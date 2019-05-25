@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    public int heldPackages = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("Accelerate") != 0 || Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             Propulsion();
+        }
+        if (heldPackages < 0)
+        {
+            heldPackages = 0;
         }
     }
 
@@ -46,5 +52,14 @@ public class PlayerController : MonoBehaviour
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Package")
+        {
+            Destroy(collision.gameObject);
+            heldPackages += 1;
+        }
     }
 }
