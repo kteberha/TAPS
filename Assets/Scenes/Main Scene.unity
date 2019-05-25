@@ -295,8 +295,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2efc76178ca104bbd3144506e32301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damping: 1
-  yAddValue: 0.8
+  damping: 0.25
+  yAddValue: 0
   yMinValue: -1e+32
   yMaxValue: 1e+32
   xMinValue: -1e+32
