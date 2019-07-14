@@ -1,0 +1,6 @@
+[submodule "Assets/UM_AI"]
+	path = Assets/UM_AI
+	url = https://github.com/rockretep/UM_AI.git
+[submodule "Assets/UM_Basic"]
+	path = Assets/UM_Basic
+	url = https://github.com/rockretep/UM_Basic.git
