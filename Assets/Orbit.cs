@@ -10,16 +10,20 @@ public class Orbit : MonoBehaviour
     private Vector3 desiredPosition;
     private float originalZ = 0;
 
-    public float radius = 2.0f;
-    public float radiusSpeed = 0.5f;
-    public float rotationSpeed = 80.0f;
     public float maxDistanceFromCenter = 25;
 
-    public bool willOrbit = true;
+    //rotation
+    public float rotationSpeed = 80.0f;
+    [SerializeField]
+    private float currentRotationSpeed = 0f;
+    public float rotationAccel = 10f;
+    public float rotationDecel = 5f;
 
-
-    // orbits around a "star" at the origin with fixed mass
-    public float starMass = 1000f;
+    //release slingshot
+    bool hasReleased;
+    Vector3 releaseVelocity;
+    private Vector3 posSpeed;
+    private Vector3 lastPos;
 
     void Start()
     {
@@ -27,47 +31,58 @@ public class Orbit : MonoBehaviour
         center = centerObj.transform;
         originalZ = this.transform.position.z;
 
-        float initV = Mathf.Sqrt(starMass / transform.position.magnitude);
-        GetComponent<Rigidbody2D>().velocity = new Vector3(0, initV, 0);
-
         float dist = Vector3.Distance(center.position, transform.position);
-        radius = dist;
+        lastPos = transform.position;
     }
 
     void Update()
     {
+        //calculate distance from Shipping Lane center
         float dist = Vector3.Distance(center.position, transform.position);
-        radius = dist;
-        if (dist > maxDistanceFromCenter)
-            willOrbit = false;
-        else
-            willOrbit = true;
 
-        if (willOrbit)
-        {
-            //float r = Vector3.Magnitude(transform.position);
-            //float totalForce = -(starMass) / (r * r);
-            //Vector3 force = (transform.position).normalized * totalForce;
-            //GetComponent<Rigidbody2D>().AddForce(force);
-            //Debug.Log(force);
-
-            float distFromEdge = maxDistanceFromCenter - dist;
-            float relativeRotationSpeed = rotationSpeed * (distFromEdge / maxDistanceFromCenter);
-
-            transform.RotateAround(center.position, axis, rotationSpeed * Time.deltaTime);
-            desiredPosition = (transform.position - center.position).normalized * radius + center.position;
-
-            Vector3 heading = desiredPosition - transform.position;
-            float distance = heading.magnitude;
-            Vector3 direction = heading / distance; //normalized direction
-
-            Vector3 force = direction * radiusSpeed;
-
-            GetComponent<Rigidbody2D>().AddForce(force);
-            Debug.Log(force);
-            //transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.deltaTime * radiusSpeed); 
-        }
         
+
+        if (dist > maxDistanceFromCenter) //if the object is outside of the Shipping Lane's range, decrease rotation speed
+        {
+            if (!hasReleased)
+                Release();
+            currentRotationSpeed = 0;//-= rotationDecel;
+            if (currentRotationSpeed < 0)
+                currentRotationSpeed = 0;
+        }
+        else //if the object is within the Shipping Lane's range, increase rotation speed
+        {
+            hasReleased = false;
+            currentRotationSpeed += rotationAccel;
+            if (currentRotationSpeed > rotationSpeed)
+                currentRotationSpeed = rotationSpeed;
+        }
+
+
+        transform.RotateAround(center.position, axis, currentRotationSpeed * Time.deltaTime);
+
+        if (lastPos != transform.position)
+        {
+            posSpeed = transform.position - lastPos;
+            posSpeed /= Time.deltaTime;
+            lastPos = transform.position;
+        }
+
+
+    }
+
+    // Call this when you want to let the sling loose to fly in a straight line.
+    public void Release()
+    {
+        Vector3 offsetFromCenter = transform.position - center.position;
+        float radius = offsetFromCenter.magnitude;
+
+        Vector3 travelDirection = Vector3.Cross(axis, offsetFromCenter).normalized;
+
+        releaseVelocity = posSpeed;
+        this.GetComponent<Rigidbody2D>().velocity = releaseVelocity;
+
+        hasReleased = true;
     }
 
 
