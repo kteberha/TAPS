@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private Rigidbody2D rb;
+    private List<GameObject> heldPackages = new List<GameObject>();
+    
     public float playerSpeed = 2.5f;
     public float maxSpeed = 10;
 
-    private Rigidbody2D rb;
-
-    public int heldPackages = 0;
+    public float inventoryDistance = 5f;
+    public float inventoryDampingRatio = 1f;
+    public float inventoryFrequency = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -23,10 +26,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("Accelerate") != 0 || Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             Propulsion();
-        }
-        if (heldPackages < 0)
-        {
-            heldPackages = 0;
         }
     }
 
@@ -54,12 +53,29 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (collision.tag == "Package")
+        if (other.gameObject.CompareTag("Package"))
         {
-            Destroy(collision.gameObject);
-            heldPackages += 1;
+            if (!heldPackages.Contains(other.gameObject))
+            {
+                SpringJoint2D rope = other.gameObject.AddComponent<SpringJoint2D>();
+                int num = heldPackages.Count;
+                if (num == 0)
+                {
+                    rope.connectedBody = GetComponent<Rigidbody2D>();
+                }
+                else
+                {
+                    rope.connectedBody = heldPackages[num - 1].GetComponent<Rigidbody2D>();
+                }
+                rope.autoConfigureDistance = false;
+                rope.distance = inventoryDistance;
+                rope.dampingRatio = inventoryDampingRatio;
+                rope.frequency = inventoryFrequency;
+
+                heldPackages.Add(other.gameObject);
+            }
         }
     }
 }
