@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5869416400145213134}
   - component: {fileID: 1144800216}
   - component: {fileID: 1557468216}
+  - component: {fileID: 7596986712774070413}
   m_Layer: 0
   m_Name: Package - Physics
   m_TagString: Package
@@ -159,3 +160,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1880ea708b6682440aaf32bc36fbfbb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!251 &7596986712774070413
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5869416400145213135}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 55
+  m_RotationalOffset: 0
+  m_UseOneWay: 0
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1

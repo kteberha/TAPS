@@ -10,6 +10,11 @@ public class PlayerController : MonoBehaviour
     public float playerSpeed = 2.5f;
     public float maxSpeed = 10;
 
+    public float shootForce = 10f;
+    public float shootCooldown = 1f;
+    private float shootCooldownClock = 0f;
+    public float shootPackageCollisionImmuneTime = 0.5f;
+
     public float inventoryDistance = 5f;
     public float inventoryDampingRatio = 1f;
     public float inventoryFrequency = 0.5f;
@@ -27,6 +32,14 @@ public class PlayerController : MonoBehaviour
         {
             Propulsion();
         }
+        if (Input.GetAxis("Fire2") != 0 && heldPackages.Count > 0 && shootCooldownClock <= 0)
+        {
+            Shoot();
+            shootCooldownClock = shootCooldown;
+        }
+
+        //Clocks
+        shootCooldownClock -= Time.deltaTime;
     }
 
     void Propulsion()
@@ -50,7 +63,31 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
+    }
 
+    void Shoot()
+    {
+        if (heldPackages.Count > 0)
+        {
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = 0f;
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+            Vector2 heading = mousePos - heldPackages[0].transform.position;
+            float distance = heading.magnitude;
+            Vector2 direction = heading / distance;
+
+            Destroy(heldPackages[0].GetComponent<SpringJoint2D>());
+            heldPackages[0].GetComponent<BoxCollider2D>().usedByEffector = true;
+            heldPackages[0].GetComponent<Package>().DoNotCollideWithPlayer(shootPackageCollisionImmuneTime);
+            heldPackages[0].GetComponent<Rigidbody2D>().AddForce(direction * shootForce);            
+            heldPackages.Remove(heldPackages[0]);     
+
+            if (heldPackages.Count > 0)
+            {
+                heldPackages[0].GetComponent<SpringJoint2D>().connectedBody = this.GetComponent<Rigidbody2D>();
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
