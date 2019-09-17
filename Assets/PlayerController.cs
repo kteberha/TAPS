@@ -32,12 +32,17 @@ public class PlayerController : MonoBehaviour
         {
             Propulsion();
         }
-        if (Input.GetAxis("Fire2") != 0 && heldPackages.Count > 0 && shootCooldownClock <= 0)
+
+        if (Input.GetKeyUp("mouse 1") && heldPackages.Count > 0 && shootCooldownClock <= 0)
         {
-            Shoot();
+           Shoot();
             shootCooldownClock = shootCooldown;
         }
 
+        if (Input.GetKeyDown("mouse 1"))
+        {
+
+        }
         //Clocks
         shootCooldownClock -= Time.deltaTime;
     }
