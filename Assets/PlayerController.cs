@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
+
+
 {
     private Rigidbody2D rb;
     private List<GameObject> heldPackages = new List<GameObject>();
-    
+
+
     public float playerSpeed = 2.5f;
     public float maxSpeed = 10;
 
@@ -39,10 +42,7 @@ public class PlayerController : MonoBehaviour
             shootCooldownClock = shootCooldown;
         }
 
-        if (Input.GetKeyDown("mouse 1"))
-        {
-
-        }
+ 
         //Clocks
         shootCooldownClock -= Time.deltaTime;
     }
@@ -94,6 +94,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
 
     private void OnCollisionEnter2D(Collision2D other)
     {
