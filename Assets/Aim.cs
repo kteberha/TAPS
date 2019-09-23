@@ -8,10 +8,11 @@ public class Aim : MonoBehaviour
 
     public Transform player;
     private Transform mouse;
+
     // Start is called before the first frame update
     void Start()
     {
-        lineRenderer = GetComponent<LineRenderer>(); 
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -19,7 +20,6 @@ public class Aim : MonoBehaviour
     {
 
         lineRenderer.SetPosition(0, player.position);
-        lineRenderer.SetPosition(1, position: Input.mousePosition);
-
+        lineRenderer.SetPosition(1, position: Camera.main.ScreenToWorldPoint(Input.mousePosition));
     }
 }
