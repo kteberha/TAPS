@@ -18,8 +18,7 @@ public class Aim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        lineRenderer.SetPosition(0, player.position);
-        lineRenderer.SetPosition(1, position: Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            lineRenderer.SetPosition(0, player.position);
+            lineRenderer.SetPosition(1, position: Camera.main.ScreenToWorldPoint(Input.mousePosition));
     }
 }
