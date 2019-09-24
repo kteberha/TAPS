@@ -20,7 +20,7 @@ public class CrossfadeOnTrigger : MonoBehaviour
 			{
 				currentTrack = 0;
 			}
-			MusicManager.Crossfade(tracks[currentTrack], fadeTime);
+			//MusicManager.Crossfade(tracks[currentTrack], fadeTime);
 
             triggerMusic = false;
 		}
