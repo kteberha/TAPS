@@ -120,6 +120,90 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &8026146
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -927199367670048503, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_Name
+      value: Astroid
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -134.50249
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 20.050785
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -68.03242
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8140464326019191787, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.86
+      objectReference: {fileID: 0}
+    - target: {fileID: -8140464326019191787, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 6193439858517049454, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 89b9931aab1d90848947ae0a622d6055, type: 3}
 --- !u!1 &26351614
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +281,7 @@ Transform:
   m_LocalScale: {x: 30.73056, y: 30.73056, z: 30.73056}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &49594463
 GameObject:
@@ -309,16 +393,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_Name
       value: Package - Physics (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213131, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -388,16 +472,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_Name
       value: Package - Physics (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213131, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -467,16 +551,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_Name
       value: Package - Physics (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213131, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -635,16 +719,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_Name
       value: Package - Physics (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213131, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -714,16 +798,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_Name
       value: Package - Physics (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213131, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -793,16 +877,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_Name
       value: Package - Physics
       objectReference: {fileID: 0}
+    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213131, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -872,16 +956,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_Name
       value: Package - Physics (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213131, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1124,16 +1208,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_Name
       value: Package - Physics (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213131, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1280,7 +1364,7 @@ Transform:
   m_Children:
   - {fileID: 1487570873}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1338098775
 GameObject:
@@ -1371,7 +1455,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!4 &1487570873 stripped
 Transform:
@@ -1504,7 +1588,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1624786325
 PrefabInstance:
@@ -1513,11 +1597,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_Name
@@ -1528,6 +1607,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213131, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1597,16 +1681,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_Name
       value: Package - Physics (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213131, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1676,11 +1760,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_Name
@@ -1691,6 +1770,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213131, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1760,16 +1844,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_Name
       value: Package - Physics (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213131, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1839,11 +1923,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_Name
@@ -1854,6 +1933,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213131, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2020,7 +2104,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2057024222
 PrefabInstance:
@@ -2029,16 +2113,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_Name
       value: Package - Physics (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 5265413745711683492, guid: 7007122bec9f3f84f9f4619dc200db00,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5869416400145213131, guid: 7007122bec9f3f84f9f4619dc200db00,
         type: 3}
       propertyPath: m_LocalPosition.x
