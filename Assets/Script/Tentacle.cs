@@ -26,8 +26,6 @@ public struct PosRot
 public class Tentacle : MonoBehaviour
 {
 
-	const string ROOTJOINTNAME = "Armature/Root";
-
 	[Readonly]
 	public Transform RootJoint;
 	[Readonly]
@@ -35,10 +33,10 @@ public class Tentacle : MonoBehaviour
 	[Readonly]
 	public float[] Solution;
 
-	public Transform Target;
-	[Tooltip("Mininum distance from target")]
-	public float MininumDistance;
-	private Vector3 destination;
+	public Transform Destination;
+	[Tooltip("Mininum distance from destination")]
+	public float DistanceFromDestination;
+	private Vector3 target;
 
 	[Range(0, 1f)]
 	public float DeltaGradient = 0.1F;
@@ -58,19 +56,15 @@ public class Tentacle : MonoBehaviour
 
 	void Awake()
 	{
-		RootJoint = transform.Find(ROOTJOINTNAME);
 		Joints = RootJoint.GetComponentsInChildren<ArmJoint>();
 		Solution = new float[Joints.Length];
 	}
 
 	void Update()
 	{
-		if (Target != null)
-		{
-			Vector3 direction = (Target.position - transform.position).normalized;
-			destination = Target.position - direction * MininumDistance;
-			if (Comfort(destination, Solution) > StopThreshold) ApproachTarget(destination);
-		}
+		Vector3 direction = (Destination.position - transform.position).normalized;
+		target = Destination.position - direction * DistanceFromDestination;
+		if (Comfort(target, Solution) > StopThreshold) ApproachTarget(target);
 	}
 
 	private void ApproachTarget(Vector3 target)
@@ -115,7 +109,7 @@ public class Tentacle : MonoBehaviour
 			torsion += Mathf.Abs(solution[i]) * TorsionPenality.z;
 		}
 		return Vector3.Distance(target, result)
-			+ Mathf.Abs(Quaternion.Angle(result, Target.rotation)/180F) * OrientationWeight
+			+ Mathf.Abs(Quaternion.Angle(result, Destination.rotation)/180F) * OrientationWeight
 			+ (torsion / solution.Length) * TorsionWeight;
 	}
 
