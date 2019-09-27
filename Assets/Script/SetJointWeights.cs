@@ -4,6 +4,9 @@ public class SetJointWeights : MonoBehaviour
 {
 	public Vector2 MinAngle;
 	public Vector2 MaxAngle;
+
+	public float MinSpeed;
+	public float MaxSpeed;
 	
 	private ArmJoint[] Joints;
 
@@ -23,6 +26,8 @@ public class SetJointWeights : MonoBehaviour
 
 			Joints[i].MinAngle = Mathf.Lerp(MinAngle.x, MinAngle.y, t);
 			Joints[i].MaxAngle = Mathf.Lerp(MaxAngle.x, MaxAngle.y, t);
+
+			Joints[i].Speed = Mathf.Lerp(MinSpeed, MaxSpeed, t);
 
 			Joints[i].Axis = Axes[i % Axes.Length];
 		}

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UModules;
 
 public struct PosRot
 {
@@ -22,15 +23,18 @@ public struct PosRot
 	}
 }
 
-public class IKMovement : MonoBehaviour
+public class Tentacle : MonoBehaviour
 {
-	public Transform BaseJoint;
-	[HideInInspector]
+
+	[Readonly]
+	public Transform RootJoint;
+	[Readonly]
 	public ArmJoint[] Joints;
-	[HideInInspector]
+	[Readonly]
 	public float[] Solution;
 
 	public Transform Destination;
+	[Tooltip("Mininum distance from destination")]
 	public float DistanceFromDestination;
 	private Vector3 target;
 
@@ -52,7 +56,7 @@ public class IKMovement : MonoBehaviour
 
 	void Awake()
 	{
-		Joints = BaseJoint.GetComponentsInChildren<ArmJoint>();
+		Joints = RootJoint.GetComponentsInChildren<ArmJoint>();
 		Solution = new float[Joints.Length];
 	}
 
