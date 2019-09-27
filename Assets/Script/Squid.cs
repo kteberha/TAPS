@@ -9,6 +9,10 @@ public class Squid : Agent
 {
 	private readonly string[] AllowedTags = {"Player","Crate"};
 
+
+	[SerializeField,Readonly]
+	private Tentacle[] tentacles;
+
 	public override void Initialize()
 	{
 		base.Initialize();
@@ -40,7 +44,7 @@ public class Squid : Agent
 		{
 		}
 
-		public override void Exit() 
+		public override void Exit()
 		{
 		}
 	};
