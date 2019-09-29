@@ -19,10 +19,13 @@ public class PlayerController : MonoBehaviour
     public float inventoryDampingRatio = 1f;
     public float inventoryFrequency = 0.5f;
 
+    private Camera mainCamera;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -44,9 +47,10 @@ public class PlayerController : MonoBehaviour
 
     void Propulsion()
     {
-        Vector2 playerPos = this.transform.position; //player position
-        Vector2 mousePos = Input.mousePosition; //mouse position
-        mousePos = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().ScreenToWorldPoint(mousePos);
+        Vector3 playerPos = this.transform.position; //player position
+        Vector3 mousePos = Input.mousePosition; //mouse position
+        mousePos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mainCamera.transform.position.z * -1));
+
         float mousePosX = mousePos.x - playerPos.x;//gets the distance between object and mouse position for x        
         float mousePosY = mousePos.y - playerPos.y;//gets the distance between object and mouse position for y;
 
@@ -71,7 +75,7 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = 0f;
-            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+            mousePos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mainCamera.transform.position.z * -1));
 
             Vector2 heading = mousePos - heldPackages[0].transform.position;
             float distance = heading.magnitude;

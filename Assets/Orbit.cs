@@ -57,8 +57,9 @@ public class Orbit : MonoBehaviour
             if (currentRotationSpeed > rotationSpeed)
                 currentRotationSpeed = rotationSpeed;
         }
-
-
+        Vector3 localForward = transform.worldToLocalMatrix.MultiplyVector(transform.up);
+        //GetComponent<Rigidbody2D>().AddRelativeForce(localForward * 1f);
+        //GetComponent<Rigidbody2D>().AddTorque(1f * Time.deltaTime);
         transform.RotateAround(center.position, axis, currentRotationSpeed * Time.deltaTime);
 
         if (lastPos != transform.position)
