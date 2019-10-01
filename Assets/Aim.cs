@@ -17,7 +17,20 @@ public class Aim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RaycastHit hit;
+
             lineRenderer.SetPosition(0, player.position);
-            lineRenderer.SetPosition(1, position: Camera.main.ScreenToWorldPoint(Input.mousePosition));
+
+           
+            Vector3 mousePosition = Input.mousePosition;
+            mousePosition.z = player.position.z - Camera.main.transform.position.z;
+            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+             if (Physics.Linecast(player.position, mousePosition, out hit)) {
+            mousePosition = hit.point;
+        }   
+
+            lineRenderer.SetPosition(1,  mousePosition);
+        Debug.Log(mousePosition);
     }
 }
