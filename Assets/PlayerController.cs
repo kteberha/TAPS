@@ -117,6 +117,10 @@ public class PlayerController : MonoBehaviour
 
                 heldPackages.Add(other.gameObject);
             }
+            else
+            {
+                print(other.gameObject.name);
+            }
         }
     }
 }
