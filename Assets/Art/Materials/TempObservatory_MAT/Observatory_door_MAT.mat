@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Observatory_door_MAT
+  m_Shader: {fileID: -6465566751694194690, guid: 6cb7f551fd7258948a770b2e6f9150fb,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _SampleTexture2D_27B18008_Texture:
+        m_Texture: {fileID: 2800000, guid: 9677064be4106cb409796355b0317298, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_A1145C89_Texture:
+        m_Texture: {fileID: 2800000, guid: e75170f1b4211ba41bec80c558caeecf, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_3E8358B8: 0
+    - Vector1_52A29AF3: 0
+    - Vector1_834D9694: 0
+    - Vector1_B61D65D1: 0
+    m_Colors:
+    - Color_412637AA: {r: 0, g: 0, b: 0, a: 0}
+    - Color_AA7B6B51: {r: 0, g: 0, b: 0, a: 0}
