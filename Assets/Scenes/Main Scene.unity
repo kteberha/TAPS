@@ -961,7 +961,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 1
+    textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
@@ -2053,6 +2053,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AstroidHome1
       objectReference: {fileID: 0}
+    - target: {fileID: -7383606744557681941, guid: 7a1d0ab6285055843b946ee26c1ffd7f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 26c5ef3cc44d5a14f9844b65ca76aee8, type: 2}
     - target: {fileID: -4216859302048453862, guid: 7a1d0ab6285055843b946ee26c1ffd7f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2123,11 +2128,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.05
       objectReference: {fileID: 0}
-    - target: {fileID: -7383606744557681941, guid: 7a1d0ab6285055843b946ee26c1ffd7f,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 26c5ef3cc44d5a14f9844b65ca76aee8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a1d0ab6285055843b946ee26c1ffd7f, type: 3}
 --- !u!4 &1475627692 stripped
