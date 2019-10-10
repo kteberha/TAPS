@@ -30,6 +30,16 @@ public class Package : MonoBehaviour
     {
         if (collision.tag == "Finish")
         {
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManager>().packagesDelivered += 1;
+            Destroy(gameObject);
+        }
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Finish")
+        {
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManager>().packagesDelivered += 1;
             Destroy(gameObject);
         }
     }

@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 49594464}
   - component: {fileID: 49594467}
   - component: {fileID: 49594468}
+  - component: {fileID: 49594469}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -340,6 +341,19 @@ Skybox:
   m_GameObject: {fileID: 49594463}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 2100000, guid: fee8e90ef4023f04fb8ae46c17d434cb, type: 2}
+--- !u!114 &49594469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49594463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b33293f191613449dd04ca5027364e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  packagesDelivered: 0
 --- !u!1001 &52926657
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4173,7 +4187,7 @@ GameObject:
   - component: {fileID: 556869416}
   m_Layer: 0
   m_Name: Asteroid-H3
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4992,7 +5006,7 @@ GameObject:
   - component: {fileID: 678036051}
   m_Layer: 0
   m_Name: Asteroid-H4
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8321,16 +8335,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Astroid (5)
       objectReference: {fileID: 0}
-    - target: {fileID: -8140464326019191787, guid: 89b9931aab1d90848947ae0a622d6055,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -5.2
-      objectReference: {fileID: 0}
-    - target: {fileID: -8140464326019191787, guid: 89b9931aab1d90848947ae0a622d6055,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.2
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 89b9931aab1d90848947ae0a622d6055,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8400,6 +8404,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 3.9941201
+      objectReference: {fileID: 0}
+    - target: {fileID: -8140464326019191787, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8140464326019191787, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89b9931aab1d90848947ae0a622d6055, type: 3}
@@ -10179,16 +10193,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Astroid (2)
       objectReference: {fileID: 0}
-    - target: {fileID: -8140464326019191787, guid: 89b9931aab1d90848947ae0a622d6055,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.8436346
-      objectReference: {fileID: 0}
-    - target: {fileID: -8140464326019191787, guid: 89b9931aab1d90848947ae0a622d6055,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.1929178
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 89b9931aab1d90848947ae0a622d6055,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10258,6 +10262,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 2.3701165
+      objectReference: {fileID: 0}
+    - target: {fileID: -8140464326019191787, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.8436346
+      objectReference: {fileID: 0}
+    - target: {fileID: -8140464326019191787, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.1929178
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89b9931aab1d90848947ae0a622d6055, type: 3}
@@ -13922,7 +13936,7 @@ GameObject:
   - component: {fileID: 1753285523}
   m_Layer: 0
   m_Name: Asteroid-H2
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15931,7 +15945,7 @@ GameObject:
   - component: {fileID: 2099315088}
   m_Layer: 0
   m_Name: Asteroid-H1
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
