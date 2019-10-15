@@ -19,11 +19,18 @@ public class PlayerController : MonoBehaviour
     public float inventoryDampingRatio = 1f;
     public float inventoryFrequency = 0.5f;
 
+    //variables for the lineRenderer
     private LineRenderer lineRenderer;
     private float counter;
     private float dist = 0f;
-    private Package[] packages;
     public float lineDrawSpeed = 6f;
+
+    //Audio Variables
+    private AudioSource P_audioSource;
+    public AudioClip extinguisherStart;
+    public AudioClip extinguisherLoop;
+    public AudioClip extinguisherEnd;
+    public AudioClip throwSound;
 
     private Camera mainCamera;
 
@@ -34,6 +41,8 @@ public class PlayerController : MonoBehaviour
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
         lineRenderer = GetComponent<LineRenderer>();
+
+        P_audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -57,14 +66,51 @@ public class PlayerController : MonoBehaviour
         {
             //Set the Origin of the line renderer to the player position
             lineRenderer.SetPosition(0, this.transform.position);
+            
 
             //Set the positions of the following line render points to all of the transforms in the heldPackages list
-            for (int i = 1; i <= heldPackages.Count; i++)
+            for (int i = 0; i <= heldPackages.Count - 1 ; i++)
             {
-                lineRenderer.SetPosition(i, heldPackages[i - 1].transform.position);
+               
+                if (i < heldPackages.Count - 1)
+                {
+                    //determine distance from player to package at the end of the line
+                    dist = Vector3.Distance(heldPackages[i].transform.position, heldPackages[i + 1].transform.position);
+                }
+              
+
+                if (counter < dist)
+                {
+                    counter += 0.1f / lineDrawSpeed;
+
+                    float x = Mathf.Lerp(0, dist, counter);
+
+                    //make sure it doesn't try to draw to a non existant box beyond the end of the list
+                    if (i < heldPackages.Count - 1)
+                    {
+                        Vector3 pointA = heldPackages[i].transform.position;
+                        Vector3 pointB = heldPackages[i + 1].transform.position;
+
+                        //Get the unit vector in the desired direction, multiply by the desired length and add the starting point.
+                        Vector3 pointAlongLine = x * Vector3.Normalize(pointB - pointA) + pointA;
+                    }
+                }
+                
+                lineRenderer.SetPosition(i + 1, heldPackages[i].transform.position);
             }
+        }
 
+        if(Input.GetMouseButtonDown(0))
+        {
+            StartCoroutine("StartExtinguisher");
+        }
 
+        if(Input.GetMouseButtonUp(0))
+        {
+            //stop fire extinguisher loop
+            P_audioSource.loop = false;
+            P_audioSource.clip = extinguisherEnd;
+            P_audioSource.Play();
         }
     }
 
@@ -108,7 +154,9 @@ public class PlayerController : MonoBehaviour
             heldPackages[0].GetComponent<BoxCollider2D>().usedByEffector = true;
             heldPackages[0].GetComponent<Package>().DoNotCollideWithPlayer(shootPackageCollisionImmuneTime);
             heldPackages[0].GetComponent<Rigidbody2D>().AddForce(direction * shootForce);            
-            heldPackages.Remove(heldPackages[0]);     
+            heldPackages.Remove(heldPackages[0]);
+
+            P_audioSource.PlayOneShot(throwSound);
 
             if (heldPackages.Count > 0)
             {
@@ -151,5 +199,19 @@ public class PlayerController : MonoBehaviour
             //tell the line renderer to draw to the newest added point (line renderer will always have 2 positions though)
             lineRenderer.positionCount = heldPackages.Count + 1;
         }
+    }
+
+    IEnumerator StartExtinguisher()
+    {
+        //set & play fire extinguisher start sound
+        P_audioSource.clip = extinguisherStart;
+        P_audioSource.Play();
+
+        yield return new WaitForSeconds(P_audioSource.clip.length);
+
+        //set & play loop sound after setting it to loop
+        P_audioSource.clip = extinguisherLoop;
+        P_audioSource.loop = true;
+        P_audioSource.Play();
     }
 }

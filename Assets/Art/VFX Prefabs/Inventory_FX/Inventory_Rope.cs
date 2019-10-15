@@ -40,19 +40,6 @@ public class Inventory_Rope : MonoBehaviour
             lineRenderer.SetPosition(1, pointAlongLine);
         }
         lineRenderer.SetPosition(0, playerTransform.position);
-
-        Debug.Log("Rope target pos: " + destinationTransform.position);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag != "Package")
-        {
-            Debug.Log("Not a package");
-        }
-        else
-        {
-            Debug.Log("Package Hit!!!!!");
-        }
-    }
 }
