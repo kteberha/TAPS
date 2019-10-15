@@ -108,6 +108,8 @@ public class PlayerController : MonoBehaviour
         if(Input.GetMouseButtonUp(0))
         {
             //stop fire extinguisher loop
+            StopCoroutine("StartExtinguisher");
+
             P_audioSource.loop = false;
             P_audioSource.clip = extinguisherEnd;
             P_audioSource.Play();
