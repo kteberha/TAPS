@@ -19,6 +19,12 @@ public class PlayerController : MonoBehaviour
     public float inventoryDampingRatio = 1f;
     public float inventoryFrequency = 0.5f;
 
+    private LineRenderer lineRenderer;
+    private float counter;
+    private float dist = 0f;
+    private Package[] packages;
+    public float lineDrawSpeed = 6f;
+
     private Camera mainCamera;
 
     // Start is called before the first frame update
@@ -26,6 +32,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -43,6 +51,21 @@ public class PlayerController : MonoBehaviour
 
         //Clocks
         shootCooldownClock -= Time.deltaTime;
+
+        //Check if player has packages to draw lines to
+        if (heldPackages.Count > 0)
+        {
+            //Set the Origin of the line renderer to the player position
+            lineRenderer.SetPosition(0, this.transform.position);
+
+            //Set the positions of the following line render points to all of the transforms in the heldPackages list
+            for (int i = 1; i <= heldPackages.Count; i++)
+            {
+                lineRenderer.SetPosition(i, heldPackages[i - 1].transform.position);
+            }
+
+
+        }
     }
 
     void Propulsion()
@@ -91,6 +114,9 @@ public class PlayerController : MonoBehaviour
             {
                 heldPackages[0].GetComponent<SpringJoint2D>().connectedBody = this.GetComponent<Rigidbody2D>();
             }
+
+            //adjust the lineRenderer positions array so that it doesn't keep drawing to a thrown box
+            lineRenderer.positionCount = heldPackages.Count + 1;
         }
     }
 
@@ -121,6 +147,9 @@ public class PlayerController : MonoBehaviour
             {
                 print(other.gameObject.name);
             }
+
+            //tell the line renderer to draw to the newest added point (line renderer will always have 2 positions though)
+            lineRenderer.positionCount = heldPackages.Count + 1;
         }
     }
 }

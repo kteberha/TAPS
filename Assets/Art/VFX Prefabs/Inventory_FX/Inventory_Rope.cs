@@ -8,8 +8,8 @@ public class Inventory_Rope : MonoBehaviour
     private float counter;
     private float dist;
 
-    public Transform player;
-    public Transform destination;
+    public Transform playerTransform;
+    public Transform destinationTransform;
 
     public float lineDrawSpeed = 6f;
 
@@ -17,9 +17,9 @@ public class Inventory_Rope : MonoBehaviour
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.SetPosition(0, player.position);
+        lineRenderer.SetPosition(0, playerTransform.position);
 
-        dist = Vector3.Distance(player.position, destination.position);
+        dist = Vector3.Distance(playerTransform.position, destinationTransform.position);
     }
 
     // Update is called once per frame
@@ -31,14 +31,28 @@ public class Inventory_Rope : MonoBehaviour
 
             float x = Mathf.Lerp(0, dist, counter);
 
-            Vector3 pointA = player.position;
-            Vector3 pointB = destination.position;
+            Vector3 pointA = playerTransform.position;
+            Vector3 pointB = destinationTransform.position;
 
             //Get the unit vector in the desired direction, multiply by the desired length and add the starting point.
             Vector3 pointAlongLine = x * Vector3.Normalize(pointB - pointA) + pointA;
 
             lineRenderer.SetPosition(1, pointAlongLine);
         }
-        lineRenderer.SetPosition(0, player.position);
+        lineRenderer.SetPosition(0, playerTransform.position);
+
+        Debug.Log("Rope target pos: " + destinationTransform.position);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag != "Package")
+        {
+            Debug.Log("Not a package");
+        }
+        else
+        {
+            Debug.Log("Package Hit!!!!!");
+        }
     }
 }
