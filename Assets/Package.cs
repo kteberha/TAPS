@@ -60,18 +60,20 @@ public class Package : MonoBehaviour
             {
                 int removeRange = 0;
 
-                //loop through all packages starting at the end of the rope up to and including the triggered package
                 for (int i = _heldPackages.Count - 1; i >= _heldPackages.IndexOf(gameObject); i--)
                 {
-                    //destroy the spring arm of this object
-                    Destroy(_heldPackages[_heldPackages.IndexOf(gameObject)].GetComponent<SpringJoint2D>());
-                    
-                    //increase integer that is used to determine how many objects to remove from package list
-                    removeRange++; 
+                    Destroy(_heldPackages[_heldPackages.IndexOf(gameObject)].GetComponent<SpringJoint2D>());//destroy the spring arm of this object
+                    removeRange++; //increase integer that is used to determine how many objects to remove from package list
                 }
 
                 // remove all packages starting from triggered object and those behind it
                 _heldPackages.RemoveRange(_heldPackages.IndexOf(gameObject), removeRange);
+
+                //update the line renderer's position count
+                lineRend.positionCount = _heldPackages.Count + 1;
+
+                //destroy the package being hit
+                Destroy(gameObject);
             }
 
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManager>().packagesDelivered += 1;
@@ -96,9 +98,14 @@ public class Package : MonoBehaviour
                 Destroy(_heldPackages[_heldPackages.IndexOf(gameObject)].GetComponent<SpringJoint2D>());//destroy the spring arm of this object
                 removeRange++; //increase integer that is used to determine how many objects to remove from package list
             }
-            
+
             // remove all packages starting from triggered object and those behind it
             _heldPackages.RemoveRange(_heldPackages.IndexOf(gameObject), removeRange);
+            
+            //update the line renderer's position count
+            lineRend.positionCount = _heldPackages.Count + 1;
+
+            //destroy the package being hit
             Destroy(gameObject);
         }
     }

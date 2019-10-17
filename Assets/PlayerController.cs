@@ -64,9 +64,6 @@ public class PlayerController : MonoBehaviour
         //Check if player has packages to draw lines to
         if (heldPackages.Count > 0)
         {
-
-            print("has packages");
-
             //Set the Origin of the line renderer to the player position
             lineRenderer.SetPosition(0, this.transform.position);
 
