@@ -64,6 +64,9 @@ public class PlayerController : MonoBehaviour
         //Check if player has packages to draw lines to
         if (heldPackages.Count > 0)
         {
+
+            print("has packages");
+
             //Set the Origin of the line renderer to the player position
             lineRenderer.SetPosition(0, this.transform.position);
 
@@ -99,15 +102,15 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0)) 
         {
-            StartCoroutine("StartExtinguisher");
+            StartCoroutine("StartExtinguisherSound");
         }
 
         if(Input.GetMouseButtonUp(0))
         {
             //stop fire extinguisher loop
-            StopCoroutine("StartExtinguisher");
+            StopCoroutine("StartExtinguisherSound");
 
             P_audioSource.loop = false;
             P_audioSource.clip = extinguisherEnd;
@@ -167,6 +170,10 @@ public class PlayerController : MonoBehaviour
 
             //adjust the lineRenderer positions array so that it doesn't keep drawing to a thrown box
             lineRenderer.positionCount = heldPackages.Count + 1;
+
+
+
+            
         }
     }
 
@@ -198,12 +205,12 @@ public class PlayerController : MonoBehaviour
                 //print(other.gameObject.name);
             }
 
-            //tell the line renderer to draw to the newest added point (line renderer will always have 2 positions though)
+            //tell the line renderer to draw to the newest added point
             lineRenderer.positionCount = heldPackages.Count + 1;
         }
     }
 
-    IEnumerator StartExtinguisher()
+    IEnumerator StartExtinguisherSound()
     {
         //set & play fire extinguisher start sound
         P_audioSource.clip = extinguisherStart;

@@ -42,6 +42,7 @@ public class Package : MonoBehaviour
                     Debug.Log("Package destroyed: " + gameObject);
                     //_heldPackages.RemoveAt(_heldPackages.IndexOf(gameObject));
                     //_heldPackages.RemoveRange(i, _heldPackages.Count);
+                    
                 }
                 
             }
@@ -57,8 +58,22 @@ public class Package : MonoBehaviour
             //check if the package is in the inventory to be removed
             if (_heldPackages.IndexOf(gameObject) != -1)
             {
-                _heldPackages.Remove(_heldPackages[_heldPackages.IndexOf(gameObject)]);
+                int removeRange = 0;
+
+                //loop through all packages starting at the end of the rope up to and including the triggered package
+                for (int i = _heldPackages.Count - 1; i >= _heldPackages.IndexOf(gameObject); i--)
+                {
+                    //destroy the spring arm of this object
+                    Destroy(_heldPackages[_heldPackages.IndexOf(gameObject)].GetComponent<SpringJoint2D>());
+                    
+                    //increase integer that is used to determine how many objects to remove from package list
+                    removeRange++; 
+                }
+
+                // remove all packages starting from triggered object and those behind it
+                _heldPackages.RemoveRange(_heldPackages.IndexOf(gameObject), removeRange);
             }
+
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManager>().packagesDelivered += 1;
             Destroy(gameObject);
         }
@@ -67,5 +82,24 @@ public class Package : MonoBehaviour
     public void DoNotCollideWithPlayer(float duration)
     {
         noCollisionTime = duration;
+    }
+
+    //for testing
+    private void OnMouseDown()
+    {
+        if (_heldPackages.IndexOf(gameObject) != -1)
+        {
+            int removeRange = 0;
+
+            for (int i = _heldPackages.Count - 1; i >= _heldPackages.IndexOf(gameObject); i--)
+            {
+                Destroy(_heldPackages[_heldPackages.IndexOf(gameObject)].GetComponent<SpringJoint2D>());//destroy the spring arm of this object
+                removeRange++; //increase integer that is used to determine how many objects to remove from package list
+            }
+            
+            // remove all packages starting from triggered object and those behind it
+            _heldPackages.RemoveRange(_heldPackages.IndexOf(gameObject), removeRange);
+            Destroy(gameObject);
+        }
     }
 }
