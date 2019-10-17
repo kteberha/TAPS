@@ -194,6 +194,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: package
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 4583b2b1204842046894b480ede833de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 4583b2b1204842046894b480ede833de,
         type: 3}
       propertyPath: m_LocalPosition.x
