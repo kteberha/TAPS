@@ -31,6 +31,6 @@ public class Aim : MonoBehaviour
         }   
 
             lineRenderer.SetPosition(1,  mousePosition);
-        Debug.Log(mousePosition);
+        //Debug.Log(mousePosition);
     }
 }

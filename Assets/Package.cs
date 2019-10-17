@@ -5,11 +5,14 @@ using UnityEngine;
 public class Package : MonoBehaviour
 {
     private float noCollisionTime = 0f;
+    private List<GameObject> _heldPackages;
+    private LineRenderer lineRend;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _heldPackages = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().heldPackages;
+        lineRend = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().lineRenderer;
     }
 
     // Update is called once per frame
@@ -30,6 +33,18 @@ public class Package : MonoBehaviour
     {
         if (collision.tag == "Finish")
         {
+            //check if the package is in the inventory to be removed
+            if(_heldPackages.IndexOf(gameObject) != -1)
+            {
+                for(int i = _heldPackages.IndexOf(gameObject) + 1; i < _heldPackages.Count - 1; i++)
+                {
+                    Debug.Log("Package destroyed index: " + i);
+                    Debug.Log("Package destroyed: " + gameObject);
+                    //_heldPackages.RemoveAt(_heldPackages.IndexOf(gameObject));
+                    //_heldPackages.RemoveRange(i, _heldPackages.Count);
+                }
+                
+            }
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManager>().packagesDelivered += 1;
             Destroy(gameObject);
         }
@@ -39,6 +54,11 @@ public class Package : MonoBehaviour
     {
         if (collision.gameObject.tag == "Finish")
         {
+            //check if the package is in the inventory to be removed
+            if (_heldPackages.IndexOf(gameObject) != -1)
+            {
+                _heldPackages.Remove(_heldPackages[_heldPackages.IndexOf(gameObject)]);
+            }
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManager>().packagesDelivered += 1;
             Destroy(gameObject);
         }

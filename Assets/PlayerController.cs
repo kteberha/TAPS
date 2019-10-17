@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private List<GameObject> heldPackages = new List<GameObject>();
+    public List<GameObject> heldPackages = new List<GameObject>();
     
     public float playerSpeed = 2.5f;
     public float maxSpeed = 10;
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public float inventoryFrequency = 0.5f;
 
     //variables for the lineRenderer
-    private LineRenderer lineRenderer;
+    public LineRenderer lineRenderer;
     private float counter;
     private float dist = 0f;
     public float lineDrawSpeed = 6f;
@@ -66,7 +66,6 @@ public class PlayerController : MonoBehaviour
         {
             //Set the Origin of the line renderer to the player position
             lineRenderer.SetPosition(0, this.transform.position);
-            
 
             //Set the positions of the following line render points to all of the transforms in the heldPackages list
             for (int i = 0; i <= heldPackages.Count - 1 ; i++)
@@ -95,7 +94,7 @@ public class PlayerController : MonoBehaviour
                         Vector3 pointAlongLine = x * Vector3.Normalize(pointB - pointA) + pointA;
                     }
                 }
-                
+
                 lineRenderer.SetPosition(i + 1, heldPackages[i].transform.position);
             }
         }
@@ -158,6 +157,7 @@ public class PlayerController : MonoBehaviour
             heldPackages[0].GetComponent<Rigidbody2D>().AddForce(direction * shootForce);            
             heldPackages.Remove(heldPackages[0]);
 
+            //cue throwing sound
             P_audioSource.PlayOneShot(throwSound);
 
             if (heldPackages.Count > 0)
@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                print(other.gameObject.name);
+                //print(other.gameObject.name);
             }
 
             //tell the line renderer to draw to the newest added point (line renderer will always have 2 positions though)
