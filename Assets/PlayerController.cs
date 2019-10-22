@@ -143,6 +143,9 @@ public class PlayerController : MonoBehaviour
     {
         if (heldPackages.Count > 0)
         {
+            //turn off inventory bubble
+            heldPackages[0].gameObject.GetComponent<Package>().Throw();
+
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = 0f;
             mousePos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mainCamera.transform.position.z * -1));
@@ -180,6 +183,9 @@ public class PlayerController : MonoBehaviour
         {
             if (!heldPackages.Contains(other.gameObject))
             {
+                //turn on inventory bubble
+                other.gameObject.GetComponent<Package>().Pickup();
+
                 SpringJoint2D rope = other.gameObject.AddComponent<SpringJoint2D>();
                 int num = heldPackages.Count;
                 if (num == 0)

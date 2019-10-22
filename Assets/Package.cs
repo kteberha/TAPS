@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Package : MonoBehaviour
 {
     private float noCollisionTime = 0f;
     private List<GameObject> _heldPackages;
     private LineRenderer lineRend;
+    [SerializeField] GameObject invBubble;
 
     // Start is called before the first frame update
     void Start()
@@ -108,5 +110,18 @@ public class Package : MonoBehaviour
             //destroy the package being hit
             Destroy(gameObject);
         }
+    }
+
+    public void Pickup()
+    {
+        invBubble.SetActive(true);
+        invBubble.transform.DOScale(4, 1).SetEase(Ease.OutQuint);
+    
+    }
+
+    public void Throw()
+    {
+        //invBubble.transform.DOScale(6, .5).SetEase(Ease.OutQuint);
+        invBubble.SetActive(false);
     }
 }

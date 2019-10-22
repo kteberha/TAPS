@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1880ea708b6682440aaf32bc36fbfbb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invBubble: {fileID: 7317962506090367762}
 --- !u!251 &7596986712774070413
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -326,10 +327,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5869416400145213131}
     m_Modifications:
-    - target: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
-      propertyPath: m_Name
-      value: InventoryBubble
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -376,15 +373,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
+      propertyPath: m_Name
+      value: InventoryBubble
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -392,6 +397,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 808d51e566230884198025a1a164bbf4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
+--- !u!1 &7317962506090367762 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035,
+    type: 3}
+  m_PrefabInstance: {fileID: 7317962506090401202}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7317962506090272562 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: e30c257a978b9e54b9d1de50486bd035,
