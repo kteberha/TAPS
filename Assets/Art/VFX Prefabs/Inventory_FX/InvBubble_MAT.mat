@@ -22,11 +22,11 @@ Material:
     m_Floats:
     - Vector1_3E49D2B0: 5
     - Vector1_7307103D: 1
-    - Vector1_8F9FE653: 0.1
+    - Vector1_8F9FE653: 0.05
     - Vector1_9B841612: 0.5
     - Vector1_9E1AD6BD: 5
     - Vector1_B76CCBBA: 0.75
-    - Vector1_CDB5EB61: 0.6
+    - Vector1_CDB5EB61: 0.1
     - Vector1_E532813F: 0.89
     - Vector1_F1D6A0EE: 3
     m_Colors:
