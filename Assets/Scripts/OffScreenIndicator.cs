@@ -20,7 +20,7 @@ public class OffScreenIndicator : MonoBehaviour
         Vector3 edgePt = target;
         edgePt.x = Mathf.Clamp(edgePt.x, Screen.width * 0.01f, Screen.width * 0.99f);
         edgePt.y = Mathf.Clamp(edgePt.y, Screen.height * 0.01f, Screen.height * 0.99f);
-        indicators[nextIndicator].transform.position = edgePt;
+        //indicators[nextIndicator].transform.position = edgePt;
 
     }
 }
