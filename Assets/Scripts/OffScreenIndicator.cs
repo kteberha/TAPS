@@ -19,8 +19,8 @@ public class OffScreenIndicator : MonoBehaviour
         
         // Put it on the edge
         Vector3 edgePt = Camera.main.WorldToScreenPoint(target.position);
-        edgePt.x = Mathf.Clamp(edgePt.x, Screen.width * 0.01f, Screen.width * 0.99f);
-        edgePt.y = Mathf.Clamp(edgePt.y, Screen.height * 0.01f, Screen.height * 0.99f);
+        edgePt.x = Mathf.Clamp(edgePt.x, Screen.width * 0.04f, Screen.width * 0.96f);
+        edgePt.y = Mathf.Clamp(edgePt.y, Screen.height * 0.07f, Screen.height * 0.93f);
         transform.position = edgePt;
 
     }
