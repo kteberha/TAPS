@@ -32,6 +32,11 @@ public class PlayerController : MonoBehaviour
     public AudioClip extinguisherEnd;
     public AudioClip throwSound;
 
+    //Teleporter variables
+    public GameObject teleporter;
+    private Transform teleportTransform;
+    public float teleportCooldown;
+
     private Camera mainCamera;
 
     // Start is called before the first frame update
@@ -43,12 +48,14 @@ public class PlayerController : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
 
         P_audioSource = GetComponent<AudioSource>();
+
+        teleportTransform = teleporter.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("Accelerate") != 0 || Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        if (Input.GetMouseButton(0)|| Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             Propulsion();
         }
@@ -56,6 +63,12 @@ public class PlayerController : MonoBehaviour
         {
             Shoot();
             shootCooldownClock = shootCooldown;
+        }
+
+        //Teleport on given key down
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            Teleport();
         }
 
         //Clocks
@@ -226,4 +239,21 @@ public class PlayerController : MonoBehaviour
         P_audioSource.loop = true;
         P_audioSource.Play();
     }
+
+    void Teleport()
+    {
+        //remove all packages from the player inventory, remove the bubble, and update line renderer
+        for (int i = 0; i < heldPackages.Count; i++)
+        {
+            heldPackages[i].GetComponent<Package>().Throw();
+            Destroy(heldPackages[i].GetComponent<SpringJoint2D>());
+        }
+        heldPackages.Clear();
+        lineRenderer.positionCount = heldPackages.Count;
+
+        rb.velocity = new Vector2(0f,0f); // set velocity to 0 to discontiue movement
+        this.transform.position = teleportTransform.position; // set player position to the teleporter's
+    }
+
+    
 }
