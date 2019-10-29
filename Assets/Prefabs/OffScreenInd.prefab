@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7240659776279898213}
   - component: {fileID: 6020964792735634516}
   - component: {fileID: 2813021581454759165}
+  - component: {fileID: 6613167370894938692}
   m_Layer: 5
   m_Name: OffScreenInd
   m_TagString: Untagged
@@ -77,6 +78,19 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &6613167370894938692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2184166370506530841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7276286a05cd27941bf0fc9d15f4f4cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!1 &2911463809066658807
 GameObject:
   m_ObjectHideFlags: 0
