@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Package
   - ShippingLane
+  - Teleporter
   layers:
   - Default
   - TransparentFX
