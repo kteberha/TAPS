@@ -10,11 +10,16 @@ public class Package : MonoBehaviour
     private LineRenderer lineRend;
     [SerializeField] GameObject invBubble;
 
+    private AudioSource a_Source;
+    public AudioClip collisionSound;
+    public AudioClip deliveredSound;
+
     // Start is called before the first frame update
     void Start()
     {
         _heldPackages = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().heldPackages;
         lineRend = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().lineRenderer;
+        a_Source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -35,6 +40,8 @@ public class Package : MonoBehaviour
     {
         if (collision.gameObject.tag == "Finish")
         {
+            a_Source.PlayOneShot(deliveredSound);
+            
             //check if the package is in the inventory to be removed
             if (_heldPackages.IndexOf(gameObject) != -1)
             {

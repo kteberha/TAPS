@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip extinguisherLoop;
     public AudioClip extinguisherEnd;
     public AudioClip throwSound;
+    public AudioClip collisionSound;
 
     //Teleporter variables
     public GameObject teleporter;
@@ -174,7 +175,7 @@ public class PlayerController : MonoBehaviour
             heldPackages.Remove(heldPackages[0]);
 
             //cue throwing sound
-            P_audioSource.PlayOneShot(throwSound);
+            P_audioSource.PlayOneShot(throwSound, 0.5f);
 
             if (heldPackages.Count > 0)
             {
@@ -183,10 +184,6 @@ public class PlayerController : MonoBehaviour
 
             //adjust the lineRenderer positions array so that it doesn't keep drawing to a thrown box
             lineRenderer.positionCount = heldPackages.Count + 1;
-
-
-
-            
         }
     }
 
