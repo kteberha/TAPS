@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     public float inventoryDampingRatio = 1f;
     public float inventoryFrequency = 0.5f;
 
+    ParticleSystem particleSys;
+
     //variables for the lineRenderer
     public LineRenderer lineRenderer;
     private float counter;
@@ -51,14 +53,20 @@ public class PlayerController : MonoBehaviour
         P_audioSource = GetComponent<AudioSource>();
 
         teleportTransform = teleporter.transform;
+
+        particleSys = GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0)|| Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        if (Input.GetMouseButton(0) || Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             Propulsion();
+        }
+        else if (particleSys.isPlaying)
+        {
+            particleSys.Pause();
         }
         if (Input.GetKeyUp("mouse 1") && heldPackages.Count > 0 && shootCooldownClock <= 0)
         {
@@ -151,6 +159,8 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
+
+        particleSys.Play();
     }
 
     void Shoot()
@@ -189,6 +199,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        if(!other.gameObject.CompareTag("Package"))
+        {
+            P_audioSource.PlayOneShot(collisionSound, .75f); //play collision audio
+        }
         if (other.gameObject.CompareTag("Package"))
         {
             if (!heldPackages.Contains(other.gameObject))

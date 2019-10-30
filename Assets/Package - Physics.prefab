@@ -116,8 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   invBubble: {fileID: 7317962506090367762}
-  collisionSound: {fileID: 8300000, guid: 7dd946f4ffa2a3b4d864c96c3d43d4a6, type: 3}
-  deliveredSound: {fileID: 8300000, guid: b1a47fd35f0de534f83df92f6c84351b, type: 3}
+  deliveredSound: {fileID: 8300000, guid: dc1d876011823da4bae5041cf2c1d4db, type: 3}
 --- !u!251 &7596986712774070413
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -184,8 +183,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: dc1d876011823da4bae5041cf2c1d4db, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
