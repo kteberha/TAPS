@@ -6,6 +6,9 @@ using DG.Tweening;
 public class Package : MonoBehaviour
 {
     private float noCollisionTime = 0f;
+    private float justThrownTimer = 10f;
+    private float justThrownClock = 0f;
+
     private List<GameObject> _heldPackages;
     private LineRenderer lineRend;
     [SerializeField] GameObject invBubble;
@@ -24,6 +27,7 @@ public class Package : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        justThrownClock -= Time.deltaTime;
         noCollisionTime -= Time.deltaTime;
         if (noCollisionTime > 0)
         {
@@ -32,12 +36,12 @@ public class Package : MonoBehaviour
         else
         {
             GetComponent<BoxCollider2D>().usedByEffector = false;
-        }
+        }        
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Finish")
+        if (collision.gameObject.tag == "Finish" && justThrownClock >= 0)
         {
 
             //check if the package is in the inventory to be removed
@@ -104,6 +108,7 @@ public class Package : MonoBehaviour
     public void Throw()
     {
         //invBubble.transform.DOScale(6, .5).SetEase(Ease.OutQuint);
+        justThrownClock = justThrownTimer;
         invBubble.SetActive(false);
     }
 
