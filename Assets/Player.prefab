@@ -112,6 +112,9 @@ MonoBehaviour:
   extinguisherLoop: {fileID: 0}
   extinguisherEnd: {fileID: 0}
   throwSound: {fileID: 0}
+  collisionSound: {fileID: 0}
+  teleporter: {fileID: 0}
+  teleportCooldown: 0
 --- !u!50 &3880720995697368719
 Rigidbody2D:
   serializedVersion: 4
@@ -4876,7 +4879,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3880720995697368712}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 072d3305689828644928e181cecb7162, type: 3}
   m_Name: 
