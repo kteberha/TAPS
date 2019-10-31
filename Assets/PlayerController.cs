@@ -19,7 +19,8 @@ public class PlayerController : MonoBehaviour
     public float inventoryDampingRatio = 1f;
     public float inventoryFrequency = 0.5f;
 
-    ParticleSystem particleSys;
+    ParticleSystem mainStreamSys;
+    ParticleSystem splatterSys;
 
     //variables for the lineRenderer
     public LineRenderer lineRenderer;
@@ -54,20 +55,33 @@ public class PlayerController : MonoBehaviour
 
         teleportTransform = teleporter.transform;
 
-        particleSys = GetComponent<ParticleSystem>();
+        mainStreamSys = transform.Find("foam_FX").Find("mainstream_Part").GetComponent<ParticleSystem>();
+        splatterSys = transform.Find("foam_FX").Find("splatter_Part").GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //variables to trigger fire extinguisher particle effects
+        var mainEmission = mainStreamSys.emission;
+        var splatEmission = splatterSys.emission;
+
         if (Input.GetMouseButton(0) || Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             Propulsion();
+
+            //setting the particle system to play when propulsion is occuring
+            mainEmission.enabled = true;
+            splatEmission.enabled = true;
+
         }
-        else if (particleSys.isPlaying)
+        else
         {
-            particleSys.Pause();
+            //setting particle systems to "stop" when the player isnt using input.
+            mainEmission.enabled = false;
+            splatEmission.enabled = false;
         }
+
         if (Input.GetKeyUp("mouse 1") && heldPackages.Count > 0 && shootCooldownClock <= 0)
         {
             Shoot();
@@ -159,8 +173,6 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
-
-        particleSys.Play();
     }
 
     void Shoot()
