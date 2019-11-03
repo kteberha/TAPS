@@ -11,11 +11,15 @@
     "com.unity.package-manager-ui": "2.2.0",
     "com.unity.purchasing": "2.0.6",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "com.unity.render-pipelines.lightweight": "5.7.2",
     "com.unity.shadergraph": "5.7.2",
 =======
     "com.unity.test-framework": "1.0.13",
 >>>>>>> Steering, Sensor, setup test squid
+=======
+    "com.unity.test-framework": "1.0.13",
+>>>>>>> 70de882720c93e2f9eecf3672ea0294b7da101f1
     "com.unity.textmeshpro": "2.0.1",
     "com.unity.timeline": "1.1.0",
     "com.unity.ugui": "1.0.0",
