@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 4334253686894856477}
   - component: {fileID: 4143281508889013535}
   - component: {fileID: 218627031426550333}
+  - component: {fileID: 32808622}
   m_Layer: 5
   m_Name: FillCatchup
   m_TagString: Untagged
@@ -149,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.10196079, g: 0.9490197, b: 0.2784314, a: 0.6784314}
+  m_Color: {r: 0.101960786, g: 0.9490196, b: 0.2784314, a: 0.6784314}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -165,6 +166,23 @@ MonoBehaviour:
   m_FillClockwise: 0
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
+--- !u!114 &32808622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2911463809066658807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 867d4e85046974749b831c3830c3af1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fillImage: {fileID: 218627031426550333}
+  green: {r: 0, g: 0, b: 0, a: 0}
+  yellow: {r: 0.8987792, g: 0.9056604, b: 0.2947668, a: 0}
+  red: {r: 0, g: 0, b: 0, a: 0}
+  CurrentValue: 0
 --- !u!1 &3776087566205658852
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,6 +194,7 @@ GameObject:
   - component: {fileID: 5654909741566117410}
   - component: {fileID: 6936997073957319423}
   - component: {fileID: 6770024591706548277}
+  - component: {fileID: 1161211008}
   m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
@@ -239,6 +258,23 @@ MonoBehaviour:
   m_FillClockwise: 0
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
+--- !u!114 &1161211008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3776087566205658852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 867d4e85046974749b831c3830c3af1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fillImage: {fileID: 6770024591706548277}
+  green: {r: 0, g: 0, b: 0, a: 0}
+  yellow: {r: 0.92553294, g: 0.9339623, b: 0.2511125, a: 0}
+  red: {r: 0, g: 0, b: 0, a: 0}
+  CurrentValue: 0
 --- !u!1 &5271930149297947468
 GameObject:
   m_ObjectHideFlags: 0
