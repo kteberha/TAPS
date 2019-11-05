@@ -9,9 +9,11 @@ public class DemandController : MonoBehaviour
 
     public Image fillImage;
 
-    public Color green;
-    public Color yellow;
-    public Color red;
+    public float targetDemand;
+
+    public Color GoodColor;
+    public Color WarningColor;
+    public Color DangerColor;
 
     // Trackers for min/max values
     protected float maxValue = 2f, minValue = 0f;
@@ -39,6 +41,17 @@ public class DemandController : MonoBehaviour
         }
     }
 
+    void AddtoTimer()
+    {
+        CurrentValue += .25f;
+        //CurrentValue.DOValue(.25, .3);
+    }
+
+    void AddtoTimerCatchup()
+    {
+        CurrentValueCatchup += 0.25f;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,16 +64,26 @@ public class DemandController : MonoBehaviour
         CurrentValue -= 0.0086f;
         CurrentValueCatchup -= 0.0086f;
 
-        if (CurrentValue == 1.0)
+        if (CurrentValue > 1.0)
         {
-            fillImage.DOColor(yellow, 1);
+            fillImage.DOColor(GoodColor, 1);
+        }
+
+        if (CurrentValue < 1.0)
+        {
+            fillImage.DOColor(WarningColor, 1);
+        }
+
+        if (CurrentValue < 0.5)
+        {
+            fillImage.DOColor(DangerColor, 1);
         }
 
         if (Input.GetKeyDown("space"))
         {
-            CurrentValue += 0.25f;
-           // yield return new WaitForSeconds(1);
-            CurrentValueCatchup += 0.25f;
+            AddtoTimer();
+            //yield return new WaitForSeconds(1);
+            AddtoTimerCatchup();
         }
     }
 }
