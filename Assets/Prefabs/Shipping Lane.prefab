@@ -1188,6 +1188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3524484648438788408}
   - component: {fileID: 3524484648438788409}
+  - component: {fileID: 2092220138}
   m_Layer: 0
   m_Name: Shipping Lane
   m_TagString: ShippingLane
@@ -1202,7 +1203,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3524484648438788358}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 34.548492, y: -45.120934, z: -10}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
@@ -1278,6 +1279,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2092220138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3524484648438788358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a8f00ad9125484f8e084dbde433802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnRate: 10
+  box: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00, type: 3}
 --- !u!1 &3524484648458897162
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,7 +1489,7 @@ PointEffector2D:
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_ForceMagnitude: 0.02
+  m_ForceMagnitude: 0.04
   m_ForceVariation: 0
   m_DistanceScale: 1
   m_ForceSource: 0
@@ -2824,21 +2839,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: cb8ef447f8e23b34b9ebcda9010b0faa,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: cb8ef447f8e23b34b9ebcda9010b0faa,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: cb8ef447f8e23b34b9ebcda9010b0faa,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2128806212197127692, guid: cb8ef447f8e23b34b9ebcda9010b0faa,
         type: 3}
