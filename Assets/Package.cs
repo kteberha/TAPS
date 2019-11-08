@@ -61,8 +61,8 @@ public class Package : MonoBehaviour
                 //update the line renderer's position count
                 lineRend.positionCount = _heldPackages.Count + 1;
             }
-            
-            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManager>().packagesDelivered += 1;
+
+            collision.gameObject.GetComponent<AsteroidHome>().Deliver();
 
             //destroy the package being hit and play audio
             StartCoroutine("DeliverySound");

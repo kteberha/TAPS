@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 5976260845439166685}
   - component: {fileID: 3986496691462621547}
   - component: {fileID: 937872404386213484}
+  - component: {fileID: 6350878957715227429}
   m_Layer: 0
   m_Name: Asteroid Home
   m_TagString: Finish
@@ -149,6 +150,31 @@ CapsuleCollider2D:
   m_Offset: {x: -1.32, y: 19.33}
   m_Size: {x: 13, y: 34.9}
   m_Direction: 0
+--- !u!114 &6350878957715227429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5976260845439166682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dca7fe2d9cf4a92409ba2dbda735123c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deliverPointsAtTime:
+  - time: 0
+    points: 1
+  - time: 15
+    points: 2
+  - time: 30
+    points: 3
+  - time: 45
+    points: 4
+  - time: 60
+    points: 5
+  currentTime: 0
+  maxTime: 60
 --- !u!1001 &5976260844640521987
 PrefabInstance:
   m_ObjectHideFlags: 0
