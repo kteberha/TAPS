@@ -15,16 +15,16 @@ public class DemandController : MonoBehaviour
     public Color WarningColor;
     public Color DangerColor;
 
+    private Color currentColor;
+
+    public bool instant = true;
+
     // Trackers for min/max values
-    protected float maxValue = 2f, minValue = 0f;
+    protected float maxValue = 10.0f, minValue = 0f;
 
     // Create a property to handle the slider's value
-    private float currentValue = 2.0f;
-    public float CurrentValue;
-
-    private float currentValueCatchup = 2.0f;
-    public float CurrentValueCatchup
-
+    private float currentValue = 10.0f;
+    public float CurrentValue
     {
         get
         {
@@ -39,51 +39,68 @@ public class DemandController : MonoBehaviour
             float fillPercentage = currentValue / maxValue;
             fillImage.fillAmount = fillPercentage;
         }
+
     }
+
+ 
 
     void AddtoTimer()
     {
-        CurrentValue += .25f;
-        //CurrentValue.DOValue(.25, .3);
+        //CurrentValue += 2.0f;
+        DOTween.To(()=> currentValue, x => CurrentValue = x, currentValue + 2.0f, 1.0f);
     }
 
-    void AddtoTimerCatchup()
-    {
-        CurrentValueCatchup += 0.25f;
-    }
+
 
     // Start is called before the first frame update
     void Start()
     {
-        CurrentValue = 2.0f;
+        CurrentValue = 10.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        CurrentValue -= 0.0086f;
-        CurrentValueCatchup -= 0.0086f;
+        CurrentValue -= Time.deltaTime;
+        
 
-        if (CurrentValue > 1.0)
+        Color nextColor = currentColor;
+
+        if (CurrentValue > 5.0f)
         {
-            fillImage.DOColor(GoodColor, 1);
+            nextColor = GoodColor;
+            //fillImage.DOColor(GoodColor, 1);
         }
 
-        if (CurrentValue < 1.0)
+        if (CurrentValue < 5.0f)
         {
-            fillImage.DOColor(WarningColor, 1);
+            nextColor = WarningColor;
+            //fillImage.DOColor(WarningColor, 1);
         }
 
-        if (CurrentValue < 0.5)
+        if (CurrentValue < 2.5f)
         {
-            fillImage.DOColor(DangerColor, 1);
+            nextColor = DangerColor;
+            //fillImage.DOColor(DangerColor, 1);
+        }
+
+        if (nextColor != currentColor)
+        {
+            currentColor = nextColor;
+            fillImage.DOColor(nextColor, 1);
         }
 
         if (Input.GetKeyDown("space"))
         {
-            AddtoTimer();
-            //yield return new WaitForSeconds(1);
-            AddtoTimerCatchup();
+            if (instant == false)
+            {
+                AddtoTimer();
+            }
+            else
+            {
+                CurrentValue += 2.0f;
+                DOTween.To(() => currentValue, x => CurrentValue = x, currentValue, 1.0f);
+            }
         }
     }
 }

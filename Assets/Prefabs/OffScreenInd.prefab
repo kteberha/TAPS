@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  playerTransform: {fileID: 0}
 --- !u!1 &2911463809066658807
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,10 +180,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fillImage: {fileID: 218627031426550333}
-  green: {r: 0, g: 0, b: 0, a: 0}
-  yellow: {r: 0.8987792, g: 0.9056604, b: 0.2947668, a: 0}
-  red: {r: 0, g: 0, b: 0, a: 0}
-  CurrentValue: 0
+  targetDemand: 0
+  GoodColor: {r: 0.46195152, g: 0.5566038, b: 0.45946068, a: 1}
+  WarningColor: {r: 0.904062, g: 0.9056604, b: 0.46564615, a: 1}
+  DangerColor: {r: 0.8490566, g: 0.38047346, b: 0.38047346, a: 1}
+  instant: 1
 --- !u!1 &3776087566205658852
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,10 +273,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fillImage: {fileID: 6770024591706548277}
-  green: {r: 0, g: 0, b: 0, a: 0}
-  yellow: {r: 0.92553294, g: 0.9339623, b: 0.2511125, a: 0}
-  red: {r: 0, g: 0, b: 0, a: 0}
-  CurrentValue: 0
+  targetDemand: 0
+  GoodColor: {r: 0.10980393, g: 1, b: 0.29803923, a: 1}
+  WarningColor: {r: 0.93725497, g: 0.95294124, b: 0.14901961, a: 1}
+  DangerColor: {r: 0.9245283, g: 0.082858644, b: 0.082858644, a: 1}
+  instant: 0
 --- !u!1 &5271930149297947468
 GameObject:
   m_ObjectHideFlags: 0
