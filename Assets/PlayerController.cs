@@ -278,5 +278,11 @@ public class PlayerController : MonoBehaviour
         this.transform.position = teleportTransform.position; // set player position to the teleporter's
     }
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Wall")
+        {
+            Teleport();
+        }
+    }
 }
