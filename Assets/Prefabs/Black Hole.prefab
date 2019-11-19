@@ -195,7 +195,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2048933665244815756}
   - component: {fileID: 2048933665244815757}
-  - component: {fileID: 3208315888402427486}
   m_Layer: 0
   m_Name: Black Hole
   m_TagString: ShippingLane
@@ -285,20 +284,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3208315888402427486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2048933665244815794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18a8f00ad9125484f8e084dbde433802, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnRate: 10
-  box: {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00, type: 3}
 --- !u!1 &2048933665341407163
 GameObject:
   m_ObjectHideFlags: 0
@@ -2272,41 +2257,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.2
       objectReference: {fileID: 0}
-    - target: {fileID: 4020267988600623573, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4020267988600623573, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4020267988600623573, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4020267988600623573, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 8901039316747597714, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 400
-      objectReference: {fileID: 0}
-    - target: {fileID: 8901039316747597714, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 400
-      objectReference: {fileID: 0}
-    - target: {fileID: 8901039316747597714, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 500
-      objectReference: {fileID: 0}
     - target: {fileID: 6954967327220045374, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -2326,6 +2276,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8901039316747597714, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 8901039316747597714, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 8901039316747597714, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 4020267988600623573, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4020267988600623573, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4020267988600623573, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4020267988600623573, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7850590667532462164, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
         type: 3}
