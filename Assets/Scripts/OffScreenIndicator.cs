@@ -8,13 +8,20 @@ public class OffScreenIndicator : MonoBehaviour
     public Transform target;
 
     float distanceFromTarget;
-    float sizeMultiplier;
+    float sizeMultiplier = 4;
     public Transform playerTransform;
+
+    public float minDistance;
+    public float maxDistance;
+
+    float imageScaleVal;
+    RectTransform imageRectTransform;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        imageRectTransform = GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
@@ -27,14 +34,26 @@ public class OffScreenIndicator : MonoBehaviour
         edgePt.y = Mathf.Clamp(edgePt.y, Screen.height * 0.07f, Screen.height * 0.93f);
         transform.position = edgePt;
 
+        Scale();
+
     }
 
     void Scale()
     {
         //get the float value for the distance to multiply to the scale
         //SqrMagnitude because its faster than Magnitube
-        distanceFromTarget = Vector3.SqrMagnitude(target.position - playerTransform.position);
-        
+        distanceFromTarget = Vector3.Magnitude(target.position - playerTransform.position);
+        //print(distanceFromTarget);
+
+        //get decimal value of distance compared to min distance?
+        distanceFromTarget = 1 - (distanceFromTarget - minDistance) / (maxDistance - minDistance);
+        //print(distanceFromTarget);
+
+        //locks the scale value between the min and max distance values (needs to be converted to a number between 0 & 1)
+        imageScaleVal = Mathf.Lerp(0.5f, 1.0f, distanceFromTarget);
+        print(imageScaleVal);
+
+        this.transform.localScale = Vector3.one * imageScaleVal;
         //multiply image scale by distance and clamp image scale between 0.5 and 1
         //this will need some extra manipulation
 
