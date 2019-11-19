@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
 
     ParticleSystem mainStreamSys;
     ParticleSystem splatterSys;
+    ParticleSystem burstSys;
+    bool burstPlayed = false;
 
     //variables for the lineRenderer
     public LineRenderer lineRenderer;
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour
 
         mainStreamSys = transform.Find("foam_FX").Find("mainstream_Part").GetComponent<ParticleSystem>();
         splatterSys = transform.Find("foam_FX").Find("splatter_Part").GetComponent<ParticleSystem>();
+        burstSys = transform.Find("foam_FX").Find("wideburst_Part").GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -74,12 +77,20 @@ public class PlayerController : MonoBehaviour
             mainEmission.enabled = true;
             splatEmission.enabled = true;
 
+            if (burstPlayed == false)
+            {
+                burstSys.Emit(15);
+                burstPlayed = true;
+            }
+            
         }
         else
         {
             //setting particle systems to "stop" when the player isnt using input.
             mainEmission.enabled = false;
             splatEmission.enabled = false;
+
+            burstPlayed = false;
         }
 
         if (Input.GetKeyUp("mouse 1") && heldPackages.Count > 0 && shootCooldownClock <= 0)
