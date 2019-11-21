@@ -15,13 +15,11 @@ public class OffScreenIndicator : MonoBehaviour
     public float maxDistance;
 
     float imageScaleVal;
-    RectTransform imageRectTransform;
-
 
     // Start is called before the first frame update
     void Start()
     {
-        imageRectTransform = GetComponent<RectTransform>();
+
     }
 
     // Update is called once per frame
@@ -51,7 +49,6 @@ public class OffScreenIndicator : MonoBehaviour
 
         //locks the scale value between the min and max distance values (needs to be converted to a number between 0 & 1)
         imageScaleVal = Mathf.Lerp(0.5f, 1.0f, distanceFromTarget);
-        print(imageScaleVal);
 
         this.transform.localScale = Vector3.one * imageScaleVal;
         //multiply image scale by distance and clamp image scale between 0.5 and 1

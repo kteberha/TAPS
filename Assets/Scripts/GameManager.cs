@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,10 +12,14 @@ public class GameManager : MonoBehaviour
     public float timeInWorkday = 0f;
     public float workdayLength = 600f;
 
+    public Text workdayStatusText;
+    Animation textAnimation;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        workdayStatusText.text = "Clocked IN!";
+        textAnimation = workdayStatusText.GetComponent<Animation>();
     }
 
     // Update is called once per frame
@@ -30,8 +35,20 @@ public class GameManager : MonoBehaviour
         timeInWorkday += Time.deltaTime;
         if (timeInWorkday > workdayLength)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            Debug.Log("New Workday! Reload scene...");
+            //have the workday over text appear and fade before loading the scene
+            StartCoroutine(Clockout());
+
         }
+    }
+
+    public IEnumerator Clockout()
+    {
+        workdayStatusText.text = "Clocked OUT!";
+        textAnimation.Play();
+
+        yield return new WaitForSeconds(textAnimation["WorkdayStatusAnim"].length);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Debug.Log("New Workday! Reload scene...");
     }
 }
