@@ -14,25 +14,19 @@ public class GameManager : MonoBehaviour
 
     public Text workdayStatusText;
     Animation textAnimation;
-
-    bool paused = false;
-    public Image pausePanel;
-    public Image resumeButton;
-    public Image optionsButton;
-    public Image quitButton;
-    Color panelColor;
-    Color resumeButtonColor;
-    Color optionsButtonColor;
-    Color quitButtonColor;
+    
+    [HideInInspector]
+    public bool paused = false;
+    public GameObject pausePanel;
+    CanvasGroup cg;
+    
     // Start is called before the first frame update
     void Start()
     {
+        cg = pausePanel.GetComponent<CanvasGroup>();
         workdayStatusText.text = "Clocked IN!";
         textAnimation = workdayStatusText.GetComponent<Animation>();
-        panelColor = pausePanel.color;
-        resumeButtonColor = resumeButton.color;
-        optionsButtonColor = optionsButton.color;
-        quitButtonColor = quitButton.color;
+        
     }
 
     // Update is called once per frame
@@ -45,20 +39,12 @@ public class GameManager : MonoBehaviour
         }
 
         //pause the game on Espcape press
-        if(Input.GetAxis("Cancel") != 0 || Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
-            //if (paused)
-            //{
-            //    print("resume");
-            //    Resume();
-            //}
-            //else
-            //    print("pause");
-            //    Pause();
-
-            //temporary until UI gets implemented successfully
-            UnityEditor.EditorApplication.ExecuteMenuItem("Edit/Play");
-            Application.Quit();
+            if (paused)
+                Resume();
+            else
+                Pause();
         }
 
         //Workday reset
@@ -82,25 +68,41 @@ public class GameManager : MonoBehaviour
         Debug.Log("New Workday! Reload scene...");
     }
 
-    void Pause()
+    public void Pause()
     {
-        
-        panelColor.a = 1f;
-        resumeButtonColor.a = 1f;
-        optionsButtonColor.a = 1f;
-        quitButtonColor.a = 1f;
+        cg.alpha = 1f;
+        cg.interactable = true;
         Time.timeScale = 0f;
         paused = true;
 
     }
 
-    void Resume()
+    /// <summary>
+    /// resume the game when the button is pressed
+    /// </summary>
+    public void Resume()
     {
+        cg.interactable = false;
+        cg.alpha = 0f;
         paused = false;
         Time.timeScale = 1f;
-        panelColor.a = 0f;
-        resumeButtonColor.a = 0f;
-        optionsButtonColor.a = 0f;
-        quitButtonColor.a = 0f;
+
+    }
+    
+    /// <summary>
+    /// option the options menu
+    /// </summary>
+    public void Options()
+    {
+
+    }
+
+    /// <summary>
+    /// Quit the game in editor and build
+    /// </summary>
+    public void QuitGame()
+    {
+        UnityEditor.EditorApplication.ExecuteMenuItem("Edit/Play");
+        Application.Quit();
     }
 }

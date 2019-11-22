@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField]
+    Camera mainCam;
+    GameManager gameManager;
+
     private Rigidbody2D rb;
     public List<GameObject> heldPackages = new List<GameObject>();
     
@@ -48,6 +52,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = mainCam.GetComponent<GameManager>();
         rb = GetComponent<Rigidbody2D>();
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
@@ -65,100 +70,103 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //variables to trigger fire extinguisher particle effects
-        var mainEmission = mainStreamSys.emission;
-        var splatEmission = splatterSys.emission;
-
-        if (Input.GetMouseButton(0) || Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        if (!gameManager.paused)
         {
-            Propulsion();
+            //variables to trigger fire extinguisher particle effects
+            var mainEmission = mainStreamSys.emission;
+            var splatEmission = splatterSys.emission;
 
-            //setting the particle system to play when propulsion is occuring
-            mainEmission.enabled = true;
-            splatEmission.enabled = true;
-
-            if (burstPlayed == false)
+            if (Input.GetMouseButton(0) || Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
             {
-                burstSys.Emit(15);
-                burstPlayed = true;
-            }
-            
-        }
-        else
-        {
-            //setting particle systems to "stop" when the player isnt using input.
-            mainEmission.enabled = false;
-            splatEmission.enabled = false;
+                Propulsion();
 
-            burstPlayed = false;
-        }
+                //setting the particle system to play when propulsion is occuring
+                mainEmission.enabled = true;
+                splatEmission.enabled = true;
 
-        if (Input.GetKeyUp("mouse 1") && heldPackages.Count > 0 && shootCooldownClock <= 0)
-        {
-            Shoot();
-            shootCooldownClock = shootCooldown;
-        }
-
-        //Teleport on given key down
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            Teleport();
-        }
-
-        //Clocks
-        shootCooldownClock -= Time.deltaTime;
-
-        //Check if player has packages to draw lines to
-        if (heldPackages.Count > 0)
-        {
-            //Set the Origin of the line renderer to the player position
-            lineRenderer.SetPosition(0, this.transform.position);
-
-            //Set the positions of the following line render points to all of the transforms in the heldPackages list
-            for (int i = 0; i <= heldPackages.Count - 1 ; i++)
-            {
-               
-                if (i < heldPackages.Count - 1)
+                if (burstPlayed == false)
                 {
-                    //determine distance from player to package at the end of the line
-                    dist = Vector3.Distance(heldPackages[i].transform.position, heldPackages[i + 1].transform.position);
+                    burstSys.Emit(15);
+                    burstPlayed = true;
                 }
-              
 
-                if (counter < dist)
+            }
+            else
+            {
+                //setting particle systems to "stop" when the player isnt using input.
+                mainEmission.enabled = false;
+                splatEmission.enabled = false;
+
+                burstPlayed = false;
+            }
+
+            if (Input.GetKeyUp("mouse 1") && heldPackages.Count > 0 && shootCooldownClock <= 0)
+            {
+                Shoot();
+                shootCooldownClock = shootCooldown;
+            }
+
+            //Teleport on given key down
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Teleport();
+            }
+
+            //Clocks
+            shootCooldownClock -= Time.deltaTime;
+
+            //Check if player has packages to draw lines to
+            if (heldPackages.Count > 0)
+            {
+                //Set the Origin of the line renderer to the player position
+                lineRenderer.SetPosition(0, this.transform.position);
+
+                //Set the positions of the following line render points to all of the transforms in the heldPackages list
+                for (int i = 0; i <= heldPackages.Count - 1; i++)
                 {
-                    counter += 0.1f / lineDrawSpeed;
 
-                    float x = Mathf.Lerp(0, dist, counter);
-
-                    //make sure it doesn't try to draw to a non existant box beyond the end of the list
                     if (i < heldPackages.Count - 1)
                     {
-                        Vector3 pointA = heldPackages[i].transform.position;
-                        Vector3 pointB = heldPackages[i + 1].transform.position;
-
-                        //Get the unit vector in the desired direction, multiply by the desired length and add the starting point.
-                        Vector3 pointAlongLine = x * Vector3.Normalize(pointB - pointA) + pointA;
+                        //determine distance from player to package at the end of the line
+                        dist = Vector3.Distance(heldPackages[i].transform.position, heldPackages[i + 1].transform.position);
                     }
+
+
+                    if (counter < dist)
+                    {
+                        counter += 0.1f / lineDrawSpeed;
+
+                        float x = Mathf.Lerp(0, dist, counter);
+
+                        //make sure it doesn't try to draw to a non existant box beyond the end of the list
+                        if (i < heldPackages.Count - 1)
+                        {
+                            Vector3 pointA = heldPackages[i].transform.position;
+                            Vector3 pointB = heldPackages[i + 1].transform.position;
+
+                            //Get the unit vector in the desired direction, multiply by the desired length and add the starting point.
+                            Vector3 pointAlongLine = x * Vector3.Normalize(pointB - pointA) + pointA;
+                        }
+                    }
+
+                    lineRenderer.SetPosition(i + 1, heldPackages[i].transform.position);
                 }
-
-                lineRenderer.SetPosition(i + 1, heldPackages[i].transform.position);
             }
-        }
 
-        if(Input.GetMouseButtonDown(0)) 
-        {
-            StartCoroutine("StartExtinguisherSound");
-        }
+            if (Input.GetMouseButtonDown(0))
+            {
+                StartCoroutine("StartExtinguisherSound");
+            }
 
-        if(Input.GetMouseButtonUp(0))
-        {
-            //stop fire extinguisher loop
-            StopCoroutine("StartExtinguisherSound");
+            if (Input.GetMouseButtonUp(0))
+            {
+                //stop fire extinguisher loop
+                StopCoroutine("StartExtinguisherSound");
 
-            P_audioSource.loop = false;
-            P_audioSource.clip = extinguisherEnd;
-            P_audioSource.Play();
+                P_audioSource.loop = false;
+                P_audioSource.clip = extinguisherEnd;
+                P_audioSource.Play();
+            }
         }
     }
 
