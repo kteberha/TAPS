@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    Camera mainCam;
-    GameManager gameManager;
+    GameObject UICanvas;
+    MenuController menuController;
 
     private Rigidbody2D rb;
     public List<GameObject> heldPackages = new List<GameObject>();
@@ -52,7 +52,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = mainCam.GetComponent<GameManager>();
+        menuController = UICanvas.GetComponent<MenuController>();
+
         rb = GetComponent<Rigidbody2D>();
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
@@ -70,7 +71,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!gameManager.paused)
+        if (!menuController.paused)
         {
             //variables to trigger fire extinguisher particle effects
             var mainEmission = mainStreamSys.emission;
