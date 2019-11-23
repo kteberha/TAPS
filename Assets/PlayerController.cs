@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //Menu UI References
     [SerializeField]
     GameObject UICanvas;
     MenuController menuController;
@@ -49,6 +50,12 @@ public class PlayerController : MonoBehaviour
 
     private Camera mainCamera;
 
+    //Animator variables
+    public GameObject playerModel;
+    Animator animator;
+    public float hitSpeed;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -66,6 +73,8 @@ public class PlayerController : MonoBehaviour
         mainStreamSys = transform.Find("foam_FX").Find("mainstream_Part").GetComponent<ParticleSystem>();
         splatterSys = transform.Find("foam_FX").Find("splatter_Part").GetComponent<ParticleSystem>();
         burstSys = transform.Find("foam_FX").Find("wideburst_Part").GetComponent<ParticleSystem>();
+
+        animator = playerModel.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -167,6 +176,9 @@ public class PlayerController : MonoBehaviour
                 P_audioSource.loop = false;
                 P_audioSource.clip = extinguisherEnd;
                 P_audioSource.Play();
+
+                //play idle animation
+                animator.SetBool("IsFlying", false);
             }
         }
     }
@@ -193,6 +205,9 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
+
+        //animation adjustments
+        animator.SetBool("IsFlying", true);
     }
 
     void Shoot()
@@ -234,6 +249,13 @@ public class PlayerController : MonoBehaviour
         if(!other.gameObject.CompareTag("Package"))
         {
             P_audioSource.PlayOneShot(collisionSound, .75f); //play collision audio
+
+            //only play the hit animation when zip hits not a package at a certain speed
+            if(rb.velocity.magnitude > hitSpeed)
+            {
+                animator.SetTrigger("Hit");
+            }
+            
         }
         if (other.gameObject.CompareTag("Package"))
         {
@@ -283,6 +305,9 @@ public class PlayerController : MonoBehaviour
         P_audioSource.Play();
     }
 
+    /// <summary>
+    /// this teleports the player to a fixed location
+    /// </summary>
     void Teleport()
     {
         //remove all packages from the player inventory, remove the bubble, and update line renderer
