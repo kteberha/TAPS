@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
             if (heldPackages.Count > 0)
             {
                 //Set the Origin of the line renderer to the player position
-                lineRenderer.SetPosition(0, this.transform.position);
+                lineRenderer.SetPosition(0, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + 20f));
 
                 //Set the positions of the following line render points to all of the transforms in the heldPackages list
                 for (int i = 0; i <= heldPackages.Count - 1; i++)
