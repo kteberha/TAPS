@@ -30,6 +30,7 @@ public class DialogueManager : MonoBehaviour
     }
     void MakeMenu()
     {
+        Time.timeScale = 0f;
         menu.gameObject.SetActive(true);
     }
 }
