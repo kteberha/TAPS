@@ -3,8 +3,8 @@ using UModules;
 
 public struct PosRot
 {
-	Vector3 position;
-	Quaternion rotation;
+	public Vector3 position;
+	public Quaternion rotation;
 
 	public PosRot(Vector3 position, Quaternion rotation)
 	{
@@ -36,6 +36,7 @@ public class Tentacle : MonoBehaviour
 	public float[] Solution;
 
 	public Transform Target;
+	
 	[Tooltip("Mininum distance from target")]
 	public float MininumDistance;
 	private Vector3 destination;

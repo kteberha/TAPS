@@ -143,14 +143,14 @@ public class ArmIK : MonoBehaviour
 // NOTE: Assuming X axis...
 public enum ArmSide {LEFT, RIGHT, NONE}
 
-struct PosRot
-{
-	public Vector3 position;
-	public Quaternion rotation;
+// struct PosRot
+// {
+// 	public Vector3 position;
+// 	public Quaternion rotation;
 
-	public PosRot(Vector3 pos, Quaternion rot)
-	{
-		this.position = pos;
-		this.rotation = rot;
-	}
-}
+// 	public PosRot(Vector3 pos, Quaternion rot)
+// 	{
+// 		this.position = pos;
+// 		this.rotation = rot;
+// 	}
+// }
