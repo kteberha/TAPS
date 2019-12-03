@@ -308,7 +308,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// this teleports the player to a fixed location
     /// </summary>
-    void Teleport()
+    public void Teleport()
     {
         //remove all packages from the player inventory, remove the bubble, and update line renderer
         for (int i = 0; i < heldPackages.Count; i++)
@@ -323,11 +323,15 @@ public class PlayerController : MonoBehaviour
         this.transform.position = teleportTransform.position; // set player position to the teleporter's
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.tag == "Wall")
-        {
-            Teleport();
-        }
-    }
+    /// <summary>
+    /// this was supposed to make the player character teleport when it collided with the wall, but it didn't work for some reason. See boundaries script for my temp solution. -Emma
+    /// </summary>
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if(other.gameObject.tag == "Wall")
+    //    {
+    //        print("Triggered");
+    //        Teleport();
+    //    }
+    //}
 }
