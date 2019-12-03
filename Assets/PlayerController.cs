@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     
     public float playerSpeed = 2.5f;
     public float maxSpeed = 10;
+    public float playerDamping = 1f;
+    Vector3 offset;
 
     public float shootForce = 10f;
     public float shootCooldown = 1f;
@@ -75,6 +77,9 @@ public class PlayerController : MonoBehaviour
         burstSys = transform.Find("foam_FX").Find("wideburst_Part").GetComponent<ParticleSystem>();
 
         animator = playerModel.GetComponent<Animator>();
+
+       //for damping the player character's rotation when it collides with an object. see LateUpdate () for the remainder of the code that affects this.
+        /*offset = transform.position - playerModel.transform.position;*/
     }
 
     // Update is called once per frame
@@ -323,6 +328,16 @@ public class PlayerController : MonoBehaviour
         this.transform.position = teleportTransform.position; // set player position to the teleporter's
     }
 
+/*    private void LateUpdate()
+    {
+        Vector3 desiredPosition = playerModel.transform.position + offset;
+        transform.position = desiredPosition;
+        Vector3 position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * playerDamping);
+        transform.position = position;
+
+        transform.LookAt(playerModel.transform.position);
+    }
+*/
     /// <summary>
     /// this was supposed to make the player character teleport when it collided with the wall, but it didn't work for some reason. See boundaries script for my temp solution. -Emma
     /// </summary>
