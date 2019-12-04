@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     GameObject UICanvas;
     MenuController menuController;
 
+    private Camera mainCamera;
+
     private Rigidbody2D rb;
     public List<GameObject> heldPackages = new List<GameObject>();
     
@@ -49,8 +51,6 @@ public class PlayerController : MonoBehaviour
     public GameObject teleporter;
     private Transform teleportTransform;
     public float teleportCooldown;
-
-    private Camera mainCamera;
 
     //Animator variables
     public GameObject playerModel;
@@ -104,7 +104,6 @@ public class PlayerController : MonoBehaviour
                     burstSys.Emit(15);
                     burstPlayed = true;
                 }
-
             }
             else
             {
