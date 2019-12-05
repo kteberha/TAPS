@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     MenuController menuController;
 
     private Camera mainCamera;
+    public Transform dialogueCameraPoint;
+
 
     private Rigidbody2D rb;
     public List<GameObject> heldPackages = new List<GameObject>();
