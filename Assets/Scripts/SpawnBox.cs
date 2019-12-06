@@ -22,7 +22,7 @@ public class SpawnBox : MonoBehaviour
         if (timeSinceSpawn >= spawnRate)
         {
             if (box != null)
-                Instantiate(box, new Vector3(this.transform.position.x + Random.Range(-25, 25), this.transform.position.y + Random.Range(-15, 30), 25f), new Quaternion());
+                Instantiate(box, new Vector3(this.transform.position.x + Random.Range(-25, 25), this.transform.position.y + Random.Range(-15, 30), 12.35f), new Quaternion());
             timeSinceSpawn = 0;
         }
     }

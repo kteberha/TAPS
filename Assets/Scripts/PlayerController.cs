@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 10;
     //public float playerDamping = 1f;
     Vector3 offset;
+    public float impulseForce;
 
     public float shootForce = 10f;
     public float shootCooldown = 1f;
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
     public float inventoryDampingRatio = 1f;
     public float inventoryFrequency = 0.5f;
 
+    //particle system variables
     ParticleSystem mainStreamSys;
     ParticleSystem splatterSys;
     ParticleSystem burstSys;
@@ -105,6 +107,7 @@ public class PlayerController : MonoBehaviour
                 {
                     burstSys.Emit(15);
                     burstPlayed = true;
+                    
                 }
             }
             else
@@ -203,7 +206,16 @@ public class PlayerController : MonoBehaviour
         {
             dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
+
+        //this is where inversion will be toggled
         dir = dir.normalized * -1;
+        
+        //do a check for initial speed burst
+        if(!burstPlayed)
+        {
+            print("added impulse");
+            this.rb.AddForce(dir * playerSpeed * impulseForce);
+        }
 
         this.rb.AddForce(dir * playerSpeed);
 
