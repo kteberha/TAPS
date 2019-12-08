@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     //public float playerDamping = 1f;
     Vector3 offset;
     public float impulseForce;
+    public float impulseCoolDown = 1f;
+    private float impulseCoolDownClock = 0f;
 
     public float shootForce = 10f;
     public float shootCooldown = 1f;
@@ -106,8 +108,7 @@ public class PlayerController : MonoBehaviour
                 if (burstPlayed == false)
                 {
                     burstSys.Emit(15);
-                    burstPlayed = true;
-                    
+                    burstPlayed = true;                    
                 }
             }
             else
@@ -133,6 +134,7 @@ public class PlayerController : MonoBehaviour
 
             //Clocks
             shootCooldownClock -= Time.deltaTime;
+            impulseCoolDownClock -= Time.deltaTime;
 
             //Check if player has packages to draw lines to
             if (heldPackages.Count > 0)
@@ -209,12 +211,12 @@ public class PlayerController : MonoBehaviour
 
         //this is where inversion will be toggled
         dir = dir.normalized * -1;
-        
+
         //do a check for initial speed burst
-        if(!burstPlayed)
+        if (!burstPlayed && impulseCoolDownClock < 0)
         {
-            print("added impulse");
             this.rb.AddForce(dir * playerSpeed * impulseForce);
+            impulseCoolDownClock = impulseCoolDown;
         }
 
         this.rb.AddForce(dir * playerSpeed);
