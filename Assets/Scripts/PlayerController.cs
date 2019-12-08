@@ -4,31 +4,31 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //Menu UI References
-    [SerializeField]
-    GameObject UICanvas;
-    MenuController menuController;
+    public MenuController menuController;
 
     private Camera mainCamera;
     public Transform dialogueCameraPoint;
 
-
     private Rigidbody2D rb;
     public List<GameObject> heldPackages = new List<GameObject>();
     
+    //movement variables
     public float playerSpeed = 2.5f;
     public float maxSpeed = 10;
     //public float playerDamping = 1f;
     Vector3 offset;
     public float impulseForce;
-    public float impulseCoolDown = 1f;
+    public float impulseCoolDown = 3f;
     private float impulseCoolDownClock = 0f;
+    bool impulseReady = true;
 
+    //package throwing variables
     public float shootForce = 10f;
     public float shootCooldown = 1f;
     private float shootCooldownClock = 0f;
     public float shootPackageCollisionImmuneTime = 0.5f;
 
+    //inventory variables
     public float inventoryDistance = 5f;
     public float inventoryDampingRatio = 1f;
     public float inventoryFrequency = 0.5f;
@@ -66,8 +66,6 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        menuController = UICanvas.GetComponent<MenuController>();
-
         rb = GetComponent<Rigidbody2D>();
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
@@ -107,7 +105,7 @@ public class PlayerController : MonoBehaviour
                 if (burstPlayed == false)
                 {
                     burstSys.Emit(15);
-                    burstPlayed = true;                    
+                    burstPlayed = true;
                 }
             }
             else
@@ -208,14 +206,23 @@ public class PlayerController : MonoBehaviour
             dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
 
-        //this is where inversion will be toggled
-        dir = dir.normalized * -1;
+        //determine inverted movement controls
+        if(menuController.invertedMovement)
+        {
+            dir = dir.normalized * -1;
+        }
+        else
+        {
+            dir = dir.normalized;
+        }
 
-        //do a check for initial speed burst
-        if (!burstPlayed && impulseCoolDownClock < 0)
+
+        //check to see if movement impulse can be added
+        if (burstPlayed == false && impulseReady == true)
         {
             this.rb.AddForce(dir * playerSpeed * impulseForce);
             impulseCoolDownClock = impulseCoolDown;
+            impulseReady = false;
         }
 
         this.rb.AddForce(dir * playerSpeed);

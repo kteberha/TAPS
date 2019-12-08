@@ -13,6 +13,8 @@ public class MenuController : MonoBehaviour
     CanvasGroup pauseCg;
     CanvasGroup optionsCg;
 
+    public bool invertedMovement = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -74,6 +76,19 @@ public class MenuController : MonoBehaviour
         optionsCg.alpha = 1f;
         optionsCg.interactable = true;
         optionsCg.blocksRaycasts = true;
+    }
+
+    ///<summary>
+    ///inverts the player movement controls
+    /// </summary>
+    public void InvertMovement()
+    {
+        if (invertedMovement)
+        {
+            invertedMovement = false;
+        }
+        else
+            invertedMovement = true;
     }
 
     /// <summary>

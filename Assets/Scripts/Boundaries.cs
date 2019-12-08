@@ -22,26 +22,11 @@ public class Boundaries : MonoBehaviour
     {
         if (player.transform.position.y > topbottomBoundaries.y || player.transform.position.y < -(topbottomBoundaries.y))
         {
-            print(player.transform.position);
-            print("y");
             playerController.Teleport();
         }
         if (player.transform.position.x > leftrightBoundaries.x || player.transform.position.x < -(leftrightBoundaries.x))
         {
-            print(player.transform.position);
-            print("x");
             playerController.Teleport();
         }
     }
-
-    /// <summary>
-    /// this was supposed to make the player character teleport when it collided with the wall, but it didn't work for some reason. -Emma
-    /// </summary>
-    //    private void OnTriggerEnter(Collider other)
-    //    {
-    //        print("Triggered");
-    //        if (other.gameObject.tag == "Player") {
-    //            player.Teleport();
-    //        }
-    //    }
 }
