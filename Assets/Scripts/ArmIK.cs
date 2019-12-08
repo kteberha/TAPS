@@ -9,6 +9,10 @@ public class ArmIK : MonoBehaviour
 	[DontShowIf(nameof(mouseTarget))]
 	public Transform target;
 	public bool mouseTarget;
+	[OnlyShowIf(nameof(mouseTarget))]
+	public float screenToWorldPointFactor = 100f;
+	[OnlyShowIf(nameof(mouseTarget))]
+	public float zOffset = -10f;
 	[SerializeField] private AvatarIKGoal Type;
 	[SerializeField, Range(0, 1)] private float PositionWeight = 1;
 	[SerializeField, Range(0, 1)] private float RotationWeight = 0;
@@ -16,17 +20,22 @@ public class ArmIK : MonoBehaviour
 	private Animator animator;
 	private Vector3 targetPos;
 	private Quaternion targetRot;
+	private Camera mainCamera;
 
 	void Awake()
 	{
 		animator = GetComponent<Animator>();
+		mainCamera = Camera.main;
 	}
 
 	void OnAnimatorIK(int layerIndex)
 	{
 		if (mouseTarget)
 		{
-			targetPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z);
+			//targetPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z - 10f);
+			targetPos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mainCamera.nearClipPlane));
+			targetPos *= screenToWorldPointFactor;
+			targetPos.z = transform.position.z + zOffset;
 			targetRot = Quaternion.identity;
 		}
 		else

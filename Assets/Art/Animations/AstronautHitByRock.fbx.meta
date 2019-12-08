@@ -21,7 +21,19 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
+      improve retargeting quality.\n\t'Stomache_Control' is inbetween humanoid transforms
+      and has rotation animation that will be discarded.\n\t'Chest_Control' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'Collarbone_Control'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'L_Arm_Control'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'L_Elbow_Control'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'L_Wirst_Control'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Neck_Control'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'R_Arm_Control'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'R_Elbow_Control'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'R_Wrist_Control'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -100,7 +112,7 @@ ModelImporter:
     normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1
-  copyAvatar: 1
+  copyAvatar: 0
   humanDescription:
     serializedVersion: 3
     human:
@@ -748,8 +760,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: a333967f3b629044c9ff6bedf4ce8970,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 3
   humanoidOversampling: 1
   additionalBone: 0
