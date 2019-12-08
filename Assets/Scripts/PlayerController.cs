@@ -77,9 +77,9 @@ public class PlayerController : MonoBehaviour
 
         teleportTransform = teleporter.transform;
 
-        mainStreamSys = transform.Find("foam_FX").Find("mainstream_Part").GetComponent<ParticleSystem>();
-        splatterSys = transform.Find("foam_FX").Find("splatter_Part").GetComponent<ParticleSystem>();
-        burstSys = transform.Find("foam_FX").Find("wideburst_Part").GetComponent<ParticleSystem>();
+        mainStreamSys = transform.Find("FireExtinguisher").Find("foam_FX").Find("mainstream_Part").GetComponent<ParticleSystem>();
+        splatterSys = transform.Find("FireExtinguisher").Find("foam_FX").Find("splatter_Part").GetComponent<ParticleSystem>();
+        burstSys = transform.Find("FireExtinguisher").Find("foam_FX").Find("wideburst_Part").GetComponent<ParticleSystem>();
 
         animator = playerModel.GetComponent<Animator>();
 
