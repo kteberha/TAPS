@@ -51,7 +51,6 @@ public class PlayerController : MonoBehaviour
     public AudioClip extinguisherLoop;
     public AudioClip extinguisherEnd;
     public AudioClip throwSound;
-    public AudioClip collisionSound;
 
     //Teleporter variables
     public GameObject teleporter;
@@ -268,8 +267,6 @@ public class PlayerController : MonoBehaviour
     {
         if(!other.gameObject.CompareTag("Package"))
         {
-            P_audioSource.PlayOneShot(collisionSound, .75f); //play collision audio
-
             //only play the hit animation when zip hits not a package at a certain speed
             if(rb.velocity.magnitude > hitSpeed)
             {
@@ -301,11 +298,7 @@ public class PlayerController : MonoBehaviour
 
                 heldPackages.Add(other.gameObject);
             }
-            else
-            {
-                //print(other.gameObject.name);
-            }
-
+            
             //tell the line renderer to draw to the newest added point
             lineRenderer.positionCount = heldPackages.Count + 1;
         }

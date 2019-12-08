@@ -14,7 +14,6 @@ public class Package : MonoBehaviour
     [SerializeField] GameObject invBubble;
 
     private AudioSource a_Source;
-    public AudioClip deliveredSound;
 
     // Start is called before the first frame update
     void Start()
