@@ -94,6 +94,11 @@ public class PlayerController : MonoBehaviour
             var mainEmission = mainStreamSys.emission;
             var splatEmission = splatterSys.emission;
 
+            if(impulseCoolDownClock < 0)
+            {
+                impulseReady = true;
+            }
+
             if (Input.GetMouseButton(0) || Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
             {
                 Propulsion();
@@ -115,6 +120,7 @@ public class PlayerController : MonoBehaviour
                 splatEmission.enabled = false;
 
                 burstPlayed = false;
+                print(burstPlayed);
             }
 
             if (Input.GetKeyUp("mouse 1") && heldPackages.Count > 0 && shootCooldownClock <= 0)
@@ -215,7 +221,6 @@ public class PlayerController : MonoBehaviour
         {
             dir = dir.normalized;
         }
-
 
         //check to see if movement impulse can be added
         if (burstPlayed == false && impulseReady == true)

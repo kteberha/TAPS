@@ -184,7 +184,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 79464b9291903d7499d32e1e5c233f6a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -424,14 +424,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5869416400145213131}
     m_Modifications:
-    - target: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
-      propertyPath: m_Name
-      value: InventoryBubble
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -486,6 +478,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
       propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
+      propertyPath: m_Name
+      value: InventoryBubble
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
