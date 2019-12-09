@@ -109,7 +109,7 @@ public class MenuController : MonoBehaviour
     /// </summary>
     public void QuitGame()
     {
-        UnityEditor.EditorApplication.ExecuteMenuItem("Edit/Play");
+        //UnityEditor.EditorApplication.ExecuteMenuItem("Edit/Play");
         Application.Quit();
     }
 }
