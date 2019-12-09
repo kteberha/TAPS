@@ -120,7 +120,6 @@ public class PlayerController : MonoBehaviour
                 splatEmission.enabled = false;
 
                 burstPlayed = false;
-                print(burstPlayed);
             }
 
             if (Input.GetKeyUp("mouse 1") && heldPackages.Count > 0 && shootCooldownClock <= 0)

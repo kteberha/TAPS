@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
             //have the workday over text appear and fade before loading the scene
             StartCoroutine(Clockout());
         }
+
     }
 
     public IEnumerator Clockout()
