@@ -90,15 +90,15 @@ public class PlayerController : MonoBehaviour
     {
         if (!menuController.paused)
         {
+            //Clocks
+            shootCooldownClock -= Time.deltaTime;
+            impulseCoolDownClock -= Time.deltaTime;
+
             //variables to trigger fire extinguisher particle effects
             var mainEmission = mainStreamSys.emission;
             var splatEmission = splatterSys.emission;
 
-            if(impulseCoolDownClock < 0)
-            {
-                impulseReady = true;
-            }
-
+            //When the left mouse button, or directional input is received
             if (Input.GetMouseButton(0) || Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
             {
                 Propulsion();
@@ -107,17 +107,24 @@ public class PlayerController : MonoBehaviour
                 mainEmission.enabled = true;
                 splatEmission.enabled = true;
 
-                if (burstPlayed == false)
+                //play the burst particle effect if it hasn't been played yet
+                if (burstPlayed == false && impulseReady == true)
                 {
                     burstSys.Emit(15);
                     burstPlayed = true;
+                    impulseReady = false;
                 }
             }
             else
             {
+                //set the impulse check to true if cooldown is complete
+                if (impulseCoolDownClock < 0)
+                    impulseReady = true;
+
                 //setting particle systems to "stop" when the player isnt using input.
                 mainEmission.enabled = false;
                 splatEmission.enabled = false;
+
 
                 burstPlayed = false;
             }
@@ -133,10 +140,6 @@ public class PlayerController : MonoBehaviour
             {
                 Teleport();
             }
-
-            //Clocks
-            shootCooldownClock -= Time.deltaTime;
-            impulseCoolDownClock -= Time.deltaTime;
 
             //Check if player has packages to draw lines to
             if (heldPackages.Count > 0)
@@ -211,26 +214,23 @@ public class PlayerController : MonoBehaviour
             dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
 
-        //determine inverted movement controls
+        //determine inverted movement controls and establish direction of travel
         if(menuController.invertedMovement)
-        {
             dir = dir.normalized * -1;
-        }
         else
-        {
             dir = dir.normalized;
-        }
-
+        
         //check to see if movement impulse can be added
         if (burstPlayed == false && impulseReady == true)
         {
             this.rb.AddForce(dir * playerSpeed * impulseForce);
             impulseCoolDownClock = impulseCoolDown;
-            impulseReady = false;
         }
 
+        //constantly add force in the given direction
         this.rb.AddForce(dir * playerSpeed);
 
+        //prevent player from going faster than maximum speed
         if (rb.velocity.magnitude > maxSpeed)
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
