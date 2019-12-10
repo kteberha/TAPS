@@ -10,10 +10,12 @@ public class MenuController : MonoBehaviour
     public bool paused = false;
     public GameObject pausePanel;
     public GameObject optionsPanel;
+    public GameObject map;
     CanvasGroup pauseCg;
     CanvasGroup optionsCg;
 
     public bool invertedMovement = true;
+    public bool mapToggled = true;
 
     // Start is called before the first frame update
     void Start()
@@ -90,6 +92,24 @@ public class MenuController : MonoBehaviour
         else
             invertedMovement = true;
     }
+    
+    ///<summary>
+    ///toggles minimap visibility
+    /// </summary>
+    public void ToggleMap()
+    {
+        if (mapToggled)
+        {
+            mapToggled = false;
+            map.SetActive(false);
+        }
+        else
+        {
+            mapToggled = true;
+            map.SetActive(true);
+        }
+    
+    }
 
     /// <summary>
     /// returns to the pause menu from the options menu
@@ -109,7 +129,7 @@ public class MenuController : MonoBehaviour
     /// </summary>
     public void QuitGame()
     {
-        //UnityEditor.EditorApplication.ExecuteMenuItem("Edit/Play");
+        UnityEditor.EditorApplication.ExecuteMenuItem("Edit/Play");
         Application.Quit();
     }
 }
