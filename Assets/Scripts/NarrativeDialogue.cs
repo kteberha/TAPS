@@ -17,7 +17,8 @@ public class NarrativeDialogue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (textBox == null) {
+        if (textBox == null)
+        {
             textBox = GameObject.Find("TextTest").GetComponent<TextMeshProUGUI>();
             print(textBox);
         }
@@ -25,7 +26,11 @@ public class NarrativeDialogue : MonoBehaviour
         //script for calling the .ink files located in the Dialogue Script folder
         story = new Story(inkJSONAsset.text);
         Debug.Log(story.Continue());
-        
+
+        button.onClick.AddListener(delegate {
+            RefreshView();
+        });
+
     }
 
     // This is the main function called every time the story changes. It does a few things:
@@ -34,7 +39,7 @@ public class NarrativeDialogue : MonoBehaviour
     void RefreshView()
     {
         // Remove all the UI on screen
-        RemoveChildren();
+        // RemoveChildren();
 
         // Read all the content until we can't continue any more
         while (story.canContinue)
@@ -63,7 +68,7 @@ public class NarrativeDialogue : MonoBehaviour
         // If we've read all the content and there's no choices, the story is finished!
         else
         {
-            Button choice = CreateChoiceView("End of story.\nRestart?");
+            Button choice = CreateChoiceView("MANAGER HAS HUNG UP");
             choice.onClick.AddListener(delegate {
                 Start();
             });
@@ -83,6 +88,8 @@ public class NarrativeDialogue : MonoBehaviour
         TextMeshProUGUI storyText = Instantiate(textBox) as TextMeshProUGUI;
         storyText.text = text;
         storyText.transform.SetParent(canvas.transform, false);
+
+        Debug.Log(text);
     }
 
     // Creates a button showing the choice text
