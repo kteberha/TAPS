@@ -5141,6 +5141,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: AstronautModel
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: a333967f3b629044c9ff6bedf4ce8970,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: a333967f3b629044c9ff6bedf4ce8970,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: bc5b2f7e5a057bf4c82e8c67e4d5bda1, type: 2}
     - target: {fileID: -4216859302048453862, guid: a333967f3b629044c9ff6bedf4ce8970,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5211,11 +5221,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 25
       objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: a333967f3b629044c9ff6bedf4ce8970,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: bc5b2f7e5a057bf4c82e8c67e4d5bda1, type: 2}
     - target: {fileID: -6554638395129518078, guid: a333967f3b629044c9ff6bedf4ce8970,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -5556,17 +5561,17 @@ PrefabInstance:
     - target: {fileID: 4290168587156804309, guid: cea752a6553548647bb4a5f8a5c4c6be,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.018
       objectReference: {fileID: 0}
     - target: {fileID: 4290168587156804309, guid: cea752a6553548647bb4a5f8a5c4c6be,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.25
+      value: 2.308
       objectReference: {fileID: 0}
     - target: {fileID: 4290168587156804309, guid: cea752a6553548647bb4a5f8a5c4c6be,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.1
+      value: 0.77
       objectReference: {fileID: 0}
     - target: {fileID: 4290168587156804309, guid: cea752a6553548647bb4a5f8a5c4c6be,
         type: 3}
@@ -5607,6 +5612,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087079254082388906, guid: cea752a6553548647bb4a5f8a5c4c6be,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 1.0252004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cea752a6553548647bb4a5f8a5c4c6be, type: 3}
