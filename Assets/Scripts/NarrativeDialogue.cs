@@ -27,9 +27,9 @@ public class NarrativeDialogue : MonoBehaviour
         story = new Story(inkJSONAsset.text);
         //Debug.Log(story.Continue());
 
-        button.onClick.AddListener(delegate {
-            RefreshView();
-        });
+        //button.onClick.AddListener(delegate {
+        //    RefreshView();
+        //});
 
     }
 
@@ -38,13 +38,9 @@ public class NarrativeDialogue : MonoBehaviour
     // Continues over all the lines of text, then displays all the choices. If there are no choices, the story is finished!
     public void RefreshView()
     {
-        // Remove all the UI on screen
-        // RemoveChildren();
-
-        print("button was pressed");
-
         // Read all the content until we can't continue any more
-        while (story.canContinue)
+        //we need to figure out how to break the text up so that it doesn't display it all on screen at once.
+        if (story.canContinue)
         {
             // Continue gets the next line of the story
             string text = story.Continue();
@@ -87,9 +83,9 @@ public class NarrativeDialogue : MonoBehaviour
     // Creates a button showing the choice text
     void CreateContentView(string text)
     {
-        TextMeshProUGUI storyText = Instantiate(textBox) as TextMeshProUGUI;
-        storyText.text = text;
-        storyText.transform.SetParent(canvas.transform, false);
+        TextMeshProUGUI storyText = textBox as TextMeshProUGUI;
+        textBox.text = text;
+        //storyText.transform.SetParent(canvas.transform, false);
 
         //Debug.Log(text);
     }
@@ -112,6 +108,10 @@ public class NarrativeDialogue : MonoBehaviour
         return choice;
     }
 
+    
+    
+    
+    //bad, we don't want this
     // Destroys all the children of this gameobject (all the UI)
     void RemoveChildren()
     {
