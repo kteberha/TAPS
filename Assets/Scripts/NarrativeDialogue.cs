@@ -25,12 +25,13 @@ public class NarrativeDialogue : MonoBehaviour
 
         //script for calling the .ink files located in the Dialogue Script folder
         story = new Story(inkJSONAsset.text);
+        
+        
         //Debug.Log(story.Continue());
 
         //button.onClick.AddListener(delegate {
         //    RefreshView();
         //});
-
     }
 
     // This is the main function called every time the story changes. It does a few things:
@@ -39,7 +40,6 @@ public class NarrativeDialogue : MonoBehaviour
     public void RefreshView()
     {
         // Read all the content until we can't continue any more
-        //we need to figure out how to break the text up so that it doesn't display it all on screen at once.
         if (story.canContinue)
         {
             // Continue gets the next line of the story
@@ -53,6 +53,7 @@ public class NarrativeDialogue : MonoBehaviour
         // Display all the choices, if there are any!
         if (story.currentChoices.Count > 0)
         {
+            print("Theres a choice available");
             for (int i = 0; i < story.currentChoices.Count; i++)
             {
                 Choice choice = story.currentChoices[i];
@@ -66,10 +67,10 @@ public class NarrativeDialogue : MonoBehaviour
         // If we've read all the content and there's no choices, the story is finished!
         else
         {
-            Button choice = CreateChoiceView("MANAGER HAS HUNG UP");
-            choice.onClick.AddListener(delegate {
-                Start();
-            });
+            //Button choice = CreateChoiceView("MANAGER HAS HUNG UP");
+            //choice.onClick.AddListener(delegate {
+            //    Start();
+            //});
         }
     }
 
@@ -83,7 +84,6 @@ public class NarrativeDialogue : MonoBehaviour
     // Creates a button showing the choice text
     void CreateContentView(string text)
     {
-        TextMeshProUGUI storyText = textBox as TextMeshProUGUI;
         textBox.text = text;
         //storyText.transform.SetParent(canvas.transform, false);
 

@@ -139,7 +139,15 @@ public class MenuController : MonoBehaviour
     /// </summary>
     public void QuitGame()
     {
+        //needs removed/commented out when making builds
         UnityEditor.EditorApplication.ExecuteMenuItem("Edit/Play");
+       //
+
         Application.Quit();
+
+        //remove for official development
+        //for testing purposes, reset the tutorial check 
+        PlayerPrefs.SetInt("tutorialDone", 0);
+        //
     }
 }

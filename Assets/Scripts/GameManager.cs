@@ -6,23 +6,39 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    //point and package tracking variables
     public int packagesDelivered = 0;
     public int points = 0;
 
+    //workday timer variables
     public float timeInWorkday = 0f;
-    public float workdayLength = 600f;
-
+    public float workdayLength = 300f;
+    
+    //Clock in or out UI text variables
     public Text workdayStatusText;
     Animation textAnimation;
 
+    //Pause menu & game state variables
     [HideInInspector]
     public bool paused = false;
     public GameObject pausePanel;
-    CanvasGroup pauseCg;
+    private CanvasGroup pauseCg;
+
+    ////Tutorial variables
+    public DialogueMenuManager dialogueManager;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        print(PlayerPrefs.GetInt("tutorialDone"));
+        //start the tutorial dialogue if it hasn't been done before
+        if(PlayerPrefs.GetInt("tutorialDone", 0) <= 0)
+        {
+            dialogueManager.StartDialogue();
+            PlayerPrefs.SetInt("tutorialDone", 1);
+        }
+
         pauseCg = pausePanel.GetComponent<CanvasGroup>();
         workdayStatusText.text = "Clocked IN!";
         textAnimation = workdayStatusText.GetComponent<Animation>();
@@ -32,14 +48,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            Debug.Log("Reload scene...");
-        }
-
-        //Workday reset
+        //Workday timer
         timeInWorkday += Time.deltaTime;
+        
+        //Workday reset
         if (timeInWorkday > workdayLength)
         {
             //have the workday over text appear and fade before loading the scene
@@ -54,6 +66,8 @@ public class GameManager : MonoBehaviour
         textAnimation.Play();
 
         yield return new WaitForSeconds(textAnimation["WorkdayStatusAnim"].length);
+        
+        DontDestroyOnLoad(this);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Debug.Log("New Workday! Reload scene...");

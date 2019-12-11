@@ -18,9 +18,8 @@ public class DialogueMenuManager : MonoBehaviour
     Camera main;
     Transform dialogueCameraTransform;
 
-    // Start is called before the first frame update
-    void Start()
-    { 
+    private void Awake()
+    {
         main = Camera.main;
         rb = player.GetComponent<Rigidbody2D>();
         dialogueCameraTransform = player.GetComponent<PlayerController>().dialogueCameraPoint;
@@ -31,20 +30,30 @@ public class DialogueMenuManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.D) && !menuActive)
         {
-            pTempVelocity = rb.velocity;
-            rb.velocity = new Vector3(0f, 0f, 0f);
-            main.GetComponent<Camera2DFollow>().enabled = false;
-            main.transform.DOMove(new Vector3(dialogueCameraTransform.position.x , dialogueCameraTransform.transform.position.y, dialogueCameraTransform.position.z), 0.3f).OnComplete(MakeMenu).SetEase(Ease.InBack);
+            StartDialogue();
         }
 
         if(Input.GetKeyDown(KeyCode.D) && menuActive)
         {
-            main.GetComponent<Camera2DFollow>().enabled = true;
-            main.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -100f);
-            rb.velocity = pTempVelocity;
-            RemoveMenu(); 
+            EndDialogue();
         }
     }
+    public void StartDialogue()
+    {
+        pTempVelocity = rb.velocity;
+        rb.velocity = new Vector3(0f, 0f, 0f);
+        main.GetComponent<Camera2DFollow>().enabled = false;
+        main.transform.DOMove(new Vector3(dialogueCameraTransform.position.x, dialogueCameraTransform.transform.position.y, dialogueCameraTransform.position.z), 0.3f).OnComplete(MakeMenu).SetEase(Ease.InBack);
+    }
+
+    public void EndDialogue()
+    {
+        main.GetComponent<Camera2DFollow>().enabled = true;
+        main.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -100f);
+        rb.velocity = pTempVelocity;
+        RemoveMenu();
+    }
+
     void MakeMenu()
     {
         menuController.paused = true;
