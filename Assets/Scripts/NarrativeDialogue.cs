@@ -8,11 +8,14 @@ using TMPro;
 public class NarrativeDialogue : MonoBehaviour
 {
     public TextAsset inkJSONAsset;
-    private Story story;
+    public Story story;
 
     public Canvas canvas;
     public TextMeshProUGUI textBox;
     public Button button;
+    public Button choiceButton;
+
+    public HorizontalLayoutGroup hlg;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +28,9 @@ public class NarrativeDialogue : MonoBehaviour
 
         //script for calling the .ink files located in the Dialogue Script folder
         story = new Story(inkJSONAsset.text);
+
+        //start the story off with the first line of text
+        RefreshView();
         
         
         //Debug.Log(story.Continue());
@@ -49,14 +55,22 @@ public class NarrativeDialogue : MonoBehaviour
             // Display the text on screen!
             CreateContentView(text);
         }
+        else
+        {
+            GetComponent<DialogueMenuManager>().EndDialogue();
+        }
 
         // Display all the choices, if there are any!
         if (story.currentChoices.Count > 0)
         {
+            ///
             print("Theres a choice available");
+            ///
+
             for (int i = 0; i < story.currentChoices.Count; i++)
             {
                 Choice choice = story.currentChoices[i];
+                
                 Button button = CreateChoiceView(choice.text.Trim());
                 // Tell the button what to do when we press it
                 button.onClick.AddListener(delegate {
@@ -79,27 +93,29 @@ public class NarrativeDialogue : MonoBehaviour
     {
         story.ChooseChoiceIndex(choice.index);
         RefreshView();
+        GameObject[] go = GameObject.FindGameObjectsWithTag("Choices");
+        foreach (GameObject o in go)
+        {
+            Destroy(o);
+        }
     }
 
     // Creates a button showing the choice text
     void CreateContentView(string text)
     {
         textBox.text = text;
-        //storyText.transform.SetParent(canvas.transform, false);
-
-        //Debug.Log(text);
     }
 
     // Creates a button showing the choice text
     Button CreateChoiceView(string text)
     {
         // Creates the button from a prefab
-        Button choice = Instantiate(button) as Button;
-        choice.transform.SetParent(canvas.transform, false);
+        Button choice = Instantiate(choiceButton) as Button;
+        choice.transform.SetParent(canvas.transform.Find("DialogueScreen").Find("Choices").transform, false);
 
         // Gets the text from the button prefab
-        TextMeshPro choiceText = choice.GetComponentInChildren<TextMeshPro>();
-        choiceText.text = text;
+        TextMeshProUGUI choiceText = choice.GetComponentInChildren<TextMeshProUGUI>();
+        choiceText.text = text ;
 
         // Make the button expand to fit the text
         HorizontalLayoutGroup layoutGroup = choice.GetComponent<HorizontalLayoutGroup>();
@@ -107,11 +123,8 @@ public class NarrativeDialogue : MonoBehaviour
 
         return choice;
     }
-
     
-    
-    
-    //bad, we don't want this
+    //bad, we don't want this. This destroys every child in the canvas
     // Destroys all the children of this gameobject (all the UI)
     void RemoveChildren()
     {

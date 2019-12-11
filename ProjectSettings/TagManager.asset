@@ -8,6 +8,7 @@ TagManager:
   - ShippingLane
   - Teleporter
   - Wall
+  - Choices
   layers:
   - Default
   - TransparentFX
