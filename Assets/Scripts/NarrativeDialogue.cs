@@ -31,13 +31,6 @@ public class NarrativeDialogue : MonoBehaviour
 
         //start the story off with the first line of text
         RefreshView();
-        
-        
-        //Debug.Log(story.Continue());
-
-        //button.onClick.AddListener(delegate {
-        //    RefreshView();
-        //});
     }
 
     // This is the main function called every time the story changes. It does a few things:
@@ -63,10 +56,7 @@ public class NarrativeDialogue : MonoBehaviour
         // Display all the choices, if there are any!
         if (story.currentChoices.Count > 0)
         {
-            ///
-            print("Theres a choice available");
-            ///
-
+      
             for (int i = 0; i < story.currentChoices.Count; i++)
             {
                 Choice choice = story.currentChoices[i];
