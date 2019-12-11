@@ -20,7 +20,7 @@ public class DialogueMenuManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    { 
         main = Camera.main;
         rb = player.GetComponent<Rigidbody2D>();
         dialogueCameraTransform = player.GetComponent<PlayerController>().dialogueCameraPoint;
@@ -29,7 +29,7 @@ public class DialogueMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("m") && !menuActive)
+        if (Input.GetKeyDown(KeyCode.D) && !menuActive)
         {
             pTempVelocity = rb.velocity;
             rb.velocity = new Vector3(0f, 0f, 0f);
@@ -37,7 +37,7 @@ public class DialogueMenuManager : MonoBehaviour
             main.transform.DOMove(new Vector3(dialogueCameraTransform.position.x , dialogueCameraTransform.transform.position.y, dialogueCameraTransform.position.z), 0.3f).OnComplete(MakeMenu).SetEase(Ease.InBack);
         }
 
-        if(Input.GetKeyDown("m") && menuActive)
+        if(Input.GetKeyDown(KeyCode.D) && menuActive)
         {
             main.GetComponent<Camera2DFollow>().enabled = true;
             main.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -100f);
@@ -60,13 +60,5 @@ public class DialogueMenuManager : MonoBehaviour
         Time.timeScale = 1f;
         menuActive = false;
         menu.gameObject.SetActive(false);
-    }
-
-    public void Test()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            print("clicked");
-        }
     }
 }

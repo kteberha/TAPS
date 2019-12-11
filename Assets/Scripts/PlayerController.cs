@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
             }
 
             //Teleport on given key down
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.T))
             {
                 Teleport();
             }

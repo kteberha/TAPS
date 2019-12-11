@@ -17,9 +17,13 @@ public class MenuController : MonoBehaviour
     public bool invertedMovement = true;
     public bool mapToggled = true;
 
+    public float pauseKey;
+    public float teleportKey;
+    public float mapKey;
+
     // Start is called before the first frame update
     void Start()
-    {
+    { 
         pauseCg = pausePanel.GetComponent<CanvasGroup>();
         optionsCg = optionsPanel.GetComponent<CanvasGroup>();
     }
@@ -34,6 +38,11 @@ public class MenuController : MonoBehaviour
                 Resume();
             else
                 Pause();
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            ToggleMap();
         }
     }
 
@@ -55,6 +64,7 @@ public class MenuController : MonoBehaviour
     {
         Time.timeScale = 1f;
         pauseCg.interactable = false;
+        pauseCg.blocksRaycasts = false;
         pauseCg.alpha = 0f;
         optionsCg.interactable = false;
         optionsCg.alpha = 0f;
