@@ -25,7 +25,7 @@ public class NarrativeDialogue : MonoBehaviour
 
         //script for calling the .ink files located in the Dialogue Script folder
         story = new Story(inkJSONAsset.text);
-        Debug.Log(story.Continue());
+        //Debug.Log(story.Continue());
 
         button.onClick.AddListener(delegate {
             RefreshView();
@@ -36,10 +36,12 @@ public class NarrativeDialogue : MonoBehaviour
     // This is the main function called every time the story changes. It does a few things:
     // Destroys all the old content and choices.
     // Continues over all the lines of text, then displays all the choices. If there are no choices, the story is finished!
-    void RefreshView()
+    public void RefreshView()
     {
         // Remove all the UI on screen
         // RemoveChildren();
+
+        print("button was pressed");
 
         // Read all the content until we can't continue any more
         while (story.canContinue)
@@ -89,7 +91,7 @@ public class NarrativeDialogue : MonoBehaviour
         storyText.text = text;
         storyText.transform.SetParent(canvas.transform, false);
 
-        Debug.Log(text);
+        //Debug.Log(text);
     }
 
     // Creates a button showing the choice text

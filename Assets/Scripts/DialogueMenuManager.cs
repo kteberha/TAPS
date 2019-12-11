@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets._2D;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class DialogueMenuManager : MonoBehaviour
 {
     public GameObject player;
     public GameObject menu;
+    public MenuController menuController;
 
     Rigidbody2D rb;
     Vector3 pTempVelocity;
@@ -45,6 +47,7 @@ public class DialogueMenuManager : MonoBehaviour
     }
     void MakeMenu()
     {
+        menuController.paused = true;
         Time.timeScale = 0f;
         menuActive = true;
         menu.gameObject.SetActive(true);
@@ -53,8 +56,17 @@ public class DialogueMenuManager : MonoBehaviour
 
     void RemoveMenu()
     {
+        menuController.paused = false;
         Time.timeScale = 1f;
         menuActive = false;
         menu.gameObject.SetActive(false);
+    }
+
+    public void Test()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            print("clicked");
+        }
     }
 }
