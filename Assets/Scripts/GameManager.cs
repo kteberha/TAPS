@@ -70,6 +70,5 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Debug.Log("New Workday! Reload scene...");
     }
 }
