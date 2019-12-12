@@ -67,6 +67,8 @@ public class NarrativeDialogue : MonoBehaviour
                     OnClickChoiceButton(choice);
                 });
             }
+
+            button.interactable = false;
         }
         // If we've read all the content and there's no choices, the story is finished!
         else
@@ -88,6 +90,7 @@ public class NarrativeDialogue : MonoBehaviour
         {
             Destroy(o);
         }
+        button.interactable = true;
     }
 
     // Creates a button showing the choice text
