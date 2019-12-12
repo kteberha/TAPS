@@ -140,7 +140,7 @@ public class MenuController : MonoBehaviour
     public void QuitGame()
     {
         //needs removed/commented out when making builds
-        UnityEditor.EditorApplication.ExecuteMenuItem("Edit/Play");
+        //UnityEditor.EditorApplication.ExecuteMenuItem("Edit/Play");
        //
 
         Application.Quit();
