@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 1
   zOffset: -100
+  mc: {fileID: 0}
   debug: 0
 --- !u!1001 &4049420351855656555
 PrefabInstance:
@@ -147,8 +148,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 3615528091148464967, guid: cf24640e77eb46d4783eaa8ef5362395,
-        type: 3}
+      objectReference: {fileID: 2100000, guid: 8cbb48413b47ae44cb2a06c6bc7cb4c3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf24640e77eb46d4783eaa8ef5362395, type: 3}
 --- !u!1 &5409811942470100834 stripped
