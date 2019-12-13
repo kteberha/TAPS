@@ -20,10 +20,10 @@ public class DemandController : MonoBehaviour
     public bool instant = true;
 
     // Trackers for min/max values
-    protected float maxValue = 10.0f, minValue = 0f;
+    protected float maxValue = 300.0f, minValue = 0f;
 
     // Create a property to handle the slider's value
-    private float currentValue = 10.0f;
+    private float currentValue = 300.0f;
     public float CurrentValue
     {
         get
@@ -55,7 +55,7 @@ public class DemandController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CurrentValue = 10.0f;
+        CurrentValue = 300.0f;
     }
 
     // Update is called once per frame
@@ -66,19 +66,19 @@ public class DemandController : MonoBehaviour
 
         Color nextColor = currentColor;
 
-        if (CurrentValue > 5.0f)
+        if (CurrentValue > 150.0f)
         {
             nextColor = GoodColor;
             //fillImage.DOColor(GoodColor, 1);
         }
 
-        if (CurrentValue < 5.0f)
+        if (CurrentValue < 150.0f)
         {
             nextColor = WarningColor;
             //fillImage.DOColor(WarningColor, 1);
         }
 
-        if (CurrentValue < 2.5f)
+        if (CurrentValue < 75.0f)
         {
             nextColor = DangerColor;
             //fillImage.DOColor(DangerColor, 1);
