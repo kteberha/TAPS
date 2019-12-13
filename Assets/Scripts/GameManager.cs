@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(textAnimation["WorkdayStatusAnim"].length);
         
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
