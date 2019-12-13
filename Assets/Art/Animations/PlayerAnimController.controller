@@ -129,6 +129,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -7205140823931991720}
     m_Position: {x: 150, y: 310, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 6121139883293928749}
+    m_Position: {x: 185, y: 375, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -1115178682067220262}
@@ -270,6 +273,32 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: 1827226128182048838, guid: 40b25af9c6b80e646a55ef7515193dbe,
     type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &6121139883293928749
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Astronaut_Face_FreakedOut
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 06942f9c48265204598aa5199eebb86a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
