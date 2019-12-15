@@ -122,6 +122,8 @@ public class Package : MonoBehaviour
         invBubble.SetActive(false);
         //gameObject.GetComponent<MeshRenderer>().enabled = false;
         gameObject.transform.Find("package").Find("pCube1").GetComponent<MeshRenderer>().enabled = false;
+        gameObject.transform.Find("package").GetComponent<BoxCollider>().enabled = false;
+        GetComponent<BoxCollider2D>().enabled = false;
         a_Source.Play();
         yield return new WaitForSeconds(a_Source.clip.length);
         Destroy(gameObject);
