@@ -42,7 +42,6 @@ public class OrderManager : MonoBehaviour
 
             orderTimer = resetTimer;
         }
-       // else
-           // print("houses waiting for delivery");
+       
     }
 }

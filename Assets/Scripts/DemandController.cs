@@ -20,7 +20,7 @@ public class DemandController : MonoBehaviour
     public bool instant = true;
 
     // Trackers for min/max values
-    protected float maxValue = 300.0f, minValue = 0f;
+    protected float maxValue = 30.0f, minValue = 0f;
 
     // Create a property to handle the slider's value
     private float currentValue = 300.0f;
@@ -56,6 +56,7 @@ public class DemandController : MonoBehaviour
     void Start()
     {
         CurrentValue = 300.0f;
+        print(CurrentValue);
     }
 
     // Update is called once per frame

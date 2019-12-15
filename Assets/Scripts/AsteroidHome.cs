@@ -17,7 +17,7 @@ public class AsteroidHome : MonoBehaviour
     public float maxTime = 60f;
 
     public bool packageOrdered;
-    public float numPackages;
+    public int numPackages;
     public GameObject offScreenIndicator;
     public DemandController demandController;
 
@@ -33,6 +33,7 @@ public class AsteroidHome : MonoBehaviour
     {
         if (currentTime < maxTime)
             currentTime += Time.deltaTime;
+        OrderExpired();
     }
 
     /// <summary>
@@ -104,7 +105,7 @@ public class AsteroidHome : MonoBehaviour
         {
             offScreenIndicator.SetActive(false);
             packageOrdered = false;
-            print("order failed to be delivered");
+            numPackages = 0;
         }
     }
 }

@@ -107,6 +107,8 @@ public class PlayerController : MonoBehaviour
                 mainEmission.enabled = true;
                 splatEmission.enabled = true;
 
+                print(splatEmission.enabled);
+
                 //play the burst particle effect if it hasn't been played yet
                 if (burstPlayed == false && impulseReady == true)
                 {
