@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     //workday timer variables
     public float timeInWorkday = 0f;
     public float workdayLength = 300f;
-    
+
     //Clock in or out UI text variables
     public Text workdayStatusText;
     Animation textAnimation;
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     {
         //Workday timer
         timeInWorkday += Time.deltaTime;
-        
+
         //Workday reset
         if (timeInWorkday > workdayLength)
         {
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
         textAnimation.Play();
 
         yield return new WaitForSeconds(textAnimation["WorkdayStatusAnim"].length);
-        
+
         //DontDestroyOnLoad(this);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

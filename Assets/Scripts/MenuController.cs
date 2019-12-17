@@ -23,7 +23,7 @@ public class MenuController : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    { 
+    {
         pauseCg = pausePanel.GetComponent<CanvasGroup>();
         optionsCg = optionsPanel.GetComponent<CanvasGroup>();
     }
@@ -102,7 +102,6 @@ public class MenuController : MonoBehaviour
         else
             invertedMovement = true;
     }
-    
     ///<summary>
     ///toggles minimap visibility
     /// </summary>
@@ -118,7 +117,6 @@ public class MenuController : MonoBehaviour
             mapToggled = true;
             map.SetActive(true);
         }
-    
     }
 
     /// <summary>
@@ -141,12 +139,12 @@ public class MenuController : MonoBehaviour
     {
         //needs removed/commented out when making builds
         //UnityEditor.EditorApplication.ExecuteMenuItem("Edit/Play");
-       //
+        //
 
         Application.Quit();
 
         //remove for official development
-        //for testing purposes, reset the tutorial check 
+        //for testing purposes, reset the tutorial check
         PlayerPrefs.SetInt("tutorialDone", 0);
         //
     }

@@ -14,7 +14,7 @@ public class DialogueMenuManager : MonoBehaviour
     Rigidbody2D rb;
     Vector3 pTempVelocity;
     bool menuActive = false;
-    
+
     Camera main;
     Transform dialogueCameraTransform;
 

@@ -56,16 +56,13 @@ public class NarrativeDialogue : MonoBehaviour
         // Display all the choices, if there are any!
         if (story.currentChoices.Count > 0)
         {
-      
             for (int i = 0; i < story.currentChoices.Count; i++)
             {
                 Choice choice = story.currentChoices[i];
-                
+
                 Button button = CreateChoiceView(choice.text.Trim());
                 // Tell the button what to do when we press it
-                button.onClick.AddListener(delegate {
-                    OnClickChoiceButton(choice);
-                });
+                button.onClick.AddListener(delegate {OnClickChoiceButton(choice);});
             }
 
             button.interactable = false;
@@ -116,7 +113,7 @@ public class NarrativeDialogue : MonoBehaviour
 
         return choice;
     }
-    
+
     //bad, we don't want this. This destroys every child in the canvas
     // Destroys all the children of this gameobject (all the UI)
     void RemoveChildren()

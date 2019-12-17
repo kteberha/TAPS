@@ -35,7 +35,7 @@ public class Package : MonoBehaviour
         else
         {
             GetComponent<BoxCollider2D>().usedByEffector = false;
-        }        
+        }
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -72,7 +72,7 @@ public class Package : MonoBehaviour
 
     //        // remove all packages starting from triggered object and those behind it
     //        _heldPackages.RemoveRange(_heldPackages.IndexOf(gameObject), removeRange);
-            
+
     //        //update the line renderer's position count
     //        lineRend.positionCount = _heldPackages.Count + 1;
 
@@ -85,7 +85,6 @@ public class Package : MonoBehaviour
     {
         invBubble.SetActive(true);
         invBubble.transform.DOScale(4, 1).SetEase(Ease.OutQuint);
-    
     }
 
     public void Throw()

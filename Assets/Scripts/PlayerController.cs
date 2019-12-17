@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
     public List<GameObject> heldPackages = new List<GameObject>();
-    
+
     //movement variables
     public float playerSpeed = 2.5f;
     public float maxSpeed = 10;
@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
 
         animator = playerModel.GetComponent<Animator>();
 
-       //for damping the player character's rotation when it collides with an object. see LateUpdate () for the remainder of the code that affects this.
+        //for damping the player character's rotation when it collides with an object. see LateUpdate () for the remainder of the code that affects this.
         /*offset = transform.position - playerModel.transform.position;*/
     }
 
@@ -207,8 +207,8 @@ public class PlayerController : MonoBehaviour
         Vector3 mousePos = Input.mousePosition; //mouse position
         mousePos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mainCamera.transform.position.z * -1));
 
-        float mousePosX = mousePos.x - playerPos.x;//gets the distance between object and mouse position for x        
-        float mousePosY = mousePos.y - playerPos.y;//gets the distance between object and mouse position for y;
+        float mousePosX = mousePos.x - playerPos.x;//gets the distance between object and mouse position for x
+        float mousePosY = mousePos.y - playerPos.y;//gets the distance between object and mouse position for y
 
         Vector2 dir = new Vector2(mousePosX, mousePosY);
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
@@ -221,7 +221,7 @@ public class PlayerController : MonoBehaviour
             dir = dir.normalized * -1;
         else
             dir = dir.normalized;
-        
+
         //check to see if movement impulse can be added
         if (burstPlayed == false && impulseReady == true)
         {
@@ -260,7 +260,7 @@ public class PlayerController : MonoBehaviour
             Destroy(heldPackages[0].GetComponent<SpringJoint2D>());
             heldPackages[0].GetComponent<BoxCollider2D>().usedByEffector = true;
             heldPackages[0].GetComponent<Package>().DoNotCollideWithPlayer(shootPackageCollisionImmuneTime);
-            heldPackages[0].GetComponent<Rigidbody2D>().AddForce(direction * shootForce);            
+            heldPackages[0].GetComponent<Rigidbody2D>().AddForce(direction * shootForce);
             heldPackages.Remove(heldPackages[0]);
 
             //cue throwing sound
@@ -285,7 +285,7 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetTrigger("Hit");
             }
-            
+
         }
         if (other.gameObject.CompareTag("Package"))
         {
@@ -311,7 +311,7 @@ public class PlayerController : MonoBehaviour
 
                 heldPackages.Add(other.gameObject);
             }
-            
+
             //tell the line renderer to draw to the newest added point
             lineRenderer.positionCount = heldPackages.Count + 1;
         }
