@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     bool impulseReady = true;
 
     //package throwing variables
+    public int maxPackages = 5;
     public float shootForce = 10f;
     public float shootCooldown = 1f;
     private float shootCooldownClock = 0f;
@@ -286,6 +287,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void PackageSwitch()
+    {
+
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if(!other.gameObject.CompareTag("Package"))
@@ -299,7 +305,7 @@ public class PlayerController : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Package"))
         {
-            if (!heldPackages.Contains(other.gameObject))
+            if (!heldPackages.Contains(other.gameObject) && heldPackages.Count < maxPackages)
             {
                 //turn on inventory bubble
                 other.gameObject.GetComponent<Package>().Pickup();
