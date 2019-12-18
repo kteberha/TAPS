@@ -5,6 +5,10 @@ using DG.Tweening;
 
 public class Package : MonoBehaviour
 {
+    public float maxSize = 5.5f;
+    public float minSize = 2.5f;
+    public bool randomRotateAtSpawn = true;       
+
     private float noCollisionTime = 0f;
     private float justThrownTimer = 10f;
     private float justThrownClock = 0f;
@@ -21,6 +25,17 @@ public class Package : MonoBehaviour
         _heldPackages = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().heldPackages;
         lineRend = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().lineRenderer;
         a_Source = GetComponent<AudioSource>();
+
+        //Random Size
+        float randomSize = Random.Range(minSize, maxSize);
+        this.transform.localScale = new Vector3(randomSize, randomSize, randomSize);
+
+        //Random Rotation at spawn
+        if (randomRotateAtSpawn)
+        {
+            int randomNum = Random.Range(0, 360);
+            this.transform.localRotation = Quaternion.Euler(0, 0, randomNum);
+        }
     }
 
     // Update is called once per frame
