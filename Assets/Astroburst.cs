@@ -24,8 +24,6 @@ public class Astroburst : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            print("player gonna die... if he could");
-
             StartCoroutine(Explode());
         }
     }
@@ -37,6 +35,7 @@ public class Astroburst : MonoBehaviour
         pointEffector.enabled = true;
         partSystem.Play();
         meshRend.enabled = false;
+        GetComponent<AudioSource>().Play();
 
         yield return new WaitWhile(ParticleDone);
 
@@ -45,7 +44,6 @@ public class Astroburst : MonoBehaviour
 
     bool ParticleDone()
     {
-        print(partSystem.isEmitting);
         return partSystem.isEmitting;
     }
 }
