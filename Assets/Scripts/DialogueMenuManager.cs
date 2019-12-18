@@ -43,7 +43,7 @@ public class DialogueMenuManager : MonoBehaviour
         pTempVelocity = rb.velocity;
         rb.velocity = new Vector3(0f, 0f, 0f);
         main.GetComponent<Camera2DFollow>().enabled = false;
-        main.transform.DOMove(new Vector3(dialogueCameraTransform.position.x, dialogueCameraTransform.transform.position.y, dialogueCameraTransform.position.z), 0.3f).OnComplete(MakeMenu).SetEase(Ease.InBack);
+        main.transform.DOMove(new Vector3(dialogueCameraTransform.position.x, dialogueCameraTransform.transform.position.y, dialogueCameraTransform.position.z), 0.3f).OnComplete(MakeMenu).SetEase(DG.Tweening.Ease.InBack);
     }
 
     public void EndDialogue()
