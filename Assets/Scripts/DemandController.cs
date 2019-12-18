@@ -42,7 +42,7 @@ public class DemandController : MonoBehaviour
 
     }
 
- 
+
 
     void AddtoTimer()
     {
@@ -63,7 +63,6 @@ public class DemandController : MonoBehaviour
     void Update()
     {
         CurrentValue -= Time.deltaTime;
-        
 
         Color nextColor = currentColor;
 

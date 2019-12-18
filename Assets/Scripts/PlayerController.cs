@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private Camera mainCamera;
     public float minZPosition;
     public float maxZPosition;
-    private Vector3 currentPosition;
+    public float doSmoothTime = 3f;
     public Transform dialogueCameraPoint;
 
     private Rigidbody2D rb;
@@ -371,7 +371,7 @@ public class PlayerController : MonoBehaviour
         float lerpPerc = rb.velocity.magnitude / maxSpeed;
         //print(lerpPerc);
         float newZ = Mathf.Lerp(minZPosition, maxZPosition, lerpPerc);
-        mainCamera.transform.DOMoveZ(newZ, 3f, false);
+        mainCamera.transform.DOMoveZ(newZ, doSmoothTime, false);
     }
 
 /*    private void LateUpdate()
