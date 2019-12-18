@@ -149,8 +149,15 @@ public class PlayerController : MonoBehaviour
             //Throw packages on right mouse button release
             if (Input.GetKeyUp("mouse 1") && heldPackages.Count > 0 && shootCooldownClock <= 0)
             {
-                Shoot();
+                PackageShoot(heldPackages[0], shootForce);
                 shootCooldownClock = shootCooldown;
+            }
+
+            PackageSwitch(Input.mouseScrollDelta.y);
+
+            if (Input.GetKeyUp("mouse 2"))
+            {
+                PackageSwitch(-1);
             }
 
             //Teleport on given key down
@@ -253,26 +260,26 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsFlying", true);
     }
 
-    void Shoot()
+    void PackageShoot(GameObject packageMoved, float force)
     {
         if (heldPackages.Count > 0)
         {
             //turn off inventory bubble
-            heldPackages[0].gameObject.GetComponent<Package>().Throw();
+            packageMoved.gameObject.GetComponent<Package>().Throw();
 
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = 0f;
             mousePos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mainCamera.transform.position.z * -1));
 
-            Vector2 heading = mousePos - heldPackages[0].transform.position;
+            Vector2 heading = mousePos - packageMoved.transform.position;
             float distance = heading.magnitude;
             Vector2 direction = heading / distance;
 
-            Destroy(heldPackages[0].GetComponent<SpringJoint2D>());
-            heldPackages[0].GetComponent<BoxCollider2D>().usedByEffector = true;
-            heldPackages[0].GetComponent<Package>().DoNotCollideWithPlayer(shootPackageCollisionImmuneTime);
-            heldPackages[0].GetComponent<Rigidbody2D>().AddForce(direction * shootForce);
-            heldPackages.Remove(heldPackages[0]);
+            Destroy(packageMoved.GetComponent<SpringJoint2D>());
+            packageMoved.GetComponent<BoxCollider2D>().usedByEffector = true;
+            packageMoved.GetComponent<Package>().DoNotCollideWithPlayer(shootPackageCollisionImmuneTime);
+            packageMoved.GetComponent<Rigidbody2D>().AddForce(direction * force);
+            heldPackages.Remove(packageMoved);
 
             //cue throwing sound
             P_audioSource.PlayOneShot(throwSound, 0.5f);
@@ -287,10 +294,66 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void PackageSwitch()
+    void PackageAdd(GameObject other, bool addToFront = false)
     {
+        if (!heldPackages.Contains(other.gameObject) && heldPackages.Count < maxPackages)
+        {
+            //turn on inventory bubble
+            other.gameObject.GetComponent<Package>().Pickup();
 
+            SpringJoint2D rope = other.gameObject.AddComponent<SpringJoint2D>();
+            if (!addToFront)
+            {
+                int num = heldPackages.Count;
+                if (num == 0)
+                {
+                    rope.connectedBody = GetComponent<Rigidbody2D>();
+                }
+                else
+                {
+                    rope.connectedBody = heldPackages[num - 1].GetComponent<Rigidbody2D>();
+                }
+                heldPackages.Add(other.gameObject);
+            }
+            else
+            {
+                rope.connectedBody = GetComponent<Rigidbody2D>();
+                heldPackages[0].GetComponent<SpringJoint2D>().connectedBody = other.GetComponent<Rigidbody2D>();
+
+                heldPackages.Insert(0, other.gameObject);
+            }
+            rope.autoConfigureDistance = false;
+            rope.distance = inventoryDistance;
+            rope.dampingRatio = inventoryDampingRatio;
+            rope.frequency = inventoryFrequency;
+        }
+
+        //tell the line renderer to draw to the newest added point
+        lineRenderer.positionCount = heldPackages.Count + 1;
     }
+
+    void PackageSwitch(float dir)
+    {
+        if (heldPackages.Count > 1)
+        {
+            GameObject packageMoved = null;
+            if (dir < 0)
+                packageMoved = heldPackages[0];
+            else if (dir > 0)
+            {
+                Debug.Log("Scroll up!");
+                packageMoved = heldPackages[heldPackages.Count - 1];
+            }
+            else
+                return;
+
+            //remove
+            PackageShoot(packageMoved, 0);
+
+            //add
+            PackageAdd(packageMoved, dir > 0);
+        }
+    }  
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -305,31 +368,7 @@ public class PlayerController : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Package"))
         {
-            if (!heldPackages.Contains(other.gameObject) && heldPackages.Count < maxPackages)
-            {
-                //turn on inventory bubble
-                other.gameObject.GetComponent<Package>().Pickup();
-
-                SpringJoint2D rope = other.gameObject.AddComponent<SpringJoint2D>();
-                int num = heldPackages.Count;
-                if (num == 0)
-                {
-                    rope.connectedBody = GetComponent<Rigidbody2D>();
-                }
-                else
-                {
-                    rope.connectedBody = heldPackages[num - 1].GetComponent<Rigidbody2D>();
-                }
-                rope.autoConfigureDistance = false;
-                rope.distance = inventoryDistance;
-                rope.dampingRatio = inventoryDampingRatio;
-                rope.frequency = inventoryFrequency;
-
-                heldPackages.Add(other.gameObject);
-            }
-
-            //tell the line renderer to draw to the newest added point
-            lineRenderer.positionCount = heldPackages.Count + 1;
+            PackageAdd(other.gameObject);
         }
     }
 
