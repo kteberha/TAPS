@@ -10,16 +10,15 @@ public class MenuController : MonoBehaviour
     public bool paused = false;
     public GameObject pausePanel;
     public GameObject optionsPanel;
-    public GameObject map;
+    //public GameObject map;
     CanvasGroup pauseCg;
     CanvasGroup optionsCg;
 
     public bool invertedMovement = true;
-    public bool mapToggled = true;
+    //public bool mapToggled = true;
 
     public float pauseKey;
     public float teleportKey;
-    public float mapKey;
 
     // Start is called before the first frame update
     void Start()
@@ -40,10 +39,10 @@ public class MenuController : MonoBehaviour
                 Pause();
         }
 
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            ToggleMap();
-        }
+        //if (Input.GetKeyDown(KeyCode.M))
+        //{
+        //    ToggleMap();
+        //}
     }
 
     public void Pause()
@@ -105,19 +104,19 @@ public class MenuController : MonoBehaviour
     ///<summary>
     ///toggles minimap visibility
     /// </summary>
-    public void ToggleMap()
-    {
-        if (mapToggled)
-        {
-            mapToggled = false;
-            map.SetActive(false);
-        }
-        else
-        {
-            mapToggled = true;
-            map.SetActive(true);
-        }
-    }
+    //public void ToggleMap()
+    //{
+    //    if (mapToggled)
+    //    {
+    //        mapToggled = false;
+    //        map.SetActive(false);
+    //    }
+    //    else
+    //    {
+    //        mapToggled = true;
+    //        map.SetActive(true);
+    //    }
+    //}
 
     /// <summary>
     /// returns to the pause menu from the options menu

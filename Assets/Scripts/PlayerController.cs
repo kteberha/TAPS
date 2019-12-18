@@ -1,12 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+
 
 public class PlayerController : MonoBehaviour
 {
     public MenuController menuController;
 
+    //Camera variables
     private Camera mainCamera;
+    public float minZPosition;
+    public float maxZPosition;
+    private Vector3 currentPosition;
     public Transform dialogueCameraPoint;
 
     private Rigidbody2D rb;
@@ -90,6 +96,9 @@ public class PlayerController : MonoBehaviour
     {
         if (!menuController.paused)
         {
+            //adjust the camera Z offset based on player speed
+            CameraLerp();
+
             //Clocks
             shootCooldownClock -= Time.deltaTime;
             impulseCoolDownClock -= Time.deltaTime;
@@ -101,13 +110,12 @@ public class PlayerController : MonoBehaviour
             //When the left mouse button, or directional input is received
             if (Input.GetMouseButton(0) || Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
             {
+                //movement logic
                 Propulsion();
 
                 //setting the particle system to play when propulsion is occuring
                 mainEmission.enabled = true;
                 splatEmission.enabled = true;
-
-                print(splatEmission.enabled);
 
                 //play the burst particle effect if it hasn't been played yet
                 if (burstPlayed == false && impulseReady == true)
@@ -131,6 +139,13 @@ public class PlayerController : MonoBehaviour
                 burstPlayed = false;
             }
 
+            //start fire extinguisher sound
+            if (Input.GetMouseButtonDown(0))
+            {
+                StartCoroutine("StartExtinguisherSound");
+            }
+
+            //Throw packages on right mouse button release
             if (Input.GetKeyUp("mouse 1") && heldPackages.Count > 0 && shootCooldownClock <= 0)
             {
                 Shoot();
@@ -179,11 +194,6 @@ public class PlayerController : MonoBehaviour
 
                     lineRenderer.SetPosition(i + 1, heldPackages[i].transform.position);
                 }
-            }
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                StartCoroutine("StartExtinguisherSound");
             }
 
             if (Input.GetMouseButtonUp(0))
@@ -347,6 +357,21 @@ public class PlayerController : MonoBehaviour
 
         rb.velocity = new Vector2(0f,0f); // set velocity to 0 to discontiue movement
         this.transform.position = teleportTransform.position; // set player position to the teleporter's
+    }
+
+
+    float smoothTime = 0.3f;
+    float zVel = 0f;
+
+    /// <summary>
+    /// Handles moving the camera closer or further based on player's speed
+    /// </summary>
+    void CameraLerp()
+    {
+        float lerpPerc = rb.velocity.magnitude / maxSpeed;
+        //print(lerpPerc);
+        float newZ = Mathf.Lerp(minZPosition, maxZPosition, lerpPerc);
+        mainCamera.transform.DOMoveZ(newZ, 3f, false);
     }
 
 /*    private void LateUpdate()

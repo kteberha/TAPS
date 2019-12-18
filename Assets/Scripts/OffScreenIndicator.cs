@@ -16,16 +16,9 @@ public class OffScreenIndicator : MonoBehaviour
 
     float imageScaleVal;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-        
         // Put it on the edge
         Vector3 edgePt = Camera.main.WorldToScreenPoint(target.position);
         edgePt.x = Mathf.Clamp(edgePt.x, Screen.width * 0.06f, Screen.width * 0.94f);
@@ -33,7 +26,6 @@ public class OffScreenIndicator : MonoBehaviour
         transform.position = edgePt;
 
         Scale();
-
     }
 
     void Scale()
@@ -53,6 +45,5 @@ public class OffScreenIndicator : MonoBehaviour
         this.transform.localScale = Vector3.one * imageScaleVal;
         //multiply image scale by distance and clamp image scale between 0.5 and 1
         //this will need some extra manipulation
-
     }
 }
