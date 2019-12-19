@@ -131,6 +131,11 @@ public class MenuController : MonoBehaviour
         optionsCg.blocksRaycasts = false;
     }
 
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
     /// <summary>
     /// Quit the game in editor and build
     /// </summary>
