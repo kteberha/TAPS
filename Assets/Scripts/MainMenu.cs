@@ -57,17 +57,31 @@ public class MainMenu : MonoBehaviour
         mainMenu.SetActive(true);
     }
 
+    /// <summary>
+    /// Opens the options panel
+    /// </summary>
     public void Options()
     {
         mainMenu.SetActive(false);
         optionsMenu.SetActive(true);
     }
 
+    /// <summary>
+    /// Starts the game and loads appropriate data
+    /// </summary>
     public void StartGame()
     {
         //will need a section for loading saved data
 
         SceneManager.LoadScene("MainScene");
+    }
+
+    /// <summary>
+    /// Closes the application
+    /// </summary>
+    public void Quit()
+    {
+        Application.Quit();
     }
 
     /// <summary>
@@ -95,6 +109,7 @@ public class MainMenu : MonoBehaviour
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];
+        print(resolution);
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 

@@ -57,8 +57,6 @@ public class AsteroidHome : MonoBehaviour
             offScreenIndicator.SetActive(true);
             demandController.CurrentValue = 300f;
         }
-        else
-            print("something didn't go right");
     }
 
     /// <summary>
@@ -78,7 +76,7 @@ public class AsteroidHome : MonoBehaviour
     }
 
     /// <summary>
-    /// When all the packages are delivered as requested, award the points to the player 
+    /// When all the packages are delivered as requested, award the points to the player
     /// </summary>
     void OrderFulfilled()
     {
@@ -97,6 +95,8 @@ public class AsteroidHome : MonoBehaviour
         currentTime = 0f;
 
         offScreenIndicator.SetActive(false);
+
+        packageOrdered = false;
     }
 
     public void OrderExpired()
