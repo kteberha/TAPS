@@ -101,7 +101,7 @@ public class Package : MonoBehaviour
     public void Pickup()
     {
         invBubble.SetActive(true);
-        invBubble.transform.DOScale(4, 1).SetEase(Ease.OutQuint);
+        invBubble.transform.DOScale(4, 1).SetEase(DG.Tweening.Ease.OutQuint);
     
     }
 
