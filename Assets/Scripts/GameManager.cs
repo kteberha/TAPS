@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        print(PlayerPrefs.GetInt("tutorialDone"));
+        //print(PlayerPrefs.GetInt("tutorialDone"));
         //start the tutorial dialogue if it hasn't been done before
         if(PlayerPrefs.GetInt("tutorialDone", 0) <= 0)
         {

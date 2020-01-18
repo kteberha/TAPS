@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Astroburst : MonoBehaviour
 {
+    public GameObject blackHole;
+
     PointEffector2D pointEffector;
     ParticleSystem partSystem;
     MeshRenderer meshRend;
@@ -38,6 +40,9 @@ public class Astroburst : MonoBehaviour
         GetComponent<AudioSource>().Play();
 
         yield return new WaitWhile(ParticleDone);
+
+        Instantiate(blackHole, transform.position, transform.rotation);
+        print("black hole");
 
         Destroy(gameObject);
     }

@@ -48,7 +48,7 @@ public class AsteroidHome : MonoBehaviour
             packageOrdered = true;
             //determine number of packages ordered
             numPackages = Random.Range(2, 5);
-            print("number of packages ordered: " + numPackages);
+            //print("number of packages ordered: " + numPackages);
 
             //eventually get to types of packages
             //

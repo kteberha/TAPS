@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     private Camera mainCamera;
     public float minZPosition;
     public float maxZPosition;
-    public float doSmoothTime = 3f;
     public Transform dialogueCameraPoint;
 
     private Rigidbody2D rb;
@@ -27,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public float impulseCoolDown = 3f;
     private float impulseCoolDownClock = 0f;
     bool impulseReady = true;
+    public GameObject movementPointer;
 
     //package throwing variables
     public int maxPackages = 5;
@@ -97,8 +97,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!menuController.paused)
         {
-            //adjust the camera Z offset based on player speed
-            CameraLerp();
+            RotatePointer();
 
             //Clocks
             shootCooldownClock -= Time.deltaTime;
@@ -253,6 +252,7 @@ public class PlayerController : MonoBehaviour
         //prevent player from going faster than maximum speed
         if (rb.velocity.magnitude > maxSpeed)
         {
+            print("velocity is over max");
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 
@@ -353,7 +353,7 @@ public class PlayerController : MonoBehaviour
             //add
             PackageAdd(packageMoved, dir > 0);
         }
-    }  
+    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -404,40 +404,28 @@ public class PlayerController : MonoBehaviour
         this.transform.position = teleportTransform.position; // set player position to the teleporter's
     }
 
-
-    float smoothTime = 0.3f;
-    float zVel = 0f;
-
     /// <summary>
     /// Handles moving the camera closer or further based on player's speed
     /// </summary>
-    void CameraLerp()
+    public float DetermineCameraZ()
     {
+        //get the percentage of how fast the player is going compared to their max speed
         float lerpPerc = rb.velocity.magnitude / maxSpeed;
-        //print(lerpPerc);
-        float newZ = Mathf.Lerp(minZPosition, maxZPosition, lerpPerc);
-        mainCamera.transform.DOMoveZ(newZ, doSmoothTime, false);
+        //lerp to find new camera z position based on speed percentage
+        float desiredZ = Mathf.Lerp(minZPosition, maxZPosition, lerpPerc);
+        print(desiredZ);
+
+        return desiredZ;
     }
 
-/*    private void LateUpdate()
-    {
-        Vector3 desiredPosition = playerModel.transform.position + offset;
-        transform.position = desiredPosition;
-        Vector3 position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * playerDamping);
-        transform.position = position;
-
-        transform.LookAt(playerModel.transform.position);
-    }
-*/
     /// <summary>
-    /// this was supposed to make the player character teleport when it collided with the wall, but it didn't work for some reason. See boundaries script for my temp solution. -Emma
+    /// Rotates the direction indicator around the player based on desired input type.
     /// </summary>
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if(other.gameObject.tag == "Wall")
-    //    {
-    //        print("Triggered");
-    //        Teleport();
-    //    }
-    //}
+    void RotatePointer()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+
+        Vector3 rotateVector = new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y, 0f);
+        movementPointer.transform.rotation = Quaternion.LookRotation(-rotateVector, -Vector3.forward);
+    }
 }

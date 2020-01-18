@@ -31,17 +31,16 @@ public class OrderManager : MonoBehaviour
                 //check if the home being compared has ordered a package, if so break the loop
                 if (homes[i].packageOrdered == false)
                 {
-                    print("order has been placed");
+                    //print("order has been placed");
 
                     homes[i].Order();
                     break;
                 }
-                else
-                    print("no room for orders");
+                //else
+                //    print("no room for orders");
             }
 
             orderTimer = resetTimer;
         }
-       
     }
 }

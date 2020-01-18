@@ -86,6 +86,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  asteroidSpawn: {fileID: 923535397587018118, guid: 34f705687ff2f4c40a3143bc0fc23150,
+    type: 3}
   breakThreshold: 25
   playCoolDown: 0.5
   breakableResist: {fileID: 8300000, guid: 4ec09215ecef28648a1e1164fa42fa16, type: 3}

@@ -56,7 +56,7 @@ public class DemandController : MonoBehaviour
     void Start()
     {
         CurrentValue = 300.0f;
-        print(CurrentValue);
+        //print(CurrentValue);
     }
 
     // Update is called once per frame
