@@ -413,7 +413,6 @@ public class PlayerController : MonoBehaviour
         float lerpPerc = rb.velocity.magnitude / maxSpeed;
         //lerp to find new camera z position based on speed percentage
         float desiredZ = Mathf.Lerp(minZPosition, maxZPosition, lerpPerc);
-        print(desiredZ);
 
         return desiredZ;
     }
@@ -426,6 +425,10 @@ public class PlayerController : MonoBehaviour
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
 
         Vector3 rotateVector = new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y, 0f);
-        movementPointer.transform.rotation = Quaternion.LookRotation(-rotateVector, -Vector3.forward);
+        if(menuController.invertedMovement)
+            movementPointer.transform.rotation = Quaternion.LookRotation(-rotateVector, -Vector3.forward);
+        else
+            movementPointer.transform.rotation = Quaternion.LookRotation(rotateVector, -Vector3.forward);
+
     }
 }

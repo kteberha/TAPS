@@ -8,6 +8,7 @@ public class Aim : MonoBehaviour
 
     public Camera mainCamera;
     public Transform player;
+    public PlayerController playerController;
 
     // Start is called before the first frame update
     void Start()
@@ -18,31 +19,32 @@ public class Aim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Fire2"))
+        if (playerController.heldPackages.Count > 0)
         {
-            RaycastHit hit;
-
-            lineRenderer.enabled = true;
-
-            lineRenderer.SetPosition(0, player.position);
-
-            Vector3 mousePosition = Input.mousePosition;
-            mousePosition.z = player.position.z - Camera.main.transform.position.z;
-            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-            print(Camera.main.transform.position);
-
-            if (Physics.Linecast(player.position, mousePosition, out hit))
+            if (Input.GetButton("Fire2"))
             {
-                mousePosition = hit.point;
-            }
+                RaycastHit hit;
 
-            lineRenderer.SetPosition(1, mousePosition);
-            //Debug.Log(mousePosition);
-        }
-        if (Input.GetButtonUp("Fire2"))
-        {
-            lineRenderer.enabled = false;
+                lineRenderer.enabled = true;
+
+                lineRenderer.SetPosition(0, player.position);
+
+                Vector3 mousePosition = Input.mousePosition;
+                mousePosition.z = player.position.z - Camera.main.transform.position.z;
+                mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+                if (Physics.Linecast(player.position, mousePosition, out hit))
+                {
+                    mousePosition = hit.point;
+                }
+
+                lineRenderer.SetPosition(1, mousePosition);
+                //Debug.Log(mousePosition);
+            }
+            if (Input.GetButtonUp("Fire2"))
+            {
+                lineRenderer.enabled = false;
+            }
         }
     }
 }
