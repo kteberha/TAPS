@@ -429,6 +429,5 @@ public class PlayerController : MonoBehaviour
             movementPointer.transform.rotation = Quaternion.LookRotation(-rotateVector, -Vector3.forward);
         else
             movementPointer.transform.rotation = Quaternion.LookRotation(rotateVector, -Vector3.forward);
-
     }
 }
