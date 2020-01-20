@@ -11,7 +11,9 @@ public class Astroburst : MonoBehaviour
     MeshRenderer meshRend;
     bool partIsEmitting = false;
 
-    public float delayTime = 0;
+    public float delayTime = 3;
+
+    public bool spawnBH = false;
 
     private void Start()
     {
@@ -41,8 +43,12 @@ public class Astroburst : MonoBehaviour
 
         yield return new WaitWhile(ParticleDone);
 
-        Instantiate(blackHole, transform.position, transform.rotation);
-        print("black hole");
+        if(spawnBH)
+        {
+            Instantiate(blackHole, transform.position, transform.rotation);
+            print("black hole");
+        }
+
 
         Destroy(gameObject);
     }

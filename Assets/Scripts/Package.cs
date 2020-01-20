@@ -7,7 +7,7 @@ public class Package : MonoBehaviour
 {
     public float maxSize = 5.5f;
     public float minSize = 2.5f;
-    public bool randomRotateAtSpawn = true;       
+    public bool randomRotateAtSpawn = true;
 
     private float noCollisionTime = 0f;
     private float justThrownTimer = 10f;
@@ -27,8 +27,8 @@ public class Package : MonoBehaviour
         a_Source = GetComponent<AudioSource>();
 
         //Random Size
-        float randomSize = Random.Range(minSize, maxSize);
-        this.transform.localScale = new Vector3(randomSize, randomSize, randomSize);
+        //float randomSize = Random.Range(minSize, maxSize);
+        //this.transform.localScale = new Vector3(randomSize, randomSize, randomSize);
 
         //Random Rotation at spawn
         if (randomRotateAtSpawn)
@@ -71,30 +71,6 @@ public class Package : MonoBehaviour
     {
         noCollisionTime = duration;
     }
-
-    //for testing
-    //private void OnMouseDown()
-    //{
-    //    if (_heldPackages.IndexOf(gameObject) != -1)
-    //    {
-    //        int removeRange = 0;
-
-    //        for (int i = _heldPackages.Count - 1; i >= _heldPackages.IndexOf(gameObject); i--)
-    //        {
-    //            Destroy(_heldPackages[_heldPackages.IndexOf(gameObject)].GetComponent<SpringJoint2D>());//destroy the spring arm of this object
-    //            removeRange++; //increase integer that is used to determine how many objects to remove from package list
-    //        }
-
-    //        // remove all packages starting from triggered object and those behind it
-    //        _heldPackages.RemoveRange(_heldPackages.IndexOf(gameObject), removeRange);
-
-    //        //update the line renderer's position count
-    //        lineRend.positionCount = _heldPackages.Count + 1;
-
-    //        //destroy the package being hit
-    //        Destroy(gameObject);
-    //    }
-    //}
 
     public void Pickup()
     {
