@@ -128,7 +128,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d23a27d8fe4b80a4b961e92e6f074acd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayTime: 1
+  blackHole: {fileID: 0}
+  delayTime: 0.25
+  spawnBH: 0
 --- !u!250 &4624711481760005603
 PointEffector2D:
   m_ObjectHideFlags: 0
