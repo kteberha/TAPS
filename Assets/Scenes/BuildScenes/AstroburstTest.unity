@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -16319,6 +16319,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2048933665244815794, guid: 8bd532e3e79dcd9489eb2b22cb543da2,
         type: 3}
+    - target: {fileID: 4624711481760005602, guid: 88a320fa3b7653e4699a875239ad9093,
+        type: 3}
+      propertyPath: spawnBH
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88a320fa3b7653e4699a875239ad9093, type: 3}
 --- !u!1001 &509715476
@@ -17006,6 +17011,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2048933665244815794, guid: 8bd532e3e79dcd9489eb2b22cb543da2,
         type: 3}
+    - target: {fileID: 4624711481760005613, guid: 88a320fa3b7653e4699a875239ad9093,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88a320fa3b7653e4699a875239ad9093, type: 3}
 --- !u!4 &536891492 stripped
@@ -34023,7 +34033,7 @@ GameObject:
   - component: {fileID: 1098475964}
   - component: {fileID: 1098475963}
   m_Layer: 8
-  m_Name: Cube
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34037,8 +34047,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1098475961}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 12}
-  m_LocalScale: {x: 2, y: 1, z: 6}
+  m_LocalPosition: {x: 0, y: 0, z: 8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1880654529}
   m_RootOrder: 0
@@ -34060,7 +34070,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 4d6810b0818470d41a45e2fd6c5c335e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -34087,7 +34097,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1098475961}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 6143595049192820490, guid: 97eaa480b199ab74983fe2044295cdac, type: 3}
 --- !u!4 &1099470768 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4218280027348439957, guid: 34f705687ff2f4c40a3143bc0fc23150,
@@ -68768,7 +68778,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &2073310916
 AudioSource:
   m_ObjectHideFlags: 0
@@ -69832,7 +69842,7 @@ PrefabInstance:
     - target: {fileID: 3880720995697368718, guid: 4582ea96336a72540ba7ca77b968e5fd,
         type: 3}
       propertyPath: impulseCoolDown
-      value: 0.25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3880720995697368718, guid: 4582ea96336a72540ba7ca77b968e5fd,
         type: 3}

@@ -99,7 +99,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 0.75
 --- !u!58 &4624711481760005614
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -128,9 +128,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d23a27d8fe4b80a4b961e92e6f074acd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blackHole: {fileID: 0}
+  blackHole: {fileID: 2048933665244815794, guid: 8bd532e3e79dcd9489eb2b22cb543da2,
+    type: 3}
+  normalMaterial: {fileID: 2100000, guid: b6a1513120d061e4cbbce6eeb78606f5, type: 2}
+  bHMaterial: {fileID: 2100000, guid: 431cd94e18a1dcb4786fda50f081ee97, type: 2}
   delayTime: 0.25
-  spawnBH: 0
+  spawnBH: 1
 --- !u!250 &4624711481760005603
 PointEffector2D:
   m_ObjectHideFlags: 0
@@ -221,7 +224,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4624711481760005604}
   serializedVersion: 6
-  lengthInSec: 5
+  lengthInSec: 1.5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0

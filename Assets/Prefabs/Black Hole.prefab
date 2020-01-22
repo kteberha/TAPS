@@ -195,6 +195,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2048933665244815756}
   - component: {fileID: 2048933665244815757}
+  - component: {fileID: 6646944476545111022}
+  - component: {fileID: 6825439994784875236}
   m_Layer: 0
   m_Name: Black Hole
   m_TagString: ShippingLane
@@ -284,6 +286,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &6646944476545111022
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048933665244815794}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
+--- !u!114 &6825439994784875236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048933665244815794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa00e5a0c084ae4fb17ff5233ac7da3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2048933665341407163
 GameObject:
   m_ObjectHideFlags: 0
@@ -2182,6 +2212,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2048933665244815756}
     m_Modifications:
+    - target: {fileID: 5781496078567164333, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
+        type: 3}
+      propertyPath: m_Name
+      value: BlackHole_FX
+      objectReference: {fileID: 0}
     - target: {fileID: 4850682879385421421, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2251,11 +2286,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5781496078567164333, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
-        type: 3}
-      propertyPath: m_Name
-      value: BlackHole_FX
       objectReference: {fileID: 0}
     - target: {fileID: 6954967327220045374, guid: 5460b1bf99ffdfa4ab08a0f61ff32819,
         type: 3}

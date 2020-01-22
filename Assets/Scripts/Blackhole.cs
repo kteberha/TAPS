@@ -11,10 +11,12 @@ public class Blackhole : MonoBehaviour
         {
             collision.GetComponent<PlayerController>().Teleport();
         }
-        else if(collision.tag == "Package")
+        else if (collision.tag == "Package")
         {
             collision.GetComponent<Package>().RemovePackages();
             Destroy(collision.gameObject);
         }
+        else
+            Destroy(collision.gameObject);
     }
 }

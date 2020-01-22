@@ -20,6 +20,15 @@ public class MenuController : MonoBehaviour
     public float pauseKey;
     public float teleportKey;
 
+    private void Awake()
+    {
+        print(PlayerPrefs.GetInt("InvertedMovement"));
+        if (PlayerPrefs.GetInt("InvertedMovement") == 0)
+            invertedMovement = false;
+        else
+            invertedMovement = true;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -97,9 +106,13 @@ public class MenuController : MonoBehaviour
         if (invertedMovement)
         {
             invertedMovement = false;
+            PlayerPrefs.SetInt("InvertedMovement", 0);
         }
         else
+        {
             invertedMovement = true;
+            PlayerPrefs.SetInt("InvertedMovement", 1);
+        }
     }
     ///<summary>
     ///toggles minimap visibility
