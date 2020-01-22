@@ -5667,7 +5667,7 @@ MonoBehaviour:
   homes:
   - {fileID: 1066886295}
   - {fileID: 33718822}
-  orderTimer: 5
+  orderTimer: 15
 --- !u!4 &192724485
 Transform:
   m_ObjectHideFlags: 0
@@ -46585,9 +46585,8 @@ MonoBehaviour:
   paused: 0
   pausePanel: {fileID: 155777269}
   optionsPanel: {fileID: 857403280}
-  invertedMovement: 1
-  pauseKey: 0
-  teleportKey: 0
+  invertedMovement: 0
+  invertMoveToggle: {fileID: 1134110050}
 --- !u!114 &1432778801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69812,7 +69811,7 @@ PrefabInstance:
     - target: {fileID: 3880720995697368718, guid: 4582ea96336a72540ba7ca77b968e5fd,
         type: 3}
       propertyPath: impulseForce
-      value: 75
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3880720995697368718, guid: 4582ea96336a72540ba7ca77b968e5fd,
         type: 3}
@@ -69863,6 +69862,21 @@ PrefabInstance:
         type: 3}
       propertyPath: distanceDamp
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3880720995697368718, guid: 4582ea96336a72540ba7ca77b968e5fd,
+        type: 3}
+      propertyPath: inventoryFrequency
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3880720995697368718, guid: 4582ea96336a72540ba7ca77b968e5fd,
+        type: 3}
+      propertyPath: inventoryDistance
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3880720995697368718, guid: 4582ea96336a72540ba7ca77b968e5fd,
+        type: 3}
+      propertyPath: inventoryDampingRatio
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 123207205, guid: 4582ea96336a72540ba7ca77b968e5fd, type: 3}
       propertyPath: m_Positions.Array.data[0].z

@@ -55,7 +55,7 @@ public class Package : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Finish" && justThrownClock >= 0)
+        if (collision.gameObject.tag == "Finish" && justThrownClock >= 0 && collision.gameObject.GetComponent<AsteroidHome>().packageOrdered)
         {
 
             RemovePackages();

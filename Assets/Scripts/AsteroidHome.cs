@@ -55,7 +55,7 @@ public class AsteroidHome : MonoBehaviour
 
             //set assigned demand indicator to be active with assigned time
             offScreenIndicator.SetActive(true);
-            demandController.CurrentValue = 300f;
+            demandController.CurrentValue = 120f;
         }
     }
 

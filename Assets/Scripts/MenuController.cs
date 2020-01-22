@@ -26,25 +26,21 @@ public class MenuController : MonoBehaviour
         pauseCg = pausePanel.GetComponent<CanvasGroup>();
         optionsCg = optionsPanel.GetComponent<CanvasGroup>();
 
-        //get saved input options if any exist
+        //get and apply saved input options if any exist
         if (!PlayerPrefs.HasKey("InvertedMovement"))
         {
             PlayerPrefs.SetInt("InvertedMovement", 1);
             PlayerPrefs.Save();
             invertedMovement = true;
-            print("movement set to default");
         }
         else if (PlayerPrefs.GetInt("InvertedMovement") == 0)
         {
             invertedMovement = false;
-            print("should be non-invert");
         }
         else
         {
             invertedMovement = true;
-            print("should be invert");
         }
-
         invertMoveToggle.SetIsOnWithoutNotify(invertedMovement);
     }
 
@@ -115,26 +111,17 @@ public class MenuController : MonoBehaviour
     /// </summary>
     public void InvertMovement()
     {
-        print("invert movement being called: " + invertedMovement);
-        print("player pref value: " + PlayerPrefs.GetInt("InvertedMovement"));
-
         if (invertedMovement)
         {
             invertedMovement = false;
             PlayerPrefs.SetInt("InvertedMovement", 0);
             PlayerPrefs.Save();
-            print("movement has been set to non-invert");
-
-            print("invertedMovement now = 0");
         }
         else
         {
             invertedMovement = true;
             PlayerPrefs.SetInt("InvertedMovement", 1);
             PlayerPrefs.Save();
-            print("movement set to invert");
-
-            print("invertedMovement now = 1");
         }
     }
 
@@ -169,8 +156,8 @@ public class MenuController : MonoBehaviour
 
         //remove for official development
         //for testing purposes, reset the tutorial check
-        PlayerPrefs.SetInt("tutorialDone", 0);
+        PlayerPrefs.DeleteKey("tutorialDone");
         //
-        //PlayerPrefs.DeleteKey("InvertedMovement");
+        PlayerPrefs.DeleteKey("InvertedMovement");
     }
 }
