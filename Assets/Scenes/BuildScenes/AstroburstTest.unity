@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -16323,6 +16323,16 @@ PrefabInstance:
         type: 3}
       propertyPath: spawnBH
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624711481760005603, guid: 88a320fa3b7653e4699a875239ad9093,
+        type: 3}
+      propertyPath: m_ForceMagnitude
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624711481760005603, guid: 88a320fa3b7653e4699a875239ad9093,
+        type: 3}
+      propertyPath: m_DistanceScale
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88a320fa3b7653e4699a875239ad9093, type: 3}
@@ -43981,7 +43991,7 @@ MonoBehaviour:
   xMinValue: -1e+32
   xMaxValue: 1e+32
   arrowMat: {fileID: 2100000, guid: 4d6810b0818470d41a45e2fd6c5c335e, type: 2}
-  dissolveThreshold: 0.45
+  dissolveThreshold: 0.3
   m_CurrentPosition: {x: 0, y: 0, z: 0}
 --- !u!81 &1357624522
 AudioListener:
