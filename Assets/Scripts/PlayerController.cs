@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public float minZPosition;
     public float maxZPosition;
     public Transform dialogueCameraPoint;
+    public float lerpPerc;
 
     private Rigidbody2D rb;
     public List<GameObject> heldPackages = new List<GameObject>();
@@ -410,7 +411,7 @@ public class PlayerController : MonoBehaviour
     public float DetermineCameraZ()
     {
         //get the percentage of how fast the player is going compared to their max speed
-        float lerpPerc = rb.velocity.magnitude / maxSpeed;
+        lerpPerc = rb.velocity.magnitude / maxSpeed;
         //lerp to find new camera z position based on speed percentage
         float desiredZ = Mathf.Lerp(minZPosition, maxZPosition, lerpPerc);
 

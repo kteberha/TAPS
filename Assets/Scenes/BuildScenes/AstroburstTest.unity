@@ -34046,13 +34046,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1098475961}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 8}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 1880654529}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!23 &1098475963
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -34097,7 +34097,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1098475961}
-  m_Mesh: {fileID: 6143595049192820490, guid: 97eaa480b199ab74983fe2044295cdac, type: 3}
+  m_Mesh: {fileID: 5302568919011541938, guid: dbd7f41ce1e93a3499638d2ea909a455, type: 3}
 --- !u!4 &1099470768 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4218280027348439957, guid: 34f705687ff2f4c40a3143bc0fc23150,
@@ -43980,6 +43980,8 @@ MonoBehaviour:
   yMaxValue: 1e+32
   xMinValue: -1e+32
   xMaxValue: 1e+32
+  arrowMat: {fileID: 2100000, guid: 4d6810b0818470d41a45e2fd6c5c335e, type: 2}
+  dissolveThreshold: 0.45
   m_CurrentPosition: {x: 0, y: 0, z: 0}
 --- !u!81 &1357624522
 AudioListener:

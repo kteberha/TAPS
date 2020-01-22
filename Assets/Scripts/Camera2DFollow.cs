@@ -14,6 +14,11 @@ namespace UnityStandardAssets._2D
         public float xMinValue = -1f; //For the left wall
         public float xMaxValue = 999999f; //For the right wall
 
+        public Material arrowMat;
+        public float dissolveThreshold;
+
+        bool dissolved = true;
+
         private Camera cam;
 
 		float nextTimeToSearch = 0;
@@ -43,19 +48,42 @@ namespace UnityStandardAssets._2D
         // Update is called once per frame
         private void FixedUpdate()
         {
-
 			if (target == null) {
 				FindPlayer ();
 				return;
 			}
-
-
 
             float xMoveDelta = (target.position - m_LastTargetPosition).x;
             float yMoveDelta = (target.position - m_LastTargetPosition).y;
             float zMoveDelta = (target.position - m_LastTargetPosition).z;
 
             m_OffsetZ = playerController.DetermineCameraZ();
+
+            //handle the direction arrow fading in and out
+            if(playerController.lerpPerc < dissolveThreshold)
+            {
+                if(dissolved)
+                {
+                    print("arrow is appearing");
+                    float currentF = arrowMat.GetFloat("_Dissolve");
+                    currentF += Time.deltaTime;
+                    arrowMat.SetFloat("_Dissolve", currentF);
+                    if (currentF >= 1f)
+                        dissolved = false;
+                }
+            }
+            else
+            {
+                if(!dissolved)
+                {
+                    print("arrow is disappearing");
+                    float currentF = arrowMat.GetFloat("_Dissolve");
+                    currentF -= Time.deltaTime;
+                    arrowMat.SetFloat("_Dissolve", currentF);
+                    if (currentF <= 0f)
+                        dissolved = true;
+                }
+            }
 
 
             Vector3 aheadTargetPos = target.position + new Vector3(0, 0, 0) + Vector3.forward*m_OffsetZ;
@@ -77,6 +105,5 @@ namespace UnityStandardAssets._2D
 				nextTimeToSearch = Time.time + 0.5f;
 			}
 		}
-
     }
 }

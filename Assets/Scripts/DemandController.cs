@@ -66,23 +66,27 @@ public class DemandController : MonoBehaviour
 
         Color nextColor = currentColor;
 
-        if (CurrentValue > 150.0f)
+        if (fillImage.fillAmount > 0.5f)
         {
             nextColor = GoodColor;
             //fillImage.DOColor(GoodColor, 1);
         }
 
-        if (CurrentValue < 150.0f)
+        if (fillImage.fillAmount < 0.5f)
         {
             nextColor = WarningColor;
             //fillImage.DOColor(WarningColor, 1);
         }
 
-        if (CurrentValue < 75.0f)
+        if (fillImage.fillAmount < 0.25f)
         {
             nextColor = DangerColor;
             //fillImage.DOColor(DangerColor, 1);
         }
+
+        if (fillImage.fillAmount == 0)
+            fillImage.color = GoodColor;
+
 
         if (nextColor != currentColor)
         {
