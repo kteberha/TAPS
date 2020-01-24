@@ -6,9 +6,6 @@ public class Astroburst : MonoBehaviour
 {
     public GameObject blackHole;
 
-    public Material normalMaterial;
-    public Material bHMaterial;
-
     PointEffector2D pointEffector;
     ParticleSystem partSystem;
     MeshRenderer meshRend;
@@ -16,8 +13,9 @@ public class Astroburst : MonoBehaviour
     bool triggered = false;
 
     public float delayTime = 0.5f;
+    public float bHChance = 0.1f;
 
-    public bool spawnBH = false;
+    static bool firstBurst = true;
 
     private void Start()
     {
@@ -26,16 +24,12 @@ public class Astroburst : MonoBehaviour
         partSystem = GetComponent<ParticleSystem>();
         partSystem.Stop();
         meshRend = GetComponent<MeshRenderer>();
-        //assign the material given to the astroburst depending on whether it will spawn a black hole
-        if (spawnBH)
-            meshRend.material = normalMaterial;
-        else
-            meshRend.material = bHMaterial;
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player") || other.CompareTag("Package"))
         {
             if (!triggered)
             {
@@ -67,12 +61,21 @@ public class Astroburst : MonoBehaviour
 
         yield return new WaitWhile(ParticleEmitting);
 
-        if(spawnBH)
+        if (!firstBurst)
         {
-            Instantiate(blackHole, transform.position, transform.rotation);
-            print("black hole");
+            float bHCreation = Random.value;
+            print("black hole value: " + bHCreation);
+            if (bHChance >= bHCreation)
+            {
+                Instantiate(blackHole, transform.position, transform.rotation);
+                print("black hole");
+            }
         }
-
+        else
+        {
+            firstBurst = false;
+            print("first astroburst to explode");
+        }
 
         Destroy(gameObject);
     }

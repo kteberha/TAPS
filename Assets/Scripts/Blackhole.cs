@@ -7,11 +7,11 @@ public class Blackhole : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.CompareTag("Player"))
         {
             collision.GetComponent<PlayerController>().Teleport();
         }
-        else if (collision.tag == "Package")
+        else if (collision.CompareTag("Package"))
         {
             collision.GetComponent<Package>().RemovePackages();
             Destroy(collision.gameObject);

@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -40356,6 +40356,7 @@ GameObject:
   - component: {fileID: 1272896667}
   - component: {fileID: 1272896666}
   - component: {fileID: 1272896665}
+  - component: {fileID: 1272896668}
   m_Layer: 5
   m_Name: WorkdayTimer
   m_TagString: Untagged
@@ -40397,7 +40398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -40444,7 +40445,23 @@ MonoBehaviour:
   fadeTime: 2
   gm: {fileID: 1357624518}
   countStarted: 1
-  countdownValue: 120
+--- !u!111 &1272896668
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272896663}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: ce20d77bf2f576641bcb468eb64e8bd7, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: ce20d77bf2f576641bcb468eb64e8bd7, type: 2}
+  - {fileID: 7400000, guid: 8ade8bbc7ea03b64aab8b30523962504, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &1273789687
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42311,6 +42328,7 @@ GameObject:
   - component: {fileID: 1325029949}
   - component: {fileID: 1325029951}
   - component: {fileID: 1325029950}
+  - component: {fileID: 1325029952}
   m_Layer: 5
   m_Name: TimerText
   m_TagString: Untagged
@@ -42350,7 +42368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.37254903, g: 0.68235296, b: 0.95294124, a: 1}
+  m_Color: {r: 0.37254903, g: 0.68235296, b: 0.95294124, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -42379,6 +42397,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1325029948}
   m_CullTransparentMesh: 0
+--- !u!111 &1325029952
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325029948}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 0db63c3e88be6734db10e02432f27fb5, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 0db63c3e88be6734db10e02432f27fb5, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!4 &1326188286 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4218280027348439957, guid: 34f705687ff2f4c40a3143bc0fc23150,
