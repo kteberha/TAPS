@@ -70,7 +70,7 @@ Material:
     - _BumpScale: 1
     - _Cull: 2
     - _Cutoff: 0.5
-    - _Dissolve: 0.86000013
+    - _Dissolve: 2.1799986
     - _DstBlend: 0
     - _EdgeWidth: 0.01
     - _EnvironmentReflections: 1

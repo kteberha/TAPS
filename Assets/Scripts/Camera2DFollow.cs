@@ -64,7 +64,6 @@ namespace UnityStandardAssets._2D
             {
                 if(dissolved)
                 {
-                    print("arrow is appearing");
                     float currentF = arrowMat.GetFloat("_Dissolve");
                     currentF += Time.deltaTime;
                     arrowMat.SetFloat("_Dissolve", currentF);
@@ -76,7 +75,6 @@ namespace UnityStandardAssets._2D
             {
                 if(!dissolved)
                 {
-                    print("arrow is disappearing");
                     float currentF = arrowMat.GetFloat("_Dissolve");
                     currentF -= Time.deltaTime;
                     arrowMat.SetFloat("_Dissolve", currentF);

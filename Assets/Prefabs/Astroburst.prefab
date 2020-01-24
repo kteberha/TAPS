@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 431cd94e18a1dcb4786fda50f081ee97, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -130,10 +130,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blackHole: {fileID: 2048933665244815794, guid: 8bd532e3e79dcd9489eb2b22cb543da2,
     type: 3}
-  normalMaterial: {fileID: 2100000, guid: b6a1513120d061e4cbbce6eeb78606f5, type: 2}
-  bHMaterial: {fileID: 2100000, guid: 431cd94e18a1dcb4786fda50f081ee97, type: 2}
   delayTime: 0.25
-  spawnBH: 1
+  bHChance: 0.2
 --- !u!250 &4624711481760005603
 PointEffector2D:
   m_ObjectHideFlags: 0

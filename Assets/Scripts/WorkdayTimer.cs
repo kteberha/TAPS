@@ -19,16 +19,21 @@ public class WorkdayTimer : MonoBehaviour
     public GameManager gm;
 
     public bool countStarted = true;
-    public float countdownValue = 120f;
 
     Color nextColor;
     Color currentColor;
 
+    Animation fadeAnimation;
+    Animation clockTextAnim;
+
+    float countdownValue;
     float startTime;
     float minute;
     float second;
     string minText;
     string secText;
+    bool oneTimeFadeStarted = false;
+    bool fadeAnimationStarted = false;
 
     private void Start()
     {
@@ -37,11 +42,17 @@ public class WorkdayTimer : MonoBehaviour
         clockSlider.value = countdownValue;
 
         fill.color = startFillColor;
+
+        fadeAnimation = GetComponent<Animation>();
+        clockTextAnim = GetComponent<Animation>();
+
+        StartCoroutine(ClockFade());
     }
 
     // Update is called once per frame
     void Update()
     {
+        //a lot of this needs to be taken off update
         if (countStarted && countdownValue >= 0f)
         {
             //start the countdown
@@ -62,10 +73,44 @@ public class WorkdayTimer : MonoBehaviour
             else
                 secText = second.ToString();
 
+
+            //This is all rough code that needs to be made nicer
+            if (second % 60 == 1 && countdownValue > 2)
+            {
+                if (!fadeAnimationStarted)
+                {
+                    StartCoroutine(ClockFade());
+                }
+            }
+
+            if (Mathf.Ceil(countdownValue) == 11)
+            {
+                //StartCoroutine(TimerFlash());
+                fadeAnimation.Play("ClockFadeIn");
+                print("warning fade in");
+            }
+
+            if(countdownValue <= 0)
+            {
+                if(!oneTimeFadeStarted)
+                {
+                    fadeAnimation.Play("ClockFadeOut");
+                    oneTimeFadeStarted = true;
+                    //clockTextAnim.Stop();
+                    clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b, 0f);
+                }
+            }
+            /////////////////////////////////////////////////////////////
+
+
             if(countdownValue <= finalColorSecValue + 1)
             {
                 fill.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.5f, 1));
-                clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.5f, 1));
+                if(!oneTimeFadeStarted)
+                {
+                    clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.5f, 1));
+                }
+
             }
             else if(countdownValue / gm.workdayLength <= warningColorPercent + 0.1f)
             {
@@ -73,7 +118,7 @@ public class WorkdayTimer : MonoBehaviour
                 startTime = gm.workdayLength * warningColorPercent;
                 //fade from one color to the other smoothly
                 fill.color = Color.Lerp(startFillColor, warningColor, Mathf.SmoothStep(0,1,((Time.time - startTime) / fadeTime)));
-            }         
+            }
         }
         else
         {
@@ -92,4 +137,28 @@ public class WorkdayTimer : MonoBehaviour
         //format the timer text
         clockText.text = minText + ":" + secText;
     }
+
+    /// <summary>
+    /// Handles playing the animation for the clock fading in and out
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ClockFade()
+    {
+        fadeAnimationStarted = true;
+        fadeAnimation.Play();
+
+        yield return new WaitForSeconds(2);
+
+        fadeAnimation.clip = fadeAnimation.GetClip("ClockFadeOut");
+        fadeAnimation.Play();
+        fadeAnimation.clip = fadeAnimation.GetClip("ClockFadeIn");
+        fadeAnimationStarted = false;
+    }
+    //IEnumerator TimerFlash()
+    //{
+    //    clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b);
+    //    fadeAnimation.Play("ClockFadeIn");
+    //    yield return new WaitForSeconds(fadeAnimation.clip.length);
+    //    clockTextAnim.Play();
+    //}
 }
