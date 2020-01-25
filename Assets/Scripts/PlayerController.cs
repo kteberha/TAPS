@@ -96,8 +96,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //check the game isn't paused
         if (!menuController.paused)
         {
+            //rotate the direction pointer
             RotatePointer();
 
             //Clocks
@@ -153,8 +155,10 @@ public class PlayerController : MonoBehaviour
                 shootCooldownClock = shootCooldown;
             }
 
+            //switch the order of the packages based on the mouse wheel
             PackageSwitch(Input.mouseScrollDelta.y);
 
+            //switch the order of the packages based on mouse wheel press
             if (Input.GetKeyUp("mouse 2"))
             {
                 PackageSwitch(-1);
@@ -200,7 +204,13 @@ public class PlayerController : MonoBehaviour
                         }
                     }
 
-                    lineRenderer.SetPosition(i + 1, heldPackages[i].transform.position);
+                    //make sure there is a package to try and redraw to
+                    //lineRenderer.positionCount > 0 put this back in if statement if plan doesn't work
+                    if (i < lineRenderer.positionCount - 1)
+                    {
+                        lineRenderer.SetPosition(i + 1, heldPackages[i].transform.position);
+
+                    }
                 }
             }
 
@@ -268,23 +278,25 @@ public class PlayerController : MonoBehaviour
             //turn off inventory bubble
             packageMoved.gameObject.GetComponent<Package>().Throw();
 
+            //determine the direction for the package to travel
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = 0f;
             mousePos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, mainCamera.transform.position.z * -1));
-
             Vector2 heading = mousePos - packageMoved.transform.position;
             float distance = heading.magnitude;
             Vector2 direction = heading / distance;
 
-            Destroy(packageMoved.GetComponent<SpringJoint2D>());
-            packageMoved.GetComponent<BoxCollider2D>().usedByEffector = true;
-            packageMoved.GetComponent<Package>().DoNotCollideWithPlayer(shootPackageCollisionImmuneTime);
-            packageMoved.GetComponent<Rigidbody2D>().AddForce(direction * force);
+            //remove the package being shot
+            Destroy(packageMoved.GetComponent<SpringJoint2D>()); //remove the spring arm
+            packageMoved.GetComponent<BoxCollider2D>().usedByEffector = true; //activate the effector to add force
+            packageMoved.GetComponent<Package>().DoNotCollideWithPlayer(shootPackageCollisionImmuneTime); //make sure package won't collide with player
+            packageMoved.GetComponent<Rigidbody2D>().AddForce(direction * force); //add force
             heldPackages.Remove(packageMoved);
 
             //cue throwing sound
             P_audioSource.PlayOneShot(throwSound, 0.5f);
 
+            //attach the first package's spring joint to the one that was behind it
             if (heldPackages.Count > 0)
             {
                 heldPackages[0].GetComponent<SpringJoint2D>().connectedBody = this.GetComponent<Rigidbody2D>();
@@ -299,10 +311,17 @@ public class PlayerController : MonoBehaviour
     {
         if (!heldPackages.Contains(other.gameObject) && heldPackages.Count < maxPackages)
         {
-            //turn on inventory bubble
-            other.gameObject.GetComponent<Package>().Pickup();
+            //set the package touched to a local variable
+            Package package = other.GetComponent<Package>();
+            package.lineRend = GetComponent<LineRenderer>();
 
+            //turn on inventory bubble
+            package.Pickup();
+
+            //add a spring joint to the package to physically bind the packages to the player or other packages
             SpringJoint2D rope = other.gameObject.AddComponent<SpringJoint2D>();
+
+            //determine if the package should be added to the front or back of the line
             if (!addToFront)
             {
                 int num = heldPackages.Count;

@@ -74,7 +74,7 @@ public class WorkdayTimer : MonoBehaviour
                 secText = second.ToString();
 
 
-            //This is all rough code that needs to be made nicer
+            /////////////////////////////////////////////This is all rough code that needs to be made nicer and more efficient
             if (second % 60 == 1 && countdownValue > 2)
             {
                 if (!fadeAnimationStarted)
@@ -100,8 +100,6 @@ public class WorkdayTimer : MonoBehaviour
                     clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b, 0f);
                 }
             }
-            /////////////////////////////////////////////////////////////
-
 
             if(countdownValue <= finalColorSecValue + 1)
             {
@@ -119,6 +117,8 @@ public class WorkdayTimer : MonoBehaviour
                 //fade from one color to the other smoothly
                 fill.color = Color.Lerp(startFillColor, warningColor, Mathf.SmoothStep(0,1,((Time.time - startTime) / fadeTime)));
             }
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         }
         else
         {

@@ -19,9 +19,9 @@ public class Aim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerController.heldPackages.Count > 0)
+        if (Input.GetButton("Fire2"))
         {
-            if (Input.GetButton("Fire2"))
+            if (playerController.heldPackages.Count > 0)
             {
                 RaycastHit hit;
 
@@ -39,12 +39,11 @@ public class Aim : MonoBehaviour
                 }
 
                 lineRenderer.SetPosition(1, mousePosition);
-                //Debug.Log(mousePosition);
             }
-            if (Input.GetButtonUp("Fire2"))
-            {
-                lineRenderer.enabled = false;
-            }
+        }
+        if (Input.GetButtonUp("Fire2"))
+        {
+            lineRenderer.enabled = false;
         }
     }
 }

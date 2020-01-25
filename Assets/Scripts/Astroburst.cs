@@ -64,17 +64,14 @@ public class Astroburst : MonoBehaviour
         if (!firstBurst)
         {
             float bHCreation = Random.value;
-            print("black hole value: " + bHCreation);
             if (bHChance >= bHCreation)
             {
                 Instantiate(blackHole, transform.position, transform.rotation);
-                print("black hole");
             }
         }
         else
         {
             firstBurst = false;
-            print("first astroburst to explode");
         }
 
         Destroy(gameObject);

@@ -14,8 +14,8 @@ public class Package : MonoBehaviour
     private float justThrownClock = 0f;
 
     private List<GameObject> _heldPackages;
-    private LineRenderer lineRend;
-    [SerializeField] GameObject invBubble;
+    public LineRenderer lineRend;
+    public GameObject invBubble;
 
     private AudioSource a_Source;
 
@@ -23,7 +23,7 @@ public class Package : MonoBehaviour
     void Start()
     {
         _heldPackages = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().heldPackages;
-        lineRend = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().lineRenderer;
+        //lineRend = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().lineRenderer;
         a_Source = GetComponent<AudioSource>();
 
         //Random Size
@@ -90,20 +90,27 @@ public class Package : MonoBehaviour
         //check if the package is in the inventory to be removed
         if (_heldPackages.IndexOf(gameObject) != -1)
         {
-            int removeRange = 0;
+            int removeRange = 0; //local to determine how many packages will be getting removed behind this package
 
+            //start the loop at the end of the inventory and work toward the beginning
             for (int i = _heldPackages.Count - 1; i >= _heldPackages.IndexOf(gameObject); i--)
             {
-                Destroy(_heldPackages[_heldPackages.IndexOf(gameObject)].GetComponent<SpringJoint2D>());//destroy the spring arm of this object
+                Destroy(_heldPackages[_heldPackages.IndexOf(gameObject)].GetComponent<SpringJoint2D>()); //destroy the spring arm of this object
                 removeRange++; //increase integer that is used to determine how many objects to remove from package list
-                invBubble.SetActive(false);
+                _heldPackages[i].GetComponent<Package>().invBubble.SetActive(false); //set the inventory bubble to inactive
             }
 
-            // remove all packages starting from triggered object and those behind it
-            _heldPackages.RemoveRange(_heldPackages.IndexOf(gameObject), removeRange);
+            _heldPackages.RemoveRange(_heldPackages.IndexOf(gameObject), removeRange); // remove all packages starting from triggered object and those behind it from the list
 
             //update the line renderer's position count
-            lineRend.positionCount = _heldPackages.Count + 1;
+            if (_heldPackages.Count > 0)
+            {
+                lineRend.positionCount = _heldPackages.Count + 1;
+            }
+            else
+            {
+                lineRend.positionCount = 1;
+            }
         }
     }
 
@@ -117,5 +124,10 @@ public class Package : MonoBehaviour
         a_Source.Play();
         yield return new WaitForSeconds(a_Source.clip.length);
         Destroy(gameObject);
+    }
+
+    private void OnMouseDown()
+    {
+        RemovePackages();
     }
 }
