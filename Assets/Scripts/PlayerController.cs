@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip extinguisherLoop;
     public AudioClip extinguisherEnd;
     public AudioClip throwSound;
+    public AudioClip teleportSound;
 
     //Teleporter variables
     public GameObject teleporter;
@@ -419,6 +420,8 @@ public class PlayerController : MonoBehaviour
         }
         heldPackages.Clear();
         lineRenderer.positionCount = heldPackages.Count;
+
+        P_audioSource.PlayOneShot(teleportSound);
 
         rb.velocity = new Vector2(0f,0f); // set velocity to 0 to discontiue movement
         this.transform.position = teleportTransform.position; // set player position to the teleporter's
