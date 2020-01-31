@@ -131,7 +131,7 @@ MonoBehaviour:
   blackHole: {fileID: 2048933665244815794, guid: 8bd532e3e79dcd9489eb2b22cb543da2,
     type: 3}
   delayTime: 0.25
-  bHChance: 0.2
+  bHChance: 0.3
 --- !u!250 &4624711481760005603
 PointEffector2D:
   m_ObjectHideFlags: 0

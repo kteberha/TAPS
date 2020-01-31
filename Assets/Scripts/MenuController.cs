@@ -11,9 +11,18 @@ public class MenuController : MonoBehaviour
     public bool paused = false;
     public GameObject pausePanel;
     public GameObject optionsPanel;
+    public GameObject endDayPanel;
     //public GameObject map;
     CanvasGroup pauseCg;
     CanvasGroup optionsCg;
+    CanvasGroup endDayCg;
+
+    public Text ordersFulfilledText;
+    public Text refundsOrderedText;
+
+    Animation endDayAnim;
+    [HideInInspector] public int ordersFulfilled = 0;
+    [HideInInspector] public int refundsOrdered = 0;
 
     public bool invertedMovement;
     //public bool mapToggled = true;
@@ -25,6 +34,8 @@ public class MenuController : MonoBehaviour
         //get components
         pauseCg = pausePanel.GetComponent<CanvasGroup>();
         optionsCg = optionsPanel.GetComponent<CanvasGroup>();
+        endDayCg = endDayPanel.GetComponent<CanvasGroup>();
+        endDayAnim = endDayPanel.GetComponent<Animation>();
 
         //get and apply saved input options if any exist
         if (!PlayerPrefs.HasKey("InvertedMovement"))
@@ -136,6 +147,24 @@ public class MenuController : MonoBehaviour
         optionsCg.alpha = 0f;
         optionsCg.interactable = false;
         optionsCg.blocksRaycasts = false;
+    }
+
+    public void EndOfDay()
+    {
+        ordersFulfilledText.text = "Orders Fulfilled: " + ordersFulfilled.ToString();
+        refundsOrderedText.text = " Refunds Ordered: " + refundsOrdered.ToString();
+
+        StartCoroutine(EndDay());
+    }
+
+    IEnumerator EndDay()
+    {
+        paused = true;
+        endDayAnim.Play();
+        yield return new WaitForSeconds(endDayAnim.clip.length);
+        Time.timeScale = 0f;
+        endDayCg.blocksRaycasts = true;
+        endDayCg.interactable = true;
     }
 
     public void ReturnToMenu()

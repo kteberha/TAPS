@@ -91,6 +91,7 @@ public class AsteroidHome : MonoBehaviour
 
         gm.packagesDelivered += 1;
         gm.points += pointsToAward;
+        gm.ordersFulfilled += 1;
 
         currentTime = 0f;
 
@@ -106,6 +107,7 @@ public class AsteroidHome : MonoBehaviour
             offScreenIndicator.SetActive(false);
             packageOrdered = false;
             numPackages = 0;
+            gm.refundsOrdered += 1;
         }
     }
 }

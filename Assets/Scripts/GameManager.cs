@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 {
     //point and package tracking variables
     public int packagesDelivered = 0;
+    public int ordersFulfilled = 0;
+    public int refundsOrdered = 0;
     public int points = 0;
 
     //workday timer variables
@@ -17,6 +19,7 @@ public class GameManager : MonoBehaviour
     //Clock in or out UI text variables
     public Text workdayStatusText;
     Animation textAnimation;
+    bool clockedOut = false;
 
     //Pause menu & game state variables
     [HideInInspector]
@@ -26,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     ////Tutorial variables
     public DialogueMenuManager dialogueManager;
+    public MenuController menuController;
 
 
     // Start is called before the first frame update
@@ -54,8 +58,12 @@ public class GameManager : MonoBehaviour
         //Workday reset
         if (timeInWorkday > workdayLength)
         {
-            //have the workday over text appear and fade before loading the scene
-            StartCoroutine(Clockout());
+            if (!clockedOut)
+            {
+                clockedOut = true;
+                //have the workday over text appear and fade before loading the scene
+                StartCoroutine(Clockout());
+            }
         }
 
     }
@@ -67,8 +75,10 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(textAnimation["WorkdayStatusAnim"].length);
 
-        //DontDestroyOnLoad(this);
+        menuController.ordersFulfilled = ordersFulfilled;
+        menuController.refundsOrdered = refundsOrdered;
+        menuController.EndOfDay();
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //StopCoroutine(Clockout());
     }
 }
