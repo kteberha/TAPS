@@ -64,7 +64,6 @@ public class Astroburst : MonoBehaviour
         if (!firstBurst)
         {
             float bHCreation = Random.value;
-            print(bHCreation);
             if (bHChance >= bHCreation)
             {
                 Instantiate(blackHole, transform.position, transform.rotation);

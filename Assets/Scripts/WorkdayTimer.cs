@@ -85,9 +85,7 @@ public class WorkdayTimer : MonoBehaviour
 
             if (Mathf.Ceil(countdownValue) == 11)
             {
-                //StartCoroutine(TimerFlash());
                 fadeAnimation.Play("ClockFadeIn");
-                print("warning fade in");
             }
 
             if(countdownValue <= 0)

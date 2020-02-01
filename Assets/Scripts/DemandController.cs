@@ -62,7 +62,8 @@ public class DemandController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CurrentValue -= Time.deltaTime;
+        if(currentValue > 0)
+            CurrentValue -= Time.deltaTime;
 
         Color nextColor = currentColor;
 

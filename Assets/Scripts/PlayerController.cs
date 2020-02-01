@@ -264,7 +264,6 @@ public class PlayerController : MonoBehaviour
         //prevent player from going faster than maximum speed
         if (rb.velocity.magnitude > maxSpeed)
         {
-            print("velocity is over max");
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 

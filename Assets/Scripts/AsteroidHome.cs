@@ -21,6 +21,8 @@ public class AsteroidHome : MonoBehaviour
     public GameObject offScreenIndicator;
     public DemandController demandController;
 
+    bool doOnce = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +35,18 @@ public class AsteroidHome : MonoBehaviour
     {
         if (currentTime < maxTime)
             currentTime += Time.deltaTime;
-        OrderExpired();
+        if(demandController.CurrentValue <= 0)
+        {
+            if (!doOnce)
+            {
+                doOnce = true;
+                OrderExpired();
+            }
+        }
+        else
+        {
+            doOnce = false;
+        }
     }
 
     /// <summary>
