@@ -15,11 +15,12 @@ public class AsteroidHome : MonoBehaviour
     public GameManager gm;
 
     ///public pointsAtTime[] deliverPointsAtTime;
-    public float currentTime = 0f;
+    //public float currentTime = 0f;
     public float maxTime = 60f;
 
     public bool packageOrdered;
     public int numPackages;
+    public float orderTime = 120f;
     public GameObject offScreenIndicator;
     public DemandController demandController;
 
@@ -35,8 +36,9 @@ public class AsteroidHome : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentTime < maxTime)
-            currentTime += Time.deltaTime;
+        //if (currentTime < maxTime)
+        //    currentTime += Time.deltaTime;
+
         if(demandController.CurrentValue <= 0)
         {
             if (!doOnce)
@@ -68,9 +70,11 @@ public class AsteroidHome : MonoBehaviour
             //eventually get to types of packages
             //
 
+            demandController.maxValue = orderTime;
+            demandController.CurrentValue = orderTime;
+
             //set assigned demand indicator to be active with assigned time
             offScreenIndicator.SetActive(true);
-            demandController.CurrentValue = 120f;
         }
     }
 
@@ -95,7 +99,9 @@ public class AsteroidHome : MonoBehaviour
     /// </summary>
     void OrderFulfilled()
     {
-        print("order fulfilled");
+        offScreenIndicator.SetActive(false);
+
+        packageOrdered = false;
 
         //int pointsToAward = 1;
         //foreach (pointsAtTime p in deliverPointsAtTime)
@@ -103,17 +109,14 @@ public class AsteroidHome : MonoBehaviour
         //    if (p.time <= currentTime)
         //        pointsToAward = p.points;
         //}
-
-
         gm.packagesDelivered += 1;
         gm.points += points;
         gm.ordersFulfilled += 1;
 
-        currentTime = 0f;
+        //currentTime = 0f;
 
-        offScreenIndicator.SetActive(false);
-
-        packageOrdered = false;
+        print(offScreenIndicator.activeSelf);
+        print(packageOrdered);
     }
 
     public void OrderExpired()

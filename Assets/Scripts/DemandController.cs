@@ -20,7 +20,7 @@ public class DemandController : MonoBehaviour
     public bool instant = true;
 
     // Trackers for min/max values
-    protected float maxValue = 30.0f, minValue = 0f;
+    public float maxValue = 30.0f, minValue = 0f;
 
     // Create a property to handle the slider's value
     private float currentValue = 300.0f;
@@ -55,7 +55,7 @@ public class DemandController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CurrentValue = 300.0f;
+        //CurrentValue = 300.0f;
         //print(CurrentValue);
     }
 
@@ -95,17 +95,17 @@ public class DemandController : MonoBehaviour
             fillImage.DOColor(nextColor, 1);
         }
 
-        if (Input.GetKeyDown("space"))
-        {
-            if (instant == false)
-            {
-                AddtoTimer();
-            }
-            else
-            {
-                CurrentValue += 2.0f;
-                DOTween.To(() => currentValue, x => CurrentValue = x, currentValue, 1.0f);
-            }
-        }
+        //if (Input.GetKeyDown("space"))
+        //{
+        //    if (instant == false)
+        //    {
+        //        AddtoTimer();
+        //    }
+        //    else
+        //    {
+        //        CurrentValue += 2.0f;
+        //        DOTween.To(() => currentValue, x => CurrentValue = x, currentValue, 1.0f);
+        //    }
+        //}
     }
 }
