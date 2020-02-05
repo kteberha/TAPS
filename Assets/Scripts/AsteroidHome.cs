@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class AsteroidHome : MonoBehaviour
 {
-    [System.Serializable]
-    public class pointsAtTime
-    {
-        public float time; //in seconds
-        public int points;
-    }
+    //[System.Serializable]
+    //public class pointsAtTime
+    //{
+    //    public float time; //in seconds
+    //    public int points;
+    //}
+
+    public int points;
     public GameManager gm;
 
-    public pointsAtTime[] deliverPointsAtTime;
+    ///public pointsAtTime[] deliverPointsAtTime;
     public float currentTime = 0f;
     public float maxTime = 60f;
 
@@ -95,15 +97,16 @@ public class AsteroidHome : MonoBehaviour
     {
         print("order fulfilled");
 
-        int pointsToAward = 1;
-        foreach (pointsAtTime p in deliverPointsAtTime)
-        {
-            if (p.time <= currentTime)
-                pointsToAward = p.points;
-        }
+        //int pointsToAward = 1;
+        //foreach (pointsAtTime p in deliverPointsAtTime)
+        //{
+        //    if (p.time <= currentTime)
+        //        pointsToAward = p.points;
+        //}
+
 
         gm.packagesDelivered += 1;
-        gm.points += pointsToAward;
+        gm.points += points;
         gm.ordersFulfilled += 1;
 
         currentTime = 0f;

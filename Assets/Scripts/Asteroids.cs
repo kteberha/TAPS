@@ -8,21 +8,17 @@ public class Asteroids : MonoBehaviour
     public float breakThreshold = 10f;
     public float playCoolDown = 0.5f;
     public AudioClip breakableResist;
+
     private float coolDownClock = 0f;
     private AudioSource audioSource;
-    private ParticleSystem partSystem;
-    private MeshRenderer meshRenderer;
+    [SerializeField]private ParticleSystem[] partSystems = new ParticleSystem[2];
+    [SerializeField]private MeshRenderer meshRenderer;
     private int asteroidSpawnCount = 2;
+    private bool broken = false;
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        if(gameObject.name == "Breakable")
-        {
-            partSystem = transform.Find("Particle").GetComponent<ParticleSystem>();
-            partSystem.Stop();
-            meshRenderer = transform.Find("Astroid").GetComponent<MeshRenderer>();
-        }
     }
 
     private void Update()
@@ -30,33 +26,17 @@ public class Asteroids : MonoBehaviour
         coolDownClock -= Time.deltaTime;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player" && coolDownClock <= 0)
-        {
-            if (gameObject.name == "Breakable" && player.GetComponent<Rigidbody2D>().velocity.magnitude >= breakThreshold)
-            {
-                StartCoroutine(Shatter());
-            }
-            else if(gameObject.name == "Breakable" && player.GetComponent<Rigidbody2D>().velocity.magnitude < breakThreshold)
-            {
-                audioSource.PlayOneShot(breakableResist);
-                coolDownClock = playCoolDown;
-            }
-            else
-            {
-                audioSource.Play();
-                coolDownClock = playCoolDown;
-            }
-        }
-    }
-
+    /// <summary>
+    /// Check for collisions
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.tag == "Player" && coolDownClock <= 0)
         {
-            if (gameObject.name == "Breakable" && player.GetComponent<Rigidbody2D>().velocity.magnitude >= breakThreshold)
+            if (gameObject.name == "Breakable" && player.GetComponent<Rigidbody2D>().velocity.magnitude >= breakThreshold && broken == false)
             {
+                broken = true;
                 StartCoroutine(Shatter());
             }
             else if (gameObject.name == "Breakable" && player.GetComponent<Rigidbody2D>().velocity.magnitude < breakThreshold)
@@ -79,7 +59,8 @@ public class Asteroids : MonoBehaviour
     IEnumerator Shatter()
     {
         audioSource.Play();
-        partSystem.Play();
+        foreach (ParticleSystem particle in partSystems)
+            particle.Play();
         meshRenderer.enabled = false;
         GetComponent<Collider2D>().enabled = false;
 
@@ -103,6 +84,9 @@ public class Asteroids : MonoBehaviour
 
     bool IsEmitting()
     {
-        return partSystem.isEmitting;
+        foreach (ParticleSystem particle in partSystems)
+            if (particle.isEmitting)
+                return true;
+        return false;
     }
 }

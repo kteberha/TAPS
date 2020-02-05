@@ -56,7 +56,7 @@ public class WorkdayTimer : MonoBehaviour
         if (countStarted && countdownValue >= 0f)
         {
             //start the countdown
-            countdownValue =Mathf.Clamp(countdownValue - Time.deltaTime, 0f, gm.workdayLength);
+            countdownValue = Mathf.Clamp(countdownValue - Time.deltaTime, 0f, gm.workdayLength);
 
             //set the minute and second values
             minute = Mathf.Floor(countdownValue / 60f);
@@ -83,7 +83,7 @@ public class WorkdayTimer : MonoBehaviour
                 }
             }
 
-            if (Mathf.Ceil(countdownValue) == 11)
+            if (Mathf.Ceil(countdownValue) == 31)
             {
                 fadeAnimation.Play("ClockFadeIn");
             }
@@ -101,10 +101,10 @@ public class WorkdayTimer : MonoBehaviour
 
             if(countdownValue <= finalColorSecValue + 1)
             {
-                fill.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.5f, 1));
+                fill.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.2f, 1));
                 if(!oneTimeFadeStarted)
                 {
-                    clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.5f, 1));
+                    clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.2f, 1));
                 }
 
             }

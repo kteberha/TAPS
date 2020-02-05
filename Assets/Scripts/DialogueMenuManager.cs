@@ -28,15 +28,7 @@ public class DialogueMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D) && !menuActive)
-        {
-            StartDialogue();
-        }
 
-        if(Input.GetKeyDown(KeyCode.D) && menuActive)
-        {
-            EndDialogue();
-        }
     }
     public void StartDialogue()
     {

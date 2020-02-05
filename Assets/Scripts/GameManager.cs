@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     //workday timer variables
     public float timeInWorkday = 0f;
-    public float workdayLength = 300f;
+    public float workdayLength = 301f;
 
     //Clock in or out UI text variables
     public Text workdayStatusText;

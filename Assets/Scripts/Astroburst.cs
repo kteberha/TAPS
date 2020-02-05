@@ -42,8 +42,8 @@ public class Astroburst : MonoBehaviour
     IEnumerator Explode()
     {
         //trigger color change to indicate imminent detonation
-        Color astroColor = GetComponent<MeshRenderer>().material.color;
-        astroColor = new Color(1,0,0);
+        //Color astroColor = GetComponent<MeshRenderer>().material.color;
+        //astroColor = new Color(1,0,0);
 
         //wait the desired time before detonating
         yield return new WaitForSeconds(delayTime);

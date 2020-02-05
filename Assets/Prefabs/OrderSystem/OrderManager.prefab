@@ -46,4 +46,6 @@ MonoBehaviour:
   homes:
   - {fileID: 0}
   - {fileID: 0}
-  orderTimer: 15
+  - {fileID: 0}
+  - {fileID: 0}
+  orderTimer: 10
