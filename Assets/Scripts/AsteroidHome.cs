@@ -20,6 +20,7 @@ public class AsteroidHome : MonoBehaviour
 
     public bool packageOrdered;
     public int numPackages;
+    public float orderTime = 120f;
     public GameObject offScreenIndicator;
     public DemandController demandController;
 
@@ -37,6 +38,7 @@ public class AsteroidHome : MonoBehaviour
     {
         if (currentTime < maxTime)
             currentTime += Time.deltaTime;
+
         if(demandController.CurrentValue <= 0)
         {
             if (!doOnce)
@@ -68,9 +70,14 @@ public class AsteroidHome : MonoBehaviour
             //eventually get to types of packages
             //
 
+            demandController.maxValue = orderTime;
+            demandController.CurrentValue = orderTime;
+
             //set assigned demand indicator to be active with assigned time
             offScreenIndicator.SetActive(true);
-            demandController.CurrentValue = 120f;
+
+            print("Time: " + demandController.CurrentValue);
+            print("max value: " + demandController.maxValue);
         }
     }
 
