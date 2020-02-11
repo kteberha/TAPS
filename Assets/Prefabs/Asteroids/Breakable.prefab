@@ -91,6 +91,10 @@ MonoBehaviour:
   breakThreshold: 25
   playCoolDown: 0.5
   breakableResist: {fileID: 8300000, guid: 4ec09215ecef28648a1e1164fa42fa16, type: 3}
+  partSystems:
+  - {fileID: 1259588824986145284}
+  - {fileID: 1341314801887513600}
+  meshRenderer: {fileID: 2709022988808731736}
 --- !u!82 &83447678091815445
 AudioSource:
   m_ObjectHideFlags: 0
@@ -382,6 +386,18 @@ PrefabInstance:
 --- !u!4 &4306339249639488033 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 973742913066263249, guid: 60bb7771d584dcd4396bf127909db40b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3909228648754518256}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1259588824986145284 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2826760706074004212, guid: 60bb7771d584dcd4396bf127909db40b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3909228648754518256}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1341314801887513600 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2656296993855476976, guid: 60bb7771d584dcd4396bf127909db40b,
     type: 3}
   m_PrefabInstance: {fileID: 3909228648754518256}
   m_PrefabAsset: {fileID: 0}

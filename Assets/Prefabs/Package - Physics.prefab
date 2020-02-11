@@ -118,7 +118,11 @@ MonoBehaviour:
   maxSize: 5.5
   minSize: 2.5
   randomRotateAtSpawn: 1
+  brokenPackagePercent: 0.3
+  lineRend: {fileID: 0}
   invBubble: {fileID: 7317962506090367762}
+  brokenPackageClip: {fileID: 8300000, guid: e7a033c6ab2345345886a2e333ba9c5e, type: 3}
+  normalPackageClip: {fileID: 8300000, guid: 50cf8fd27ad56554c978c0eb62f23419, type: 3}
 --- !u!251 &7596986712774070413
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -184,9 +188,9 @@ AudioSource:
   m_GameObject: {fileID: 5869416400145213135}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -1457463368673965892, guid: c28ce6ed7ffb1fe4cbbb15bc75db4d79,
+  OutputAudioMixerGroup: {fileID: -6987383228537063942, guid: c28ce6ed7ffb1fe4cbbb15bc75db4d79,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 79464b9291903d7499d32e1e5c233f6a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 50cf8fd27ad56554c978c0eb62f23419, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.1
   m_Pitch: 1

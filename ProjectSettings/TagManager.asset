@@ -9,6 +9,7 @@ TagManager:
   - Teleporter
   - Wall
   - Choices
+  - Breakable
   layers:
   - Default
   - TransparentFX

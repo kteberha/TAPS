@@ -24,11 +24,15 @@ public class AsteroidHome : MonoBehaviour
     public GameObject offScreenIndicator;
     public DemandController demandController;
 
+    AudioSource audioSource;
+    [SerializeField] AudioClip orderedClip, expiredClip, successClip;
+
     bool doOnce = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         offScreenIndicator.SetActive(false);
         packageOrdered = false;
     }
@@ -61,10 +65,12 @@ public class AsteroidHome : MonoBehaviour
         //check that this house hasn't ordered a package already
         if (packageOrdered == false)
         {
+            audioSource.clip = orderedClip;
+            audioSource.Play();
             //set order status
             packageOrdered = true;
             //determine number of packages ordered
-            numPackages = 1; // reassign this once we get communication tools up: Random.Range(2, 5);
+            numPackages = 2; // reassign this once we get communication tools up: Random.Range(2, 5);
             //print("number of packages ordered: " + numPackages);
 
             //eventually get to types of packages
@@ -103,6 +109,9 @@ public class AsteroidHome : MonoBehaviour
 
         packageOrdered = false;
 
+        audioSource.clip = successClip;
+        audioSource.Play();
+
         //int pointsToAward = 1;
         //foreach (pointsAtTime p in deliverPointsAtTime)
         //{
@@ -123,6 +132,8 @@ public class AsteroidHome : MonoBehaviour
     {
         if (demandController.CurrentValue <= 0)
         {
+            audioSource.clip = expiredClip;
+            audioSource.Play();
             offScreenIndicator.SetActive(false);
             packageOrdered = false;
             numPackages = 0;

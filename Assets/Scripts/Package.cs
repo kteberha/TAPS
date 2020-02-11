@@ -9,6 +9,8 @@ public class Package : MonoBehaviour
     public float minSize = 2.5f;
     public bool randomRotateAtSpawn = true;
 
+    public float brokenPackagePercent = 0.3f;//odds that a broken package sound will play
+
     private float noCollisionTime = 0f;
     private float justThrownTimer = 10f;
     private float justThrownClock = 0f;
@@ -17,13 +19,14 @@ public class Package : MonoBehaviour
     public LineRenderer lineRend;
     public GameObject invBubble;
 
+    public AudioClip brokenPackageClip;
+    public AudioClip normalPackageClip;
     private AudioSource a_Source;
 
     // Start is called before the first frame update
     void Start()
     {
         _heldPackages = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().heldPackages;
-        //lineRend = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().lineRenderer;
         a_Source = GetComponent<AudioSource>();
 
         //Random Size
@@ -121,6 +124,11 @@ public class Package : MonoBehaviour
         gameObject.transform.Find("package").Find("pCube1").GetComponent<MeshRenderer>().enabled = false;
         gameObject.transform.Find("package").GetComponent<BoxCollider>().enabled = false;
         GetComponent<BoxCollider2D>().enabled = false;
+        float f = Random.value;
+        if (f <= brokenPackagePercent)
+            a_Source.clip = brokenPackageClip;
+        else
+            a_Source.clip = normalPackageClip;
         a_Source.Play();
         yield return new WaitForSeconds(a_Source.clip.length);
         Destroy(gameObject);
