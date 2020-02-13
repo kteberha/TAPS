@@ -97,11 +97,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //check the game isn't paused
-        if (!menuController.paused)
+        if (!menuController.paused)//check the game isn't paused
+
         {
-            //rotate the direction pointer
-            RotatePointer();
+            RotatePointer();//rotate the direction pointer
+
 
             //Clocks
             shootCooldownClock -= Time.deltaTime;
@@ -111,18 +111,15 @@ public class PlayerController : MonoBehaviour
             var mainEmission = mainStreamSys.emission;
             var splatEmission = splatterSys.emission;
 
-            //When the left mouse button, or directional input is received
-            if (Input.GetMouseButton(0) || Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+            if (Input.GetMouseButton(0) || Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)//When the left mouse button, or directional input is received
             {
-                //movement logic
-                Propulsion();
+                Propulsion();//movement logic
 
                 //setting the particle system to play when propulsion is occuring
                 mainEmission.enabled = true;
                 splatEmission.enabled = true;
 
-                //play the burst particle effect if it hasn't been played yet
-                if (burstPlayed == false && impulseReady == true)
+                if (burstPlayed == false && impulseReady == true)//play the burst particle effect if it hasn't been played yet
                 {
                     burstSys.Emit(15);
                     burstPlayed = true;
@@ -245,30 +242,27 @@ public class PlayerController : MonoBehaviour
             dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
 
-        //determine inverted movement controls and establish direction of travel
-        if(menuController.invertedMovement)
+        if(menuController.invertedMovement)//determine inverted movement controls and establish direction of travel
+
             dir = dir.normalized * -1;
         else
             dir = dir.normalized;
 
-        //check to see if movement impulse can be added
-        if (burstPlayed == false && impulseReady == true)
+        if (burstPlayed == false && impulseReady == true)//check to see if movement impulse can be added
         {
             this.rb.AddForce(dir * playerSpeed * impulseForce);
             impulseCoolDownClock = impulseCoolDown;
         }
 
-        //constantly add force in the given direction
-        this.rb.AddForce(dir * playerSpeed);
+        this.rb.AddForce(dir * playerSpeed);//constantly add force in the given direction
 
-        //prevent player from going faster than maximum speed
-        if (rb.velocity.magnitude > maxSpeed)
+        if (rb.velocity.magnitude > maxSpeed)//prevent player from going faster than maximum speed
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 
-        //animation adjustments
-        animator.SetBool("IsFlying", true);
+        animator.SetBool("IsFlying", true);//animation adjustments
+
     }
 
     void PackageShoot(GameObject packageMoved, float force)
@@ -361,7 +355,7 @@ public class PlayerController : MonoBehaviour
                 packageMoved = heldPackages[0];
             else if (dir > 0)
             {
-                Debug.Log("Scroll up!");
+                //Debug.Log("Scroll up!");
                 packageMoved = heldPackages[heldPackages.Count - 1];
             }
             else
@@ -379,14 +373,14 @@ public class PlayerController : MonoBehaviour
     {
         if(!other.gameObject.CompareTag("Package"))
         {
-            //only play the hit animation when zip hits not a package at a certain speed
-            if(rb.velocity.magnitude > hitSpeed)
+            if(rb.velocity.magnitude > hitSpeed)//only play the hit animation when zip hits not a package at a certain speed
+
             {
                 animator.SetTrigger("Hit");
             }
 
         }
-        if (other.gameObject.CompareTag("Package"))
+        if (other.gameObject.CompareTag("Package"))//check that zip has hit a package to collect.
         {
             PackageAdd(other.gameObject);
         }
@@ -411,19 +405,18 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void Teleport()
     {
-        //remove all packages from the player inventory, remove the bubble, and update line renderer
-        for (int i = 0; i < heldPackages.Count; i++)
+        for (int i = 0; i < heldPackages.Count; i++)//remove all packages from the player inventory, remove the bubble, and update line renderer
         {
             heldPackages[i].GetComponent<Package>().Throw();
             Destroy(heldPackages[i].GetComponent<SpringJoint2D>());
         }
-        heldPackages.Clear();
-        lineRenderer.positionCount = heldPackages.Count;
+        heldPackages.Clear();//remove all packages from the player's inventory
+        lineRenderer.positionCount = heldPackages.Count;//clear all of the line renderer's points
 
-        P_audioSource.PlayOneShot(teleportSound);
+        P_audioSource.PlayOneShot(teleportSound);//play the teleport sound
 
         rb.velocity = new Vector2(0f,0f); // set velocity to 0 to discontiue movement
-        this.transform.position = teleportTransform.position; // set player position to the teleporter's
+        this.transform.position = teleportTransform.position; // set player position to the teleporter's position
     }
 
     /// <summary>
@@ -431,10 +424,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public float DetermineCameraZ()
     {
-        //get the percentage of how fast the player is going compared to their max speed
-        lerpPerc = rb.velocity.magnitude / maxSpeed;
-        //lerp to find new camera z position based on speed percentage
-        float desiredZ = Mathf.Lerp(minZPosition, maxZPosition, lerpPerc);
+        lerpPerc = rb.velocity.magnitude / maxSpeed;//get the percentage of how fast the player is going compared to their max speed
+
+        float desiredZ = Mathf.Lerp(minZPosition, maxZPosition, lerpPerc);//lerp to find new camera z position based on speed percentage
 
         return desiredZ;
     }
@@ -444,6 +436,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void RotatePointer()
     {
+//////////////////////This code only works with mouse. Currently working on implementing code for controller input///////////////////////////////////////
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
 
         Vector3 rotateVector = new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y, 0f);
@@ -451,5 +444,6 @@ public class PlayerController : MonoBehaviour
             movementPointer.transform.rotation = Quaternion.LookRotation(-rotateVector, -Vector3.forward);
         else
             movementPointer.transform.rotation = Quaternion.LookRotation(rotateVector, -Vector3.forward);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

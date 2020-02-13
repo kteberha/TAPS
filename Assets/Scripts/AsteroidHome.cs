@@ -10,17 +10,17 @@ public class AsteroidHome : MonoBehaviour
     //    public float time; //in seconds
     //    public int points;
     //}
+    //public pointsAtTime[] deliverPointsAtTime;
+    //public float currentTime = 0f;
 
     public int points;
     public GameManager gm;
 
-    ///public pointsAtTime[] deliverPointsAtTime;
-    //public float currentTime = 0f;
-    public float maxTime = 60f;
-
     public bool packageOrdered;
     public int numPackages;
-    public float orderTime = 120f;
+    public float orderTime = 120f;//time before an order expires
+    public float orderDelayTime = 5f;//time to delay another order after expired or fulfilled orders
+    private float delayReset;
     public GameObject offScreenIndicator;
     public DemandController demandController;
 
@@ -35,25 +35,24 @@ public class AsteroidHome : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         offScreenIndicator.SetActive(false);
         packageOrdered = false;
+        delayReset = orderDelayTime;//set the delay timer restart to whatever the user designates
+        orderDelayTime = 0f;//set the delay timer to 0 for the very first package orders
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (currentTime < maxTime)
-        //    currentTime += Time.deltaTime;
-
-        if(demandController.CurrentValue <= 0)
+        if(demandController.CurrentValue <= 0)//check if the offscreen indicator value is <= 0
         {
-            if (!doOnce)
+            if (!doOnce)//if the order hasn't called the expired method once
             {
-                doOnce = true;
-                OrderExpired();
+                doOnce = true;//trigger the one time bool
+                OrderExpired();//set the order to expired
             }
         }
-        else
+        else//if the current value of offscreen indicator is > 0
         {
-            doOnce = false;
+            doOnce = false;//ensure the do once bool is false
         }
     }
 
@@ -62,25 +61,31 @@ public class AsteroidHome : MonoBehaviour
     /// </summary>
     public void Order()
     {
-        //check that this house hasn't ordered a package already
-        if (packageOrdered == false)
+        if (packageOrdered == false)//check that this house hasn't ordered a package already
         {
-            audioSource.clip = orderedClip;
-            audioSource.Play();
-            //set order status
-            packageOrdered = true;
-            //determine number of packages ordered
-            numPackages = 2; // reassign this once we get communication tools up: Random.Range(2, 5);
-            //print("number of packages ordered: " + numPackages);
+            if (orderDelayTime <= 0)//make sure the delay time is 0 so that an order isn't placed right after one is fulfilled or expires
+            {
+                print(this.name + " has ordered successfully");
+                audioSource.clip = orderedClip;//set the proper audio clip
+                audioSource.Play();//play audio
+                packageOrdered = true;//set order status
 
-            //eventually get to types of packages
-            //
+                numPackages = 2;//determine number of packages ordered
 
-            demandController.maxValue = orderTime;
-            demandController.CurrentValue = orderTime;
+                //eventually get to types of packages//
 
-            //set assigned demand indicator to be active with assigned time
-            offScreenIndicator.SetActive(true);
+                ///////////////////////////////////////
+
+                demandController.maxValue = orderTime;//set the slider's max time value
+                demandController.CurrentValue = orderTime;//set the slider's current value
+
+                offScreenIndicator.SetActive(true);//set assigned demand indicator to be active with assigned time
+            }
+            else//run the delay then place the order
+            {
+                print(this.name + " needs to wait");
+                StartCoroutine(OrderDelay());
+            }
         }
     }
 
@@ -91,8 +96,8 @@ public class AsteroidHome : MonoBehaviour
     {
         print("packages left to deliver: " + numPackages);
 
-        //check number of packages left to deliver
-        if (numPackages - 1 <= 0)
+        if (numPackages - 1 <= 0)//check number of packages left to deliver
+
         {
             OrderFulfilled();
         }
@@ -122,22 +127,32 @@ public class AsteroidHome : MonoBehaviour
         gm.points += points;
         gm.ordersFulfilled += 1;
 
-        //currentTime = 0f;
-
-        print(offScreenIndicator.activeSelf);
-        print(packageOrdered);
+        orderDelayTime = delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
     }
 
     public void OrderExpired()
     {
         if (demandController.CurrentValue <= 0)
         {
-            audioSource.clip = expiredClip;
-            audioSource.Play();
-            offScreenIndicator.SetActive(false);
-            packageOrdered = false;
+            audioSource.clip = expiredClip;//set the audio clip
+            audioSource.Play();//play the audio
+            offScreenIndicator.SetActive(false);//turn off the offscreen indicator
+            packageOrdered = false;//toggle the house's package ordered state to false so it knows it can order another package
             numPackages = 0;
-            gm.refundsOrdered += 1;
+            gm.refundsOrdered += 1;//increment the refunds ordered variable in the game manager
+            orderDelayTime = delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
         }
+    }
+
+
+    /// <summary>
+    /// Delays the ordering process for homes that have just had orders fulfilled or expired
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator OrderDelay()
+    {
+        yield return new WaitForSeconds(orderDelayTime);
+        orderDelayTime = 0;
+        Order();
     }
 }

@@ -51,14 +51,6 @@ public class DemandController : MonoBehaviour
     }
 
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //CurrentValue = 300.0f;
-        //print(CurrentValue);
-    }
-
     // Update is called once per frame
     void Update()
     {

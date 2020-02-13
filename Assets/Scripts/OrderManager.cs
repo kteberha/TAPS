@@ -25,22 +25,20 @@ public class OrderManager : MonoBehaviour
         //check when the timer reaches 0;
         if (orderTimer <= 0)
         {
+            //print("attempt order");
             //go through the list of homes and see if they can order a package
             for (int i = 0; i < homes.Length; i++)
             {
+                //print("checking: " + homes[i].name);
                 //check if the home being compared has ordered a package, if so break the loop
                 if (homes[i].packageOrdered == false)
                 {
-                    //print("order has been placed");
-
                     homes[i].Order();
                     break;
                 }
-                //else
-                //    print("no room for orders");
             }
 
-            orderTimer = resetTimer;
+            orderTimer = resetTimer;//reset the order timer.
         }
     }
 }
