@@ -13,10 +13,10 @@ public class AsteroidHome : MonoBehaviour
     //public pointsAtTime[] deliverPointsAtTime;
     //public float currentTime = 0f;
 
-    public int points;
+    public int points = 1;
     public GameManager gm;
 
-    public bool packageOrdered;
+    public bool packageOrdered = false;
     public int numPackages;
     public float orderTime = 120f;//time before an order expires
     public float orderDelayTime = 5f;//time to delay another order after expired or fulfilled orders
@@ -34,7 +34,6 @@ public class AsteroidHome : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         offScreenIndicator.SetActive(false);
-        packageOrdered = false;
         delayReset = orderDelayTime;//set the delay timer restart to whatever the user designates
         orderDelayTime = 0f;//set the delay timer to 0 for the very first package orders
     }

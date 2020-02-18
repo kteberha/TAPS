@@ -75,7 +75,7 @@ public class WorkdayTimer : MonoBehaviour
 
 
             /////////////////////////////////////////////This is all rough code that needs to be made nicer and more efficient
-            if (second % 60 == 1 && countdownValue > 2)
+            if (second % 60 == 1 || second % 60 == 31 && countdownValue > 2)
             {
                 if (!fadeAnimationStarted)
                 {
