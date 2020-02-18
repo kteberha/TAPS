@@ -4,13 +4,26 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+public enum GAMESTATE
+{
+    PAUSED, CLOCKEDIN, CLOCKEDOUT
+}
+
+public enum INPUTTYPE
+{
+    KEYBOARD, CONTROLLER
+}
+
 public class GameManager : MonoBehaviour
 {
+    public GAMESTATE state;//for tracking the game state for functionality
+    public INPUTTYPE inputType;
+
     //point and package tracking variables
-    public int packagesDelivered = 0;
-    public int ordersFulfilled = 0;
-    public int refundsOrdered = 0;
-    public int points = 0;
+    [HideInInspector]public int packagesDelivered = 0;
+    [HideInInspector]public int ordersFulfilled = 0;
+    [HideInInspector]public int refundsOrdered = 0;
+    [HideInInspector]public int points = 0;
 
     //workday timer variables
     public float timeInWorkday = 0f;
@@ -42,6 +55,7 @@ public class GameManager : MonoBehaviour
             dialogueManager.StartDialogue();
             PlayerPrefs.SetInt("tutorialDone", 1);
         }
+
 
         pauseCg = pausePanel.GetComponent<CanvasGroup>();
         workdayStatusText.text = "Clocked IN!";

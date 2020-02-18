@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
+    [SerializeField] GameManager gm; 
 
-    [HideInInspector]
-    public bool paused = false;
+    [HideInInspector]public bool paused = false;
+
     public GameObject pausePanel;
     public GameObject optionsPanel;
     public GameObject endDayPanel;
@@ -19,6 +20,8 @@ public class MenuController : MonoBehaviour
 
     public Text ordersFulfilledText;
     public Text refundsOrderedText;
+    public Text bestOrdersFulfilledText;
+    public Text bestRefundsText;
 
     Animation endDayAnim;
     [HideInInspector] public int ordersFulfilled = 0;
@@ -151,8 +154,22 @@ public class MenuController : MonoBehaviour
 
     public void EndOfDay()
     {
+        //Check for orders completed high scores and adjust accordingly
+        if(PlayerPrefs.GetInt("OrderBest", 0) == 0)
+        {
+            PlayerPrefs.SetInt("OrderBest", ordersFulfilled);
+        }
+
+        //check for refunds placed (lowest) high scores and adjust accordingly
+        if(PlayerPrefs.GetInt("RefundsBest", 0) == 0)
+        {
+            PlayerPrefs.SetInt("RefundsBest", refundsOrdered);
+        }
+
         ordersFulfilledText.text = "Orders Fulfilled: " + ordersFulfilled.ToString();
+        bestOrdersFulfilledText.text = "Best: " + PlayerPrefs.GetInt("OrderBest").ToString();
         refundsOrderedText.text = " Refunds Ordered: " + refundsOrdered.ToString();
+        bestRefundsText.text = "Best: " + PlayerPrefs.GetInt("RefundsBest").ToString();
 
         StartCoroutine(EndDay());
     }
