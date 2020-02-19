@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
-    [SerializeField] GameManager gm; 
+    [SerializeField] GameManager gm;
 
     [HideInInspector]public bool paused = false;
 
@@ -155,15 +155,17 @@ public class MenuController : MonoBehaviour
     public void EndOfDay()
     {
         //Check for orders completed high scores and adjust accordingly
-        if(PlayerPrefs.GetInt("OrderBest", 0) == 0)
+        if(PlayerPrefs.GetInt("OrderBest") < ordersFulfilled)
         {
             PlayerPrefs.SetInt("OrderBest", ordersFulfilled);
+            print("new best orders fulfilled");
         }
 
         //check for refunds placed (lowest) high scores and adjust accordingly
-        if(PlayerPrefs.GetInt("RefundsBest", 0) == 0)
+        if (PlayerPrefs.GetInt("RefundsBest") < refundsOrdered)
         {
             PlayerPrefs.SetInt("RefundsBest", refundsOrdered);
+            print("new best refunds avoided");
         }
 
         ordersFulfilledText.text = "Orders Fulfilled: " + ordersFulfilled.ToString();

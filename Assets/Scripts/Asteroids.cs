@@ -19,6 +19,7 @@ public class Asteroids : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        transform.rotation = new Quaternion(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
     }
 
     private void Update()
