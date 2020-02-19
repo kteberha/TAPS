@@ -100,6 +100,7 @@ public class PlayerController : MonoBehaviour
         if (!menuController.paused)//check the game isn't paused
 
         {
+
             RotatePointer();//rotate the direction pointer
 
 
