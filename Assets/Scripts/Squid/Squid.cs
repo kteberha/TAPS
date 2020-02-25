@@ -56,7 +56,9 @@ public class Squid : Agent
 	{
 		public Wander(Agent agent) : base(agent)
 		{
+			#if UNITY_EDITOR
 			color = Color.green;
+			#endif
 		}
 
 		public override void Enter(StateArgs args)
@@ -83,7 +85,9 @@ public class Squid : Agent
 	{
 		public Seek(Agent agent) : base(agent)
 		{
+			#if UNITY_EDITOR
 			color = Color.yellow;
+			#endif
 		}
 
 		public override void Enter(StateArgs args)
