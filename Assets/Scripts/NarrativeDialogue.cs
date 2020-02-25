@@ -124,4 +124,5 @@ public class NarrativeDialogue : MonoBehaviour
             GameObject.Destroy(canvas.transform.GetChild(i).gameObject);
         }
     }
+    /////////////////////////////////////////////////////////////////////////////
 }

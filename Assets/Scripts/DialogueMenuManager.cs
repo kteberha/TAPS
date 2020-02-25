@@ -62,4 +62,9 @@ public class DialogueMenuManager : MonoBehaviour
         menuActive = false;
         menu.gameObject.SetActive(false);
     }
+
+    public void SkipDialogue()
+    {
+        EndDialogue();
+    }
 }
