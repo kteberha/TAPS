@@ -41,10 +41,10 @@ GameObject:
   - component: {fileID: 5976260845439166684}
   - component: {fileID: 3986496691462621547}
   - component: {fileID: 937872404386213484}
-  - component: {fileID: 4508565738756710932}
   - component: {fileID: 7130396921223353632}
   - component: {fileID: 5643917456712781058}
   - component: {fileID: 6350878957715227429}
+  - component: {fileID: 105080115862195020}
   m_Layer: 0
   m_Name: Asteroid Home
   m_TagString: Finish
@@ -122,35 +122,6 @@ CapsuleCollider2D:
   m_Offset: {x: -1.32, y: 19.33}
   m_Size: {x: 13, y: 34.9}
   m_Direction: 0
---- !u!68 &4508565738756710932
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5976260845439166682}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 678c87a9592feeb48b5441a1a501771e, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: 4.3572793, y: 0.43641794}
-  - {x: -3.2204156, y: 0.5204511}
-  - {x: -9.371454, y: 10.63813}
-  - {x: -6.0376215, y: 13.061032}
-  - {x: -6.226906, y: 18.738754}
-  - {x: -7.0867615, y: 24.561897}
-  - {x: -8.614086, y: 26.84898}
-  - {x: -6.5554605, y: 31.938719}
-  - {x: -1.2203263, y: 36.49614}
-  - {x: 4.284158, y: 31.8664}
-  - {x: 3.9818668, y: 13.375992}
-  - {x: 6.5994296, y: 7.2041545}
-  - {x: 4.9124365, y: -0.011803512}
 --- !u!68 &7130396921223353632
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -207,19 +178,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dca7fe2d9cf4a92409ba2dbda735123c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deliverPointsAtTime:
-  - time: 0
-    points: 1
-  - time: 15
-    points: 2
-  - time: 30
-    points: 3
-  - time: 45
-    points: 4
-  - time: 60
-    points: 5
-  currentTime: 0
-  maxTime: 60
+  points: 1
+  gm: {fileID: 0}
+  packageOrdered: 0
+  numPackages: 0
+  orderTime: 120
+  orderDelayTime: 5
+  offScreenIndicator: {fileID: 0}
+  demandController: {fileID: 0}
+  orderedClip: {fileID: 0}
+  expiredClip: {fileID: 0}
+  successClip: {fileID: 0}
+--- !u!70 &105080115862195020
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5976260845439166682}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -1.4, y: 18.12}
+  m_Size: {x: 15.91, y: 39.1}
+  m_Direction: 0
 --- !u!1001 &5976260844640521987
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -227,11 +212,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5976260845439166684}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 7a1d0ab6285055843b946ee26c1ffd7f,
-        type: 3}
-      propertyPath: m_Name
-      value: AstroidHome1
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 7a1d0ab6285055843b946ee26c1ffd7f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -302,6 +282,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.14606409
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 7a1d0ab6285055843b946ee26c1ffd7f,
+        type: 3}
+      propertyPath: m_Name
+      value: AstroidHome1
+      objectReference: {fileID: 0}
     - target: {fileID: -7383606744557681941, guid: 7a1d0ab6285055843b946ee26c1ffd7f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -322,11 +307,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5976260845439166684}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 89b9931aab1d90848947ae0a622d6055,
-        type: 3}
-      propertyPath: m_Name
-      value: Astroid
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 89b9931aab1d90848947ae0a622d6055,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -396,6 +376,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 89b9931aab1d90848947ae0a622d6055,
+        type: 3}
+      propertyPath: m_Name
+      value: Astroid
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89b9931aab1d90848947ae0a622d6055, type: 3}

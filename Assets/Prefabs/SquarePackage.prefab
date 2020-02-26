@@ -415,7 +415,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 8321685774571456786, guid: 861c81eb3c2094149b340dfa96f7f70a,
+      objectReference: {fileID: 4068373912626513877, guid: 4583b2b1204842046894b480ede833de,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4583b2b1204842046894b480ede833de, type: 3}
@@ -438,14 +438,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5869416400145213131}
     m_Modifications:
-    - target: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
-      propertyPath: m_Name
-      value: InventoryBubble
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -500,6 +492,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
       propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
+      propertyPath: m_Name
+      value: InventoryBubble
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
