@@ -13,17 +13,27 @@ public class AsteroidHome : MonoBehaviour
     //public pointsAtTime[] deliverPointsAtTime;
     //public float currentTime = 0f;
 
-    public int points = 1;
     public GameManager gm;
 
-    public bool packageOrdered = false;
-    public int numPackages;
+    //Variables regarding the packages
+    [HideInInspector]public bool packageBeenOrdered = false;//whether house has ordered a package or not
+    [HideInInspector]public int numPackagesOrdered;//number of packages ordered by a house
     public float orderTime = 120f;//time before an order expires
     public float orderDelayTime = 5f;//time to delay another order after expired or fulfilled orders
-    private float delayReset;
+    public int points = 1;
+
+    public GameObject[] packageTypes = new GameObject[3];
+    public List<GameObject> packagesOrdered;
+
+
+    private float delayReset;//value to reset the delay to
+
+    //variables for offscreen indicator
     public GameObject offScreenIndicator;
     public DemandController demandController;
 
+
+    //variables for audio
     AudioSource audioSource;
     [SerializeField] AudioClip orderedClip, expiredClip, successClip;
 
@@ -60,20 +70,160 @@ public class AsteroidHome : MonoBehaviour
     /// </summary>
     public void Order()
     {
-        if (packageOrdered == false)//check that this house hasn't ordered a package already
+        if (packageBeenOrdered == false)//check that this house hasn't ordered a package already
         {
             if (orderDelayTime <= 0)//make sure the delay time is 0 so that an order isn't placed right after one is fulfilled or expires
             {
                 print(this.name + " has ordered successfully");
                 audioSource.clip = orderedClip;//set the proper audio clip
                 audioSource.Play();//play audio
-                packageOrdered = true;//set order status
+                packageBeenOrdered = true;//set order status
 
-                numPackages = 2;//determine number of packages ordered
+                //////////Decide how many packages to order/////////////
+                float packageNumSeed = Random.value;
+                if (packageNumSeed <= 0.01f)
+                    numPackagesOrdered = 1;
+                else
+                    numPackagesOrdered = 2;
 
-                //eventually get to types of packages//
 
-                ///////////////////////////////////////
+                ////////////////////////////////////////////////////////
+
+
+                ///////////determine types of packages/////////////
+                float packTypeSeed = Random.value;
+                switch (numPackagesOrdered)
+                {
+                    case (1):
+                        if (packTypeSeed <= 0.3f)
+                        {
+                            print("ordered Square");
+                            foreach (GameObject pack in packageTypes)
+                            {
+                                if (pack.name.Equals("SquarePackage"))
+                                {
+                                    packagesOrdered.Add(pack);
+                                    break;
+                                }
+                            }
+                        }
+                        else if (packTypeSeed <= 0.6)
+                        {
+                            print("ordered Cone");
+                            foreach (GameObject pack in packageTypes)
+                            {
+                                if (pack.name.Equals("ConePackage"))
+                                {
+                                    packagesOrdered.Add(pack);
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            print("ordered Egg");
+                            foreach (GameObject pack in packageTypes)
+                            {
+                                if (pack.name.Equals("EggPackage"))
+                                {
+                                    packagesOrdered.Add(pack);
+                                    break;
+                                }
+                            }
+                        }
+
+                        break;
+
+                    case (2):
+                        if(packTypeSeed <= 0.17f)
+                        {
+                            print("ordered 2 boxes");
+                            foreach(GameObject pack in packageTypes)
+                            {
+                                if(pack.name.Equals("SquarePackage"))
+                                {
+                                    for (int i = 0; i < 2; i++)
+                                        packagesOrdered.Add(pack);
+                                }
+
+                                break;
+                            }
+                        }
+                        else if(packTypeSeed <= 0.34f)
+                        {
+                            print("ordered 2 cones");
+                            foreach(GameObject pack in packageTypes)
+                            {
+                                if(pack.name.Equals("ConePackage"))
+                                {
+                                    for (int i = 0; i < 2; i++)
+                                        packagesOrdered.Add(pack);
+                                }
+
+                                break;
+                            }
+                        }
+                        else if(packTypeSeed <= 0.51f)
+                        {
+                            print("ordered 2 eggs");
+                            foreach(GameObject pack in packageTypes)
+                            {
+                                if(pack.name.Equals("EggPackage"))
+                                {
+                                    for (int i = 0; i < 2; i++)
+                                        packagesOrdered.Add(pack);
+                                }
+
+                                break;
+                            }
+                        }
+
+                        else if (packTypeSeed <= 0.68f)
+                        {
+                            print("ordered 1 box, 1 cone");
+                            foreach (GameObject pack in packageTypes)
+                            {
+                                if (pack.name.Equals("SquarePackage"))
+                                    packagesOrdered.Add(pack);
+                                if (pack.name.Equals("ConePackage"))
+                                    packagesOrdered.Add(pack);
+                            }
+                        }
+
+                        else if (packTypeSeed <= 0.85f)
+                        {
+                            print("ordered 1 box, 1 egg");
+                            foreach (GameObject pack in packageTypes)
+                            {
+                                if (pack.name.Equals("SquarePackage"))
+                                    packagesOrdered.Add(pack);
+                                if (pack.name.Equals("EggPackage"))
+                                    packagesOrdered.Add(pack);
+                            }
+                        }
+                        else
+                        {
+                            print("ordered 1 cone, 1 egg");
+                            foreach (GameObject pack in packageTypes)
+                            {
+                                if (pack.name.Equals("ConePackage"))
+                                    packagesOrdered.Add(pack);
+                                if (pack.name.Equals("EggPackage"))
+                                    packagesOrdered.Add(pack);
+                            }
+                        }
+                        break;
+
+                    default:
+                        print("error with ordering packages");
+                        break;
+                }
+
+                foreach (GameObject i in packagesOrdered)
+                {
+                    print(i);
+                }
+                ///////////////////////////////////////////////////
 
                 demandController.maxValue = orderTime;//set the slider's max time value
                 demandController.CurrentValue = orderTime;//set the slider's current value
@@ -93,15 +243,15 @@ public class AsteroidHome : MonoBehaviour
     /// </summary>
     public void Deliver()
     {
-        print("packages left to deliver: " + numPackages);
+        print("packages left to deliver: " + numPackagesOrdered);
 
-        if (numPackages - 1 <= 0)//check number of packages left to deliver
+        if (numPackagesOrdered - 1 <= 0)//check number of packages left to deliver
 
         {
             OrderFulfilled();
         }
 
-        numPackages--;
+        numPackagesOrdered--;
     }
 
     /// <summary>
@@ -111,7 +261,7 @@ public class AsteroidHome : MonoBehaviour
     {
         offScreenIndicator.SetActive(false);
 
-        packageOrdered = false;
+        packageBeenOrdered = false;
 
         audioSource.clip = successClip;
         audioSource.Play();
@@ -136,10 +286,12 @@ public class AsteroidHome : MonoBehaviour
             audioSource.clip = expiredClip;//set the audio clip
             audioSource.Play();//play the audio
             offScreenIndicator.SetActive(false);//turn off the offscreen indicator
-            packageOrdered = false;//toggle the house's package ordered state to false so it knows it can order another package
-            numPackages = 0;
+            packageBeenOrdered = false;//toggle the house's package ordered state to false so it knows it can order another package
+            numPackagesOrdered = 0;
             gm.refundsOrdered += 1;//increment the refunds ordered variable in the game manager
             orderDelayTime = delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
+
+            packagesOrdered.Clear();//remove all packages ordered
         }
     }
 

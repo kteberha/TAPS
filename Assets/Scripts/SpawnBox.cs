@@ -70,7 +70,7 @@ public class SpawnBox : MonoBehaviour
 
                 case (2):
                     package = packageTypes[2];
-                    packageTypeIndex++;
+                    packageTypeIndex = 0;
                     break;
 
                 default:
@@ -81,8 +81,8 @@ public class SpawnBox : MonoBehaviour
             if(spawnPoint != null && package != null) // spawn selected package at point
             {
                 Instantiate(package, new Vector3(spawnPoint.transform.position.x, spawnPoint.transform.position.y,spawnPoint.transform.position.z), new Quaternion());
-                print(package.ToString());
-                print(spawnPoint.ToString());
+                //print(package.ToString());
+                //print(spawnPoint.ToString());
                 timeSinceSpawn = 0;
             }
         }

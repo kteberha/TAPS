@@ -35,7 +35,7 @@ public class FaceAnimation : MonoBehaviour
     {
         if(faceFrameIndex < selectedAnimation.Length)
         {
-            print(faceFrameIndex);
+            //print(faceFrameIndex);
             faceMaterial.SetTexture("_Texture2D_FaceTexture", currentFace);//set the face texture to the adjusted current face
             if(faceFrameIndex + 1 < selectedAnimation.Length)//check array bounds
                 currentFace = selectedAnimation[faceFrameIndex + 1];//set the current face to the frame ahead

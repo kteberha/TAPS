@@ -6,7 +6,12 @@ using UnityEngine.UI;
 
 public enum GAMESTATE
 {
-    PAUSED, CLOCKEDIN, CLOCKEDOUT
+    PAUSED, CLOCKEDIN, CLOCKEDOUT 
+}
+
+public enum WORKDAY
+{
+    WORKDAY1, WORKDAY2, WORKDAY3, WORKDAY4, WORKDAY5
 }
 
 public enum INPUTTYPE
