@@ -30,7 +30,6 @@ public class OrderManager : MonoBehaviour
             for (int i = 0; i < homes.Length; i++)
             {
                 ///////////////////////Make this so that it won't keep picking the same house/////////////
-                
                 //print("checking: " + homes[i].name);
                 //check if the home being compared has ordered a package, if so break the loop
                 if (homes[i].packageBeenOrdered == false)

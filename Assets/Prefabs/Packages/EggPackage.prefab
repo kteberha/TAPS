@@ -121,6 +121,9 @@ MonoBehaviour:
   brokenPackagePercent: 0.3
   lineRend: {fileID: 0}
   invBubble: {fileID: 7317962506090367762}
+  packageMesh: {fileID: 681233223992002578}
+  boxCollider: {fileID: 5869416400145213133}
+  meshCollider: {fileID: 1846356613261008827}
   brokenPackageClip: {fileID: 8300000, guid: e7a033c6ab2345345886a2e333ba9c5e, type: 3}
   normalPackageClip: {fileID: 8300000, guid: 50cf8fd27ad56554c978c0eb62f23419, type: 3}
 --- !u!251 &7596986712774070413
@@ -306,6 +309,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -8052994932809076077, guid: 4583b2b1204842046894b480ede833de,
+        type: 3}
+      propertyPath: m_Name
+      value: pEgg
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 4583b2b1204842046894b480ede833de,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -452,11 +460,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -3715844114465781973, guid: 6556b7982e3b1d942adb268762acde8b,
         type: 3}
-    - target: {fileID: -8052994932809076077, guid: 4583b2b1204842046894b480ede833de,
-        type: 3}
-      propertyPath: m_Name
-      value: pEgg
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4583b2b1204842046894b480ede833de, type: 3}
 --- !u!1 &8194225368429597904 stripped
@@ -471,6 +474,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 186426150689623513}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &681233223992002578 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 856365191234717131, guid: 4583b2b1204842046894b480ede833de,
+    type: 3}
+  m_PrefabInstance: {fileID: 186426150689623513}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7317962506090401202
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -478,6 +487,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5869416400145213131}
     m_Modifications:
+    - target: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
+      propertyPath: m_Name
+      value: InventoryBubble
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -532,14 +549,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
-      propertyPath: m_Name
-      value: InventoryBubble
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: e30c257a978b9e54b9d1de50486bd035, type: 3}

@@ -11,31 +11,21 @@ public class FaceAnimation : MonoBehaviour
     Texture2D currentFace;
     [SerializeField] Material faceMaterial;
     int faceFrameIndex = 0;
-    
+
 
     // Start is called before the first frame update
     void Start()
     {
         selectedAnimation = flyingFaces;//set the default animation;
         currentFace = selectedAnimation[0];
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void LateUpdate()
-    {
-        AnimateFace();
+        InvokeRepeating("AnimateFace", 0f, .5f);
     }
 
     public void AnimateFace()
     {
         if(faceFrameIndex < selectedAnimation.Length)
         {
-            //print(faceFrameIndex);
+            print(faceFrameIndex);
             faceMaterial.SetTexture("_Texture2D_FaceTexture", currentFace);//set the face texture to the adjusted current face
             if(faceFrameIndex + 1 < selectedAnimation.Length)//check array bounds
                 currentFace = selectedAnimation[faceFrameIndex + 1];//set the current face to the frame ahead
@@ -49,7 +39,7 @@ public class FaceAnimation : MonoBehaviour
     {
         selectedAnimation = freakoutFaces;
     }
-    
+
     public void SetIdleFlyingFace()
     {
         selectedAnimation = flyingFaces;

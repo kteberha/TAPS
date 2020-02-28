@@ -18,6 +18,9 @@ public class Package : MonoBehaviour
     private List<GameObject> _heldPackages;
     public LineRenderer lineRend;
     public GameObject invBubble;
+    [SerializeField] private MeshRenderer packageMesh;
+    [SerializeField] private BoxCollider2D boxCollider;
+    [SerializeField] private BoxCollider meshCollider;
 
     public AudioClip brokenPackageClip;
     public AudioClip normalPackageClip;
@@ -60,13 +63,28 @@ public class Package : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Finish") && justThrownClock >= 0 && collision.gameObject.GetComponent<AsteroidHome>().packageBeenOrdered)
         {
+            GameObject house = collision.gameObject;//store house as variable.
+            AsteroidHome ah = house.GetComponent<AsteroidHome>();//variable for house script
 
-            RemovePackages();
+            print("package has hit house");
 
-            collision.gameObject.GetComponent<AsteroidHome>().Deliver();
+            foreach(GameObject pack in ah.packagesOrdered)//go through the packages ordered list for comparison
+            {
+                if(pack.name.Equals(this.name))//check that the package's name matches a package in the list stored in the house
+                {
+                    print("correct package");
+                    ah.packagesOrdered.Remove(pack);//romve this type of package from the house's list
 
-            //destroy the package being hit and play audio
-            StartCoroutine("DeliverySound");
+                    RemovePackages();
+
+                    ah.OrderStatusCheck();
+
+                    //destroy the package being hit and play audio
+                    StartCoroutine("DeliverySound");
+                    break;
+                }
+
+            }
         }
     }
 
@@ -88,6 +106,9 @@ public class Package : MonoBehaviour
         invBubble.SetActive(false);
     }
 
+    /// <summary>
+    /// Removes the package and any behind it from the player's inventory
+    /// </summary>
     public void RemovePackages()
     {
         //check if the package is in the inventory to be removed
@@ -120,10 +141,12 @@ public class Package : MonoBehaviour
     IEnumerator DeliverySound()
     {
         invBubble.SetActive(false);
-        //gameObject.GetComponent<MeshRenderer>().enabled = false;
-        gameObject.transform.Find("package").Find("pCube1").GetComponent<MeshRenderer>().enabled = false;
-        gameObject.transform.Find("package").GetComponent<BoxCollider>().enabled = false;
-        GetComponent<BoxCollider2D>().enabled = false;
+        packageMesh.enabled = false;
+        boxCollider.enabled = false;
+        meshCollider.enabled = false;
+        //gameObject.transform.Find("package").Find("pCube1").GetComponent<MeshRenderer>().enabled = false;
+        //gameObject.transform.Find("package").GetComponent<BoxCollider>().enabled = false;
+        //GetComponent<BoxCollider2D>().enabled = false;
         float f = Random.value;
         if (f <= brokenPackagePercent)
             a_Source.clip = brokenPackageClip;
@@ -134,8 +157,8 @@ public class Package : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnMouseDown()
-    {
-        RemovePackages();
-    }
+    //private void OnMouseDown()
+    //{
+    //    RemovePackages();
+    //}
 }

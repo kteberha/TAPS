@@ -81,7 +81,7 @@ public class AsteroidHome : MonoBehaviour
 
                 //////////Decide how many packages to order/////////////
                 float packageNumSeed = Random.value;
-                if (packageNumSeed <= 0.01f)
+                if (packageNumSeed <= 0.5f)
                     numPackagesOrdered = 1;
                 else
                     numPackagesOrdered = 2;
@@ -91,6 +91,7 @@ public class AsteroidHome : MonoBehaviour
 
 
                 ///////////determine types of packages/////////////
+                #region
                 float packTypeSeed = Random.value;
                 switch (numPackagesOrdered)
                 {
@@ -157,10 +158,11 @@ public class AsteroidHome : MonoBehaviour
                                 if(pack.name.Equals("ConePackage"))
                                 {
                                     for (int i = 0; i < 2; i++)
+                                    {
                                         packagesOrdered.Add(pack);
+                                    }
+                                    break;
                                 }
-
-                                break;
                             }
                         }
                         else if(packTypeSeed <= 0.51f)
@@ -171,10 +173,11 @@ public class AsteroidHome : MonoBehaviour
                                 if(pack.name.Equals("EggPackage"))
                                 {
                                     for (int i = 0; i < 2; i++)
+                                    {
                                         packagesOrdered.Add(pack);
+                                    }
+                                    break;
                                 }
-
-                                break;
                             }
                         }
 
@@ -219,10 +222,11 @@ public class AsteroidHome : MonoBehaviour
                         break;
                 }
 
-                foreach (GameObject i in packagesOrdered)
-                {
-                    print(i);
-                }
+                //foreach (GameObject i in packagesOrdered)
+                //{
+                //    print(i);
+                //}
+                #endregion
                 ///////////////////////////////////////////////////
 
                 demandController.maxValue = orderTime;//set the slider's max time value
@@ -241,17 +245,18 @@ public class AsteroidHome : MonoBehaviour
     /// <summary>
     /// Add points to player's score based on the time of package's arrival
     /// </summary>
-    public void Deliver()
+    public void OrderStatusCheck()
     {
-        print("packages left to deliver: " + numPackagesOrdered);
+        foreach(GameObject pack in packagesOrdered)//testing
+        {
+            print("package types left: " + pack.name);
+        }
 
-        if (numPackagesOrdered - 1 <= 0)//check number of packages left to deliver
+        if (packagesOrdered.Count == 0)//check number of packages left to deliver
 
         {
             OrderFulfilled();
         }
-
-        numPackagesOrdered--;
     }
 
     /// <summary>
@@ -273,7 +278,7 @@ public class AsteroidHome : MonoBehaviour
         //        pointsToAward = p.points;
         //}
         gm.packagesDelivered += 1;
-        gm.points += points;
+        gm.points += numPackagesOrdered;
         gm.ordersFulfilled += 1;
 
         orderDelayTime = delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
