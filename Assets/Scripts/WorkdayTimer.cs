@@ -52,11 +52,11 @@ public class WorkdayTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //a lot of this needs to be taken off update
-        if (countStarted && countdownValue >= 0f)
+        ////a lot of this needs to be taken off update////
+        if (countStarted && countdownValue >= 0f)//run countdown logic if there is time left AND if the counter is allowed to be active
         {
-            //start the countdown
-            countdownValue = Mathf.Clamp(countdownValue - Time.deltaTime, 0f, gm.workdayLength);
+            countdownValue = Mathf.Clamp(countdownValue - Time.deltaTime, 0f, gm.workdayLength);//start the countdown
+
 
             //set the minute and second values
             minute = Mathf.Floor(countdownValue / 60f);
@@ -67,15 +67,13 @@ public class WorkdayTimer : MonoBehaviour
                 minText = "0" + minute.ToString();
             else
                 minText = minute.ToString();
-
             if (second < 10)
                 secText = "0" + second.ToString();
             else
                 secText = second.ToString();
 
-
             /////////////////////////////////////////////This is all rough code that needs to be made nicer and more efficient
-            if (second % 60 == 1 || second % 60 == 31 && countdownValue > 2)
+            if (second % 60 == 1 || second % 60 == 31 && countdownValue > 32)
             {
                 if (!fadeAnimationStarted)
                 {
@@ -83,23 +81,23 @@ public class WorkdayTimer : MonoBehaviour
                 }
             }
 
-            if (Mathf.Ceil(countdownValue) == 31)
+            if (Mathf.Ceil(countdownValue) == 31)//fade the clock in and don't let it fade out during the final push
             {
                 fadeAnimation.Play("ClockFadeIn");
             }
 
-            if(countdownValue <= 0)
+            if(countdownValue <= 0)//play the final fade out animation
             {
                 if(!oneTimeFadeStarted)
                 {
                     fadeAnimation.Play("ClockFadeOut");
                     oneTimeFadeStarted = true;
                     //clockTextAnim.Stop();
-                    clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b, 0f);
+                    //clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b, 0f);
                 }
             }
 
-            if(countdownValue <= finalColorSecValue + 1)
+            if(countdownValue <= finalColorSecValue + 1)//start the red flashing warning that time is almost up
             {
                 fill.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.2f, 1));
                 if(!oneTimeFadeStarted)
@@ -130,10 +128,9 @@ public class WorkdayTimer : MonoBehaviour
             }
         }
 
-        //adjust the slider fill value
-        clockSlider.value = countdownValue;
-        //format the timer text
-        clockText.text = minText + ":" + secText;
+        clockSlider.value = countdownValue;//adjust the slider fill value
+        clockText.text = minText + ":" + secText;//format the timer text
+
     }
 
     /// <summary>
@@ -147,11 +144,13 @@ public class WorkdayTimer : MonoBehaviour
 
         yield return new WaitForSeconds(2);
 
-        fadeAnimation.clip = fadeAnimation.GetClip("ClockFadeOut");
-        fadeAnimation.Play();
-        fadeAnimation.clip = fadeAnimation.GetClip("ClockFadeIn");
-        fadeAnimationStarted = false;
+        fadeAnimation.clip = fadeAnimation.GetClip("ClockFadeOut");//change the clip to fade out
+        fadeAnimation.Play();//play the fade out
+
+        fadeAnimation.clip = fadeAnimation.GetClip("ClockFadeIn");//reset the animation clip to play correctly the next time coroutine is run
+        fadeAnimationStarted = false;//toggle bool back to false
     }
+
     //IEnumerator TimerFlash()
     //{
     //    clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b);

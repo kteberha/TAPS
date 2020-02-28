@@ -162,7 +162,7 @@ public class MenuController : MonoBehaviour
         }
 
         //check for refunds placed (lowest) high scores and adjust accordingly
-        if (PlayerPrefs.GetInt("RefundsBest") < refundsOrdered)
+        if (PlayerPrefs.GetInt("RefundsBest") > refundsOrdered)
         {
             PlayerPrefs.SetInt("RefundsBest", refundsOrdered);
             print("new best refunds avoided");
