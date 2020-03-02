@@ -40,7 +40,7 @@ public class OffScreenIndicator : MonoBehaviour
         //print(distanceFromTarget);
 
         //locks the scale value between the min and max distance values (needs to be converted to a number between 0 & 1)
-        imageScaleVal = Mathf.Lerp(0.5f, 1.0f, distanceFromTarget);
+        imageScaleVal = Mathf.Lerp(0.5f, .85f, distanceFromTarget);
 
         this.transform.localScale = Vector3.one * imageScaleVal;
         //multiply image scale by distance and clamp image scale between 0.5 and 1
