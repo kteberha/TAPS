@@ -249,7 +249,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8800940999912125928, guid: 89b9931aab1d90848947ae0a622d6055, type: 3}
+  - {fileID: 2100000, guid: 0ac2cbf90d5c55647881a172cdcc90cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -351,32 +351,32 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5371131761626521976, guid: 60bb7771d584dcd4396bf127909db40b,
+    - target: {fileID: 4942435284209414574, guid: 60bb7771d584dcd4396bf127909db40b,
         type: 3}
       propertyPath: m_LocalScale.x
       value: 31.847
       objectReference: {fileID: 0}
-    - target: {fileID: 5371131761626521976, guid: 60bb7771d584dcd4396bf127909db40b,
+    - target: {fileID: 4942435284209414574, guid: 60bb7771d584dcd4396bf127909db40b,
         type: 3}
       propertyPath: m_LocalScale.y
       value: 31.847
       objectReference: {fileID: 0}
-    - target: {fileID: 5371131761626521976, guid: 60bb7771d584dcd4396bf127909db40b,
+    - target: {fileID: 4942435284209414574, guid: 60bb7771d584dcd4396bf127909db40b,
         type: 3}
       propertyPath: m_LocalScale.z
       value: 31.847
       objectReference: {fileID: 0}
-    - target: {fileID: 4942435284209414574, guid: 60bb7771d584dcd4396bf127909db40b,
+    - target: {fileID: 5371131761626521976, guid: 60bb7771d584dcd4396bf127909db40b,
         type: 3}
       propertyPath: m_LocalScale.x
       value: 31.847
       objectReference: {fileID: 0}
-    - target: {fileID: 4942435284209414574, guid: 60bb7771d584dcd4396bf127909db40b,
+    - target: {fileID: 5371131761626521976, guid: 60bb7771d584dcd4396bf127909db40b,
         type: 3}
       propertyPath: m_LocalScale.y
       value: 31.847
       objectReference: {fileID: 0}
-    - target: {fileID: 4942435284209414574, guid: 60bb7771d584dcd4396bf127909db40b,
+    - target: {fileID: 5371131761626521976, guid: 60bb7771d584dcd4396bf127909db40b,
         type: 3}
       propertyPath: m_LocalScale.z
       value: 31.847

@@ -55,11 +55,9 @@ public class PlayerController : MonoBehaviour
 
     //Audio Variables
     private AudioSource P_audioSource;
-    public AudioClip extinguisherStart;
-    public AudioClip extinguisherLoop;
-    public AudioClip extinguisherEnd;
-    public AudioClip throwSound;
-    public AudioClip teleportSound;
+    [SerializeField] AudioClip extinguisherStart, extinguisherLoop, extinguisherEnd, throwSound, teleportSound;
+    [SerializeField] AudioClip[] inventoryAddClips;
+    //[SerializeField] AudioClip[] inventorySortClips;
 
     //Teleporter variables
     public GameObject teleporter;
@@ -164,7 +162,7 @@ public class PlayerController : MonoBehaviour
             }
 
             //Teleport on given key down
-            if (Input.GetMouseButtonDown(2))
+            if (Input.GetMouseButtonDown(2) || Input.GetKeyDown(KeyCode.T))
             {
                 Teleport();
             }
@@ -289,7 +287,8 @@ public class PlayerController : MonoBehaviour
             heldPackages.Remove(packageMoved);
 
             //cue throwing sound
-            P_audioSource.PlayOneShot(throwSound, 0.5f);
+            P_audioSource.clip = throwSound;
+            P_audioSource.Play();
 
             //attach the first package's spring joint to the one that was behind it
             if (heldPackages.Count > 0)
@@ -341,10 +340,17 @@ public class PlayerController : MonoBehaviour
             rope.distance = inventoryDistance;
             rope.dampingRatio = inventoryDampingRatio;
             rope.frequency = inventoryFrequency;
+
+            //pick a random audio clip from the inventory add clip array to play
+            int i = (int)Mathf.Floor(Random.Range(0, inventoryAddClips.Length));
+
+            //assign the clip and play
+            P_audioSource.clip = inventoryAddClips[i];
+            P_audioSource.Play();
         }
 
         //tell the line renderer to draw to the newest added point
-        lineRenderer.positionCount = heldPackages.Count + 1;
+        lineRenderer.positionCount = heldPackages.Count + 1;        
     }
 
     void PackageSwitch(float dir)

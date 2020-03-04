@@ -239,6 +239,8 @@ public class AsteroidHome : MonoBehaviour
                 print(this.name + " needs to wait");
                 StartCoroutine(OrderDelay());
             }
+
+            offScreenIndicator.GetComponent<OffScreenIndicator>().OrderTicketUpdate(this);//update the offscreen indicator to display packages
         }
     }
 
@@ -247,10 +249,7 @@ public class AsteroidHome : MonoBehaviour
     /// </summary>
     public void OrderStatusCheck()
     {
-        foreach(GameObject pack in packagesOrdered)//testing
-        {
-            print("package types left: " + pack.name);
-        }
+        offScreenIndicator.GetComponent<OffScreenIndicator>().OrderTicketUpdate(this);
 
         if (packagesOrdered.Count == 0)//check number of packages left to deliver
 

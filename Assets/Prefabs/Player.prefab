@@ -109,11 +109,20 @@ MonoBehaviour:
   inventoryFrequency: 0.5
   lineRenderer: {fileID: 0}
   lineDrawSpeed: 6
-  extinguisherStart: {fileID: 8300000, guid: d5f6d01b75d430c449d9f6170ed6bf84, type: 3}
-  extinguisherLoop: {fileID: 8300000, guid: 8302f0663adab2e41a072b290be6472c, type: 3}
-  extinguisherEnd: {fileID: 8300000, guid: 44c01f9c6bf6ac843b7fc7df087b235c, type: 3}
+  extinguisherStart: {fileID: 8300000, guid: 8483f9c4a392bdd4f93f5d21ea6e9e54, type: 3}
+  extinguisherLoop: {fileID: 8300000, guid: fd4e7ea15bff1134f9dbd0f12d8998b5, type: 3}
+  extinguisherEnd: {fileID: 8300000, guid: 31e82bc5680b6a94580ca5e2c53122d0, type: 3}
   throwSound: {fileID: 8300000, guid: dccaf3368705e8a41b1ac2432edad349, type: 3}
   teleportSound: {fileID: 8300000, guid: ca4d1045016696a4e8719b3f8d820f2e, type: 3}
+  inventoryAddClips:
+  - {fileID: 8300000, guid: 6a116406fd010f34c93d539d30b99d6a, type: 3}
+  - {fileID: 8300000, guid: d436832cc95542e43a22c868664ed34a, type: 3}
+  - {fileID: 8300000, guid: 94e1c2b450bdd63479aae1ed744f888f, type: 3}
+  - {fileID: 8300000, guid: 2bba44b59e409914c9990be261e696c3, type: 3}
+  - {fileID: 8300000, guid: 30a4c229585015545bab432d2eb0d170, type: 3}
+  - {fileID: 8300000, guid: 0294a304852a0f7409891fc433042075, type: 3}
+  - {fileID: 8300000, guid: 4485089a6b179cf4083c5be67102aaf2, type: 3}
+  - {fileID: 8300000, guid: dfef6ca2214846e4f961b8a87ecb99b9, type: 3}
   teleporter: {fileID: 0}
   teleportCooldown: 0
   playerModel: {fileID: 5114675450480252855}

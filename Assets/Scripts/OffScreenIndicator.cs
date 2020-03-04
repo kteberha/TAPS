@@ -16,6 +16,13 @@ public class OffScreenIndicator : MonoBehaviour
 
     float imageScaleVal;
 
+    [SerializeField] Image pointerArrow;// to indicate where the associated home is
+    [SerializeField] Image[] packageSlotImages;//references the images in the circle that will have their sprites swapped
+    [SerializeField] Sprite[] packageSprites;//references to use for swapping out the image sprites in the package slots
+    Sprite packageTypeAssigned;//temporary holder to assign each appropriate slot
+
+
+
     // Update is called once per frame
     void Update()
     {
@@ -45,5 +52,62 @@ public class OffScreenIndicator : MonoBehaviour
         this.transform.localScale = Vector3.one * imageScaleVal;
         //multiply image scale by distance and clamp image scale between 0.5 and 1
         //this will need some extra manipulation
+    }
+
+    /// <summary>
+    /// Updates the "order ticket" that appears on the offscreen indicator with images of packages
+    /// </summary>
+    /// <param name="_asteroidHome"></param>
+    public void OrderTicketUpdate(AsteroidHome _asteroidHome)
+    {
+        //print("ui should update");//testing
+
+        int i = 0;
+
+        foreach (GameObject package in _asteroidHome.packagesOrdered)//go through each item in packages ordered list
+        {
+            string type = package.name;
+
+            switch (type)//determine sprite based on package name saved above
+            {
+                case ("SquarePackage"):
+                    packageTypeAssigned = packageSprites[0];
+                    //print("SquarePackage Sprite");//testing
+                    break;
+                case ("ConePackage"):
+                    packageTypeAssigned = packageSprites[1];
+                    //print("ConePackage Sprite");//testing
+                    break;
+                case ("EggPackage"):
+                    packageTypeAssigned = packageSprites[2];
+                    //print("EggPackage Sprite");//testing
+                    break;
+                default:
+                    packageTypeAssigned = null;
+                    //print("Error assigning package image: Offscreen Indicator");
+                    break;
+            }
+
+
+            packageSlotImages[i].sprite = packageTypeAssigned;//alter the sprite in the image slot
+
+            //print(packageSlotImages[i].sprite.name);//testing
+
+
+            if (i + 1 < _asteroidHome.packagesOrdered.Count)
+            {
+                i++; //increment the index holder to work with the next icon slot
+                //print("There are more packages to loop through");//testing
+            }
+            else
+            {
+                //print("Set other slot images to nothing");//testing
+                for (int n = i + 1; i <= _asteroidHome.packagesOrdered.Count; i++)//loop through the remaining slots 
+                {
+                    packageSlotImages[n].color = Color.clear;//set the sprite to null
+                }
+                break;//break the foreach loop
+            }
+        }
     }
 }
