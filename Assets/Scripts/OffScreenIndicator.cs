@@ -21,6 +21,7 @@ public class OffScreenIndicator : MonoBehaviour
     [SerializeField] Sprite[] packageSprites;//references to use for swapping out the image sprites in the package slots
     Sprite packageTypeAssigned;//temporary holder to assign each appropriate slot
 
+    [SerializeField] GameObject arrowHolder;
 
 
     // Update is called once per frame
@@ -33,6 +34,7 @@ public class OffScreenIndicator : MonoBehaviour
         transform.position = edgePt;
 
         Scale();
+        RotateArrow();
     }
 
     void Scale()
@@ -54,6 +56,13 @@ public class OffScreenIndicator : MonoBehaviour
         //this will need some extra manipulation
     }
 
+    void RotateArrow()
+    {
+        Vector3 v = Camera.main.WorldToScreenPoint(target.position);//get the target position in world space
+
+        arrowHolder.transform.rotation = Quaternion.LookRotation(v, -transform.forward);//rotate the arrow holder toward the target
+        arrowHolder.transform.rotation = new Quaternion(0, 0, arrowHolder.transform.rotation.z, arrowHolder.transform.rotation.w);
+    }
     /// <summary>
     /// Updates the "order ticket" that appears on the offscreen indicator with images of packages
     /// </summary>
