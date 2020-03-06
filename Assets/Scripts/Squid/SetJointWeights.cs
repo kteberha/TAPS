@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class SetJointWeights : MonoBehaviour
 {
-	public Vector2 MinAngle;
-	public Vector2 MaxAngle;
+	public Vector2 minAngle;
+	public Vector2 maxAngle;
 
-	public float MinSpeed;
-	public float MaxSpeed;
+	public float minSpeed;
+	public float maxSpeed;
 	
-	private ArmJoint[] Joints;
+	public Vector3[] axes = {Vector3.forward};
 
-	private static readonly Vector3[] Axes = {Vector3.right,Vector3.up,Vector3.forward};
+	private ArmJoint[] joints;
+
+	//private static readonly Vector3[] axes = {Vector3.right,Vector3.up,Vector3.forward};
 
 	public void Awake()
 	{
@@ -19,17 +21,17 @@ public class SetJointWeights : MonoBehaviour
 
 	public void SetJointAngles()
 	{
-		Joints = GetComponentsInChildren<ArmJoint>();
-		for (int i=0; i<Joints.Length; i++)
+		joints = GetComponentsInChildren<ArmJoint>();
+		for (int i=0; i<joints.Length; i++)
 		{
-			float t = (float)i / (Joints.Length - 1);
+			float t = (float)i / (joints.Length - 1);
 
-			Joints[i].MinAngle = Mathf.Lerp(MinAngle.x, MinAngle.y, t);
-			Joints[i].MaxAngle = Mathf.Lerp(MaxAngle.x, MaxAngle.y, t);
+			joints[i].MinAngle = Mathf.Lerp(minAngle.x, minAngle.y, t);
+			joints[i].MaxAngle = Mathf.Lerp(maxAngle.x, maxAngle.y, t);
 
-			Joints[i].Speed = Mathf.Lerp(MinSpeed, MaxSpeed, t);
+			joints[i].Speed = Mathf.Lerp(minSpeed, maxSpeed, t);
 
-			Joints[i].Axis = Axes[i % Axes.Length];
+			joints[i].Axis = axes[i % axes.Length];
 		}
 	}
 }

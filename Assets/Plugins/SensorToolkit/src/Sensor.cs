@@ -38,15 +38,18 @@ namespace SensorToolkit
         public abstract List<GameObject> DetectedObjectsOrderedByDistance { get; }
 
         [System.Serializable]
-        public class SensorEventHandler : UnityEvent<GameObject> { }
+        public class SensorEventHandler : UnityEvent<Sensor> { }
+
+        [System.Serializable]
+        public class SensorDetectionEventHandler : UnityEvent<GameObject, Sensor> { }
 
         // Event is called for each GameObject at the time it is added to the sensors DetectedObjects list
         [SerializeField]
-        public SensorEventHandler OnDetected;
+        public SensorDetectionEventHandler OnDetected;
 
         // Event is called for each GameObject at the time it is removed to the sensors DetectedObjects list
         [SerializeField]
-        public SensorEventHandler OnLostDetection;
+        public SensorDetectionEventHandler OnLostDetection;
 
         protected virtual void Awake()
         {
@@ -57,12 +60,12 @@ namespace SensorToolkit
 
             if (OnDetected == null) 
             {
-                OnDetected = new SensorEventHandler();
+                OnDetected = new SensorDetectionEventHandler();
             }
 
             if (OnLostDetection == null)
             {
-                OnLostDetection = new SensorEventHandler();
+                OnLostDetection = new SensorDetectionEventHandler();
             }
         }
 

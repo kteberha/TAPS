@@ -71,3 +71,7 @@ ChangeLog
 
 1.5.1
 - Bugfixes
+
+1.6.0
+- Sensor events now pass the sensor instance which caused the event to the handler function.
+- Fixed a bug causing RaySensor events not to fire.

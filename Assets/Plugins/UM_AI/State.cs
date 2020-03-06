@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UM_AI
 {
@@ -70,11 +71,23 @@ namespace UM_AI
         protected StateMachine StateMachine { get; set; }
         
 		/// <summary>
-        /// Dictionary of all actions associated with this state.
+        /// Dictionary of all event actions associated with this state.
         /// </summary>
         private readonly IDictionary<string, Action<EventArgs>> events = new Dictionary<string, Action<EventArgs>>();
 
-		private readonly IList<ICondition> conditions = new List<ICondition>();
+        /// <summary>
+        /// List of all conditions associated with this state.
+        /// </summary>
+        /// <typeparam name="Condition"></typeparam>
+        /// <returns></returns>
+		private readonly IList<ICondition> conditions = new List<Condition>() as IList<ICondition>;
+        private IEnumerable<TransitionCondition> Transitions
+        {
+            get
+            {
+                return conditions.OfType<TransitionCondition>();
+            }
+        }
 
         /// <summary>
         /// Triggered when we enter the state.
@@ -90,6 +103,18 @@ namespace UM_AI
         /// Triggered when we exit the state.
         /// </summary>
 		public virtual void Exit(StateArgs args) {}
+
+
+        /// <summary>
+        /// Check conditions 
+        /// </summary>
+        public void UpdateConditions()
+        {
+            for (int i=0; i<conditions.Count; i++)
+            {
+                if (conditions[i].Predicate()) conditions[i].Act();
+            }
+        }
 
         /// <summary>
         /// Sets an action to be associated with an identifier that can later be used
@@ -141,9 +166,7 @@ namespace UM_AI
         }
 
 		/// <summary>
-        /// Triggered when and event occurs. Executes the event's action if the 
-        /// current state is at the top of the stack, otherwise triggers it on 
-        /// the next state down.
+        /// Trigger an event.
         /// </summary>
         /// <param name="name">Name of the event to trigger</param>
         /// <param name="eventArgs">Arguments to send to the event</param>

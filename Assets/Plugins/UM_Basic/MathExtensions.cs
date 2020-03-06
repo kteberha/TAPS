@@ -82,13 +82,33 @@ namespace UModules
 		}
 
 		/// <summary>
+		/// Return the result of making a new Vector2 from x and y components of the given Vector3
+		/// </summary>
+		/// <param name="v">Input vector</param>
+		/// <returns>A new Vector2 (v.x, v.z)</returns>
+		public static Vector2 XY(this Vector3 v)
+		{
+			return new Vector2(v.x, v.y);
+		}
+
+		/// <summary>
 		/// Return the result of making a new Vector2 from x and z components of the given Vector3
 		/// </summary>
 		/// <param name="v">Input vector</param>
 		/// <returns>A new Vector2 (v.x, v.z)</returns>
-		public static Vector2 ToVec2(this Vector3 v)
+		public static Vector2 XZ(this Vector3 v)
 		{
 			return new Vector2(v.x, v.z);
+		}
+
+		/// <summary>
+		/// Return the result of making a new Vector2 from y and z components of the given Vector3
+		/// </summary>
+		/// <param name="v">Input vector</param>
+		/// <returns>A new Vector2 (v.x, v.z)</returns>
+		public static Vector2 YZ(this Vector3 v)
+		{
+			return new Vector2(v.y, v.z);
 		}
 
 		/// <summary>
@@ -106,6 +126,19 @@ namespace UModules
 		{
 			float th = UnityEngine.Random.value * 360 * Mathf.Deg2Rad;
 			return new Vector2(Mathf.Cos(th), Mathf.Sin(th));
+		}
+
+		// public static Vector2 RandomInRadius(this Vector3 center, float radius)
+		// {
+		// 	float a = UnityEngine.Random.value * 2f * Mathf.PI;
+		// 	float r = radius * Mathf.Sqrt(UnityEngine.Random.value);
+		// 	return new Vector2(center.x+r*Mathf.Cos(a), center.y+r*Mathf.Sin(a));
+		// }
+
+		public static Vector2 RandomInRadius(this Vector2 center, float radius)
+		{
+
+			return center + radius * RandomOnUnitCircle();
 		}
 
 		public static Vector3 RandomInRadius(this Vector3 center, float radius)

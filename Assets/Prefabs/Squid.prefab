@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6609255704153456613}
   - component: {fileID: 406457519987751662}
   - component: {fileID: 7760531624337590461}
-  - component: {fileID: 6427361936738044470}
+  - component: {fileID: 8826386407212439365}
   m_Layer: 0
   m_Name: SquidHead
   m_TagString: Untagged
@@ -26,14 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950009518099336845}
-  m_LocalRotation: {x: 0.000000021855694, y: -0.00000004371139, z: 1.0165751e-15,
-    w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5755146393495155304}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!33 &406457519987751662
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -80,20 +79,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &6427361936738044470
-CapsuleCollider:
+--- !u!70 &8826386407212439365
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950009518099336845}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 12
-  m_Height: 32
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 24, y: 32}
+  m_Direction: 0
 --- !u!1 &5755146393495155310
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,7 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UpdateInterval: 1
   debugColor: {r: 0, g: 0, b: 0, a: 0}
-  roamRange: 50
+  roamRange: 100
   seekTime: 30
   tentacles: []
   debug: 0
@@ -163,23 +164,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IgnoreList: []
-  EnableTagFilter: 0
-  AllowedTags: []
+  EnableTagFilter: 1
+  AllowedTags:
+  - Player
+  - Package
   OnDetected:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   OnLostDetection:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   DetectionMode: 0
   RequiresLineOfSight: 0
   BlocksLineOfSight:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   TestLOSTargetsOnly: 0
   NumberOfRays: 1
   MinimumVisibility: 0.5
@@ -206,15 +209,15 @@ MonoBehaviour:
   IgnoreList: []
   AvoidanceSensitivity: 1
   MaxAvoidanceLength: 1
-  RotateTowardsTarget: 0
-  RB: {fileID: 0}
-  TurnForce: 0
-  MoveForce: 0
-  StrafeForce: 0
-  TurnSpeed: 0
-  MoveSpeed: 0
-  StrafeSpeed: 0
-  StoppingDistance: 0.5
+  RotateTowardsTarget: 1
+  RB: {fileID: 7275721385386507667}
+  TurnForce: 1
+  MoveForce: 2
+  StrafeForce: 3
+  TurnSpeed: 5
+  MoveSpeed: 6
+  StrafeSpeed: 1
+  StoppingDistance: 10
   DestinationTransform: {fileID: 0}
   FaceTowardsTransform: {fileID: 0}
 --- !u!50 &7275721385386507667
@@ -225,7 +228,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5755146393495155310}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -291,12 +294,12 @@ MonoBehaviour:
   OnDetected:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   OnLostDetection:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   Length: 50
   Radius: 0
@@ -315,13 +318,13 @@ MonoBehaviour:
   OnObstruction:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   OnClear:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &9063349195524087702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,12 +343,12 @@ MonoBehaviour:
   OnDetected:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   OnLostDetection:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   Length: 50
   Radius: 0
@@ -364,13 +367,13 @@ MonoBehaviour:
   OnObstruction:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   OnClear:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &607313292945768770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,12 +392,12 @@ MonoBehaviour:
   OnDetected:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   OnLostDetection:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   Length: 50
   Radius: 0
@@ -413,13 +416,13 @@ MonoBehaviour:
   OnObstruction:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   OnClear:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &7609174028283989600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,12 +441,12 @@ MonoBehaviour:
   OnDetected:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   OnLostDetection:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   Length: 50
   Radius: 0
@@ -462,13 +465,13 @@ MonoBehaviour:
   OnObstruction:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   OnClear:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &1208599154397914762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,12 +490,12 @@ MonoBehaviour:
   OnDetected:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   OnLostDetection:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   Length: 50
   Radius: 0
@@ -511,13 +514,13 @@ MonoBehaviour:
   OnObstruction:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   OnClear:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1001 &3704787081727523752
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -538,7 +541,7 @@ PrefabInstance:
     - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
         type: 3}
@@ -558,12 +561,12 @@ PrefabInstance:
     - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.9396926
+      value: -0.258819
       objectReference: {fileID: 0}
     - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.34202018
+      value: 0.9659259
       objectReference: {fileID: 0}
     - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
         type: 3}
@@ -583,7 +586,7 @@ PrefabInstance:
     - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -140
+      value: -30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 512b69dfa52679446b186fb78615a526, type: 3}
@@ -613,7 +616,7 @@ PrefabInstance:
     - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
         type: 3}
@@ -633,12 +636,12 @@ PrefabInstance:
     - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.9396927
+      value: 0.2588191
       objectReference: {fileID: 0}
     - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.34202018
+      value: 0.9659258
       objectReference: {fileID: 0}
     - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
         type: 3}
@@ -658,7 +661,7 @@ PrefabInstance:
     - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 140
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 512b69dfa52679446b186fb78615a526, type: 3}

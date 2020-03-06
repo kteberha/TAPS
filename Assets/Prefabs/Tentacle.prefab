@@ -75,7 +75,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 419622764577530667}
-  m_LocalRotation: {x: -0.7071067, y: -0.000000030908616, z: 0.000000030908623, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -257,9 +257,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 544805686467723937}
-  m_LocalRotation: {x: 0.49999997, y: 0.5000001, z: 0.5, w: 0.49999988}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.99999994, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4554041346061638596}
   m_Father: {fileID: 8202715187253871234}
@@ -344,7 +344,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8202715187253871234}
-  - component: {fileID: 705608525143289227}
   m_Layer: 0
   m_Name: Armature
   m_TagString: Untagged
@@ -359,7 +358,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705608525143289226}
-  m_LocalRotation: {x: -0.7071067, y: -0.000000030908616, z: 0.000000030908623, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -367,22 +366,6 @@ Transform:
   m_Father: {fileID: 5583316363656038668}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &705608525143289227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 705608525143289226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 057fbbed44032d54eb32cc14ff7c3760, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MinAngle: {x: 0, y: 60}
-  MaxAngle: {x: 0, y: 60}
-  MinSpeed: 1
-  MaxSpeed: 30
 --- !u!1 &856573614950676395
 GameObject:
   m_ObjectHideFlags: 0
@@ -2841,6 +2824,7 @@ GameObject:
   - component: {fileID: 5583316363656038668}
   - component: {fileID: 2590114486413993078}
   - component: {fileID: 1772743396898815592}
+  - component: {fileID: 3835711150962281509}
   m_Layer: 0
   m_Name: Tentacle
   m_TagString: Untagged
@@ -2855,8 +2839,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8872290819828022047}
-  m_LocalRotation: {x: 0, y: 0, z: 0.2588191, w: 0.9659258}
-  m_LocalPosition: {x: -4, y: 7, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8202715187253871234}
@@ -2900,10 +2884,29 @@ MonoBehaviour:
   Solution: []
   Target: {fileID: 0}
   MininumDistance: 0
-  DeltaGradient: 0.1
-  LearningRate: 0.1
-  StopThreshold: 0.1
+  DeltaGradient: 0.2
+  LearningRate: 1.1
+  StopThreshold: 0.2
   SlowdownThreshold: 0.25
-  OrientationWeight: 0.5
+  OrientationWeight: 6
   TorsionWeight: 0.5
-  TorsionPenality: {x: 1, y: 0, z: 0}
+  TorsionPenality: {x: 0, y: 1, z: 0}
+--- !u!114 &3835711150962281509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8872290819828022047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 057fbbed44032d54eb32cc14ff7c3760, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minAngle: {x: 0, y: -120}
+  maxAngle: {x: 0, y: 120}
+  minSpeed: 1
+  maxSpeed: 5
+  axes:
+  - {x: 0, y: 0, z: 1}
+  - {x: 1, y: 0, z: 0}

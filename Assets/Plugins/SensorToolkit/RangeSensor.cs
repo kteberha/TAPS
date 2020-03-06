@@ -118,7 +118,7 @@ namespace SensorToolkit
                     }
                     else
                     {
-                        OnDetected.Invoke(newDetection);
+                        OnDetected.Invoke(newDetection, this);
                     }
                 }
             }
@@ -128,7 +128,7 @@ namespace SensorToolkit
             while (previousDetectedEnumerator.MoveNext())
             {
                 var lostDetection = previousDetectedEnumerator.Current;
-                OnLostDetection.Invoke(lostDetection);
+                OnLostDetection.Invoke(lostDetection, this);
             }
 
             previousDetectedObjects.Clear();

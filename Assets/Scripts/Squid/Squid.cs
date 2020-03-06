@@ -17,15 +17,50 @@ public class Squid : Agent
 
 	[SerializeField] protected bool debug = false;
 
-	public GameObject Target {get; protected set;}
-
-	private Vector2 targetPos;
-
 	private SteeringRig2D _steeringRig;
-	private SteeringRig2D SteeringRig {get {return this.Get<SteeringRig2D>(ref _steeringRig);} }
+	private SteeringRig2D Steering {get {return this.Get<SteeringRig2D>(ref _steeringRig);} }
 
 	private RangeSensor2D _rangeSensor;
 	private RangeSensor2D RangeSensor {get {return this.Get<RangeSensor2D>(ref _rangeSensor);} }
+
+	private GameObject _target;
+	public GameObject Target
+	{
+		get
+		{
+			return _target;
+		}
+		protected set
+		{
+			_target = value;
+			TargetPos = _target.transform.position;
+			foreach (var t in tentacles) t.Target = _target.transform;
+		}
+	}
+	private Vector2 _targetPos;
+	public Vector2 TargetPos
+	{
+		get
+		{
+			return _targetPos;
+		}
+		protected set
+		{
+			_targetPos = value;
+			Steering.Destination = _targetPos;
+			#if UNITY_EDITOR
+			if (debug) Debug.LogFormat("TargetPos: {0}",_targetPos);
+			#endif
+		}
+	}
+
+	public float DistanceToTarget
+	{
+		get
+		{
+			return Vector3.Distance(transform.position,TargetPos);
+		}
+	}
 
 	public override void Initialize()
 	{
@@ -33,17 +68,15 @@ public class Squid : Agent
 		SM.AddState(new Wander(this));
 		SM.AddState(new Seek(this));
 		SM.AddState(new Grab(this));
+		SM.DefaultState = SM.GetState(typeof(Wander));
+		SM.ChangeState(typeof(Wander));
 		
 		tentacles = GetComponentsInChildren<Tentacle>();
 
 		RangeSensor.EnableTagFilter = true;
 		RangeSensor.AllowedTags = AllowedTags;
-		RangeSensor.OnDetected.AddListener((x)=>
-		{
-			Target = x;
-			foreach (Tentacle t in tentacles) t.Target = x.transform;
-		});
-		RangeSensor.OnLostDetection.AddListener((x)=>Target=null);
+		RangeSensor.OnDetected.AddListener((x,y)=>Target=x);
+		RangeSensor.OnLostDetection.AddListener((x,y)=>Target=null);
 	}
 
 	protected override void UpdateAgent()
@@ -66,11 +99,15 @@ public class Squid : Agent
 			#if UNITY_EDITOR 
 			if(Agent.debug) {Debug.LogFormat("Enter {0}",nameof(Wander));}
 			#endif
-			Agent.targetPos = Agent.transform.position.RandomInRadius(Agent.roamRange);
+			Agent.TargetPos = Agent.transform.position.XY().RandomInRadius(Agent.roamRange);
 		}
 
 		public override void Update(float deltaTime)
 		{
+			if (Agent.DistanceToTarget <= Agent.Steering.StoppingDistance) 
+			{
+				Agent.TargetPos = Agent.transform.position.RandomInRadius(Agent.roamRange);
+			}
 		}
 
 		public override void Exit(StateArgs args)
@@ -136,13 +173,10 @@ public class Squid : Agent
 	#if UNITY_EDITOR
 	void OnDrawGizmos()
 	{
-		if (debug)
+		if (debug && Application.isPlaying)
 		{
-			if (Application.isPlaying)
-			{
-				Gizmos.color = Color.magenta;
-				Gizmos.DrawCube(targetPos,Vector3.one*3f);
-			}
+			Gizmos.color = Color.red;
+			Gizmos.DrawCube(TargetPos,Vector3.one*3f);
 		}
 	}
 	#endif

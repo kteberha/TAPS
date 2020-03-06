@@ -147,7 +147,7 @@ namespace SensorToolkit
             triggerStayLag[other] = 0;
             if (newDetected != null)
             {
-                OnDetected.Invoke(newDetected);
+                OnDetected.Invoke(newDetected, this);
                 previousDetectedObjects.Add(newDetected);
             }
             if (OnSensorUpdate != null) OnSensorUpdate();
@@ -159,7 +159,7 @@ namespace SensorToolkit
             var detectionLost = base.removeCollider(other);
             if (detectionLost != null)
             {
-                OnLostDetection.Invoke(detectionLost);
+                OnLostDetection.Invoke(detectionLost, this);
                 previousDetectedObjects.Remove(detectionLost);
             }
             if (OnSensorUpdate != null) OnSensorUpdate();
@@ -186,7 +186,7 @@ namespace SensorToolkit
                 else
                 {
                     // This is a newly detected object
-                    OnDetected.Invoke(go);
+                    OnDetected.Invoke(go, this);
                 }
             }
 
@@ -195,7 +195,7 @@ namespace SensorToolkit
             while (previousDetectedEnumerator.MoveNext())
             {
                 var go = previousDetectedEnumerator.Current;
-                OnLostDetection.Invoke(go);
+                OnLostDetection.Invoke(go, this);
             }
 
             previousDetectedObjects.Clear();

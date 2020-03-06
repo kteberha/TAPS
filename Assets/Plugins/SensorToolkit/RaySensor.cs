@@ -87,11 +87,11 @@ namespace SensorToolkit
 
         // Event fired at the time the sensor is obstructed when before it was unobstructed
         [SerializeField]
-        public UnityEvent OnObstruction;
+        public SensorEventHandler OnObstruction;
 
         // Event fired at the time the sensor is unobstructed when before it was obstructed
         [SerializeField]
-        public UnityEvent OnClear;
+        public SensorEventHandler OnClear;
 
         // Event fired each time the sensor is pulsed. This is used by the editor extension and you shouldn't have to subscribe to it yourself.
         public delegate void SensorUpdateHandler();
@@ -140,19 +140,20 @@ namespace SensorToolkit
 
             if (OnObstruction == null) 
             {
-                OnObstruction = new UnityEvent();
+                OnObstruction = new SensorEventHandler();
             }
 
             if (OnClear == null) 
             {
-                OnClear = new UnityEvent();
+                OnClear = new SensorEventHandler();
             }
         }
 
         void OnEnable()
 		{
             clearDetectedObjects();
-		}
+            previousDetectedObjects.Clear();
+        }
 
         void Update()
         {
@@ -188,12 +189,12 @@ namespace SensorToolkit
             if (isObstructed && obstructionRayHit.collider == null)
             {
                 isObstructed = false;
-                OnClear.Invoke();
+                OnClear.Invoke(this);
             }
             else if (!isObstructed && obstructionRayHit.collider != null)
             {
                 isObstructed = true;
-                OnObstruction.Invoke();
+                OnObstruction.Invoke(this);
             }
         }
 
@@ -203,7 +204,7 @@ namespace SensorToolkit
             var lostDetectionEnumerator = previousDetectedObjects.GetEnumerator();
             while (lostDetectionEnumerator.MoveNext())
             {
-                OnLostDetection.Invoke(lostDetectionEnumerator.Current);
+                OnLostDetection.Invoke(lostDetectionEnumerator.Current, this);
             }
 
             previousDetectedObjects.Clear();
@@ -351,7 +352,7 @@ namespace SensorToolkit
                 detectedObjectsInternal.Add(go);
                 if (!previousDetectedObjects.Contains(go))
                 {
-                    OnDetected.Invoke(go);
+                    OnDetected.Invoke(go, this);
                 }
                 else
                 {
@@ -360,21 +361,13 @@ namespace SensorToolkit
 			}
 		}
 
-		void clearDetectedObjects()
+        void clearDetectedObjects()
 		{
 			obstructionRayHit = new RaycastHit();
 			detectedObjectHits.Clear();
             detectedObjectsInternal.Clear();
-            previousDetectedObjects.Clear();
             detectedObjects.Clear();
 
-        }
-
-        void reset()
-        {
-            clearDetectedObjects();
-            isObstructed = false;
-            CurrentBufferSize = 0;
         }
 
         class RayDistanceComparer : IComparer<RaycastHit>

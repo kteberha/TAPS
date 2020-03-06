@@ -61,7 +61,7 @@ namespace SensorToolkit
 
         RaySensor2D[] sensors;
         Vector2 destination;
-        bool trackingToDestinationPosition;
+        bool trackingToDestinationPosition = false;
         Vector2 faceDirection;
         bool directionToFaceAssigned;
         Vector2 previousAttractionVector;
@@ -156,7 +156,10 @@ namespace SensorToolkit
             if (RotateTowardsTarget)
             {
                 var rot_z = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+                transform.rotation = Quaternion.Slerp(transform.rotation,
+                    Quaternion.Euler(Vector3.forward*(rot_z-90f)),
+                    (rot_z-transform.rotation.eulerAngles.z)*(RB.isKinematic?TurnSpeed:TurnForce));
+                //transform.rotation = Quaternion.Euler(0f,0f,rot_z-90f);
             }
 
             return accumForces(targetDirection);
@@ -170,7 +173,8 @@ namespace SensorToolkit
             }
 
             sensors = GetComponentsInChildren<RaySensor2D>();
-            trackingToDestinationPosition = false;
+            // NOTE: Setting to false here is too dependent on execution order
+            //trackingToDestinationPosition = false;
         }
 
         void Update()
