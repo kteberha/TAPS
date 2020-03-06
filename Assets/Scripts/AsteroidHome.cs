@@ -85,8 +85,6 @@ public class AsteroidHome : MonoBehaviour
                     numPackagesOrdered = 1;
                 else
                     numPackagesOrdered = 2;
-
-
                 ////////////////////////////////////////////////////////
 
 
@@ -281,6 +279,8 @@ public class AsteroidHome : MonoBehaviour
         gm.ordersFulfilled += 1;
 
         orderDelayTime = delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
+
+        print("order fulfilled: " + packagesOrdered.Count);
     }
 
     public void OrderExpired()

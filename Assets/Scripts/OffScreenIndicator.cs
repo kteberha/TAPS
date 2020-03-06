@@ -64,6 +64,10 @@ public class OffScreenIndicator : MonoBehaviour
         arrowHolder.transform.rotation = new Quaternion(0, 0, arrowHolder.transform.rotation.z, arrowHolder.transform.rotation.w);
     }
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     /// <summary>
     /// Updates the "order ticket" that appears on the offscreen indicator with images of packages
     /// </summary>
@@ -94,7 +98,7 @@ public class OffScreenIndicator : MonoBehaviour
                     break;
                 default:
                     packageTypeAssigned = null;
-                    //print("Error assigning package image: Offscreen Indicator");
+                    print("Error assigning package image: Offscreen Indicator");
                     break;
             }
 
@@ -112,9 +116,11 @@ public class OffScreenIndicator : MonoBehaviour
             else
             {
                 //print("Set other slot images to nothing");//testing
-                for (int n = i + 1; i <= _asteroidHome.packagesOrdered.Count; i++)//loop through the remaining slots 
+                for (int n = i + 1; n < packageSlotImages.Length; n++)//loop through the remaining slots
                 {
-                    packageSlotImages[n].color = Color.clear;//set the sprite to null
+                    //print("N " + n);//testing
+                    packageSlotImages[n].color = Color.clear;//make the sprites invisible
+                    //print("slot: " + (n + 1) + " is invisible");//testing
                 }
                 break;//break the foreach loop
             }

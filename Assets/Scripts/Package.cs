@@ -66,21 +66,30 @@ public class Package : MonoBehaviour
             GameObject house = collision.gameObject;//store house as variable.
             AsteroidHome ah = house.GetComponent<AsteroidHome>();//variable for house script
 
-            print("package has hit house");
+            //print("package has hit house");//testing
 
             foreach(GameObject pack in ah.packagesOrdered)//go through the packages ordered list for comparison
             {
-                if(pack.name.Equals(this.name))//check that the package's name matches a package in the list stored in the house
+                //print("checking package type");//testing
+                //print("desired pack: " + pack.name);//testing
+
+                if (name.Contains("(Clone)"))//check if the name has the string "(clone)" in its name
                 {
-                    print("correct package");
+                    name = name.Remove(name.Length - 7);//remove the string "(clone)" from the name for comparison
+                    //print("new name: " + name);//testing
+                }
+
+                if(pack.name.Contains(this.name))//check that the package's name matches a package in the list stored in the house
+                {
+                    //print("correct package");//testing
                     ah.packagesOrdered.Remove(pack);//romve this type of package from the house's list
 
                     RemovePackages();
 
-                    ah.OrderStatusCheck();
-
                     //destroy the package being hit and play audio
                     StartCoroutine("DeliverySound");
+
+                    ah.OrderStatusCheck();//check the status of the house's order
                     break;
                 }
 
