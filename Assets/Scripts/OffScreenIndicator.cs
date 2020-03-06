@@ -16,12 +16,11 @@ public class OffScreenIndicator : MonoBehaviour
 
     float imageScaleVal;
 
-    [SerializeField] Image pointerArrow;// to indicate where the associated home is
     [SerializeField] Image[] packageSlotImages;//references the images in the circle that will have their sprites swapped
     [SerializeField] Sprite[] packageSprites;//references to use for swapping out the image sprites in the package slots
     Sprite packageTypeAssigned;//temporary holder to assign each appropriate slot
 
-    [SerializeField] GameObject arrowHolder;
+    [SerializeField] GameObject arrowHolder;// to indicate where the associated home is
 
 
     // Update is called once per frame
@@ -64,10 +63,6 @@ public class OffScreenIndicator : MonoBehaviour
         arrowHolder.transform.rotation = new Quaternion(0, 0, arrowHolder.transform.rotation.z, arrowHolder.transform.rotation.w);
     }
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
     /// <summary>
     /// Updates the "order ticket" that appears on the offscreen indicator with images of packages
     /// </summary>
@@ -125,5 +120,13 @@ public class OffScreenIndicator : MonoBehaviour
                 break;//break the foreach loop
             }
         }
+    }
+
+    public void CheckHouseRendered(Renderer _houseRenderer)
+    {
+        if (_houseRenderer.isVisible)
+            arrowHolder.SetActive(false);
+        else
+            arrowHolder.SetActive(true);
     }
 }

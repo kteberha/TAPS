@@ -29,8 +29,10 @@ public class AsteroidHome : MonoBehaviour
     private float delayReset;//value to reset the delay to
 
     //variables for offscreen indicator
-    public GameObject offScreenIndicator;
+    public GameObject offScreenIndicatorObj;
+    OffScreenIndicator offScreenIndicator;
     public DemandController demandController;
+    [SerializeField] Renderer[] houseRenderers;
 
 
     //variables for audio
@@ -43,9 +45,10 @@ public class AsteroidHome : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        offScreenIndicator.SetActive(false);
+        offScreenIndicatorObj.SetActive(false);
         delayReset = orderDelayTime;//set the delay timer restart to whatever the user designates
         orderDelayTime = 0f;//set the delay timer to 0 for the very first package orders
+        offScreenIndicator = offScreenIndicatorObj.GetComponent<OffScreenIndicator>();
     }
 
     // Update is called once per frame
@@ -63,6 +66,11 @@ public class AsteroidHome : MonoBehaviour
         {
             doOnce = false;//ensure the do once bool is false
         }
+
+        if (offScreenIndicator.isActiveAndEnabled)
+            foreach(Renderer rend in houseRenderers)
+                offScreenIndicator.CheckHouseRendered(rend);
+
     }
 
     /// <summary>
@@ -230,7 +238,7 @@ public class AsteroidHome : MonoBehaviour
                 demandController.maxValue = orderTime;//set the slider's max time value
                 demandController.CurrentValue = orderTime;//set the slider's current value
 
-                offScreenIndicator.SetActive(true);//set assigned demand indicator to be active with assigned time
+                offScreenIndicatorObj.SetActive(true);//set assigned demand indicator to be active with assigned time
             }
             else//run the delay then place the order
             {
@@ -238,7 +246,7 @@ public class AsteroidHome : MonoBehaviour
                 StartCoroutine(OrderDelay());
             }
 
-            offScreenIndicator.GetComponent<OffScreenIndicator>().OrderTicketUpdate(this);//update the offscreen indicator to display packages
+            offScreenIndicatorObj.GetComponent<OffScreenIndicator>().OrderTicketUpdate(this);//update the offscreen indicator to display packages
         }
     }
 
@@ -247,7 +255,7 @@ public class AsteroidHome : MonoBehaviour
     /// </summary>
     public void OrderStatusCheck()
     {
-        offScreenIndicator.GetComponent<OffScreenIndicator>().OrderTicketUpdate(this);
+        offScreenIndicatorObj.GetComponent<OffScreenIndicator>().OrderTicketUpdate(this);
 
         if (packagesOrdered.Count == 0)//check number of packages left to deliver
 
@@ -261,7 +269,7 @@ public class AsteroidHome : MonoBehaviour
     /// </summary>
     void OrderFulfilled()
     {
-        offScreenIndicator.SetActive(false);
+        offScreenIndicatorObj.SetActive(false);
 
         packageBeenOrdered = false;
 
@@ -289,7 +297,7 @@ public class AsteroidHome : MonoBehaviour
         {
             audioSource.clip = expiredClip;//set the audio clip
             audioSource.Play();//play the audio
-            offScreenIndicator.SetActive(false);//turn off the offscreen indicator
+            offScreenIndicatorObj.SetActive(false);//turn off the offscreen indicator
             packageBeenOrdered = false;//toggle the house's package ordered state to false so it knows it can order another package
             numPackagesOrdered = 0;
             gm.refundsOrdered += 1;//increment the refunds ordered variable in the game manager
