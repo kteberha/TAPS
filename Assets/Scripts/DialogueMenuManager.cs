@@ -30,6 +30,7 @@ public class DialogueMenuManager : MonoBehaviour
     {
 
     }
+
     public void StartDialogue()
     {
         pTempVelocity = rb.velocity;
@@ -48,7 +49,8 @@ public class DialogueMenuManager : MonoBehaviour
 
     void MakeMenu()
     {
-        menuController.paused = true;
+        menuController.gm.state = GAMESTATE.PAUSED;   
+        //menuController.paused = true;
         Time.timeScale = 0f;
         menuActive = true;
         menu.gameObject.SetActive(true);
@@ -57,7 +59,8 @@ public class DialogueMenuManager : MonoBehaviour
 
     void RemoveMenu()
     {
-        menuController.paused = false;
+        menuController.gm.state = GAMESTATE.CLOCKEDIN;
+        //menuController.paused = false;
         Time.timeScale = 1f;
         menuActive = false;
         menu.gameObject.SetActive(false);

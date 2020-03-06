@@ -11,7 +11,7 @@ public enum GAMESTATE
 
 public enum WORKDAY
 {
-    WORKDAY1, WORKDAY2, WORKDAY3, WORKDAY4, WORKDAY5
+    TUTORIAL, WORKDAY1, WORKDAY2, WORKDAY3, WORKDAY4, WORKDAY5
 }
 
 public enum INPUTTYPE
@@ -22,7 +22,8 @@ public enum INPUTTYPE
 public class GameManager : MonoBehaviour
 {
     public GAMESTATE state;//for tracking the game state for functionality
-    public INPUTTYPE inputType;
+    public WORKDAY workDay;//for tracking the workday
+    public INPUTTYPE inputType;//for tracking input type
 
     //point and package tracking variables
     [HideInInspector]public int packagesDelivered = 0;
@@ -46,7 +47,7 @@ public class GameManager : MonoBehaviour
     private CanvasGroup pauseCg;
 
     ////Tutorial variables
-    public DialogueMenuManager dialogueManager;
+    public DialogueMenuManager dialogueMenuManager;
     public MenuController menuController;
 
 
@@ -57,10 +58,11 @@ public class GameManager : MonoBehaviour
         //start the tutorial dialogue if it hasn't been done before
         if(PlayerPrefs.GetInt("tutorialDone", 0) <= 0)
         {
-            dialogueManager.StartDialogue();
+            dialogueMenuManager.StartDialogue();
             PlayerPrefs.SetInt("tutorialDone", 1);
         }
 
+        state = GAMESTATE.CLOCKEDIN;
 
         pauseCg = pausePanel.GetComponent<CanvasGroup>();
         workdayStatusText.text = "Clocked IN!";
@@ -89,6 +91,8 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator Clockout()
     {
+        state = GAMESTATE.CLOCKEDOUT;
+
         workdayStatusText.text = "Clocked OUT!";
         textAnimation.Play();
 

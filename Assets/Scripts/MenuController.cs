@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
-    [SerializeField] GameManager gm;
+    public GameManager gm;
 
     [HideInInspector]public bool paused = false;
 
@@ -27,7 +27,7 @@ public class MenuController : MonoBehaviour
     [HideInInspector] public int ordersFulfilled = 0;
     [HideInInspector] public int refundsOrdered = 0;
 
-    public bool invertedMovement;
+    public bool invertedMovement = false;
     //public bool mapToggled = true;
     public Toggle invertMoveToggle;
 
@@ -43,9 +43,9 @@ public class MenuController : MonoBehaviour
         //get and apply saved input options if any exist
         if (!PlayerPrefs.HasKey("InvertedMovement"))
         {
-            PlayerPrefs.SetInt("InvertedMovement", 1);
+            PlayerPrefs.SetInt("InvertedMovement", 0);
             PlayerPrefs.Save();
-            invertedMovement = true;
+            invertedMovement = false;
         }
         else if (PlayerPrefs.GetInt("InvertedMovement") == 0)
         {
@@ -61,10 +61,10 @@ public class MenuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //pause the game on Espcape press
-        if (Input.GetKeyDown(KeyCode.Escape))
+        //need to make this unviseral key press for controller and keyboard
+        if (Input.GetKeyDown(KeyCode.Escape))//pause or unpause the game on a key press
         {
-            if (paused)
+            if (gm.state == GAMESTATE.PAUSED)
                 Resume();
             else
                 Pause();
@@ -85,6 +85,7 @@ public class MenuController : MonoBehaviour
         optionsCg.blocksRaycasts = false;
         optionsCg.interactable = false;
         paused = true;
+        gm.state = GAMESTATE.PAUSED;
     }
 
     /// <summary>
@@ -99,6 +100,7 @@ public class MenuController : MonoBehaviour
         optionsCg.interactable = false;
         optionsCg.alpha = 0f;
         paused = false;
+        gm.state = GAMESTATE.CLOCKEDIN;
     }
 
     public void Restart()
@@ -158,14 +160,14 @@ public class MenuController : MonoBehaviour
         if(PlayerPrefs.GetInt("OrderBest") < ordersFulfilled)
         {
             PlayerPrefs.SetInt("OrderBest", ordersFulfilled);
-            print("new best orders fulfilled");
+            //print("new best orders fulfilled");
         }
 
         //check for refunds placed (lowest) high scores and adjust accordingly
         if (PlayerPrefs.GetInt("RefundsBest") > refundsOrdered)
         {
             PlayerPrefs.SetInt("RefundsBest", refundsOrdered);
-            print("new best refunds avoided");
+            //print("new best refunds avoided");
         }
 
         ordersFulfilledText.text = "Orders Fulfilled: " + ordersFulfilled.ToString();
@@ -184,6 +186,7 @@ public class MenuController : MonoBehaviour
         Time.timeScale = 0f;
         endDayCg.blocksRaycasts = true;
         endDayCg.interactable = true;
+        gm.state = GAMESTATE.CLOCKEDOUT;
     }
 
     public void ReturnToMenu()

@@ -95,11 +95,15 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!menuController.paused)//check the game isn't paused
-
+        //if (!menuController.paused)//check the game isn't paused
+        if (menuController.gm.state == GAMESTATE.CLOCKEDIN)
         {
 
             RotatePointer();//rotate the direction pointer
+
+            //update the new flying VFX here
+
+            ////
 
 
             //Clocks
@@ -109,6 +113,9 @@ public class PlayerController : MonoBehaviour
             //variables to trigger fire extinguisher particle effects
             var mainEmission = mainStreamSys.emission;
             var splatEmission = splatterSys.emission;
+
+            ///////////This is input stuff that will need adjusted for controller input/////////////
+            #region
 
             if (Input.GetMouseButton(0) || Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)//When the left mouse button, or directional input is received
             {
@@ -145,6 +152,19 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine("StartExtinguisherSound");
             }
 
+            if (Input.GetMouseButtonUp(0))
+            {
+                //stop fire extinguisher loop
+                StopCoroutine("StartExtinguisherSound");
+
+                P_audioSource.loop = false;
+                P_audioSource.clip = extinguisherEnd;
+                P_audioSource.Play();
+
+                //play idle animation
+                animator.SetBool("IsFlying", false);
+            }
+
             //Throw packages on right mouse button release
             if (Input.GetKeyUp("mouse 1") && heldPackages.Count > 0 && shootCooldownClock <= 0)
             {
@@ -166,6 +186,8 @@ public class PlayerController : MonoBehaviour
             {
                 Teleport();
             }
+            #endregion
+            ///////////////////////////////////////////////////////////////////////////
 
             //Check if player has packages to draw lines to
             if (heldPackages.Count > 0)
@@ -209,20 +231,7 @@ public class PlayerController : MonoBehaviour
 
                     }
                 }
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                //stop fire extinguisher loop
-                StopCoroutine("StartExtinguisherSound");
-
-                P_audioSource.loop = false;
-                P_audioSource.clip = extinguisherEnd;
-                P_audioSource.Play();
-
-                //play idle animation
-                animator.SetBool("IsFlying", false);
-            }
+            }   
         }
     }
 

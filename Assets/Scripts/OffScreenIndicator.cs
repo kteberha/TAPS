@@ -63,6 +63,7 @@ public class OffScreenIndicator : MonoBehaviour
         arrowHolder.transform.rotation = Quaternion.LookRotation(v, -transform.forward);//rotate the arrow holder toward the target
         arrowHolder.transform.rotation = new Quaternion(0, 0, arrowHolder.transform.rotation.z, arrowHolder.transform.rotation.w);
     }
+
     /// <summary>
     /// Updates the "order ticket" that appears on the offscreen indicator with images of packages
     /// </summary>
