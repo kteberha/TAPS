@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UM_AI;
@@ -7,10 +7,14 @@ using SensorToolkit;
 
 public class Squid : Agent
 {
-	private readonly string[] AllowedTags = {"Player","Crate"};
+	const string PLAYERTAG = "Player";
+	const string PACKAGETAG = "Package";
+	private readonly string[] AllowedTags = {PLAYERTAG,PACKAGETAG};
 
 	public float roamRange = 50f;
 	public float seekTime = 30f;
+	[Range(0f,1f),Tooltip("Interest in pursuing packages over Player")]
+	public float packageInterest = 0.5f;
 
 	[SerializeField,Readonly]
 	private Tentacle[] tentacles;
@@ -32,6 +36,8 @@ public class Squid : Agent
 		}
 		protected set
 		{
+			// Exit set if chance not met
+			if (value.CompareTag(PACKAGETAG) && Random.value >= packageInterest) return;
 			_target = value;
 			TargetPos = _target.transform.position;
 			foreach (var t in tentacles) t.Target = _target.transform;
@@ -83,6 +89,11 @@ public class Squid : Agent
 	{
 		base.UpdateAgent();
 		RangeSensor.Pulse();
+	}
+
+	protected IEnumerable<GameObject> PackageCast(Vector2 pos)
+	{
+		return Physics2D.CircleCastAll(pos,30f,Vector2.zero).Select(x=>x.transform.gameObject).Where(y=>y.tag=="Package");
 	}
 
 	public class Wander : State<Squid>
@@ -160,6 +171,7 @@ public class Squid : Agent
 			#if UNITY_EDITOR 
 			if(Agent.debug) {Debug.LogFormat("Enter {0}",nameof(Grab));}
 			#endif
+			
 		}
 
 		public override void Exit(StateArgs args)

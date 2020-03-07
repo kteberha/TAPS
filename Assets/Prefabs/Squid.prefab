@@ -167,7 +167,6 @@ MonoBehaviour:
   EnableTagFilter: 1
   AllowedTags:
   - Player
-  - Package
   OnDetected:
     m_PersistentCalls:
       m_Calls: []
@@ -189,7 +188,7 @@ MonoBehaviour:
   SensorRange: 100
   DetectsOnLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   SensorUpdateMode: 1
   CheckInterval: 1
   InitialBufferSize: 20
