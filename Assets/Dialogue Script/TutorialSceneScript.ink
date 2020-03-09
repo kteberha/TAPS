@@ -14,7 +14,7 @@ Throughout the workday, you will receive orders on your heads up display beneath
 You will find these packages in the TAPS Shipping Lane as they are teleported from our delivery hub. Find the package specific to the customer's order and fly into it to activate your inventory tractor beam tool.
 //Player collects a package//
 
-Well done. Now picking up multiple packages!
+Well done. Now pick up multiple packages!
 
 Oh it looks like you've got your first order! Start heading toward your customer's home and deliver it! You better move fast. You want to deliver the package before the customer's patience--we mean their their estimated time for delivery is up.
 //[The example order moves to the edge of the screen, as normal]//
