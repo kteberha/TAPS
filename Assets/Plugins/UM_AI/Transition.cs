@@ -2,22 +2,6 @@ using System;
 
 namespace UM_AI
 {
-	// public interface ITransition
-	// {	
-	// 	IState State { get; set; }
-	// 	void ToTransition();
-	// }
-
-	// public struct Transition : ITransition
-	// {
-	// 	public IState State { get; set; }
-	// 	public void ToTransition() => State.StateMachine.ChangeState(nameof(State));
-	// 	public Transition(IState state)
-	// 	{
-	// 		this.State = state;
-	// 	}
-	// }
-
 	public delegate void Transition(TransitionArgs toState);
 
 	public class TransitionArgs : EventArgs
@@ -44,42 +28,40 @@ namespace UM_AI
 		}
 	}
 
-	public interface ICondition
+	public interface IConditional
 	{
 		Func<bool> Predicate { get; }
 		Action Act { get; }
 	}
 
-	public struct Condition : ICondition
+	public struct Conditional : IConditional
 	{
 		public Func<bool> Predicate { get; }
 		public Action Act { get; }
-		public Condition(Func<bool> predicate, Action action)
+		public Conditional(Func<bool> predicate, Action action)
 		{
 			this.Predicate = predicate;
 			this.Act = action;
 		}
 	}
 
-	//public struct TransitionCond : ITransition, ICondition
-	public struct TransitionCondition : ICondition
+	public struct Transitional : IConditional
 	{
 		public Func<bool> Predicate { get; }
 		public Action Act { get; }
 		private Transition transition;
 		private TransitionArgs args;
-		private IState state;
-		private void ToTransition() => transition(args);
+		private string stateName;
+		private void ToTransition() => transition(args??(TransitionArgs.Empty as TransitionArgs));
 
-		public TransitionCondition(IState state, TransitionArgs args, Func<bool> predicate) : this()
+		public Transitional(IState toState, Func<bool> predicate) : this()
 		{
-			this.args = args;
-			this.state = state;
+			this.transition = (x) => toState.StateMachine.ChangeState(nameof(toState), x.StateArgs);
 			this.Act = ToTransition;
 			this.Predicate = predicate;
 		}
 
-		public TransitionCondition(Transition transition, Func<bool> predicate) : this()
+		public Transitional(Transition transition, Func<bool> predicate) : this()
 		{
 			this.transition = transition;
 			this.Act = ToTransition;

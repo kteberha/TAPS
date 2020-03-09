@@ -14,7 +14,7 @@ namespace UM_AI
         // /// </summary>
         // IState Parent { get; set; }
 
-		//StateMachine StateMachine { get; set; }
+		StateMachine StateMachine { get; set; }
 
 		//Transition[] Transitions { get; }
 
@@ -68,7 +68,7 @@ namespace UM_AI
 	public abstract class State : IState
 	{
 
-        protected StateMachine StateMachine { get; set; }
+        public StateMachine StateMachine { get; set; }
         
 		/// <summary>
         /// Dictionary of all event actions associated with this state.
@@ -78,14 +78,13 @@ namespace UM_AI
         /// <summary>
         /// List of all conditions associated with this state.
         /// </summary>
-        /// <typeparam name="Condition"></typeparam>
-        /// <returns></returns>
-		private readonly IList<ICondition> conditions = new List<Condition>() as IList<ICondition>;
-        private IEnumerable<TransitionCondition> Transitions
+        /// <typeparam name="Conditional"></typeparam>
+		private readonly IList<IConditional> conditionals = new List<Conditional>() as IList<IConditional>;
+        private IEnumerable<Transitional> Transitions
         {
             get
             {
-                return conditions.OfType<TransitionCondition>();
+                return conditionals.OfType<Transitional>();
             }
         }
 
@@ -108,11 +107,67 @@ namespace UM_AI
         /// <summary>
         /// Check conditions 
         /// </summary>
-        public void UpdateConditions()
+        public void UpdateConditionals()
         {
-            for (int i=0; i<conditions.Count; i++)
+            for (int i=0; i<conditionals.Count; i++)
             {
-                if (conditions[i].Predicate()) conditions[i].Act();
+                if (conditionals[i].Predicate()) conditionals[i].Act();
+            }
+        }
+
+        /// <summary>
+        /// Set conditional
+        /// </summary>
+        /// <param name="cond"></param>
+        public void SetConditional(IConditional cond)
+        {
+            conditionals.Add(cond);
+        }
+
+        /// <summary>
+        /// Set conditional
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="act"></param>
+        public void SetConditional(Func<bool> predicate, Action act)
+        {
+            conditionals.Add(new Conditional(predicate, act));
+        }
+
+        /// <summary>
+        /// Set conditional
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="transition"></param>
+        public void SetTransitional(Func<bool> predicate, Transition transition)
+        {
+            conditionals.Add(new Transitional(transition, predicate));
+        }
+
+        /// <summary>
+        /// Set conditional
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="args"></param>
+        public void SetTransitional(Func<bool> predicate, IState toState)
+        {
+            SetTransitional(predicate, nameof(toState));
+        }
+
+        /// <summary>
+        /// Set conditional
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="args"></param>
+        public void SetTransitional(Func<bool> predicate, string toState)
+        {
+            try
+            {
+                conditionals.Add(new Transitional(this.StateMachine.GetState(toState), predicate));
+            }
+            catch
+            {
+                throw new ApplicationException("Could not state " + toState);
             }
         }
 

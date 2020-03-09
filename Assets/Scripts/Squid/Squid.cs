@@ -36,8 +36,6 @@ public class Squid : Agent
 		}
 		protected set
 		{
-			// Exit set if chance not met
-			if (value.CompareTag(PACKAGETAG) && Random.value >= packageInterest) return;
 			_target = value;
 			TargetPos = _target.transform.position;
 			foreach (var t in tentacles) t.Target = _target.transform;
@@ -68,12 +66,15 @@ public class Squid : Agent
 		}
 	}
 
+	//public bool PlayerDetected => RangeSensor.DetectedObjects.Any(x => x.CompareTag(PLAYERTAG));
+	protected bool playerDetected = false;
+
 	public override void Initialize()
 	{
 		base.Initialize();
 		SM.AddState(new Wander(this));
 		SM.AddState(new Seek(this));
-		SM.AddState(new Grab(this));
+		SM.AddState(new Flee(this));
 		SM.DefaultState = SM.GetState(typeof(Wander));
 		SM.ChangeState(typeof(Wander));
 		
@@ -81,9 +82,10 @@ public class Squid : Agent
 
 		RangeSensor.EnableTagFilter = true;
 		RangeSensor.AllowedTags = AllowedTags;
-		RangeSensor.OnDetected.AddListener((x,y)=>Target=x);
-		RangeSensor.OnLostDetection.AddListener((x,y)=>Target=null);
+		RangeSensor.OnDetected.AddListener(Detection);
+		RangeSensor.OnLostDetection.AddListener(LostDetection);
 	}
+	
 
 	protected override void UpdateAgent()
 	{
@@ -91,10 +93,43 @@ public class Squid : Agent
 		RangeSensor.Pulse();
 	}
 
+	public void Detection(GameObject go, Sensor sensor)
+	{
+		switch (go.tag)
+		{
+			case PLAYERTAG:
+				playerDetected = true;
+				Target = go;
+			break;
+			case PACKAGETAG:
+				if (Random.value <= packageInterest) Target = go;
+			break;
+		}
+	}
+
+	public void LostDetection(GameObject go, Sensor sensor)
+	{
+		switch (go.tag)
+		{
+			case PLAYERTAG:
+				playerDetected = false;
+				Target = null;
+			break;
+			case PACKAGETAG:
+
+			break;
+		}
+	}
+
+	public void Sprayed() => SM.ChangeState(typeof(Flee));
+
 	protected IEnumerable<GameObject> PackageCast(Vector2 pos)
 	{
 		return Physics2D.CircleCastAll(pos,30f,Vector2.zero).Select(x=>x.transform.gameObject).Where(y=>y.tag=="Package");
 	}
+
+	public bool ToWander() => !playerDetected && SM.TimeElapsed.Seconds >= seekTime;
+	public bool ToSeek() => playerDetected;
 
 	public class Wander : State<Squid>
 	{
@@ -103,6 +138,7 @@ public class Squid : Agent
 			#if UNITY_EDITOR
 			color = Color.green;
 			#endif
+			this.SetTransitional(Agent.ToSeek,nameof(Seek));
 		}
 
 		public override void Enter(StateArgs args)
@@ -136,6 +172,7 @@ public class Squid : Agent
 			#if UNITY_EDITOR
 			color = Color.yellow;
 			#endif
+			this.SetTransitional(Agent.ToWander,nameof(Wander));
 		}
 
 		public override void Enter(StateArgs args)
@@ -157,9 +194,9 @@ public class Squid : Agent
 		}
 	}
 
-	public class Grab : State<Squid>
+	public class Flee : State<Squid>
 	{
-		public Grab(Agent agent) : base(agent)
+		public Flee(Agent agent) : base(agent)
 		{
 			#if UNITY_EDITOR
 			color = Color.red;
@@ -169,7 +206,7 @@ public class Squid : Agent
 		public override void Enter(StateArgs args)
 		{
 			#if UNITY_EDITOR 
-			if(Agent.debug) {Debug.LogFormat("Enter {0}",nameof(Grab));}
+			if(Agent.debug) {Debug.LogFormat("Enter {0}",nameof(Flee));}
 			#endif
 			
 		}
@@ -177,7 +214,7 @@ public class Squid : Agent
 		public override void Exit(StateArgs args)
 		{
 			#if UNITY_EDITOR 
-			if(Agent.debug) {Debug.LogFormat("Exit {0}",nameof(Grab));}
+			if(Agent.debug) {Debug.LogFormat("Exit {0}",nameof(Flee));}
 			#endif
 		}
 	}
