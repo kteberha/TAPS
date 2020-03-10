@@ -70,7 +70,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2D_FaceTexture:
-        m_Texture: {fileID: 2800000, guid: ba59aaa657a0f43fd996293ec2ab0e86, type: 3}
+        m_Texture: {fileID: 2800000, guid: cb104b31736324484bd504e7ccaa38f7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:

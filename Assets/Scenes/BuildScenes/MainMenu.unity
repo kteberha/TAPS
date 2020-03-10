@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -513,7 +513,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 29}
-  m_SizeDelta: {x: -642, y: -455.5}
+  m_SizeDelta: {x: -504.23, y: -489.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &163962917
 MonoBehaviour:
@@ -1106,7 +1106,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -127.000015}
-  m_SizeDelta: {x: -642, y: -455.5}
+  m_SizeDelta: {x: -602.9, y: -496.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &284780802
 MonoBehaviour:
@@ -1307,8 +1307,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Configurations
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a0f446acd09a54c229dcd62aed6b90ed, type: 2}
-  m_sharedMaterial: {fileID: 6073040005029647833, guid: a0f446acd09a54c229dcd62aed6b90ed,
+  m_fontAsset: {fileID: 11400000, guid: 53605135361f6b542be5bae2fe2b5cdf, type: 2}
+  m_sharedMaterial: {fileID: -3522042715898332861, guid: 53605135361f6b542be5bae2fe2b5cdf,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2421,8 +2421,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Terminate
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a0f446acd09a54c229dcd62aed6b90ed, type: 2}
-  m_sharedMaterial: {fileID: 6073040005029647833, guid: a0f446acd09a54c229dcd62aed6b90ed,
+  m_fontAsset: {fileID: 11400000, guid: 53605135361f6b542be5bae2fe2b5cdf, type: 2}
+  m_sharedMaterial: {fileID: -3522042715898332861, guid: 53605135361f6b542be5bae2fe2b5cdf,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2956,8 +2956,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Creators
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a0f446acd09a54c229dcd62aed6b90ed, type: 2}
-  m_sharedMaterial: {fileID: 6073040005029647833, guid: a0f446acd09a54c229dcd62aed6b90ed,
+  m_fontAsset: {fileID: 11400000, guid: 53605135361f6b542be5bae2fe2b5cdf, type: 2}
+  m_sharedMaterial: {fileID: -3522042715898332861, guid: 53605135361f6b542be5bae2fe2b5cdf,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -4069,7 +4069,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -49.000015}
-  m_SizeDelta: {x: -642, y: -456.3}
+  m_SizeDelta: {x: -602.9, y: -489.81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1440202620
 MonoBehaviour:
@@ -5835,7 +5835,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.5, y: 106.59999}
-  m_SizeDelta: {x: -643, y: -455.5}
+  m_SizeDelta: {x: -622.52, y: -494.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1921240758
 MonoBehaviour:
@@ -6000,8 +6000,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'Clock In '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a0f446acd09a54c229dcd62aed6b90ed, type: 2}
-  m_sharedMaterial: {fileID: 6073040005029647833, guid: a0f446acd09a54c229dcd62aed6b90ed,
+  m_fontAsset: {fileID: 11400000, guid: 53605135361f6b542be5bae2fe2b5cdf, type: 2}
+  m_sharedMaterial: {fileID: -3522042715898332861, guid: 53605135361f6b542be5bae2fe2b5cdf,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
