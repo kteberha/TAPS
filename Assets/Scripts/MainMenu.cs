@@ -9,8 +9,8 @@ public class MainMenu : MonoBehaviour
 {
     public AudioMixer masterMixer;
     public Dropdown resolutionDropdown;
-    public GameObject mainMenu;
-    public GameObject optionsMenu;
+    public GameObject mainMenu, optionsMenu, creditsPanel;
+    public GameObject rightEye, leftEye;
 
     Resolution[] resolutions;
 
@@ -49,9 +49,9 @@ public class MainMenu : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns to the main menu
+    /// Returns to the main menu from options menu
     /// </summary>
-    public void Back()
+    public void OptionsBack()
     {
         optionsMenu.SetActive(false);
         mainMenu.SetActive(true);
@@ -67,11 +67,35 @@ public class MainMenu : MonoBehaviour
     }
 
     /// <summary>
+    /// returns to main menu from credits screen
+    /// </summary>
+    public void CreditsBack()
+    {
+        creditsPanel.SetActive(false);
+        mainMenu.SetActive(true);
+        rightEye.SetActive(true);
+        leftEye.SetActive(true);
+    }
+
+    /// <summary>
+    /// toggles the credits screen and plays the scrolling animation
+    /// </summary>
+    public void Credits()
+    {
+        mainMenu.SetActive(false);
+        rightEye.SetActive(false);
+        leftEye.SetActive(false);
+        creditsPanel.SetActive(true);
+    }
+
+    /// <summary>
     /// Starts the game and loads appropriate data
     /// </summary>
     public void StartGame()
     {
-        //will need a section for loading saved data
+        //will need a section for loading saved
+        //
+        //
 
         SceneManager.LoadScene("MainScene");
     }
