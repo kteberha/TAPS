@@ -8,6 +8,7 @@ public class DemandController : MonoBehaviour
 {
 
     public Image fillImage;
+    public Image arrow;
 
     public float targetDemand;
 
@@ -79,12 +80,14 @@ public class DemandController : MonoBehaviour
 
         if (fillImage.fillAmount == 0)
             fillImage.color = GoodColor;
+            arrow.color = GoodColor;
 
 
         if (nextColor != currentColor)
         {
             currentColor = nextColor;
             fillImage.DOColor(nextColor, 1);
+            arrow.DOColor(nextColor, 1);
         }
 
         //if (Input.GetKeyDown("space"))
