@@ -13,6 +13,9 @@ public class MenuController : MonoBehaviour
     public GameObject pausePanel;
     public GameObject optionsPanel;
     public GameObject endDayPanel;
+    //////DEMO ONLY/////
+    public GameObject wishlist;
+    ///////////////////
     //public GameObject map;
     CanvasGroup pauseCg;
     CanvasGroup optionsCg;
@@ -210,5 +213,13 @@ public class MenuController : MonoBehaviour
         PlayerPrefs.DeleteKey("tutorialDone");
         //
         PlayerPrefs.DeleteKey("InvertedMovement");
+    }
+
+
+    ////////////////FOR DEMO ONLY/////////////////////////
+    public void Wishlist()
+    {
+        gm.state = GAMESTATE.PAUSED;
+        wishlist.SetActive(true);
     }
 }

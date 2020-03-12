@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
 {
     public AudioMixer masterMixer;
     public Dropdown resolutionDropdown;
-    public GameObject mainMenu, optionsMenu, creditsPanel;
+    public GameObject splash, mainMenu, optionsMenu, creditsPanel;
     public GameObject rightEye, leftEye;
 
     Resolution[] resolutions;
@@ -86,6 +86,12 @@ public class MainMenu : MonoBehaviour
         rightEye.SetActive(false);
         leftEye.SetActive(false);
         creditsPanel.SetActive(true);
+    }
+
+    public void SplashToMenu()
+    {
+        splash.SetActive(false);
+        mainMenu.SetActive(true);
     }
 
     /// <summary>

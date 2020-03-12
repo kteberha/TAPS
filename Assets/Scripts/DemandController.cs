@@ -58,36 +58,39 @@ public class DemandController : MonoBehaviour
         if(currentValue > 0)
             CurrentValue -= Time.deltaTime;
 
-        Color nextColor = currentColor;
+        Color nextColor = currentColor;//default: set the next color to the current color
 
-        if (fillImage.fillAmount > 0.5f)
+        if (fillImage.fillAmount == 0)
         {
-            nextColor = GoodColor;
-            //fillImage.DOColor(GoodColor, 1);
+            fillImage.color = GoodColor;
+            arrow.color = GoodColor;
         }
-
-        if (fillImage.fillAmount < 0.5f)
-        {
-            nextColor = WarningColor;
-            //fillImage.DOColor(WarningColor, 1);
-        }
-
-        if (fillImage.fillAmount < 0.25f)
+        else if (fillImage.fillAmount < 0.25f)
         {
             nextColor = DangerColor;
             //fillImage.DOColor(DangerColor, 1);
         }
-
-        if (fillImage.fillAmount == 0)
-            fillImage.color = GoodColor;
-            arrow.color = GoodColor;
+        else if(fillImage.fillAmount < 0.5f)
+        {
+            nextColor = WarningColor;
+            //fillImage.DOColor(WarningColor, 1);
+        }
+        else if(fillImage.fillAmount > 0.5f)//when fill amount is above 50%
+        {
+            nextColor = GoodColor;
+            //fillImage.DOColor(GoodColor, 1);
+        }
+        else
+        {
+            print("something gone wrong");
+        }
 
 
         if (nextColor != currentColor)
         {
-            currentColor = nextColor;
-            fillImage.DOColor(nextColor, 1);
-            arrow.DOColor(nextColor, 1);
+            currentColor = nextColor;//assign the current color to the next assigned color
+            fillImage.DOColor(nextColor, 1);//change the fill color
+            arrow.DOColor(nextColor, 1);//change the arrow color
         }
 
         //if (Input.GetKeyDown("space"))
