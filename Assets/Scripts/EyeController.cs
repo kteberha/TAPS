@@ -11,6 +11,12 @@ public class EyeController : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public Image rightEyeFocus;
     public Image leftEyeFocus;
+    public Image rightEyeCase;
+    public Image leftEyeCase;
+
+    public GameObject topEyeCaseBound;
+    public GameObject midEyeCaseBound;
+    public GameObject bottomEyeCaseBound;
 
     public float moveTime;
     public float scaleTime;
@@ -25,26 +31,38 @@ public class EyeController : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
         if (gameObject.name == "Start/Resume")
             {
-            rightEyeFocus.transform.DOMoveY(290.0f, moveTime);
-            leftEyeFocus.transform.DOMoveY(290.0f, moveTime);
+            rightEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
+            leftEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
+
+            rightEyeCase.transform.DOMoveY(topEyeCaseBound.transform.position.y, moveTime);
+            leftEyeCase.transform.DOMoveY(topEyeCaseBound.transform.position.y, moveTime);
             //Debug.Log(name);
         }
         if (gameObject.name == "Options")
         {
-            rightEyeFocus.transform.DOMoveY(250.0f, moveTime);
-            leftEyeFocus.transform.DOMoveY(250.0f, moveTime);
+            rightEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
+            leftEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
+
+            rightEyeCase.transform.DOMoveY(midEyeCaseBound.transform.position.y, moveTime);
+            leftEyeCase.transform.DOMoveY(midEyeCaseBound.transform.position.y, moveTime);
             //Debug.Log(name);
         }
         if (gameObject.name == "Credits")
         {
-            rightEyeFocus.transform.DOMoveY(210.0f, moveTime);
-            leftEyeFocus.transform.DOMoveY(210.0f, moveTime);
+            rightEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
+            leftEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
+
+            rightEyeCase.transform.DOMoveY(midEyeCaseBound.transform.position.y, moveTime);
+            leftEyeCase.transform.DOMoveY(midEyeCaseBound.transform.position.y, moveTime);
             //Debug.Log(name);
         }
         if (gameObject.name == "Quit")
         {
-            rightEyeFocus.transform.DOMoveY(190.0f, moveTime);
-            leftEyeFocus.transform.DOMoveY(190.0f, moveTime);
+            rightEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
+            leftEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
+
+            rightEyeCase.transform.DOMoveY(bottomEyeCaseBound.transform.position.y, moveTime);
+            leftEyeCase.transform.DOMoveY(bottomEyeCaseBound.transform.position.y, moveTime);
             //Debug.Log(name);
         }
 
