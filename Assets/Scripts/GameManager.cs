@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public enum GAMESTATE
 {
-    PAUSED, CLOCKEDIN, CLOCKEDOUT 
+    PAUSED, CLOCKEDIN, CLOCKEDOUT
 }
 
 public enum WORKDAY
@@ -73,20 +73,24 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Workday timer
-        timeInWorkday += Time.deltaTime;
 
-        //Workday reset
-        if (timeInWorkday > workdayLength)
+        if (state == GAMESTATE.CLOCKEDIN)//only count the time if the player is clocked in
         {
-            if (!clockedOut)
+            //Workday timer
+            timeInWorkday += Time.deltaTime;
+
+            //Workday reset
+            if (timeInWorkday > workdayLength)
             {
-                clockedOut = true;
-                //have the workday over text appear and fade before loading the scene
-                StartCoroutine(Clockout());
+                if (state == GAMESTATE.CLOCKEDIN)
+                {
+                    state = GAMESTATE.CLOCKEDOUT;
+                    clockedOut = true;
+                    //have the workday over text appear and fade before loading the scene
+                    StartCoroutine(Clockout());
+                }
             }
         }
-
     }
 
     public IEnumerator Clockout()
