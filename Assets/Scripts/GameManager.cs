@@ -47,19 +47,28 @@ public class GameManager : MonoBehaviour
     private CanvasGroup pauseCg;
 
     ////Tutorial variables
+    [Header("Tutorial Variables")]
     public DialogueMenuManager dialogueMenuManager;
     public MenuController menuController;
-
+    public GameObject tutorialManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        //print(PlayerPrefs.GetInt("tutorialDone"));
-        //start the tutorial dialogue if it hasn't been done before
-        if(PlayerPrefs.GetInt("tutorialDone", 0) <= 0)
+        if (SceneManager.GetActiveScene().name != "TutorialScene")
         {
-            dialogueMenuManager.StartDialogue();
-            PlayerPrefs.SetInt("tutorialDone", 1);
+            print("not in the tutorial");
+            //print(PlayerPrefs.GetInt("tutorialDone"));
+            //start the tutorial dialogue if it hasn't been done before
+            if (PlayerPrefs.GetInt("tutorialDone", 0) <= 0)
+            {
+                dialogueMenuManager.StartDialogue();
+                PlayerPrefs.SetInt("tutorialDone", 1);
+            }
+        }
+        else
+        {
+            
         }
 
         state = GAMESTATE.CLOCKEDIN;
