@@ -18,6 +18,11 @@ public class DialogueMenuManager : MonoBehaviour
     Camera main;
     Transform dialogueCameraTransform;
 
+
+    [Header("DEMO TUTORIAL")]
+    public GameObject dialogueScreen;
+
+
     private void Awake()
     {
         main = Camera.main;
@@ -28,7 +33,7 @@ public class DialogueMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.activeInHierarchy)
+        if (dialogueScreen.activeInHierarchy)
         {
             menuController.gm.state = GAMESTATE.PAUSED;
             print("game should be paused: screen is active");

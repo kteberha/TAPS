@@ -42,9 +42,7 @@ public class PlayerController : MonoBehaviour
     public float inventoryFrequency = 0.5f;
 
     //particle system variables
-    ParticleSystem mainStreamSys;
-    ParticleSystem splatterSys;
-    ParticleSystem burstSys;
+    [SerializeField]ParticleSystem mainStreamSys, splatterSys, burstSys;
     bool burstPlayed = false;
 
     //variables for the lineRenderer
@@ -82,14 +80,11 @@ public class PlayerController : MonoBehaviour
 
         teleportTransform = teleporter.transform;
 
-        mainStreamSys = transform.Find("FireExtinguisher").Find("foam_FX").Find("mainstream_Part").GetComponent<ParticleSystem>();
-        splatterSys = transform.Find("FireExtinguisher").Find("foam_FX").Find("splatter_Part").GetComponent<ParticleSystem>();
-        burstSys = transform.Find("FireExtinguisher").Find("foam_FX").Find("wideburst_Part").GetComponent<ParticleSystem>();
-
         animator = playerModel.GetComponent<Animator>();
 
-        //for damping the player character's rotation when it collides with an object. see LateUpdate () for the remainder of the code that affects this.
-        /*offset = transform.position - playerModel.transform.position;*/
+        mainStreamSys.Stop();
+        splatterSys.Stop();
+        burstSys.Stop();
     }
 
     // Update is called once per frame

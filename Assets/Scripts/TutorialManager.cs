@@ -8,7 +8,6 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] GameManager gameManager;
     [SerializeField] AsteroidHome home;
     [SerializeField] OrderManager orderManager;
-    [SerializeField] TutorialDialogue tutorialDialogue;
 
     [SerializeField] NarrativeDialogue narrativeDialogue;
     [SerializeField] DialogueMenuManager dialogueMenuManager;
@@ -33,6 +32,13 @@ public class TutorialManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (dialogueMenuManager.gameObject.activeInHierarchy)
+        {
+            gameManager.state = GAMESTATE.PAUSED;
+        }
+        else
+            gameManager.state = GAMESTATE.CLOCKEDIN;
+
         if(!narrativeDialogue.story.canContinue)
         {
             print("she's ready");
