@@ -103,7 +103,7 @@ public class MainMenu : MonoBehaviour
         //
         //
 
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("TutorialScene");
     }
 
     /// <summary>

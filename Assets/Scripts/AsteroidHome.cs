@@ -93,7 +93,7 @@ public class AsteroidHome : MonoBehaviour
 
                 //////////Decide how many packages to order/////////////
                 float packageNumSeed = Random.value;
-                if (packageNumSeed <= 0.5f)
+                if (packageNumSeed <= 0.45f)
                     numPackagesOrdered = 1;
                 else
                     numPackagesOrdered = 2;
@@ -322,6 +322,12 @@ public class AsteroidHome : MonoBehaviour
             orderDelayTime = delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
 
             packagesOrdered.Clear();//remove all packages ordered
+        }
+
+        if (SceneManager.GetActiveScene().name == "TutorialScene")
+        {
+            orderDelayTime = 0;
+            Order();
         }
     }
 

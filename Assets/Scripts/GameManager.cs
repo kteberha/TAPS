@@ -60,25 +60,28 @@ public class GameManager : MonoBehaviour
             print("not in the tutorial");
             //print(PlayerPrefs.GetInt("tutorialDone"));
             //start the tutorial dialogue if it hasn't been done before
-            if (PlayerPrefs.GetInt("tutorialDone", 0) <= 0)
-            {
-                dialogueMenuManager.StartDialogue();
-                PlayerPrefs.SetInt("tutorialDone", 1);
-            }
-        }
-        else
-        {
-
-        }
-
-        if(SceneManager.GetActiveScene().name != "TutorialScene")
-        {
-            state = GAMESTATE.CLOCKEDIN;
+            //if (PlayerPrefs.GetInt("tutorialDone", 0) <= 0)
+            //{
+            //    dialogueMenuManager.StartDialogue();
+            //    PlayerPrefs.SetInt("tutorialDone", 1);
+            //}
         }
 
         pauseCg = pausePanel.GetComponent<CanvasGroup>();
         workdayStatusText.text = "Clocked IN!";
         textAnimation = workdayStatusText.GetComponent<Animation>();
+
+        if (SceneManager.GetActiveScene().name != "TutorialScene")
+        {
+            state = GAMESTATE.CLOCKEDIN;
+        }
+        else
+        {
+            textAnimation.Stop();
+        }
+
+
+
 
     }
 

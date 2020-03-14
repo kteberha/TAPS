@@ -30,11 +30,6 @@ public class DialogueMenuManager : MonoBehaviour
         dialogueCameraTransform = player.GetComponent<PlayerController>().dialogueCameraPoint;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public void StartDialogue()
     {
         pTempVelocity = rb.velocity;

@@ -85,9 +85,10 @@ public class PlayerController : MonoBehaviour
 
         animator = playerModel.GetComponent<Animator>();
 
-        mainStreamSys.Stop();
-        splatterSys.Stop();
-        burstSys.Stop();
+        var mainStreamEmission = mainStreamSys.emission;
+        var splatterStreamEmission = splatterSys.emission;
+        mainStreamEmission.enabled = false;
+        splatterStreamEmission.enabled = false;
     }
 
     // Update is called once per frame
@@ -407,6 +408,23 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+        //if (other.gameObject.CompareTag("Package"))//check that zip has hit a package to collect.
+        //{
+        //    PackageAdd(other.gameObject);
+        //}
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        //if (!other.gameObject.CompareTag("Package"))
+        //{
+        //    if (rb.velocity.magnitude > hitSpeed)//only play the hit animation when zip hits not a package at a certain speed
+
+        //    {
+        //        animator.SetTrigger("Hit");
+        //    }
+
+        //}
         if (other.gameObject.CompareTag("Package"))//check that zip has hit a package to collect.
         {
             PackageAdd(other.gameObject);
