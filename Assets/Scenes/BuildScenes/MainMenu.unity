@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2122,7 +2122,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1378}
+  m_AnchoredPosition: {x: 0.00001049, y: -840}
   m_SizeDelta: {x: 307.01007, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &362693067
@@ -2280,7 +2280,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -2270}
+  m_AnchoredPosition: {x: 0.000012398, y: -1369}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &383055474
@@ -2408,7 +2408,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -2536,7 +2536,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1565}
+  m_AnchoredPosition: {x: 0, y: -950}
   m_SizeDelta: {x: 307.01007, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &416652406
@@ -4695,7 +4695,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -2207.9976}
+  m_AnchoredPosition: {x: 0, y: -1319}
   m_SizeDelta: {x: 307.01007, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &919047278
@@ -5042,11 +5042,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: "\n\nEmma Rausch\n\nEmma Rausch\n\nKaleb Eberhart\n\n\n\nGaby Benninghoff\nRajin
     Shankar\n\nJonah Clark\n\nAndy Beer\n\nRizlyon Baguisa\n\nEmma Rausch\n\nBeth
-    Lula\n\n\n \nJake Cozza\n\nJustin Hatfield\nNoah Kankanala\n\nKaleb Eberhart\n\n\nKenton
-    Ellson\n\nEliot Westcott\n\nKenton Ellson\n\nAndy Beer\n\nKaleb Eberhart\n\n\n\nEmma
-    Rausch\n\nMadeleine Lovell\n\n\n\nKaleb Eberhart\nJesse Riggins\n\nAndy Beer\nKaleb
-    Eberhart\n\nPeter Francis\n\nKaleb Eberhart\n\n\n\nAndy Beer\nEliot Westcott\nEmma
-    Rausch\nKaleb Eberhart\nKenton Elson\n"
+    Lula\nKaleb Eberhart\nEmma Rausch\n\n\n \nJake Cozza\n\nJustin Hatfield\nNoah
+    Kankanala\n\nKaleb Eberhart\n\n\n\nKenton Ellson\n\nEliot Westcott\n\nKenton Ellson\n\nAndy
+    Beer\n\nKaleb Eberhart\n\n\n\nEmma Rausch\n\nMadeleine Lovell\n\n\n\nKaleb Eberhart\nJesse
+    Riggins\n\nAndy Beer\nKaleb Eberhart\n\nPeter Francis\n\nKaleb Eberhart\n\n\n\nAndy
+    Beer\nEliot Westcott\nEmma Rausch\nKaleb Eberhart\nKenton Elson\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 297e6ec96494cd2469865e06734706b8, type: 2}
   m_sharedMaterial: {fileID: 83784905043092836, guid: 297e6ec96494cd2469865e06734706b8,
@@ -5116,18 +5116,18 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1030593017}
-    characterCount: 469
+    characterCount: 497
     spriteCount: 0
-    spaceCount: 101
-    wordCount: 65
+    spaceCount: 106
+    wordCount: 69
     linkCount: 0
-    lineCount: 68
+    lineCount: 71
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -5625,7 +5625,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -254}
+  m_AnchoredPosition: {x: 0, y: -149}
   m_SizeDelta: {x: 307.01007, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1250415771
@@ -7756,8 +7756,8 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: "\n\nDirector\n\nExecutive Producer\n\nProducer\n\n\n\nConcept Artists\n\n\nTechnical
-    Artist\n\nUser Interface\n\n3D Artist\n\n3D Art Assistant\n\nAnimator\n\n\n\nSound
-    Designer\n\nComposers\n\n\nMixing\n\n\nSystems Designer \n\nLevel Design\n\nLevel
+    Artist\n\nUser Interface\n\n3D Artist\n\n3D Art Assistant\n\nAnimators\n\n\n\n\n\nSound
+    Designer\n\nComposers\n\n\nMixing\n\n\n\nSystems Designer \n\nLevel Design\n\nLevel
     Design Assistant\n\nUser Experience\n\nAdditional Design\n\n\n\nNarrative Designer\n\nStory
     and Dialogue\n\n\n\nGameplay Programmer\n\n\nUI\n\n\nAI Programmer\n\nAudio Programmer\n\n\n\nQA
     Analyists\n\n\n\n\n\n\n\n\n\n\n"
@@ -7830,18 +7830,18 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1637706815}
-    characterCount: 396
+    characterCount: 400
     spriteCount: 0
-    spaceCount: 96
+    spaceCount: 99
     wordCount: 46
     linkCount: 0
-    lineCount: 74
+    lineCount: 77
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -9353,7 +9353,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1950}
+  m_AnchoredPosition: {x: -0.0000019073, y: -1167}
   m_SizeDelta: {x: 307.01007, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1813908531
@@ -9511,7 +9511,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1005}
+  m_AnchoredPosition: {x: 0, y: -623}
   m_SizeDelta: {x: 307.01007, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1830720054
@@ -9669,7 +9669,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -735}
+  m_AnchoredPosition: {x: -0.000012398, y: -456}
   m_SizeDelta: {x: 307.01007, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1848251166
