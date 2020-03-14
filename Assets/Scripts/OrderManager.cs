@@ -51,8 +51,9 @@ public class OrderManager : MonoBehaviour
     /// <summary>
     /// FOR DEMO TUTORIAL
     /// </summary>
-    void OrderPackage()
+    public void OrderPackage()
     {
+        print("ordering package");
         for (int i = 0; i < homes.Length; i++)
         {
             ///////////////////////Make this so that it won't keep picking the same house/////////////
@@ -64,5 +65,6 @@ public class OrderManager : MonoBehaviour
                 break;
             }
         }
+        print("ordered");
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 
@@ -67,6 +68,8 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     public float hitSpeed;
 
+    [Header("DEMO TUTORIAL")]
+    [SerializeField] TutorialManager tutorialManager;
 
     // Start is called before the first frame update
     void Start()
@@ -226,7 +229,7 @@ public class PlayerController : MonoBehaviour
 
                     }
                 }
-            }   
+            }
         }
     }
 
@@ -307,6 +310,19 @@ public class PlayerController : MonoBehaviour
 
     void PackageAdd(GameObject other, bool addToFront = false)
     {
+        ///tutorial stuff///////////////
+        if (SceneManager.GetActiveScene().name == "TutorialScene")
+        {
+            if (tutorialManager.i == 9 || tutorialManager.i == 12)
+            {
+                //print("playercontroller");
+                tutorialManager.ToggleDialogueOn();
+                tutorialManager.i++;
+                Time.timeScale = 0f;
+            }
+        }
+        //////////////////////////////////
+
         if (!heldPackages.Contains(other.gameObject) && heldPackages.Count < maxPackages)
         {
             //set the package touched to a local variable
@@ -354,7 +370,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //tell the line renderer to draw to the newest added point
-        lineRenderer.positionCount = heldPackages.Count + 1;        
+        lineRenderer.positionCount = heldPackages.Count + 1;
     }
 
     void PackageSwitch(float dir)

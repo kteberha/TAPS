@@ -38,7 +38,6 @@ public class NarrativeDialogue : MonoBehaviour
     // Continues over all the lines of text, then displays all the choices. If there are no choices, the story is finished!
     public void RefreshView()
     {
-        print("refresh view");
         // Read all the content until we can't continue any more
         if (story.canContinue)
         {

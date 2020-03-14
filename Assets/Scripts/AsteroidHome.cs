@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AsteroidHome : MonoBehaviour
 {
@@ -27,6 +28,9 @@ public class AsteroidHome : MonoBehaviour
 
 
     private float delayReset;//value to reset the delay to
+
+    [Header("DEMO TUTORIAL")]
+    public TutorialManager tutorialManager;
 
     //variables for offscreen indicator
     public GameObject offScreenIndicatorObj;
@@ -262,6 +266,20 @@ public class AsteroidHome : MonoBehaviour
         {
             OrderFulfilled();
         }
+
+        ///Tutorial stuff///////
+        if(SceneManager.GetActiveScene().name == "TutorialScene")
+        {
+            if(tutorialManager.i == 24)
+            {
+                tutorialManager.i++;
+                print("package delivered");
+                tutorialManager.ToggleDialogueOn();
+            }
+
+
+        }
+
     }
 
     /// <summary>

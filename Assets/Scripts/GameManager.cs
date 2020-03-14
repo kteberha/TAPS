@@ -68,10 +68,13 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            
+
         }
 
-        state = GAMESTATE.CLOCKEDIN;
+        if(SceneManager.GetActiveScene().name != "TutorialScene")
+        {
+            state = GAMESTATE.CLOCKEDIN;
+        }
 
         pauseCg = pausePanel.GetComponent<CanvasGroup>();
         workdayStatusText.text = "Clocked IN!";

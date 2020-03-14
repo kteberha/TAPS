@@ -33,12 +33,6 @@ public class DialogueMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (dialogueScreen.activeInHierarchy)
-        {
-            menuController.gm.state = GAMESTATE.PAUSED;
-            print("game should be paused: screen is active");
-        }
-            
     }
 
     public void StartDialogue()
@@ -59,7 +53,7 @@ public class DialogueMenuManager : MonoBehaviour
 
     void MakeMenu()
     {
-        menuController.gm.state = GAMESTATE.PAUSED;   
+        menuController.gm.state = GAMESTATE.PAUSED;
         //menuController.paused = true;
         Time.timeScale = 0f;
         menuActive = true;
