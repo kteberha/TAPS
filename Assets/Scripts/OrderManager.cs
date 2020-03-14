@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class OrderManager : MonoBehaviour
 {
+    public GameManager gameManager;
+
     public AsteroidHome[] homes;
 
     public float orderTimer = 5f;
@@ -20,30 +22,33 @@ public class OrderManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene().name != "TutorialScene")
+        if (gameManager.state == GAMESTATE.CLOCKEDIN)
         {
-            //countdown timer
-            orderTimer -= Time.deltaTime;
-
-            //check when the timer reaches 0;
-            if (orderTimer <= 0)
+            if (SceneManager.GetActiveScene().name != "TutorialScene")
             {
-                //print("attempt order");
-                //go through the list of homes and see if they can order a package
-                for (int i = 0; i < homes.Length; i++)
-                {
-                    ///////////////////////Make this so that it won't keep picking the same house/////////////
-                    //print("checking: " + homes[i].name);
-                    //check if the home being compared has ordered a package, if so break the loop
-                    if (homes[i].packageBeenOrdered == false)
-                    {
-                        homes[i].Order();
-                        break;
-                    }
-                    //////////////////////////////////////////////////////////////////////////////////////////
-                }
+                //countdown timer
+                orderTimer -= Time.deltaTime;
 
-                orderTimer = resetTimer;//reset the order timer.
+                //check when the timer reaches 0;
+                if (orderTimer <= 0)
+                {
+                    //print("attempt order");
+                    //go through the list of homes and see if they can order a package
+                    for (int i = 0; i < homes.Length; i++)
+                    {
+                        ///////////////////////Make this so that it won't keep picking the same house/////////////
+                        //print("checking: " + homes[i].name);
+                        //check if the home being compared has ordered a package, if so break the loop
+                        if (homes[i].packageBeenOrdered == false)
+                        {
+                            homes[i].Order();
+                            break;
+                        }
+                        //////////////////////////////////////////////////////////////////////////////////////////
+                    }
+
+                    orderTimer = resetTimer;//reset the order timer.
+                }
             }
         }
     }

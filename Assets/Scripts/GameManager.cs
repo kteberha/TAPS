@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public enum GAMESTATE
 {
-    PAUSED, CLOCKEDIN, CLOCKEDOUT
+    PAUSED, CLOCKEDIN, CLOCKEDOUTSTART, CLOCKEDOUTEND
 }
 
 public enum WORKDAY
@@ -40,6 +40,17 @@ public class GameManager : MonoBehaviour
     Animation textAnimation;
     bool clockedOut = false;
 
+    //Zip Face Animations
+    public GameObject zipFaceObject;
+    public Animator zipAnimator;
+
+    //final points to judge
+    public Slider starSlider;
+
+    public NarrativeDialogue narrativeDialogue;
+    public TextAsset inkEndScript;
+
+
     //Pause menu & game state variables
     [HideInInspector]
     public bool paused = false;
@@ -51,6 +62,8 @@ public class GameManager : MonoBehaviour
     public DialogueMenuManager dialogueMenuManager;
     public MenuController menuController;
     public GameObject tutorialManager;
+
+    bool test = false;
 
     // Start is called before the first frame update
     void Start()
@@ -71,18 +84,14 @@ public class GameManager : MonoBehaviour
         workdayStatusText.text = "Clocked IN!";
         textAnimation = workdayStatusText.GetComponent<Animation>();
 
-        if (SceneManager.GetActiveScene().name != "TutorialScene")
-        {
-            state = GAMESTATE.CLOCKEDIN;
-        }
-        else
+        state = GAMESTATE.CLOCKEDOUTSTART;
+
+        StartCoroutine(WakeUp());
+
+        if (SceneManager.GetActiveScene().name == "TutorialScene")
         {
             textAnimation.Stop();
         }
-
-
-
-
     }
 
     // Update is called once per frame
@@ -99,7 +108,7 @@ public class GameManager : MonoBehaviour
             {
                 if (state == GAMESTATE.CLOCKEDIN)
                 {
-                    state = GAMESTATE.CLOCKEDOUT;
+                    state = GAMESTATE.CLOCKEDOUTEND;
                     clockedOut = true;
                     //have the workday over text appear and fade before loading the scene
                     StartCoroutine(Clockout());
@@ -108,9 +117,53 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    IEnumerator WakeUp()
+    {
+        zipFaceObject.SetActive(true);
+        AnimatorClipInfo[] clipInfo = zipAnimator.GetCurrentAnimatorClipInfo(0);
+        yield return new WaitForSeconds(clipInfo[0].clip.length);
+
+        zipFaceObject.SetActive(false);
+
+        dialogueMenuManager.StartDialogue(GAMESTATE.CLOCKEDOUTSTART);
+
+        zipAnimator.SetTrigger("ClockingIn");
+    }
+
+    IEnumerator ShutDown()
+    {
+        zipFaceObject.SetActive(true);
+        AnimatorClipInfo[] clipInfo = zipAnimator.GetCurrentAnimatorClipInfo(0);
+        yield return new WaitForSeconds(clipInfo[0].clip.length);
+
+        //FOR DEMO
+
+    }
+
     public IEnumerator Clockout()
     {
-        state = GAMESTATE.CLOCKEDOUT;
+        state = GAMESTATE.CLOCKEDOUTEND;
+        if(starSlider.value >= starSlider.maxValue)
+        {
+            zipAnimator.SetTrigger("ExcitedResults");
+            print("show excited results");
+        }
+        else if(starSlider.value >= 0.67f && starSlider.value < starSlider.maxValue)
+        {
+            zipAnimator.SetTrigger("PleasedResults");
+            print("show pleased results");
+        }
+        else if(starSlider.value >= 0.33f && starSlider.value < 0.67f)
+        {
+            zipAnimator.SetTrigger("DisappointedResults");
+            print("show disappointed results");
+        }
+        else
+        {
+            zipAnimator.SetTrigger("UghResults");
+            print("show ugh results");
+        }
 
         workdayStatusText.text = "Clocked OUT!";
         textAnimation.Play();
@@ -122,5 +175,14 @@ public class GameManager : MonoBehaviour
         menuController.EndOfDay();
 
         //StopCoroutine(Clockout());
+    }
+
+    public IEnumerator ZipResults()
+    {
+        zipFaceObject.SetActive(true);
+        AnimatorClipInfo[] clipInfo = zipAnimator.GetCurrentAnimatorClipInfo(0);
+        yield return new WaitForSeconds(clipInfo[0].clip.length);
+        narrativeDialogue.inkJSONAsset = inkEndScript;
+        dialogueMenuManager.StartDialogue(GAMESTATE.CLOCKEDOUTEND);
     }
 }

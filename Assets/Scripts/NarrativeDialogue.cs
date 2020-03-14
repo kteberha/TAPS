@@ -38,6 +38,7 @@ public class NarrativeDialogue : MonoBehaviour
     // Continues over all the lines of text, then displays all the choices. If there are no choices, the story is finished!
     public void RefreshView()
     {
+
         // Read all the content until we can't continue any more
         if (story.canContinue)
         {
@@ -65,7 +66,7 @@ public class NarrativeDialogue : MonoBehaviour
                 button.onClick.AddListener(delegate {OnClickChoiceButton(choice);});
             }
 
-            button.interactable = false;
+            button.interactable = true;
         }
         // If we've read all the content and there's no choices, the story is finished!
         else

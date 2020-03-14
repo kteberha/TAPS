@@ -52,87 +52,89 @@ public class WorkdayTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ////a lot of this needs to be taken off update////
-        if (countStarted && countdownValue >= 0f)//run countdown logic if there is time left AND if the counter is allowed to be active
+        if (gm.state == GAMESTATE.CLOCKEDIN)
         {
-            countdownValue = Mathf.Clamp(countdownValue - Time.deltaTime, 0f, gm.workdayLength);//start the countdown
+            ////a lot of this needs to be taken off update////
+            if (countStarted && countdownValue >= 0f)//run countdown logic if there is time left AND if the counter is allowed to be active
+            {
+                countdownValue = Mathf.Clamp(countdownValue - Time.deltaTime, 0f, gm.workdayLength);//start the countdown
 
 
-            //set the minute and second values
-            minute = Mathf.Floor(countdownValue / 60f);
-            second = Mathf.Floor(countdownValue) % 60f;
+                //set the minute and second values
+                minute = Mathf.Floor(countdownValue / 60f);
+                second = Mathf.Floor(countdownValue) % 60f;
 
-            //add 0's to the strings if they are less than 10
-            if (minute < 10)
-                minText = "0" + minute.ToString();
+                //add 0's to the strings if they are less than 10
+                if (minute < 10)
+                    minText = "0" + minute.ToString();
+                else
+                    minText = minute.ToString();
+                if (second < 10)
+                    secText = "0" + second.ToString();
+                else
+                    secText = second.ToString();
+
+                /////////////////////////////////////////////This is all rough code that needs to be made nicer and more efficient
+                if (second % 60 == 1 || second % 60 == 31 && countdownValue > 32)
+                {
+                    if (!fadeAnimationStarted)
+                    {
+                        StartCoroutine(ClockFade());
+                    }
+                }
+
+                if (Mathf.Ceil(countdownValue) == 31)//fade the clock in and don't let it fade out during the final push
+                {
+                    fadeAnimation.Play("ClockFadeIn");
+                }
+
+                if (countdownValue <= 0)//play the final fade out animation
+                {
+                    if (!oneTimeFadeStarted)
+                    {
+                        fadeAnimation.Play("ClockFadeOut");
+                        oneTimeFadeStarted = true;
+                        //clockTextAnim.Stop();
+                        //clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b, 0f);
+                    }
+                }
+
+                if (countdownValue <= finalColorSecValue + 1)//start the red flashing warning that time is almost up
+                {
+                    fill.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.2f, 1));
+                    if (!oneTimeFadeStarted)
+                    {
+                        clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.2f, 1));
+                    }
+
+                }
+                else if (countdownValue / gm.workdayLength <= warningColorPercent + 0.1f)
+                {
+                    //set the starting time for the fade to use
+                    startTime = gm.workdayLength * warningColorPercent;
+                    //fade from one color to the other smoothly
+                    fill.color = Color.Lerp(startFillColor, warningColor, Mathf.SmoothStep(0, 1, ((Time.time - startTime) / fadeTime)));
+                }
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            }
             else
-                minText = minute.ToString();
-            if (second < 10)
-                secText = "0" + second.ToString();
-            else
-                secText = second.ToString();
-
-            /////////////////////////////////////////////This is all rough code that needs to be made nicer and more efficient
-            if (second % 60 == 1 || second % 60 == 31 && countdownValue > 32)
             {
-                if (!fadeAnimationStarted)
+                //stop the counting
+                countStarted = false;
+                //ensure the timer values stay at 00
+                if (countdownValue <= 0)
                 {
-                    StartCoroutine(ClockFade());
+                    minText = "00";
+                    secText = "00";
                 }
             }
 
-            if (Mathf.Ceil(countdownValue) == 31)//fade the clock in and don't let it fade out during the final push
-            {
-                fadeAnimation.Play("ClockFadeIn");
-            }
-
-            if(countdownValue <= 0)//play the final fade out animation
-            {
-                if(!oneTimeFadeStarted)
-                {
-                    fadeAnimation.Play("ClockFadeOut");
-                    oneTimeFadeStarted = true;
-                    //clockTextAnim.Stop();
-                    //clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b, 0f);
-                }
-            }
-
-            if(countdownValue <= finalColorSecValue + 1)//start the red flashing warning that time is almost up
-            {
-                fill.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.2f, 1));
-                if(!oneTimeFadeStarted)
-                {
-                    clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.2f, 1));
-                }
-
-            }
-            else if(countdownValue / gm.workdayLength <= warningColorPercent + 0.1f)
-            {
-                //set the starting time for the fade to use
-                startTime = gm.workdayLength * warningColorPercent;
-                //fade from one color to the other smoothly
-                fill.color = Color.Lerp(startFillColor, warningColor, Mathf.SmoothStep(0,1,((Time.time - startTime) / fadeTime)));
-            }
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            clockSlider.value = countdownValue;//adjust the slider fill value
+            clockText.text = minText + ":" + secText;//format the timer text
 
         }
-        else
-        {
-            //stop the counting
-            countStarted = false;
-            //ensure the timer values stay at 00
-            if (countdownValue <= 0)
-            {
-                minText = "00";
-                secText = "00";
-            }
-        }
-
-        clockSlider.value = countdownValue;//adjust the slider fill value
-        clockText.text = minText + ":" + secText;//format the timer text
-
     }
-
     /// <summary>
     /// Handles playing the animation for the clock fading in and out
     /// </summary>

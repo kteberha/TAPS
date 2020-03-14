@@ -13,9 +13,11 @@ public class MenuController : MonoBehaviour
     public GameObject pausePanel;
     public GameObject optionsPanel;
     public GameObject endDayPanel;
+
     //////DEMO ONLY/////
     public GameObject wishlist;
     ///////////////////
+
     //public GameObject map;
     CanvasGroup pauseCg;
     CanvasGroup optionsCg;
@@ -183,13 +185,18 @@ public class MenuController : MonoBehaviour
 
     IEnumerator EndDay()
     {
-        paused = true;
+        gm.state = GAMESTATE.CLOCKEDOUTEND;
+        //paused = true;
         endDayAnim.Play();
         yield return new WaitForSeconds(endDayAnim.clip.length);
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         endDayCg.blocksRaycasts = true;
         endDayCg.interactable = true;
-        gm.state = GAMESTATE.CLOCKEDOUT;
+    }
+
+    public void ShowResultFace()
+    {
+        gm.StartCoroutine(gm.ZipResults());
     }
 
     public void ReturnToMenu()
@@ -219,7 +226,7 @@ public class MenuController : MonoBehaviour
     ////////////////FOR DEMO ONLY/////////////////////////
     public void Wishlist()
     {
-        gm.state = GAMESTATE.PAUSED;
+        gm.state = GAMESTATE.CLOCKEDOUTEND;
         wishlist.SetActive(true);
     }
 }

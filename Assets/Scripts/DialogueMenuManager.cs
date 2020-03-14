@@ -11,6 +11,8 @@ public class DialogueMenuManager : MonoBehaviour
     public GameObject menu;
     public MenuController menuController;
 
+    public GameObject goalsScreen;
+
     Rigidbody2D rb;
     Vector3 pTempVelocity;
     bool menuActive = false;
@@ -30,12 +32,13 @@ public class DialogueMenuManager : MonoBehaviour
         dialogueCameraTransform = player.GetComponent<PlayerController>().dialogueCameraPoint;
     }
 
-    public void StartDialogue()
+    public void StartDialogue(GAMESTATE gs)
     {
         pTempVelocity = rb.velocity;
         rb.velocity = new Vector3(0f, 0f, 0f);
         main.GetComponent<Camera2DFollow>().enabled = false;
-        main.transform.DOMove(new Vector3(dialogueCameraTransform.position.x, dialogueCameraTransform.transform.position.y, dialogueCameraTransform.position.z), 0.3f).OnComplete(MakeMenu).SetEase(DG.Tweening.Ease.InBack);
+        //main.transform.DOMove(new Vector3(dialogueCameraTransform.position.x, dialogueCameraTransform.transform.position.y, dialogueCameraTransform.position.z), 0.3f).OnComplete(MakeMenu).SetEase(DG.Tweening.Ease.InBack);
+        MakeMenu(gs);
     }
 
     public void EndDialogue()
@@ -46,9 +49,9 @@ public class DialogueMenuManager : MonoBehaviour
         RemoveMenu();
     }
 
-    void MakeMenu()
+    void MakeMenu(GAMESTATE gs)
     {
-        menuController.gm.state = GAMESTATE.PAUSED;
+        menuController.gm.state = gs;
         //menuController.paused = true;
         Time.timeScale = 0f;
         menuActive = true;
@@ -67,11 +70,25 @@ public class DialogueMenuManager : MonoBehaviour
 
     void RemoveMenu()
     {
-        menuController.gm.state = GAMESTATE.CLOCKEDIN;
         //menuController.paused = false;
         Time.timeScale = 1f;
         menuActive = false;
         menu.gameObject.SetActive(false);
+
+        if (menuController.gm.state == GAMESTATE.CLOCKEDOUTSTART)
+        {
+            goalsScreen.SetActive(true);
+        }
+        else if(menuController.gm.state == GAMESTATE.CLOCKEDOUTEND)
+        {
+            menuController.Wishlist();
+        }
+    }
+
+    public void ClockIn()
+    {
+        goalsScreen.SetActive(false);
+        menuController.gm.state = GAMESTATE.CLOCKEDIN;
     }
 
     public void SkipDialogue()
