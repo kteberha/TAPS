@@ -142,55 +142,48 @@ public class AsteroidHome : MonoBehaviour
                                 }
                             }
                         }
-
                         break;
 
                     case (2):
+                        /////Double of one kind///////////
                         if(packTypeSeed <= 0.17f)
                         {
-                            print("ordered 2 boxes");
                             foreach(GameObject pack in packageTypes)
                             {
                                 if(pack.name.Equals("SquarePackage"))
                                 {
-                                    for (int i = 0; i < 2; i++)
-                                        packagesOrdered.Add(pack);
+                                    packagesOrdered.Add(pack);
+                                    packagesOrdered.Add(pack);
+                                    break;//break out of the loop early
                                 }
-
-                                break;
                             }
                         }
                         else if(packTypeSeed <= 0.34f)
                         {
-                            print("ordered 2 cones");
                             foreach(GameObject pack in packageTypes)
                             {
                                 if(pack.name.Equals("ConePackage"))
                                 {
-                                    for (int i = 0; i < 2; i++)
-                                    {
-                                        packagesOrdered.Add(pack);
-                                    }
-                                    break;
+                                    packagesOrdered.Add(pack);
+                                    packagesOrdered.Add(pack);
+                                    break;//break out of the loop early
                                 }
                             }
                         }
                         else if(packTypeSeed <= 0.51f)
                         {
-                            print("ordered 2 eggs");
                             foreach(GameObject pack in packageTypes)
                             {
                                 if(pack.name.Equals("EggPackage"))
                                 {
-                                    for (int i = 0; i < 2; i++)
-                                    {
-                                        packagesOrdered.Add(pack);
-                                    }
-                                    break;
+                                    packagesOrdered.Add(pack);
+                                    packagesOrdered.Add(pack);
                                 }
                             }
                         }
+                        //////////////////////////////////////
 
+                        ////2 individual kinds////////////////
                         else if (packTypeSeed <= 0.68f)
                         {
                             print("ordered 1 box, 1 cone");
@@ -231,11 +224,6 @@ public class AsteroidHome : MonoBehaviour
                         print("error with ordering packages");
                         break;
                 }
-
-                //foreach (GameObject i in packagesOrdered)
-                //{
-                //    print(i);
-                //}
                 #endregion
                 ///////////////////////////////////////////////////
 
@@ -262,7 +250,6 @@ public class AsteroidHome : MonoBehaviour
         offScreenIndicatorObj.GetComponent<OffScreenIndicator>().OrderTicketUpdate(this);
 
         if (packagesOrdered.Count == 0)//check number of packages left to deliver
-
         {
             OrderFulfilled();
         }
@@ -273,13 +260,9 @@ public class AsteroidHome : MonoBehaviour
             if(tutorialManager.i == 24)
             {
                 tutorialManager.i++;
-                print("package delivered");
                 tutorialManager.ToggleDialogueOn();
             }
-
-
         }
-
     }
 
     /// <summary>
@@ -300,13 +283,11 @@ public class AsteroidHome : MonoBehaviour
         //    if (p.time <= currentTime)
         //        pointsToAward = p.points;
         //}
-        gm.packagesDelivered += 1;
-        gm.points += numPackagesOrdered;
+        gm.packagesDelivered += numPackagesOrdered;//reward based on number of packages delivered
+        gm.points += numPackagesOrdered;//reward based on the number of packages delivered
         gm.ordersFulfilled += 1;
 
         orderDelayTime = delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
-
-        print("order fulfilled: " + packagesOrdered.Count);
     }
 
     public void OrderExpired()
@@ -341,5 +322,6 @@ public class AsteroidHome : MonoBehaviour
         yield return new WaitForSeconds(orderDelayTime);
         orderDelayTime = 0;
         Order();
+        orderDelayTime = delayReset;
     }
 }

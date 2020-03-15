@@ -75,6 +75,7 @@ public class OffScreenIndicator : MonoBehaviour
 
         foreach (GameObject package in _asteroidHome.packagesOrdered)//go through each item in packages ordered list
         {
+            print(package.name);
             string type = package.name;
 
             switch (type)//determine sprite based on package name saved above
@@ -97,11 +98,9 @@ public class OffScreenIndicator : MonoBehaviour
                     break;
             }
 
-
             packageSlotImages[i].sprite = packageTypeAssigned;//alter the sprite in the image slot
 
             //print(packageSlotImages[i].sprite.name);//testing
-
 
             if (i + 1 < _asteroidHome.packagesOrdered.Count)
             {

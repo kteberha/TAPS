@@ -197,6 +197,7 @@ public class MenuController : MonoBehaviour
     public void ShowResultFace()
     {
         gm.StartCoroutine(gm.ZipResults());
+        endDayPanel.SetActive(false);
     }
 
     public void ReturnToMenu()

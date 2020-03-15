@@ -8,6 +8,7 @@ using TMPro;
 public class NarrativeDialogue : MonoBehaviour
 {
     public TextAsset inkJSONAsset;
+    public TextAsset inkJSONAsset2;
     public Story story;
 
     public Canvas canvas;
@@ -31,6 +32,14 @@ public class NarrativeDialogue : MonoBehaviour
 
         //start the story off with the first line of text
         RefreshView();
+    }
+
+    public Story NewStory()
+    {
+        story = new Story(inkJSONAsset2.text);
+        print("new story");
+        RefreshView();
+        return story;
     }
 
     // This is the main function called every time the story changes. It does a few things:

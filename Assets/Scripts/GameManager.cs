@@ -26,10 +26,10 @@ public class GameManager : MonoBehaviour
     public INPUTTYPE inputType;//for tracking input type
 
     //point and package tracking variables
-    [HideInInspector]public int packagesDelivered = 0;
-    [HideInInspector]public int ordersFulfilled = 0;
-    [HideInInspector]public int refundsOrdered = 0;
-    [HideInInspector]public int points = 0;
+    [HideInInspector] public int packagesDelivered = 0;
+    [HideInInspector] public int ordersFulfilled = 0;
+    [HideInInspector] public int refundsOrdered = 0;
+    [HideInInspector] public int points = 0;
 
     //workday timer variables
     public float timeInWorkday = 0f;
@@ -37,16 +37,26 @@ public class GameManager : MonoBehaviour
 
     //Clock in or out UI text variables
     public Text workdayStatusText;
-    Animation textAnimation;
+    [HideInInspector]public Animation textAnimation;
     bool clockedOut = false;
 
-    //Zip Face Animations
+    //Zip Transition Animations
     public GameObject zipFaceObject;
     public Animator zipAnimator;
+    AnimatorClipInfo[] clipInfo;
+
+    //////might not need these/////
+    int wakeUpHash = Animator.StringToHash("Base Layer.WakeUpTransition");
+    int excitedHash = Animator.StringToHash("Base Layer.ExcitedResults");
+    int pleasedHash = Animator.StringToHash("Base Layer.PleasedResults");
+    int disappointedHash = Animator.StringToHash("Base Layer.DisappointedResults");
+    int ughHash = Animator.StringToHash("Base Layer.UghResults");
+    int clockOutHash = Animator.StringToHash("Base Layer.ClockoutTransition");
+    ////////////////////////////
 
     //final points to judge
     public Slider starSlider;
-
+    CanvasGroup zipAnimCG;
     public NarrativeDialogue narrativeDialogue;
     public TextAsset inkEndScript;
 
@@ -68,9 +78,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        zipAnimCG = zipFaceObject.GetComponent<CanvasGroup>();
         if (SceneManager.GetActiveScene().name != "TutorialScene")
         {
-            print("not in the tutorial");
             //print(PlayerPrefs.GetInt("tutorialDone"));
             //start the tutorial dialogue if it hasn't been done before
             //if (PlayerPrefs.GetInt("tutorialDone", 0) <= 0)
@@ -115,55 +125,41 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        //clipInfo = zipAnimator.GetCurrentAnimatorClipInfo(0);
+
     }
 
 
     IEnumerator WakeUp()
     {
         zipFaceObject.SetActive(true);
-        AnimatorClipInfo[] clipInfo = zipAnimator.GetCurrentAnimatorClipInfo(0);
-        yield return new WaitForSeconds(clipInfo[0].clip.length);
-
-        zipFaceObject.SetActive(false);
+        zipAnimator.SetTrigger("ClockingIn");
+        yield return new WaitForSeconds(28.7f);
+        zipAnimator.SetTrigger("DonePlaying");
+        zipAnimCG.alpha = 0f;
 
         dialogueMenuManager.StartDialogue(GAMESTATE.CLOCKEDOUTSTART);
-
-        zipAnimator.SetTrigger("ClockingIn");
+        StopCoroutine(WakeUp());
     }
 
-    IEnumerator ShutDown()
+    public IEnumerator ShutDown()
     {
-        zipFaceObject.SetActive(true);
-        AnimatorClipInfo[] clipInfo = zipAnimator.GetCurrentAnimatorClipInfo(0);
-        yield return new WaitForSeconds(clipInfo[0].clip.length);
+        StopCoroutine(ZipResults());
+        zipAnimCG.alpha = 1;
+        zipAnimator.SetTrigger("ClockingOut");
+        //clipInfo = zipAnimator.GetCurrentAnimatorClipInfo(0);
+        //print("shut down clip name: " + clipInfo[0].clip.name);
 
+        yield return new WaitForSeconds(2f);
         //FOR DEMO
-
+        menuController.Wishlist();
+        //zipAnimCG.alpha = 0f;
+        zipFaceObject.SetActive(false);
     }
 
     public IEnumerator Clockout()
     {
         state = GAMESTATE.CLOCKEDOUTEND;
-        if(starSlider.value >= starSlider.maxValue)
-        {
-            zipAnimator.SetTrigger("ExcitedResults");
-            print("show excited results");
-        }
-        else if(starSlider.value >= 0.67f && starSlider.value < starSlider.maxValue)
-        {
-            zipAnimator.SetTrigger("PleasedResults");
-            print("show pleased results");
-        }
-        else if(starSlider.value >= 0.33f && starSlider.value < 0.67f)
-        {
-            zipAnimator.SetTrigger("DisappointedResults");
-            print("show disappointed results");
-        }
-        else
-        {
-            zipAnimator.SetTrigger("UghResults");
-            print("show ugh results");
-        }
 
         workdayStatusText.text = "Clocked OUT!";
         textAnimation.Play();
@@ -179,10 +175,38 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator ZipResults()
     {
-        zipFaceObject.SetActive(true);
-        AnimatorClipInfo[] clipInfo = zipAnimator.GetCurrentAnimatorClipInfo(0);
-        yield return new WaitForSeconds(clipInfo[0].clip.length);
         narrativeDialogue.inkJSONAsset = inkEndScript;
+        zipAnimCG.alpha = 1f;
+        //zipFaceObject.SetActive(true);
+
+        if (packagesDelivered >= 15)
+        {
+            zipAnimator.SetTrigger("ExcitedResults");
+            print(packagesDelivered);
+            print("show excited results");
+        }
+        else if (packagesDelivered >= 10 && packagesDelivered < 15)
+        {
+            zipAnimator.SetTrigger("PleasedResults");
+            print(packagesDelivered);
+            print("show pleased results");
+        }
+        else if (packagesDelivered >= 5 && packagesDelivered < 10)
+        {
+            zipAnimator.SetTrigger("DisappointedResults");
+            print(packagesDelivered);
+            print("show disappointed results");
+        }
+        else
+        {
+            zipAnimator.SetTrigger("UghResults");
+            print(packagesDelivered);
+            print("show ugh results");
+        }
+        yield return new WaitForSeconds(2.5f);
+        zipAnimator.SetTrigger("DonePlaying");
+        zipAnimCG.alpha = 0f;
         dialogueMenuManager.StartDialogue(GAMESTATE.CLOCKEDOUTEND);
+        //StartCoroutine(ShutDown());
     }
 }

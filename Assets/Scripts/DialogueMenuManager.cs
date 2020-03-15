@@ -10,6 +10,7 @@ public class DialogueMenuManager : MonoBehaviour
     public GameObject player;
     public GameObject menu;
     public MenuController menuController;
+    NarrativeDialogue narrativeController;
 
     public GameObject goalsScreen;
 
@@ -30,6 +31,10 @@ public class DialogueMenuManager : MonoBehaviour
         main = Camera.main;
         rb = player.GetComponent<Rigidbody2D>();
         dialogueCameraTransform = player.GetComponent<PlayerController>().dialogueCameraPoint;
+    }
+    private void Start()
+    {
+        narrativeController = GetComponent<NarrativeDialogue>();
     }
 
     public void StartDialogue(GAMESTATE gs)
@@ -53,7 +58,7 @@ public class DialogueMenuManager : MonoBehaviour
     {
         menuController.gm.state = gs;
         //menuController.paused = true;
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         menuActive = true;
         menu.gameObject.SetActive(true);
         player.GetComponent<AudioSource>().Stop();
@@ -81,7 +86,7 @@ public class DialogueMenuManager : MonoBehaviour
         }
         else if(menuController.gm.state == GAMESTATE.CLOCKEDOUTEND)
         {
-            menuController.Wishlist();
+            StartCoroutine(menuController.gm.ShutDown());
         }
     }
 
@@ -89,6 +94,8 @@ public class DialogueMenuManager : MonoBehaviour
     {
         goalsScreen.SetActive(false);
         menuController.gm.state = GAMESTATE.CLOCKEDIN;
+        menuController.gm.textAnimation.Play();
+        narrativeController.story = narrativeController.NewStory();
     }
 
     public void SkipDialogue()
