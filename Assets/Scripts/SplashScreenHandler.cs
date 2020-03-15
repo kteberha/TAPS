@@ -10,7 +10,12 @@ public class SplashScreenHandler : MonoBehaviour
     bool skipped = false;
     private void Awake()
     {
-        audioSource2.PlayScheduled(AudioSettings.dspTime + 19.85);
+        audioSource1.Play();
+    }
+
+    private void Start()
+    {
+        audioSource2.PlayScheduled(AudioSettings.dspTime + audioSource1.clip.length);
     }
 
     private void Update()

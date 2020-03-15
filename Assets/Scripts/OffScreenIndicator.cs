@@ -99,7 +99,7 @@ public class OffScreenIndicator : MonoBehaviour
             }
 
             packageSlotImages[i].sprite = packageTypeAssigned;//alter the sprite in the image slot
-
+            print("slot " +i + " " +packageSlotImages[i].sprite.name);
             //print(packageSlotImages[i].sprite.name);//testing
 
             if (i + 1 < _asteroidHome.packagesOrdered.Count)

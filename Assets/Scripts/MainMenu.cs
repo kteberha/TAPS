@@ -14,6 +14,8 @@ public class MainMenu : MonoBehaviour
 
     Resolution[] resolutions;
 
+
+
     private void Start()
     {
         //get all of the resolutions available to display

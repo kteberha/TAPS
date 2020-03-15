@@ -252,6 +252,14 @@ public class AsteroidHome : MonoBehaviour
         if (packagesOrdered.Count == 0)//check number of packages left to deliver
         {
             OrderFulfilled();
+
+            //////////////FOR DEMO TUTORIAL SCENE////////////////
+            if (SceneManager.GetActiveScene().name == "TutorialScene")
+            {
+                orderDelayTime = 0f;
+                Order();
+            }
+            /////////////////////////////////////////////////////////
         }
 
         ///Tutorial stuff///////

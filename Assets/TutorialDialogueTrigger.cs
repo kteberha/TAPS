@@ -23,7 +23,7 @@ public class TutorialDialogueTrigger : MonoBehaviour
         {
             tutorialManager.ToggleDialogueOn();
             tutorialManager.i++;
-            Time.timeScale = 0f;
+            tutorialManager.controlIconAnimator.SetTrigger("Scroll");
         }
     }
 }

@@ -15,25 +15,28 @@ public class TutorialManager : MonoBehaviour
 
     [SerializeField] DialogueMenuManager dialogueMenuManager;
 
-    Package package;
-
-    GameObject player;
+    public GameObject player;
     PlayerController playerController;
+
+    public Animator controlIconAnimator;
+    public CanvasGroup controlsCG;
 
     public Animation animation;
     [SerializeField] AnimationClip fadein;
     [SerializeField] AnimationClip fadeout;
 
-    bool startDialogueEnded = false;
-    bool packageCollected = false;
-    bool firstDeliveryMade = false;
+    bool movementCue = false;
+    bool throwCue = false;
+    bool teleportCue = false;
     bool teleported = false;
     bool readyForMainScene = false;
+
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager.state = GAMESTATE.PAUSED;
+        playerController = player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -51,12 +54,15 @@ public class TutorialManager : MonoBehaviour
             narrativeDialogue.RefreshView();
             i++;
         }
+
         #region
         if (i == 3 && Input.GetKeyDown(KeyCode.Space))
         {
             print(i);
             i++;
             ToggleDialogueOff();
+            controlIconAnimator.SetBool("LeftClick", true);
+            controlsCG.alpha = 1f;
 
         }
         else if (i == 4 && Input.GetMouseButtonDown(0))
@@ -64,16 +70,15 @@ public class TutorialManager : MonoBehaviour
             print(i);
             i++;
             ToggleDialogueOn();
-
-            Time.timeScale = 0f;
+            PauseObjects();
         }
         else if (i == 8 && Input.GetKeyDown(KeyCode.Space))
         {
             print(i);
             i++;
             ToggleDialogueOff();
-
-            Time.timeScale = 1f;
+            ResumeObjects();
+            controlIconAnimator.SetTrigger("LeftClick");
         }
         else if (i == 9 && Input.GetKeyDown(KeyCode.Space))
         {
@@ -81,7 +86,7 @@ public class TutorialManager : MonoBehaviour
             i++;
             ToggleDialogueOn();
 
-            Time.timeScale = 0f;
+            PauseObjects();
         }
         else if (i == 11 && Input.GetKeyDown(KeyCode.Space))
         {
@@ -96,7 +101,7 @@ public class TutorialManager : MonoBehaviour
             print(i);
             i++;
             ToggleDialogueOn();
-            Time.timeScale = 0f;
+            PauseObjects();
         }
         else if (i == 14 && Input.GetKeyDown(KeyCode.Space))
         {
@@ -125,7 +130,13 @@ public class TutorialManager : MonoBehaviour
             print(i + "chuck away");
             i++;
             ToggleDialogueOff();
+            controlIconAnimator.SetTrigger("RightClick");
             Time.timeScale = 1f;
+        }
+        else if(i == 27 && !teleportCue)
+        {
+            teleportCue = true;
+            controlIconAnimator.SetTrigger("Teleport");
         }
         else if(i == 28 && Input.GetKeyDown(KeyCode.Space))
         {
@@ -157,18 +168,35 @@ public class TutorialManager : MonoBehaviour
     public void ToggleDialogueOn()
     {
         print("toggle on " + i);
-            dialogueMenuManager.dialogueScreen.SetActive(true);
-            dialogueMenuManager.enabled = false;
+        dialogueMenuManager.dialogueScreen.SetActive(true);
+        dialogueMenuManager.enabled = false;
 
     }
 
     public void ToggleDialogueOff()
     {
         print("toggle off: " + i);
-            dialogueMenuManager.dialogueScreen.SetActive(false);
-            dialogueMenuManager.enabled = true;
-            gameManager.state = GAMESTATE.CLOCKEDIN;
+        dialogueMenuManager.dialogueScreen.SetActive(false);
+        dialogueMenuManager.enabled = true;
+        gameManager.state = GAMESTATE.CLOCKEDIN;
+    }
 
+    public void PauseObjects()
+    {
+        player.GetComponent<Rigidbody2D>().Sleep();
+        foreach(GameObject p in playerController.heldPackages)
+        {
+            p.GetComponent<Rigidbody2D>().Sleep();
+        }
+    }
+
+    public void ResumeObjects()
+    {
+        player.GetComponent<Rigidbody2D>().WakeUp();
+        foreach(GameObject p in playerController.heldPackages)
+        {
+            p.GetComponent<Rigidbody2D>().WakeUp();
+        }
     }
 
     IEnumerator EndFade()
