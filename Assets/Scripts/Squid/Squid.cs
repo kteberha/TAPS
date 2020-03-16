@@ -5,7 +5,7 @@ using UM_AI;
 using UModules;
 using SensorToolkit;
 
-public class Squid : Agent
+public partial class Squid : Agent
 {
 	const string PLAYERTAG = "Player";
 	const string PACKAGETAG = "Package";
@@ -72,20 +72,13 @@ public class Squid : Agent
 	public override void Initialize()
 	{
 		base.Initialize();
-		SM.AddState(new Wander(this));
-		SM.AddState(new Seek(this));
-		SM.AddState(new Flee(this));
-		SM.DefaultState = SM.GetState(typeof(Wander));
-		SM.ChangeState(typeof(Wander));
-		
 		tentacles = GetComponentsInChildren<Tentacle>();
-
 		RangeSensor.EnableTagFilter = true;
 		RangeSensor.AllowedTags = AllowedTags;
 		RangeSensor.OnDetected.AddListener(Detection);
 		RangeSensor.OnLostDetection.AddListener(LostDetection);
 	}
-	
+
 
 	protected override void UpdateAgent()
 	{
@@ -130,94 +123,6 @@ public class Squid : Agent
 
 	public bool ToWander() => !playerDetected && SM.TimeElapsed.Seconds >= seekTime;
 	public bool ToSeek() => playerDetected;
-
-	public class Wander : State<Squid>
-	{
-		public Wander(Agent agent) : base(agent)
-		{
-			#if UNITY_EDITOR
-			color = Color.green;
-			#endif
-			this.SetTransitional(Agent.ToSeek,nameof(Seek));
-		}
-
-		public override void Enter(StateArgs args)
-		{
-			#if UNITY_EDITOR 
-			if(Agent.debug) {Debug.LogFormat("Enter {0}",nameof(Wander));}
-			#endif
-			Agent.TargetPos = Agent.transform.position.XY().RandomInRadius(Agent.roamRange);
-		}
-
-		public override void Update(float deltaTime)
-		{
-			if (Agent.DistanceToTarget <= Agent.Steering.StoppingDistance) 
-			{
-				Agent.TargetPos = Agent.transform.position.RandomInRadius(Agent.roamRange);
-			}
-		}
-
-		public override void Exit(StateArgs args)
-		{
-			#if UNITY_EDITOR 
-			if(Agent.debug) {Debug.LogFormat("Exit {0}",nameof(Wander));}
-			#endif
-		}
-	}
-
-	public class Seek : State<Squid>
-	{
-		public Seek(Agent agent) : base(agent)
-		{
-			#if UNITY_EDITOR
-			color = Color.yellow;
-			#endif
-			this.SetTransitional(Agent.ToWander,nameof(Wander));
-		}
-
-		public override void Enter(StateArgs args)
-		{
-			#if UNITY_EDITOR
-			if(Agent.debug) Debug.LogFormat("Enter {0}",nameof(Seek));
-			#endif
-		}
-
-		public override void Update(float deltaTime)
-		{
-		}
-
-		public override void Exit(StateArgs args)
-		{
-			#if UNITY_EDITOR 
-			if(Agent.debug) {Debug.LogFormat("Exit {0}",nameof(Seek));}
-			#endif
-		}
-	}
-
-	public class Flee : State<Squid>
-	{
-		public Flee(Agent agent) : base(agent)
-		{
-			#if UNITY_EDITOR
-			color = Color.red;
-			#endif
-		}
-
-		public override void Enter(StateArgs args)
-		{
-			#if UNITY_EDITOR 
-			if(Agent.debug) {Debug.LogFormat("Enter {0}",nameof(Flee));}
-			#endif
-			
-		}
-
-		public override void Exit(StateArgs args)
-		{
-			#if UNITY_EDITOR 
-			if(Agent.debug) {Debug.LogFormat("Exit {0}",nameof(Flee));}
-			#endif
-		}
-	}
 
 	#if UNITY_EDITOR
 	void OnDrawGizmos()

@@ -16,24 +16,6 @@ namespace UM_AI
 
 		StateMachine StateMachine { get; set; }
 
-		//Transition[] Transitions { get; }
-
-        // /// <summary>
-        // /// Change to the state with the specified name.
-        // /// </summary>
-        // void ChangeState(string stateName);
-
-        // /// <summary>
-        // /// Push another state above the current one, so that popping it will return to the
-        // /// current state.
-        // /// </summary>
-        // void PushState(string stateName);
-
-        // /// <summary>
-        // /// Exit out of the current state and enter whatever state is below it in the stack.
-        // /// </summary>
-        // void PopState();
-
         /// <summary>
         /// Update this state and its children with a specified delta time.
         /// </summary>
@@ -47,7 +29,7 @@ namespace UM_AI
         /// <summary>
         /// Triggered when we exit the state.
         /// </summary>
-        void Exit(StateArgs args);	
+        void Exit(StateArgs args);
 
         /// <summary>
         /// Trigger an event on this state or one of its children.
@@ -63,6 +45,52 @@ namespace UM_AI
         /// <param name="name">Name of the event to trigger</param>
         /// <param name="eventArgs">Arguments to send to the event</param>
         void TriggerEvent(string name, EventArgs eventArgs);
+
+        /// <summary>
+        /// Check conditions 
+        /// </summary>
+        void UpdateConditionals();
+
+        /// <summary>
+        /// Set conditional
+        /// </summary>
+        /// <param name="cond"></param>
+        void SetConditional(IConditional cond);
+
+        /// <summary>
+        /// Set conditional
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="act"></param>
+        void SetConditional(Func<bool> predicate, Action act);
+
+        /// <summary>
+        /// Set conditional
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="transition"></param>
+        void SetTransitional(Func<bool> predicate, Transition transition);
+
+        /// <summary>
+        /// Set conditional
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="args"></param>
+        void SetTransitional(Func<bool> predicate, IState toState);
+
+        /// <summary>
+        /// Set conditional
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="args"></param>
+        void SetTransitional(Func<bool> predicate, string toState);
+
+        /// <summary>
+        /// Set conditional
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="args"></param>
+        void SetTransitional(Func<bool> predicate, Type toState);
     }
 
 	public abstract class State : IState
@@ -167,7 +195,25 @@ namespace UM_AI
             }
             catch
             {
-                throw new ApplicationException("Could not state " + toState);
+                throw new ApplicationException("Could not find state " + toState);
+            }
+        }
+
+
+        /// <summary>
+        /// Set conditional
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="args"></param>
+        public void SetTransitional(Func<bool> predicate, Type toState)
+        {
+            try
+            {
+                conditionals.Add(new Transitional(this.StateMachine.GetState(toState), predicate));
+            }
+            catch
+            {
+                throw new ApplicationException("Could not find state " + toState);
             }
         }
 

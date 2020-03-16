@@ -532,70 +532,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &525289981
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3835711150962281509, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: MaxSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3835711150962281509, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: MinAngle.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3835711150962281509, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: MinAngle.y
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3835711150962281509, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: MaxAngle.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8872290819828022047, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_Name
-      value: Tentacle
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1772743396898815592, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: Target
-      value: 
-      objectReference: {fileID: 2012979038}
-    - target: {fileID: 1772743396898815592, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: TorsionPenality.y
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 512b69dfa52679446b186fb78615a526, type: 3}
 --- !u!1001 &1092388058
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -849,11 +785,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2012979037}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 10, z: 0}
+  m_LocalPosition: {x: 14.79, y: 5.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5755146393610363389
 PrefabInstance:
@@ -870,7 +806,7 @@ PrefabInstance:
     - target: {fileID: 5755146393495155310, guid: d193b58aaad6ada4e864b4800ae8dcbf,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1688312227218692659, guid: d193b58aaad6ada4e864b4800ae8dcbf,
         type: 3}
@@ -915,7 +851,7 @@ PrefabInstance:
     - target: {fileID: 5755146393495155304, guid: d193b58aaad6ada4e864b4800ae8dcbf,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5755146393495155304, guid: d193b58aaad6ada4e864b4800ae8dcbf,
         type: 3}
