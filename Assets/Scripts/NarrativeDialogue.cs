@@ -119,7 +119,7 @@ public class NarrativeDialogue : MonoBehaviour
 
         // Make the button expand to fit the text
         HorizontalLayoutGroup layoutGroup = choice.GetComponent<HorizontalLayoutGroup>();
-        layoutGroup.childForceExpandHeight = false;
+        layoutGroup.childForceExpandHeight = true;
 
         return choice;
     }
