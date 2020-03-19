@@ -1,6 +1,7 @@
 Manager: We need to get this inventory out fast! I hope by now you’ve forgotten this concept of ‘free time’ you dream about.
 Manager: What's wrong with you? Why aren't you moving?! Installing a software update?
 Manager: Wait. Did you forget how to do YOUR JOB? I thought they fixed the CPU bugs for this generation!
+Zip:
 *Isn’t it unsafe[?] to use the fire extinguisher for purposes it wasn’t intended for?
 Manager: YOU THINK I DON’T KNOW HOW TO RUN A COMPANY? WHY DON’T YOU PROVE YOU CAN DO YOUR JOB?! GET GOING!
 ->DONE
