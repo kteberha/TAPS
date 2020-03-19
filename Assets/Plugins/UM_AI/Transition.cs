@@ -2,70 +2,45 @@ using System;
 
 namespace UM_AI
 {
-	public delegate void Transition(TransitionArgs toState);
 
-	public class TransitionArgs : EventArgs
-	{
-		public readonly string ToState;
-		public readonly StateArgs StateArgs;
-
-		public TransitionArgs(IState state, StateArgs args)
-		{
-			this.ToState = nameof(state);
-			this.StateArgs = args;
-		}
-
-		public TransitionArgs(string stateName, StateArgs args)
-		{
-			this.ToState = stateName;
-			this.StateArgs = args;
-		}
-
-		public TransitionArgs(Type stateType, StateArgs args)
-		{
-			this.ToState = nameof(stateType);
-			this.StateArgs = args;
-		}
-	}
+	public delegate void Transition(in IState targetState, StateArgs args);
 
 	public interface IConditional
 	{
 		Func<bool> Predicate { get; }
-		Action Act { get; }
+		Action[] Actions { get; }
+		bool Triggered { get; }
 	}
 
 	public struct Conditional : IConditional
 	{
 		public Func<bool> Predicate { get; }
-		public Action Act { get; }
-		public Conditional(Func<bool> predicate, Action action)
+		public Action[] Actions { get; }
+		public bool Triggered => Predicate();
+		public Conditional(Func<bool> predicate, params Action[] actions)
 		{
 			this.Predicate = predicate;
-			this.Act = action;
+			this.Actions = actions;
 		}
 	}
 
 	public struct Transitional : IConditional
-	{
+	{ 
 		public Func<bool> Predicate { get; }
-		public Action Act { get; }
-		private Transition transition;
-		private TransitionArgs args;
-		private string stateName;
-		private void ToTransition() => transition(args??(TransitionArgs.Empty as TransitionArgs));
+		public Action[] Actions { get; }
+		public bool Triggered => Predicate();
+		public Transition Transition { get; }
+		public IState TargetState { get; }
+		public StateArgs StateArgs { get; }
+		public void TransitionAct() => Transition(TargetState,StateArgs);
 
-		public Transitional(IState toState, Func<bool> predicate) : this()
+		public Transitional(in IState targetState, StateArgs args, Func<bool> predicate, Transition transition) : this()
 		{
-			this.transition = (x) => toState.StateMachine.ChangeState(nameof(toState), x.StateArgs);
-			this.Act = ToTransition;
 			this.Predicate = predicate;
-		}
-
-		public Transitional(Transition transition, Func<bool> predicate) : this()
-		{
-			this.transition = transition;
-			this.Act = ToTransition;
-			this.Predicate = predicate;
+			this.Transition = transition;
+			this.TargetState = targetState;
+			this.StateArgs = args;
+			this.Actions = new Action[] {TransitionAct};
 		}
 	}
 }

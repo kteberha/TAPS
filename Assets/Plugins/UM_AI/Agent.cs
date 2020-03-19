@@ -70,15 +70,16 @@ namespace UM_AI
 
 		#if UNITY_EDITOR
 		public Color color;
+		public State(Agent agent, Color color) : base()
+		{
+			this._agent = agent;
+			this.color = color;
+		}
 		#endif
 
         public State(Agent agent) : base()
         {
             this._agent = agent;
-			this.StateMachine = agent.SM;
-			#if UNITY_EDITOR
-			Agent.debugColor = color;
-			#endif
         }
     }
 }

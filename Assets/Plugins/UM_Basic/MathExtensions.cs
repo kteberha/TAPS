@@ -121,24 +121,10 @@ namespace UModules
 			return new Vector3(v.x, 0f, v.y);
 		}
 
-		// Return a random vector on the unit circle by generating an angle and taking the sine and cosine
-		public static Vector2 RandomOnUnitCircle()
-		{
-			float th = UnityEngine.Random.value * 360 * Mathf.Deg2Rad;
-			return new Vector2(Mathf.Cos(th), Mathf.Sin(th));
-		}
-
-		// public static Vector2 RandomInRadius(this Vector3 center, float radius)
-		// {
-		// 	float a = UnityEngine.Random.value * 2f * Mathf.PI;
-		// 	float r = radius * Mathf.Sqrt(UnityEngine.Random.value);
-		// 	return new Vector2(center.x+r*Mathf.Cos(a), center.y+r*Mathf.Sin(a));
-		// }
-
 		public static Vector2 RandomInRadius(this Vector2 center, float radius)
 		{
 
-			return center + radius * RandomOnUnitCircle();
+			return center + (radius * UnityEngine.Random.insideUnitCircle);
 		}
 
 		public static Vector3 RandomInRadius(this Vector3 center, float radius)

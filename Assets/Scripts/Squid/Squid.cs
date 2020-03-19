@@ -77,6 +77,7 @@ public partial class Squid : Agent
 		RangeSensor.AllowedTags = AllowedTags;
 		RangeSensor.OnDetected.AddListener(Detection);
 		RangeSensor.OnLostDetection.AddListener(LostDetection);
+		SetupStateMachine();
 	}
 
 

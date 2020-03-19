@@ -6,11 +6,6 @@ namespace UM_AI
 {
 	public class StateMachine
 	{
-		// /// <summary>
-		// /// Agent owning this StateMachine.
-		// /// </summary>
-		//public Agent Agent {get; private set;}
-
 		/// <summary>
 		/// Default State of the StateMachine.
 		/// </summary>
@@ -26,13 +21,11 @@ namespace UM_AI
 		/// Types of States in the StateMachine's State set.
 		/// </summary>
 		public IEnumerable<Type> StateTypes { get {return States.Select(x=>x.Value.GetType());} }
-		//public IEnumerable<Type> StateTypes { get {return States.Select(x=>x.Value.GetType());} }
 
 		/// <summary>
 		/// Current active State.
 		/// </summary>
 		public IState CurrentState { get; private set; }
-		//public State CurrentState {get {return StateStack?.Peek();} }
 		
 		/// <summary>
 		/// Time elapsed in seconds since the enter of current State.
@@ -46,14 +39,23 @@ namespace UM_AI
 		public void UpdateState(float deltaTime)
 		{
 			CurrentState?.Update(deltaTime);
+			CurrentState?.UpdateConditionals();
+		}
+
+		public void ChangeState(in IState state, StateArgs args = null)
+		{
+			CurrentState?.Exit(args??StateArgs.Empty);
+			CurrentState = state;
+			CurrentState?.Enter(args??StateArgs.Empty);
 		}
 
 		public void ChangeState(Type stateType, StateArgs args = null)
 		{
+			IState state;
 			try
 			{
-				CurrentState = States.Values.Single(x=>x.GetType()==stateType);
-				CurrentState?.Enter(args??StateArgs.Empty);
+				state = States.Values.Single(x=>x.GetType()==stateType);
+				ChangeState(state,args);
 			}
 			catch
 			{
@@ -63,13 +65,12 @@ namespace UM_AI
 
 		public void ChangeState(string stateName, StateArgs args = null)
 		{
-            IState newState;
-            if (!States.TryGetValue(stateName, out newState))
+            IState state;
+            if (!States.TryGetValue(stateName, out state))
             {
 				throw new ApplicationException(String.Format("Can't find State of name {0}.", stateName));
             }
-			CurrentState = newState;
-			CurrentState?.Enter(args??StateArgs.Empty);
+			ChangeState(state,args);
 		}
 
 		/// <summary>
@@ -126,16 +127,20 @@ namespace UM_AI
 				throw new ApplicationException(string.Format("Can't find state of name {0}", stateName));
 			}
 		}
+
+		public void SetTransition(string fromState, string toState, StateArgs args, Func<bool> predicate)
+		{
+			IState targetState;
+			try
+			{
+				targetState = GetState(toState);
+				GetState(fromState).SetTransition(new Transitional(in targetState,args,predicate,ChangeState));
+			}
+			catch
+			{
+
+			}
+		}
+
 	}
-
-	// public class StateMachine<AT> : StateMachine where AT:Agent
-	// {
-    //     private readonly Agent _agent;
-    //     protected AT Agent { get {return _agent as AT;} }
-
-    //     public StateMachine(Agent agent) : base()
-    //     {
-    //         this._agent = agent;
-    //     }
-	// }
 }
