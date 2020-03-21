@@ -105,8 +105,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5755146393495155304}
   - component: {fileID: 1688312227218692659}
+  - component: {fileID: 4824240512723726177}
   - component: {fileID: 5342082184681947931}
-  - component: {fileID: 5755146393495155305}
   - component: {fileID: 7275721385386507667}
   m_Layer: 0
   m_Name: Squid
@@ -149,8 +149,47 @@ MonoBehaviour:
   debugColor: {r: 0, g: 0, b: 0, a: 0}
   roamRange: 100
   seekTime: 30
+  packageInterest: 0.5
   tentacles: []
   debug: 0
+--- !u!114 &4824240512723726177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5755146393495155310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c86cdc780ad4343a14405cc469b830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stFlags: 0
+  weights:
+    separation: 1
+    cohesion: 1
+    alignment: 1
+    wander: 1
+    avoidance: 1
+    seek: 1
+    flee: 1
+    arrive: 1
+    pursuit: 1
+    interpose: 1
+    evade: 1
+    hide: 1
+  wanderJitter: 1
+  wanderRadius: 10
+  wanderDistance: 15
+  ignoreList: []
+  avoidanceSensitivity: 1
+  maxAvoidanceLength: 1
+  turnSpeed: 0
+  maxSpeed: 0
+  strafeSpeed: 0
+  destinationTransform: {fileID: 0}
+  deceleration: 3
+  _summingType: 0
 --- !u!114 &5342082184681947931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,32 +232,6 @@ MonoBehaviour:
   CheckInterval: 1
   InitialBufferSize: 20
   DynamicallyIncreaseBufferSize: 1
---- !u!114 &5755146393495155305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5755146393495155310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7215075e824ecf4abdfa099cf8d5238, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IgnoreList: []
-  AvoidanceSensitivity: 1
-  MaxAvoidanceLength: 1
-  RotateTowardsTarget: 1
-  RB: {fileID: 7275721385386507667}
-  TurnForce: 1
-  MoveForce: 2
-  StrafeForce: 3
-  TurnSpeed: 5
-  MoveSpeed: 6
-  StrafeSpeed: 1
-  StoppingDistance: 10
-  DestinationTransform: {fileID: 0}
-  FaceTowardsTransform: {fileID: 0}
 --- !u!50 &7275721385386507667
 Rigidbody2D:
   serializedVersion: 4

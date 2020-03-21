@@ -21,8 +21,8 @@ public partial class Squid : Agent
 
 	[SerializeField] protected bool debug = false;
 
-	private SteeringRig2D _steeringRig;
-	private SteeringRig2D Steering {get {return this.Get<SteeringRig2D>(ref _steeringRig);} }
+	private UM_AI.SteeringRig _steeringRig;
+	private UM_AI.SteeringRig Steering {get {return this.Get<UM_AI.SteeringRig>(ref _steeringRig);} }
 
 	private RangeSensor2D _rangeSensor;
 	private RangeSensor2D RangeSensor {get {return this.Get<RangeSensor2D>(ref _rangeSensor);} }

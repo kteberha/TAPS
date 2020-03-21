@@ -11,6 +11,7 @@ public partial class Squid : Agent
 		SM.AddState(new Flee(this));
 		SM.DefaultState = SM.GetState(nameof(Wander));
 		SM.ChangeState(nameof(Wander));
+		Steering.SetFlag(SteeringType.Avoidance);
 	}
 
 	public class Wander : State<Squid>
@@ -27,15 +28,11 @@ public partial class Squid : Agent
 			#if UNITY_EDITOR 
 			if(Agent.debug) {Debug.LogFormat("Enter {0}",nameof(Wander));}
 			#endif
-			Agent.TargetPos = Agent.transform.position.XY().RandomInRadius(Agent.roamRange);
+			Agent.Steering.SetFlag(SteeringType.Wander);
 		}
 
 		public override void Update(float deltaTime)
 		{
-			if (Agent.DistanceToTarget <= Agent.Steering.StoppingDistance) 
-			{
-				Agent.TargetPos = Agent.transform.position.XY().RandomInRadius(Agent.roamRange);
-			}
 		}
 
 		public override void Exit(StateArgs args)
@@ -43,6 +40,7 @@ public partial class Squid : Agent
 			#if UNITY_EDITOR 
 			if(Agent.debug) {Debug.LogFormat("Exit {0}",nameof(Wander));}
 			#endif
+			Agent.Steering.UnsetFlag(SteeringType.Wander);
 		}
 	}
 
