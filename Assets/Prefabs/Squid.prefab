@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &950009518099336845
+--- !u!1 &1357937674209868455
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,93 +8,353 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6609255704153456613}
-  - component: {fileID: 406457519987751662}
-  - component: {fileID: 7760531624337590461}
-  - component: {fileID: 8826386407212439365}
+  - component: {fileID: 4971166622760755844}
+  - component: {fileID: 3174598663447434382}
   m_Layer: 0
-  m_Name: SquidHead
+  m_Name: Ray3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6609255704153456613
+--- !u!4 &4971166622760755844
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950009518099336845}
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_GameObject: {fileID: 1357937674209868455}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
+  m_Father: {fileID: 2374633594518513897}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3174598663447434382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357937674209868455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe4c266bf91a80044af037d5d437176e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IgnoreList: []
+  EnableTagFilter: 0
+  AllowedTags: []
+  OnDetected:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnLostDetection:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  Length: 80
+  Radius: 0
+  ObstructedByLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  DetectsOnLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  DetectionMode: 0
+  Direction: {x: 1, y: -1}
+  WorldSpace: 0
+  SensorUpdateMode: 1
+  InitialBufferSize: 20
+  DynamicallyIncreaseBufferSize: 1
+  OnObstruction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnClear:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!1 &1758639127154848730
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6261372484526705005}
+  - component: {fileID: 6730991467615669824}
+  m_Layer: 0
+  m_Name: Ray1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6261372484526705005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758639127154848730}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2374633594518513897}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6730991467615669824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758639127154848730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe4c266bf91a80044af037d5d437176e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IgnoreList: []
+  EnableTagFilter: 0
+  AllowedTags: []
+  OnDetected:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnLostDetection:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  Length: 80
+  Radius: 0
+  ObstructedByLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  DetectsOnLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  DetectionMode: 0
+  Direction: {x: -1, y: 1}
+  WorldSpace: 0
+  SensorUpdateMode: 1
+  InitialBufferSize: 20
+  DynamicallyIncreaseBufferSize: 1
+  OnObstruction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnClear:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!1 &3136662171282950992
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5209240601638468421}
+  - component: {fileID: 3237981525110764172}
+  m_Layer: 0
+  m_Name: Ray2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5209240601638468421
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3136662171282950992}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2374633594518513897}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3237981525110764172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3136662171282950992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe4c266bf91a80044af037d5d437176e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IgnoreList: []
+  EnableTagFilter: 0
+  AllowedTags: []
+  OnDetected:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnLostDetection:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  Length: 80
+  Radius: 0
+  ObstructedByLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  DetectsOnLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  DetectionMode: 0
+  Direction: {x: -1, y: -1}
+  WorldSpace: 0
+  SensorUpdateMode: 1
+  InitialBufferSize: 20
+  DynamicallyIncreaseBufferSize: 1
+  OnObstruction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnClear:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!1 &4027112180149818938
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2374633594518513897}
+  m_Layer: 0
+  m_Name: Rays
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2374633594518513897
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4027112180149818938}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6261372484526705005}
+  - {fileID: 5209240601638468421}
+  - {fileID: 4971166622760755844}
+  - {fileID: 9086601291274124512}
+  - {fileID: 6399775371474997173}
   m_Father: {fileID: 5755146393495155304}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!33 &406457519987751662
-MeshFilter:
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5693899869302181060
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950009518099336845}
-  m_Mesh: {fileID: -5668647811484802967, guid: a07ff97c77fbd3d4b86638589d9e0fa3, type: 3}
---- !u!23 &7760531624337590461
-MeshRenderer:
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9086601291274124512}
+  - component: {fileID: 3192064018013881454}
+  m_Layer: 0
+  m_Name: Ray4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9086601291274124512
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950009518099336845}
+  m_GameObject: {fileID: 5693899869302181060}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2374633594518513897}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3192064018013881454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5693899869302181060}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!70 &8826386407212439365
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950009518099336845}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 24, y: 32}
-  m_Direction: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe4c266bf91a80044af037d5d437176e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IgnoreList: []
+  EnableTagFilter: 0
+  AllowedTags: []
+  OnDetected:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnLostDetection:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  Length: 80
+  Radius: 0
+  ObstructedByLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  DetectsOnLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  DetectionMode: 0
+  Direction: {x: 1, y: 1}
+  WorldSpace: 0
+  SensorUpdateMode: 1
+  InitialBufferSize: 20
+  DynamicallyIncreaseBufferSize: 1
+  OnObstruction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnClear:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &5755146393495155310
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,8 +365,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5755146393495155304}
   - component: {fileID: 1688312227218692659}
-  - component: {fileID: 4824240512723726177}
   - component: {fileID: 5342082184681947931}
+  - component: {fileID: 4824240512723726177}
   - component: {fileID: 7275721385386507667}
   m_Layer: 0
   m_Name: Squid
@@ -126,10 +386,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6609255704153456613}
-  - {fileID: 2195357490678506065}
-  - {fileID: 8441993257504620815}
-  - {fileID: 9084288894648398500}
+  - {fileID: 2374633594518513897}
+  - {fileID: 119077752250882705}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -152,6 +410,49 @@ MonoBehaviour:
   packageInterest: 0.5
   tentacles: []
   debug: 0
+--- !u!114 &5342082184681947931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5755146393495155310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea99d7406bae0404195d20652de48155, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IgnoreList: []
+  EnableTagFilter: 1
+  AllowedTags:
+  - Player
+  - Package
+  OnDetected:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnLostDetection:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  DetectionMode: 0
+  RequiresLineOfSight: 0
+  BlocksLineOfSight:
+    serializedVersion: 2
+    m_Bits: 1
+  TestLOSTargetsOnly: 0
+  NumberOfRays: 1
+  MinimumVisibility: 0.5
+  SensorRange: 200
+  DetectsOnLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  SensorUpdateMode: 1
+  CheckInterval: 1
+  InitialBufferSize: 20
+  DynamicallyIncreaseBufferSize: 1
 --- !u!114 &4824240512723726177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,60 +479,21 @@ MonoBehaviour:
     interpose: 1
     evade: 1
     hide: 1
-  wanderJitter: 1
+  wanderJitter: 50
   wanderRadius: 10
-  wanderDistance: 15
-  ignoreList: []
+  wanderDistance: 5
+  maxSpeed: 5
+  turnSpeed: 8
+  strafeSpeed: 2
+  ignoreList:
+  - {fileID: 0}
   avoidanceSensitivity: 1
   maxAvoidanceLength: 1
-  turnSpeed: 0
-  maxSpeed: 0
-  strafeSpeed: 0
-  destinationTransform: {fileID: 0}
+  faceMovingDirection: 0
   deceleration: 3
   _summingType: 0
---- !u!114 &5342082184681947931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5755146393495155310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea99d7406bae0404195d20652de48155, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IgnoreList: []
-  EnableTagFilter: 1
-  AllowedTags:
-  - Player
-  OnDetected:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  OnLostDetection:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  DetectionMode: 0
-  RequiresLineOfSight: 0
-  BlocksLineOfSight:
-    serializedVersion: 2
-    m_Bits: 1
-  TestLOSTargetsOnly: 0
-  NumberOfRays: 1
-  MinimumVisibility: 0.5
-  SensorRange: 100
-  DetectsOnLayers:
-    serializedVersion: 2
-    m_Bits: 1
-  SensorUpdateMode: 1
-  CheckInterval: 1
-  InitialBufferSize: 20
-  DynamicallyIncreaseBufferSize: 1
+  destinationTransform: {fileID: 0}
+  steeringForce: {x: 0, y: 0}
 --- !u!50 &7275721385386507667
 Rigidbody2D:
   serializedVersion: 4
@@ -242,18 +504,18 @@ Rigidbody2D:
   m_GameObject: {fileID: 5755146393495155310}
   m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!1 &8172648275529114376
+--- !u!1 &9082215989703089503
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -261,40 +523,36 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2195357490678506065}
-  - component: {fileID: 3985924905541423909}
-  - component: {fileID: 9063349195524087702}
-  - component: {fileID: 607313292945768770}
-  - component: {fileID: 7609174028283989600}
-  - component: {fileID: 1208599154397914762}
+  - component: {fileID: 6399775371474997173}
+  - component: {fileID: 5851745561124808201}
   m_Layer: 0
-  m_Name: Rays
+  m_Name: Ray5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2195357490678506065
+--- !u!4 &6399775371474997173
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8172648275529114376}
+  m_GameObject: {fileID: 9082215989703089503}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5755146393495155304}
-  m_RootOrder: 1
+  m_Father: {fileID: 2374633594518513897}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3985924905541423909
+--- !u!114 &5851745561124808201
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8172648275529114376}
+  m_GameObject: {fileID: 9082215989703089503}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe4c266bf91a80044af037d5d437176e, type: 3}
@@ -313,116 +571,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  Length: 50
+  Length: 80
   Radius: 0
   ObstructedByLayers:
     serializedVersion: 2
-    m_Bits: 0
-  DetectsOnLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  DetectionMode: 0
-  Direction: {x: -1, y: -1}
-  WorldSpace: 0
-  SensorUpdateMode: 0
-  InitialBufferSize: 20
-  DynamicallyIncreaseBufferSize: 1
-  OnObstruction:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  OnClear:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &9063349195524087702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8172648275529114376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe4c266bf91a80044af037d5d437176e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IgnoreList: []
-  EnableTagFilter: 0
-  AllowedTags: []
-  OnDetected:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  OnLostDetection:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  Length: 50
-  Radius: 0
-  ObstructedByLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  DetectsOnLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  DetectionMode: 0
-  Direction: {x: 0, y: -1}
-  WorldSpace: 0
-  SensorUpdateMode: 0
-  InitialBufferSize: 20
-  DynamicallyIncreaseBufferSize: 1
-  OnObstruction:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  OnClear:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &607313292945768770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8172648275529114376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe4c266bf91a80044af037d5d437176e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IgnoreList: []
-  EnableTagFilter: 0
-  AllowedTags: []
-  OnDetected:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  OnLostDetection:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  Length: 50
-  Radius: 0
-  ObstructedByLayers:
-    serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   DetectsOnLayers:
     serializedVersion: 2
     m_Bits: 0
   DetectionMode: 0
   Direction: {x: 1, y: 0}
   WorldSpace: 0
-  SensorUpdateMode: 0
+  SensorUpdateMode: 1
   InitialBufferSize: 20
   DynamicallyIncreaseBufferSize: 1
   OnObstruction:
@@ -435,251 +595,78 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &7609174028283989600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8172648275529114376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe4c266bf91a80044af037d5d437176e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IgnoreList: []
-  EnableTagFilter: 0
-  AllowedTags: []
-  OnDetected:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  OnLostDetection:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  Length: 50
-  Radius: 0
-  ObstructedByLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  DetectsOnLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  DetectionMode: 0
-  Direction: {x: -1, y: 0}
-  WorldSpace: 0
-  SensorUpdateMode: 0
-  InitialBufferSize: 20
-  DynamicallyIncreaseBufferSize: 1
-  OnObstruction:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  OnClear:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &1208599154397914762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8172648275529114376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe4c266bf91a80044af037d5d437176e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IgnoreList: []
-  EnableTagFilter: 0
-  AllowedTags: []
-  OnDetected:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  OnLostDetection:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorDetectionEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  Length: 50
-  Radius: 0
-  ObstructedByLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  DetectsOnLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  DetectionMode: 0
-  Direction: {x: 1, y: -1}
-  WorldSpace: 0
-  SensorUpdateMode: 0
-  InitialBufferSize: 20
-  DynamicallyIncreaseBufferSize: 1
-  OnObstruction:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  OnClear:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: SensorToolkit.Sensor+SensorEventHandler, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!1001 &3704787081727523752
+--- !u!1001 &4962325066253169035
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 5755146393495155304}
     m_Modifications:
-    - target: {fileID: 8872290819828022047, guid: 512b69dfa52679446b186fb78615a526,
+    - target: {fileID: -927199367670048503, guid: 8fc477cba4af4f348b625f3c646443b7,
         type: 3}
       propertyPath: m_Name
-      value: Tentacle (1)
+      value: Squid
       objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
+    - target: {fileID: -4216859302048453862, guid: 8fc477cba4af4f348b625f3c646443b7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
+    - target: {fileID: -4216859302048453862, guid: 8fc477cba4af4f348b625f3c646443b7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
+    - target: {fileID: -4216859302048453862, guid: 8fc477cba4af4f348b625f3c646443b7,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
+    - target: {fileID: -4216859302048453862, guid: 8fc477cba4af4f348b625f3c646443b7,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.7071068
       objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
+    - target: {fileID: -4216859302048453862, guid: 8fc477cba4af4f348b625f3c646443b7,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
+    - target: {fileID: -4216859302048453862, guid: 8fc477cba4af4f348b625f3c646443b7,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.258819
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
+    - target: {fileID: -4216859302048453862, guid: 8fc477cba4af4f348b625f3c646443b7,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9659259
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
+    - target: {fileID: -4216859302048453862, guid: 8fc477cba4af4f348b625f3c646443b7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
+    - target: {fileID: -4216859302048453862, guid: 8fc477cba4af4f348b625f3c646443b7,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
+    - target: {fileID: -4216859302048453862, guid: 8fc477cba4af4f348b625f3c646443b7,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
+    - target: {fileID: -4216859302048453862, guid: 8fc477cba4af4f348b625f3c646443b7,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -30
+      value: -90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 512b69dfa52679446b186fb78615a526, type: 3}
---- !u!4 &9084288894648398500 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: 8fc477cba4af4f348b625f3c646443b7, type: 3}
+--- !u!4 &119077752250882705 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 8fc477cba4af4f348b625f3c646443b7,
     type: 3}
-  m_PrefabInstance: {fileID: 3704787081727523752}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &4061139129303713795
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 5755146393495155304}
-    m_Modifications:
-    - target: {fileID: 8872290819828022047, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_Name
-      value: Tentacle
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.2588191
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9659258
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 30
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 512b69dfa52679446b186fb78615a526, type: 3}
---- !u!4 &8441993257504620815 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5583316363656038668, guid: 512b69dfa52679446b186fb78615a526,
-    type: 3}
-  m_PrefabInstance: {fileID: 4061139129303713795}
+  m_PrefabInstance: {fileID: 4962325066253169035}
   m_PrefabAsset: {fileID: 0}
