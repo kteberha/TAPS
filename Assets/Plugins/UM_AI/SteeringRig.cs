@@ -1,11 +1,18 @@
+/*
+	Peter Francis
+	available to use according to UM_AI/LICENSE
+*/
+
 using UnityEngine;
 using System.Collections.Generic;
+
+// TEMPORARY USING
 using SensorToolkit;
 
 namespace UM_AI
 {
 
-	public enum SummingType {WeightedAverage, Prioritized, Dithered};
+	public enum SummingType {WeightedAverage, Prioritized, Dithered}
 
 	public enum DecelerationType : int {None=0, Fast=1, Normal=2, Slow=3}
 
@@ -15,40 +22,42 @@ namespace UM_AI
 		const float EPSILON = 0.01f;
 		const float TWOPI = 2f * Mathf.PI;
 
+		#region Properties
+
+		[Tooltip("The maximum movement speed that will be applied in a forwards direction.")]
+		public float maxSpeed;
+		[Tooltip("The maximum turning speed that will be applied.")]
+		public float turnSpeed;
+		[Tooltip("The maximum movement speed that will be applied in a sideways or backwards direction.")]
+		public float strafeSpeed;
 		[Tooltip("The rig won't try to steer around objects in this list.")]
 		public List<GameObject> ignoreList;
 		[Range(0.1f, 4f), Tooltip("Lower numbers mean the rig will move closer to obstacles.")]
 		public float avoidanceSensitivity = 1f;
 		[Range(1f, 2f), Tooltip("The max distance that can be steered from the target direction.")]
 		public float maxAvoidanceLength = 1f;
-        [Tooltip("The maximum turning speed that will be applied to kinematic rigid bodies.")]
-        public float turnSpeed;
-        [Tooltip("The maximum movement speed that will be applied to kinematic rigid bodies in a forwards direction.")]
-        public float maxSpeed;
-        [Tooltip("The maximum movement speed that will be applied to kinematic rigid bodies in a sideways or backwards direction.")]
-        public float strafeSpeed;
-		[Tooltip("The rig will attempt to move towards this transform.")]
-        public Transform destinationTransform;
-		[SerializeField]
-		DecelerationType deceleration = DecelerationType.Slow;
+		[Tooltip("Whether to rotate to face the direction of movement.")]
+		public bool faceMovingDirection;
+		[Tooltip("Type of deceleration to use.")]
+		public DecelerationType deceleration = DecelerationType.Slow;
+		[SerializeField, Tooltip("Type of steering vector summing calculation to use.")]
+		SummingType _summingType = SummingType.WeightedAverage;
+
+		[UModules.Readonly]
+		public Transform destinationTransform;
+
+		[SerializeField,UModules.Readonly]
+		Vector2 steeringForce;
 
 		RaySensor2D[] sensors;
 		Rigidbody2D RB;
-		[SerializeField,UModules.Readonly]
-		Vector2 steeringForce;
 		Vector2 targetPos;
-		float viewDistance;
-		float maxForce;
 		Rigidbody2D target1;
 		Rigidbody2D target2;
 		Rigidbody2D[] neighbors;
 
 		delegate Vector2 SummingMethod();
 		SummingMethod summingCalculate;
-		
-		[SerializeField]
-		SummingType _summingType = SummingType.WeightedAverage;
-		
 		public SummingType SummingType
 		{
 			get => _summingType;
@@ -73,39 +82,49 @@ namespace UM_AI
 			}
 		}
 
-
 		bool trackingToDestinationPosition = false;
-        public Vector2 Destination
-        {
-            get
-            {
-                return destinationTransform != null ? (Vector2)destinationTransform.position : targetPos;
-            }
-            set
-            {
-                if (destinationTransform != null)
-                {
-                    Debug.LogWarning("Cannot set Destination while DestinationTransform is not Null.");
-                }
-                else
-                {
-                    targetPos = value;
-                    trackingToDestinationPosition = true;
-                }
-            }
-        }
+		public Vector2 Destination
+		{
+			get
+			{
+				return destinationTransform != null ? (Vector2)destinationTransform.position : targetPos;
+			}
+			set
+			{
+				if (destinationTransform != null)
+				{
+					Debug.LogWarning("Cannot set Destination while DestinationTransform is not Null.");
+				}
+				else
+				{
+					targetPos = value;
+					trackingToDestinationPosition = true;
+				}
+			}
+		}
+
+		#endregion
 
 		Vector2 Heading => steeringForce.normalized;
+		Vector2 Side => (Vector2)transform.right;
 
-		Vector2 Side => new Vector2(transform.right.x,0f);
-
-		void Start()
+		void Awake()
 		{
 			RB = GetComponent<Rigidbody2D>();
+			if (ignoreList == null) 
+			{
+				ignoreList = new List<GameObject>();
+			}
+			// TODO: use original sensors
 			sensors = GetComponentsInChildren<RaySensor2D>();
+			for (int i=0; i<sensors.Length; ++i)
+			{
+				sensors[i].IgnoreList = ignoreList;
+				sensors[i].SensorUpdateMode = RaySensor2D.UpdateMode.Manual;
+			}
+			SummingType = _summingType;
 			float theta = Random.value * TWOPI;
 			wanderTarget = new Vector2(Mathf.Cos(theta)*wanderRadius,Mathf.Sin(theta)*wanderRadius);
-			SummingType = _summingType;
 		}
 
 		void Update()
@@ -113,45 +132,54 @@ namespace UM_AI
 			// reset the steering force
 			steeringForce = Vector2.zero;
 			steeringForce = summingCalculate();
-			// Lerp the dot product of the direction I'm facing to the direction I'm moving,
-            // this will interpolate between the strafing force and the moving force.
-            float forwardDotVel = Vector3.Dot(RB.transform.up, steeringForce.normalized);
-            steeringForce *= Mathf.Lerp(strafeSpeed, maxSpeed, Mathf.Clamp(forwardDotVel,0f,1f));
-            RB.position += steeringForce * Time.deltaTime;
+
+			if (faceMovingDirection) FaceDirectionKinematic(Heading);
+
+			// Lerp the dot product of the direction facing to the direction moving,
+			// this will interpolate between the strafing force and the moving force.
+			float forwardDotVel = Vector3.Dot(RB.transform.up, Heading);
+			steeringForce *= Mathf.Lerp(strafeSpeed, maxSpeed, Mathf.Clamp(forwardDotVel,0f,1f));
+			Steer(steeringForce);
+		}
+
+		void Steer(Vector2 direction)
+		{
+			RB.velocity += direction * Time.deltaTime;
+			RB.velocity = Vector2.ClampMagnitude(RB.velocity,maxSpeed);
 		}
 
 		void FaceDirectionKinematic(Vector2 direction)
-        {
+		{
 			if (direction.sqrMagnitude > EPSILON)
 			{
 				float toRotation = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-				float rotation = Mathf.LerpAngle(RB.rotation, toRotation, turnSpeed * Time.deltaTime);
-				RB.transform.rotation = Quaternion.Euler(0f,rotation,0f);
+				RB.transform.rotation = Quaternion.RotateTowards(RB.transform.rotation,
+											Quaternion.Euler(Vector3.forward*toRotation),turnSpeed*Time.deltaTime);
 			}
 		}
 
 		bool AccumulateForce(Vector2 forceToAdd)
 		{
-			//calculate how much steering force remains to be used by this vehicle
-			float magnitude = maxForce - steeringForce.magnitude;
+			// calculate how much steering force remains to be used by this vehicle
+			float magnitude = maxSpeed - steeringForce.magnitude;
 
-			//return false if there is no more force left to use
+			// return false if there is no more force left to use
 			if (magnitude <= 0f) return false;
 
 			//calculate the magnitude of the force we want to add
 			float magnitudeToAdd = forceToAdd.magnitude;
 			
-			//if the magnitude of the sum of ForceToAdd and the running total
-			//does not exceed the maximum force available to this vehicle, just
-			//add together. Otherwise add as much of the ForceToAdd vector is
-			//possible without going over the max.
+			// if the magnitude of the sum of ForceToAdd and the running total
+			// does not exceed the maximum force available to this vehicle, just
+			// add together. Otherwise add as much of the ForceToAdd vector is
+			// possible without going over the max.
 			if (magnitudeToAdd < magnitude)
 			{
 				steeringForce += forceToAdd;
 			}
 			else
 			{
-				//add it to the steering force
+				// add to the steering force
 				steeringForce += (forceToAdd.normalized * magnitude); 
 			}
 
@@ -221,7 +249,7 @@ namespace UM_AI
 				steeringForce += Interpose(target1,target2,deceleration) * weights.interpose;
 			}
 
-			return Vector2.ClampMagnitude(steeringForce,maxForce);
+			return Vector2.ClampMagnitude(steeringForce,maxSpeed);
 		}
 
 		//---------------------- CalculatePrioritized ----------------------------
@@ -251,14 +279,15 @@ namespace UM_AI
 				force = Flee(targetPos) * weights.flee;
 				if (!AccumulateForce(force)) return steeringForce;
 			}
+
 			if (HasFlag(SteeringType.Separation))
 			{
 				force = Separation(neighbors) * weights.separation;
 				if (!AccumulateForce(force)) return steeringForce;
 			}
-			if (HasFlag(SteeringType.Cohesion))
+			if (HasFlag(SteeringType.Alignment))
 			{
-				force = Alignment(neighbors) * weights.cohesion;
+				force = Alignment(neighbors) * weights.alignment;
 				if (!AccumulateForce(force)) return steeringForce;
 			}
 			if (HasFlag(SteeringType.Cohesion))
@@ -266,6 +295,7 @@ namespace UM_AI
 				force = Cohesion(neighbors) * weights.cohesion;
 				if (!AccumulateForce(force)) return steeringForce;
 			}
+
 			if (HasFlag(SteeringType.Seek))
 			{
 				force = Seek(targetPos) * weights.seek;
@@ -297,6 +327,7 @@ namespace UM_AI
 			return steeringForce;
 		}
 
+		// TODO
 		Vector2 CalculateDithered() { return Vector2.zero; }
 	}
 }

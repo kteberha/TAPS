@@ -13,7 +13,7 @@ public partial class Squid : Agent
 
 	public float roamRange = 50f;
 	public float seekTime = 30f;
-	[Range(0f,1f),Tooltip("Interest in pursuing packages over Player")]
+	[Range(0f,1f),Tooltip("Interest in pursuing packages over Player.")]
 	public float packageInterest = 0.5f;
 
 	[SerializeField,Readonly]
@@ -38,6 +38,7 @@ public partial class Squid : Agent
 		{
 			_target = value;
 			TargetPos = _target.transform.position;
+			Steering.destinationTransform = gameObject.transform;
 			foreach (var t in tentacles) t.Target = _target.transform;
 		}
 	}
@@ -51,7 +52,7 @@ public partial class Squid : Agent
 		protected set
 		{
 			_targetPos = value;
-			Steering.Destination = _targetPos;
+			//Steering.Destination = _targetPos;
 			#if UNITY_EDITOR
 			if (debug) Debug.LogFormat("TargetPos: {0}",_targetPos);
 			#endif
@@ -77,6 +78,7 @@ public partial class Squid : Agent
 		RangeSensor.AllowedTags = AllowedTags;
 		RangeSensor.OnDetected.AddListener(Detection);
 		RangeSensor.OnLostDetection.AddListener(LostDetection);
+		Steering.SetFlag(SteeringType.Avoidance);
 		SetupStateMachine();
 	}
 
@@ -119,7 +121,7 @@ public partial class Squid : Agent
 
 	protected IEnumerable<GameObject> PackageCast(Vector2 pos)
 	{
-		return Physics2D.CircleCastAll(pos,30f,Vector2.zero).Select(x=>x.transform.gameObject).Where(y=>y.tag=="Package");
+		return Physics2D.CircleCastAll(pos,30f,Vector2.zero).Select(x=>x.transform.gameObject).Where(y=>y.tag==PACKAGETAG);
 	}
 
 	public bool ToWander() => !playerDetected && SM.TimeElapsed.Seconds >= seekTime;

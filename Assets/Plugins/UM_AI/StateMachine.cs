@@ -138,7 +138,7 @@ namespace UM_AI
 			}
 			catch
 			{
-
+				throw new ApplicationException(string.Format("Can't assign transitions to NULL state!"));
 			}
 		}
 

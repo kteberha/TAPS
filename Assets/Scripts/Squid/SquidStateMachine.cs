@@ -11,7 +11,6 @@ public partial class Squid : Agent
 		SM.AddState(new Flee(this));
 		SM.DefaultState = SM.GetState(nameof(Wander));
 		SM.ChangeState(nameof(Wander));
-		Steering.SetFlag(SteeringType.Avoidance);
 	}
 
 	public class Wander : State<Squid>

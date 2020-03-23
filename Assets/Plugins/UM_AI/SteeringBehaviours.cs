@@ -1,6 +1,9 @@
-using System.Collections.Generic;
+/*
+	Peter Francis
+	available to use according to UM_AI/LICENSE
+*/
+
 using UnityEngine;
-using UModules;
 using Random=UnityEngine.Random;
 
 namespace UM_AI
@@ -20,9 +23,11 @@ namespace UM_AI
 		Pursuit		= 1<<8,		// 9
 		Evade		= 1<<9,		// 10
 		Interpose	= 1<<10		// 11
+		// TODO
 		//Hide		= 1<<11		// 12
 		//Flock		= 1<<12		// 13
 	};
+
 	[System.Serializable]
 	public struct SteeringBehaviourWeights
 	{
@@ -42,12 +47,12 @@ namespace UM_AI
 
 	public partial class SteeringRig : MonoBehaviour
 	{
-		[EnumFlag,SerializeField]
+		[UModules.EnumFlag,SerializeField]
 		SteeringType stFlags = SteeringType.None;
 		[SerializeField]
 		SteeringBehaviourWeights weights = new SteeringBehaviourWeights();
 		
-		[Range(0f,2f),SerializeField]
+		[Range(1f,100f),SerializeField]
 		float wanderJitter = 1f;
 		[Range(EPSILON,100f),SerializeField]
 		float wanderRadius = 10f;
@@ -188,10 +193,10 @@ namespace UM_AI
 		{ 
 			//this behavior is dependent on the update rate, so this line must
 			//be included when using time independent framerate.
-			float jitterTimeSlice = wanderJitter * Time.deltaTime;
+			float jitter = wanderJitter * Time.deltaTime;
 
 			//first, add a small random vector to the target's position
-			wanderTarget += new Vector2(Random.Range(-1f,1f)*jitterTimeSlice, Random.Range(-1f,1f)*jitterTimeSlice);
+			wanderTarget += new Vector2(Random.Range(-1f,1f)*jitter, Random.Range(-1f,1f)*jitter);
 
 			//reproject this new vector back on to a unit circle
 			wanderTarget.Normalize();
@@ -311,13 +316,13 @@ namespace UM_AI
 			return Arrive(midPoint, decel);
 		}
 
+		// TODO: Use original sensors
 		Vector2 Avoidance()
 		{
 			Vector2 rf = Vector2.zero;
 			for (int i = 0; i < sensors.Length; i++)
 			{
 				var s = sensors[i];
-				s.IgnoreList = ignoreList;
 				s.Pulse();
 				if (!s.IsObstructed) continue;
 				// 0 when unobstructed, 1 when touching
