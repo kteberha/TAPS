@@ -16,10 +16,13 @@ public class Asteroids : MonoBehaviour
     private int asteroidSpawnCount = 2;
     private bool broken = false;
 
+    public Camera m_Camera;
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
         transform.rotation = new Quaternion(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+        m_Camera = Camera.main;
     }
 
     private void Update()
@@ -35,7 +38,7 @@ public class Asteroids : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player") && coolDownClock <= 0)//check that the player is hitting the asteroid and it has not recently hit it.
         {
-            if (gameObject.name.Contains("Breakable") && player.GetComponent<Rigidbody2D>().velocity.magnitude >= breakThreshold && broken == false)//conditions for shattering the asteroid
+            if (gameObject.name.Contains("Breakable")) && player.GetComponent<Rigidbody2D>().velocity.magnitude >= breakThreshold && broken == false)//conditions for shattering the asteroid
             {
                 broken = true;//trigger one time bool
                 StartCoroutine(Shatter());
@@ -61,7 +64,10 @@ public class Asteroids : MonoBehaviour
     {
         audioSource.Play();//play the audio cue
         foreach (ParticleSystem particle in partSystems)//play each of the particle systems
+        {
+            particle.transform.LookAt(m_Camera.transform.position);
             particle.Play();
+        }
         meshRenderer.enabled = false;//make the mesh invisible
         GetComponent<Collider2D>().enabled = false;//disable the collider
 
