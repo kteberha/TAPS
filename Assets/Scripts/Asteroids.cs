@@ -38,7 +38,7 @@ public class Asteroids : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player") && coolDownClock <= 0)//check that the player is hitting the asteroid and it has not recently hit it.
         {
-            if (gameObject.name.Contains("Breakable")) && player.GetComponent<Rigidbody2D>().velocity.magnitude >= breakThreshold && broken == false)//conditions for shattering the asteroid
+            if (gameObject.name.Contains("Breakable") && player.GetComponent<Rigidbody2D>().velocity.magnitude >= breakThreshold && broken == false)//conditions for shattering the asteroid
             {
                 broken = true;//trigger one time bool
                 StartCoroutine(Shatter());
