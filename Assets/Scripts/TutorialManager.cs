@@ -5,18 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour
 {
-    [SerializeField] GameManager gameManager;
     [SerializeField] AsteroidHome home;
-    [SerializeField] OrderManager orderManager;
 
-    [SerializeField] NarrativeDialogue narrativeDialogue;
     public int i = 0;//keep track of how many times the dialogue has progressed.
     int[] keyToggles; // when the dialogue should get toggled
 
-    [SerializeField] DialogueMenuManager dialogueMenuManager;
-
     public GameObject player;
-    PlayerController playerController;
 
     public Animator controlIconAnimator;
     public CanvasGroup controlsCG;
@@ -35,23 +29,22 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager.state = GAMESTATE.PAUSED;
-        playerController = player.GetComponent<PlayerController>();
+        GameManager.Instance.state = GAMESTATE.PAUSED;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if(Input.GetKeyDown(KeyCode.Space) && dialogueMenuManager.dialogueScreen.activeInHierarchy)
+        if(Input.GetKeyDown(KeyCode.Space) && DialogueMenuManager.Instance.dialogueScreen.activeInHierarchy)
         {
-            if (!narrativeDialogue.story.canContinue)
+            if (!NarrativeDialogue.Instance.story.canContinue)
             {
                 print("she's ready");
                 readyForMainScene = true;
             }
 
-            narrativeDialogue.RefreshView();
+            NarrativeDialogue.Instance.RefreshView();
             i++;
         }
 
@@ -115,7 +108,7 @@ public class TutorialManager : MonoBehaviour
             print(i);
             i++;
             ToggleDialogueOn();
-            orderManager.OrderPackage();
+            OrderManager.Instance.OrderPackage();
             Time.timeScale = 0f;
         }
         else if (i == 18 && Input.GetKeyDown(KeyCode.Space))
@@ -148,7 +141,7 @@ public class TutorialManager : MonoBehaviour
             print(i + " should reappear");
             i++;
             ToggleDialogueOn();
-            narrativeDialogue.RefreshView();
+            NarrativeDialogue.Instance.RefreshView();
         }
 
         #endregion
@@ -168,23 +161,23 @@ public class TutorialManager : MonoBehaviour
     public void ToggleDialogueOn()
     {
         print("toggle on " + i);
-        dialogueMenuManager.dialogueScreen.SetActive(true);
-        dialogueMenuManager.enabled = false;
+        DialogueMenuManager.Instance.dialogueScreen.SetActive(true);
+        DialogueMenuManager.Instance.enabled = false;
 
     }
 
     public void ToggleDialogueOff()
     {
         print("toggle off: " + i);
-        dialogueMenuManager.dialogueScreen.SetActive(false);
-        dialogueMenuManager.enabled = true;
-        gameManager.state = GAMESTATE.CLOCKEDIN;
+        DialogueMenuManager.Instance.dialogueScreen.SetActive(false);
+        DialogueMenuManager.Instance.enabled = true;
+        GameManager.Instance.state = GAMESTATE.CLOCKEDIN;
     }
 
     public void PauseObjects()
     {
         player.GetComponent<Rigidbody2D>().Sleep();
-        foreach(GameObject p in playerController.heldPackages)
+        foreach(GameObject p in PlayerController.Instance.heldPackages)
         {
             p.GetComponent<Rigidbody2D>().Sleep();
         }
@@ -193,7 +186,7 @@ public class TutorialManager : MonoBehaviour
     public void ResumeObjects()
     {
         player.GetComponent<Rigidbody2D>().WakeUp();
-        foreach(GameObject p in playerController.heldPackages)
+        foreach(GameObject p in PlayerController.Instance.heldPackages)
         {
             p.GetComponent<Rigidbody2D>().WakeUp();
         }

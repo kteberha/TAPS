@@ -5,12 +5,10 @@ using UnityStandardAssets._2D;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class DialogueMenuManager : MonoBehaviour
+public class DialogueMenuManager : MonoSingleton<DialogueMenuManager>
 {
     public GameObject player;
     public GameObject menu;
-    public MenuController menuController;
-    NarrativeDialogue narrativeController;
 
     public GameObject goalsScreen;
 
@@ -26,15 +24,11 @@ public class DialogueMenuManager : MonoBehaviour
     public GameObject dialogueScreen;
 
 
-    private void Awake()
+    private void Start()
     {
         main = Camera.main;
         rb = player.GetComponent<Rigidbody2D>();
-        dialogueCameraTransform = player.GetComponent<PlayerController>().dialogueCameraPoint;
-    }
-    private void Start()
-    {
-        narrativeController = GetComponent<NarrativeDialogue>();
+        dialogueCameraTransform = PlayerController.Instance.dialogueCameraPoint;
     }
 
     public void StartDialogue(GAMESTATE gs)
@@ -56,7 +50,7 @@ public class DialogueMenuManager : MonoBehaviour
 
     void MakeMenu(GAMESTATE gs)
     {
-        menuController.gm.state = gs;
+        GameManager.Instance.state = gs;
         //menuController.paused = true;
         //Time.timeScale = 0f;
         menuActive = true;
@@ -66,7 +60,7 @@ public class DialogueMenuManager : MonoBehaviour
 
     void TutorialMakeMenu()
     {
-        menuController.gm.state = GAMESTATE.PAUSED;
+        GameManager.Instance.state = GAMESTATE.PAUSED;
         Time.timeScale = 0f;
         menuActive = true;
         menu.gameObject.SetActive(true);
@@ -80,22 +74,22 @@ public class DialogueMenuManager : MonoBehaviour
         menuActive = false;
         menu.gameObject.SetActive(false);
 
-        if (menuController.gm.state == GAMESTATE.CLOCKEDOUTSTART)
+        if (GameManager.Instance.state == GAMESTATE.CLOCKEDOUTSTART)
         {
             goalsScreen.SetActive(true);
         }
-        else if(menuController.gm.state == GAMESTATE.CLOCKEDOUTEND)
+        else if(GameManager.Instance.state == GAMESTATE.CLOCKEDOUTEND)
         {
-            StartCoroutine(menuController.gm.ShutDown());
+            StartCoroutine(GameManager.Instance.ShutDown());
         }
     }
 
     public void ClockIn()
     {
         goalsScreen.SetActive(false);
-        menuController.gm.state = GAMESTATE.CLOCKEDIN;
-        menuController.gm.textAnimation.Play();
-        narrativeController.story = narrativeController.NewStory();
+        GameManager.Instance.state = GAMESTATE.CLOCKEDIN;
+        GameManager.Instance.textAnimation.Play();
+        NarrativeDialogue.Instance.story = NarrativeDialogue.Instance.NewStory();
     }
 
     public void SkipDialogue()

@@ -19,7 +19,7 @@ public enum INPUTTYPE
     KEYBOARD, CONTROLLER
 }
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>
 {
     public GAMESTATE state;//for tracking the game state for functionality
     public WORKDAY workDay;//for tracking the workday
@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public int ordersFulfilled = 0;
     [HideInInspector] public int refundsOrdered = 0;
     [HideInInspector] public int points = 0;
+
+    [HideInInspector] public int bestDeliveryAmount = 0;
+    [HideInInspector] public int fewestRefundsAmount = 0;
 
     //workday timer variables
     public float timeInWorkday = 0f;
@@ -57,7 +60,6 @@ public class GameManager : MonoBehaviour
     //final points to judge
     public Slider starSlider;
     CanvasGroup zipAnimCG;
-    public NarrativeDialogue narrativeDialogue;
     public TextAsset inkEndScript;
 
 
@@ -65,12 +67,11 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool paused = false;
     public GameObject pausePanel;
-    private CanvasGroup pauseCg;
+
+
 
     ////Tutorial variables
     [Header("Tutorial Variables")]
-    public DialogueMenuManager dialogueMenuManager;
-    public MenuController menuController;
     public GameObject tutorialManager;
 
     bool test = false;
@@ -90,7 +91,6 @@ public class GameManager : MonoBehaviour
             //}
         }
 
-        pauseCg = pausePanel.GetComponent<CanvasGroup>();
         workdayStatusText.text = "Clocked IN!";
         textAnimation = workdayStatusText.GetComponent<Animation>();
 
@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
         zipAnimator.SetTrigger("DonePlaying");
         zipAnimCG.alpha = 0f;
 
-        dialogueMenuManager.StartDialogue(GAMESTATE.CLOCKEDOUTSTART);
+        DialogueMenuManager.Instance.StartDialogue(GAMESTATE.CLOCKEDOUTSTART);
         StopCoroutine(WakeUp());
     }
 
@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         //FOR DEMO
-        menuController.Wishlist();
+        MenuController.Instance.Wishlist();
         //zipAnimCG.alpha = 0f;
         zipFaceObject.SetActive(false);
     }
@@ -166,16 +166,16 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(textAnimation["WorkdayStatusAnim"].length);
 
-        menuController.ordersFulfilled = ordersFulfilled;
-        menuController.refundsOrdered = refundsOrdered;
-        menuController.EndOfDay();
+        MenuController.Instance.ordersFulfilled = ordersFulfilled;
+        MenuController.Instance.refundsOrdered = refundsOrdered;
+        MenuController.Instance.EndOfDay();
 
         //StopCoroutine(Clockout());
     }
 
     public IEnumerator ZipResults()
     {
-        narrativeDialogue.inkJSONAsset = inkEndScript;
+        NarrativeDialogue.Instance.inkJSONAsset = inkEndScript;
         zipAnimCG.alpha = 1f;
         //zipFaceObject.SetActive(true);
 
@@ -206,7 +206,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         zipAnimator.SetTrigger("DonePlaying");
         zipAnimCG.alpha = 0f;
-        dialogueMenuManager.StartDialogue(GAMESTATE.CLOCKEDOUTEND);
+        DialogueMenuManager.Instance.StartDialogue(GAMESTATE.CLOCKEDOUTEND);
         //StartCoroutine(ShutDown());
     }
 }

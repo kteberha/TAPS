@@ -5,10 +5,8 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoSingleton<PlayerController>
 {
-    public MenuController menuController;
-
     //Camera variables
     private Camera mainCamera;
     public float minZPosition;
@@ -71,6 +69,7 @@ public class PlayerController : MonoBehaviour
     [Header("DEMO TUTORIAL")]
     [SerializeField] TutorialManager tutorialManager;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -89,13 +88,17 @@ public class PlayerController : MonoBehaviour
         var splatterStreamEmission = splatterSys.emission;
         mainStreamEmission.enabled = false;
         splatterStreamEmission.enabled = false;
+
+        //subscribe to GameManager events
+
+        //
     }
 
     // Update is called once per frame
     void Update()
     {
         //if (!menuController.paused)//check the game isn't paused
-        if (menuController.gm.state == GAMESTATE.CLOCKEDIN)
+        if (GameManager.Instance.state == GAMESTATE.CLOCKEDIN)
         {
 
             RotatePointer();//rotate the direction pointer
@@ -249,7 +252,7 @@ public class PlayerController : MonoBehaviour
             dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
 
-        if(menuController.invertedMovement)//determine inverted movement controls and establish direction of travel
+        if(MenuController.Instance.invertedMovement)//determine inverted movement controls and establish direction of travel
 
             dir = dir.normalized * -1;
         else
@@ -485,7 +488,7 @@ public class PlayerController : MonoBehaviour
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
 
         Vector3 rotateVector = new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y, 0f);
-        if(menuController.invertedMovement)
+        if(MenuController.Instance.invertedMovement)
             movementPointer.transform.rotation = Quaternion.LookRotation(-rotateVector, -Vector3.forward);
         else
             movementPointer.transform.rotation = Quaternion.LookRotation(rotateVector, -Vector3.forward);

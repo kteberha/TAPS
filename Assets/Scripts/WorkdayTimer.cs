@@ -16,8 +16,6 @@ public class WorkdayTimer : MonoBehaviour
     public float finalColorSecValue;
     public float fadeTime;
 
-    public GameManager gm;
-
     public bool countStarted = true;
 
     Color nextColor;
@@ -37,7 +35,7 @@ public class WorkdayTimer : MonoBehaviour
 
     private void Start()
     {
-        countdownValue = gm.workdayLength;
+        countdownValue = GameManager.Instance.workdayLength;
         clockSlider.maxValue = countdownValue;
         clockSlider.value = countdownValue;
 
@@ -52,12 +50,12 @@ public class WorkdayTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gm.state == GAMESTATE.CLOCKEDIN)
+        if (GameManager.Instance.state == GAMESTATE.CLOCKEDIN)
         {
             ////a lot of this needs to be taken off update////
             if (countStarted && countdownValue >= 0f)//run countdown logic if there is time left AND if the counter is allowed to be active
             {
-                countdownValue = Mathf.Clamp(countdownValue - Time.deltaTime, 0f, gm.workdayLength);//start the countdown
+                countdownValue = Mathf.Clamp(countdownValue - Time.deltaTime, 0f, GameManager.Instance.workdayLength);//start the countdown
 
 
                 //set the minute and second values
@@ -108,10 +106,10 @@ public class WorkdayTimer : MonoBehaviour
                     }
 
                 }
-                else if (countdownValue / gm.workdayLength <= warningColorPercent + 0.1f)
+                else if (countdownValue / GameManager.Instance.workdayLength <= warningColorPercent + 0.1f)
                 {
                     //set the starting time for the fade to use
-                    startTime = gm.workdayLength * warningColorPercent;
+                    startTime = GameManager.Instance.workdayLength * warningColorPercent;
                     //fade from one color to the other smoothly
                     fill.color = Color.Lerp(startFillColor, warningColor, Mathf.SmoothStep(0, 1, ((Time.time - startTime) / fadeTime)));
                 }
@@ -152,12 +150,4 @@ public class WorkdayTimer : MonoBehaviour
         fadeAnimation.clip = fadeAnimation.GetClip("ClockFadeIn");//reset the animation clip to play correctly the next time coroutine is run
         fadeAnimationStarted = false;//toggle bool back to false
     }
-
-    //IEnumerator TimerFlash()
-    //{
-    //    clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b);
-    //    fadeAnimation.Play("ClockFadeIn");
-    //    yield return new WaitForSeconds(fadeAnimation.clip.length);
-    //    clockTextAnim.Play();
-    //}
 }

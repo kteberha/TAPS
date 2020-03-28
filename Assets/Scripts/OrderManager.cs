@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class OrderManager : MonoBehaviour
+public class OrderManager : MonoSingleton<OrderManager>
 {
-    public GameManager gameManager;
+    public AsteroidHome[] homes;//array of the homes to pull from
 
-    public AsteroidHome[] homes;
+    [SerializeField]
+    float orderTimer = 5f;//amount of time before a new house will place an order
 
-    public float orderTimer = 5f;
-    float resetTimer;
+    float resetTimer;//resets the order timer when appropriate
+
+    int homeIndex = 0;//int to select which house is placing an order
 
 
     // Start is called before the first frame update
@@ -22,8 +24,10 @@ public class OrderManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.state == GAMESTATE.CLOCKEDIN)
+        //check that the game is in the right state to do the order timing logic
+        if (GameManager.Instance.state == GAMESTATE.CLOCKEDIN)
         {
+            //make sure we're not in the tutorial scene
             if (SceneManager.GetActiveScene().name != "TutorialScene")
             {
                 //countdown timer

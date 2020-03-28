@@ -8,7 +8,6 @@ public class Aim : MonoBehaviour
 
     public Camera mainCamera;
     public Transform player;
-    public PlayerController playerController;
     public float maxLength;
 
     // Start is called before the first frame update
@@ -22,7 +21,7 @@ public class Aim : MonoBehaviour
     {
         if (Input.GetButton("Fire2"))
         {
-            if (playerController.heldPackages.Count > 0) //check that the player has packages to throw
+            if (PlayerController.Instance.heldPackages.Count > 0) //check that the player has packages to throw
             {
                 RaycastHit hit;
 

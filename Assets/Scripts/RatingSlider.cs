@@ -12,7 +12,6 @@ public class RatingSlider : MonoBehaviour
     public float maxValue = 1000f;
 
     public GameObject Fill;
-    public GameManager gm;
 
     private void Start()
     {
@@ -21,7 +20,8 @@ public class RatingSlider : MonoBehaviour
 
     private void Update()
     {
-        slideValue = gm.points;
+        //make this an event, get this off update//////
+        slideValue = GameManager.Instance.points;
 
         slider.value = slideValue;
 
@@ -30,5 +30,6 @@ public class RatingSlider : MonoBehaviour
         {
             Fill.GetComponent<Image>().sprite = filledImage;
         }
+        ////////////////////////
     }
 }

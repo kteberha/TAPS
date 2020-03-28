@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MenuController : MonoBehaviour
+public class MenuController : MonoSingleton<MenuController>
 {
-    public GameManager gm;
-
     [HideInInspector]public bool paused = false;
 
     public GameObject pausePanel;
@@ -69,7 +67,7 @@ public class MenuController : MonoBehaviour
         //need to make this unviseral key press for controller and keyboard
         if (Input.GetKeyDown(KeyCode.Escape))//pause or unpause the game on a key press
         {
-            if (gm.state == GAMESTATE.PAUSED)
+            if (GameManager.Instance.state == GAMESTATE.PAUSED)
                 Resume();
             else
                 Pause();
@@ -90,7 +88,7 @@ public class MenuController : MonoBehaviour
         optionsCg.blocksRaycasts = false;
         optionsCg.interactable = false;
         paused = true;
-        gm.state = GAMESTATE.PAUSED;
+        GameManager.Instance.state = GAMESTATE.PAUSED;
     }
 
     /// <summary>
@@ -105,7 +103,7 @@ public class MenuController : MonoBehaviour
         optionsCg.interactable = false;
         optionsCg.alpha = 0f;
         paused = false;
-        gm.state = GAMESTATE.CLOCKEDIN;
+        GameManager.Instance.state = GAMESTATE.CLOCKEDIN;
     }
 
     public void Restart()
@@ -185,7 +183,7 @@ public class MenuController : MonoBehaviour
 
     IEnumerator EndDay()
     {
-        gm.state = GAMESTATE.CLOCKEDOUTEND;
+        GameManager.Instance.state = GAMESTATE.CLOCKEDOUTEND;
         //paused = true;
         endDayAnim.Play();
         yield return new WaitForSeconds(endDayAnim.clip.length);
@@ -196,7 +194,7 @@ public class MenuController : MonoBehaviour
 
     public void ShowResultFace()
     {
-        gm.StartCoroutine(gm.ZipResults());
+        GameManager.Instance.StartCoroutine(GameManager.Instance.ZipResults());
         endDayPanel.SetActive(false);
     }
 
@@ -227,7 +225,7 @@ public class MenuController : MonoBehaviour
     ////////////////FOR DEMO ONLY/////////////////////////
     public void Wishlist()
     {
-        gm.state = GAMESTATE.CLOCKEDOUTEND;
+        GameManager.Instance.state = GAMESTATE.CLOCKEDOUTEND;
         wishlist.SetActive(true);
     }
 }

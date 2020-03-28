@@ -15,8 +15,6 @@ public class RadialLookAt : MonoBehaviour
 	Vector3 center;
 	Camera mainCamera;
 
-    public MenuController mc;
-
 #if UNITY_EDITOR
 	public bool debug;
 #endif
@@ -33,7 +31,7 @@ public class RadialLookAt : MonoBehaviour
         angle = Mathf.Atan2(dir.y, dir.x);
         targetPos = center + new Vector3(Mathf.Cos(angle),Mathf.Sin(angle)) * radius;
 		transform.localPosition = targetPos;
-		if(mc.invertedMovement)
+		if(MenuController.Instance.invertedMovement)
         {
             lookAtPos = dir;
         }

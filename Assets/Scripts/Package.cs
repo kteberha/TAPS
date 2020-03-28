@@ -29,7 +29,7 @@ public class Package : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _heldPackages = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().heldPackages;
+        _heldPackages = PlayerController.Instance.heldPackages;
         a_Source = GetComponent<AudioSource>();
 
         //Random Size

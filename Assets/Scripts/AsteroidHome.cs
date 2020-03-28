@@ -5,23 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class AsteroidHome : MonoBehaviour
 {
-    //[System.Serializable]
-    //public class pointsAtTime
-    //{
-    //    public float time; //in seconds
-    //    public int points;
-    //}
-    //public pointsAtTime[] deliverPointsAtTime;
-    //public float currentTime = 0f;
-
-    public GameManager gm;
-
     //Variables regarding the packages
     [HideInInspector]public bool packageBeenOrdered = false;//whether house has ordered a package or not
     [HideInInspector]public int numPackagesOrdered;//number of packages ordered by a house
     public float orderTime = 120f;//time before an order expires
     public float orderDelayTime = 5f;//time to delay another order after expired or fulfilled orders
-    public int points = 1;
+    public int points;//number of points the house will award for completing an order
 
     public GameObject[] packageTypes = new GameObject[3];
     public List<GameObject> packagesOrdered;
@@ -271,6 +260,7 @@ public class AsteroidHome : MonoBehaviour
                 tutorialManager.ToggleDialogueOn();
             }
         }
+        ///////////////////////////////////////////////////////
     }
 
     /// <summary>
@@ -291,9 +281,9 @@ public class AsteroidHome : MonoBehaviour
         //    if (p.time <= currentTime)
         //        pointsToAward = p.points;
         //}
-        gm.packagesDelivered += numPackagesOrdered;//reward based on number of packages delivered
-        gm.points += numPackagesOrdered;//reward based on the number of packages delivered
-        gm.ordersFulfilled += 1;
+        GameManager.Instance.packagesDelivered += numPackagesOrdered;//reward based on number of packages delivered
+        GameManager.Instance.points += numPackagesOrdered;//reward based on the number of packages delivered
+        GameManager.Instance.ordersFulfilled += 1;
 
         orderDelayTime = delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
     }
@@ -307,12 +297,13 @@ public class AsteroidHome : MonoBehaviour
             offScreenIndicatorObj.SetActive(false);//turn off the offscreen indicator
             packageBeenOrdered = false;//toggle the house's package ordered state to false so it knows it can order another package
             numPackagesOrdered = 0;
-            gm.refundsOrdered += 1;//increment the refunds ordered variable in the game manager
+            GameManager.Instance.refundsOrdered += 1;//increment the refunds ordered variable in the game manager
             orderDelayTime = delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
 
             packagesOrdered.Clear();//remove all packages ordered
         }
 
+        ///Special condition only for the tutorial scene
         if (SceneManager.GetActiveScene().name == "TutorialScene")
         {
             orderDelayTime = 0;

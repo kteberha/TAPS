@@ -27,10 +27,6 @@ namespace UnityStandardAssets._2D
         private Vector3 m_LastTargetPosition;
         public Vector3 m_CurrentPosition;
         private Vector3 m_CurrentVelocity;
-		private float tarY;
-		//private bool moving = false;
-
-        private PlayerController playerController;
 
         // Use this for initialization
         private void Start()
@@ -41,7 +37,6 @@ namespace UnityStandardAssets._2D
             m_OffsetZ = (m_CurrentPosition - target.position).z;
             transform.SetParent(null);  //transform.parent = null;
 			cam = GetComponent<Camera> ();
-            playerController = target.GetComponent<PlayerController>();
         }
 
 
@@ -57,10 +52,10 @@ namespace UnityStandardAssets._2D
             float yMoveDelta = (target.position - m_LastTargetPosition).y;
             float zMoveDelta = (target.position - m_LastTargetPosition).z;
 
-            m_OffsetZ = playerController.DetermineCameraZ();
+            m_OffsetZ = PlayerController.Instance.DetermineCameraZ();
 
             //handle the direction arrow fading in and out
-            if(playerController.lerpPerc < dissolveThreshold)
+            if(PlayerController.Instance.lerpPerc < dissolveThreshold)
             {
                 if(dissolved)
                 {

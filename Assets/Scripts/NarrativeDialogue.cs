@@ -5,7 +5,7 @@ using Ink.Runtime;
 using UnityEngine.UI;
 using TMPro;
 
-public class NarrativeDialogue : MonoBehaviour
+public class NarrativeDialogue : MonoSingleton<NarrativeDialogue>
 {
     public TextAsset inkJSONAsset;
     public TextAsset inkJSONAsset2;
@@ -60,7 +60,7 @@ public class NarrativeDialogue : MonoBehaviour
         }
         else
         {
-            GetComponent<DialogueMenuManager>().EndDialogue();
+            DialogueMenuManager.Instance.EndDialogue();
         }
 
         // Display all the choices, if there are any!
