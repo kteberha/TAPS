@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,11 +20,11 @@ public enum INPUTTYPE
     KEYBOARD, CONTROLLER
 }
 
-public class GameManager : MonoSingleton<GameManager>
+public class GameManager : Singleton<GameManager>
 {
-    public GAMESTATE state;//for tracking the game state for functionality
-    public WORKDAY workDay;//for tracking the workday
-    public INPUTTYPE inputType;//for tracking input type
+    public static GAMESTATE state;//for tracking the game state for functionality
+    public static WORKDAY workDay;//for tracking the workday
+    public static INPUTTYPE inputType;//for tracking input type
 
     //point and package tracking variables
     [HideInInspector] public int packagesDelivered = 0;
@@ -64,6 +65,8 @@ public class GameManager : MonoSingleton<GameManager>
 
 
     //Pause menu & game state variables
+    public static Action onPaused; //delegate to be called when the game is paused
+    public static Action onResumed; //delegate to be called when game is resumed
     [HideInInspector]
     public bool paused = false;
     public GameObject pausePanel;
@@ -79,7 +82,7 @@ public class GameManager : MonoSingleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-        zipAnimCG = zipFaceObject.GetComponent<CanvasGroup>();
+        //zipAnimCG = zipFaceObject.GetComponent<CanvasGroup>();
         if (SceneManager.GetActiveScene().name != "TutorialScene")
         {
             //print(PlayerPrefs.GetInt("tutorialDone"));
@@ -94,9 +97,9 @@ public class GameManager : MonoSingleton<GameManager>
         workdayStatusText.text = "Clocked IN!";
         textAnimation = workdayStatusText.GetComponent<Animation>();
 
-        state = GAMESTATE.CLOCKEDOUTSTART;
-
-        StartCoroutine(WakeUp());
+        //state = GAMESTATE.CLOCKEDOUTSTART;
+        state = GAMESTATE.CLOCKEDIN;
+        //StartCoroutine(WakeUp());
 
         if (SceneManager.GetActiveScene().name == "TutorialScene")
         {
@@ -107,6 +110,23 @@ public class GameManager : MonoSingleton<GameManager>
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (state == GAMESTATE.PAUSED)
+            {
+                if(onResumed != null)
+                {
+                    onResumed();
+                }
+            }
+            else
+            {
+                if (onPaused != null)
+                {
+                    onPaused();
+                }
+            }
+        }
 
         if (state == GAMESTATE.CLOCKEDIN)//only count the time if the player is clocked in
         {

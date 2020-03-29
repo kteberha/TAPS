@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 
-public class PlayerController : MonoSingleton<PlayerController>
+public class PlayerController : Singleton<PlayerController>
 {
     //Camera variables
     private Camera mainCamera;
@@ -97,8 +97,13 @@ public class PlayerController : MonoSingleton<PlayerController>
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            gameObject.transform.rotation = new Quaternion(0,0,0,0);
+            gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0f;
+        }
         //if (!menuController.paused)//check the game isn't paused
-        if (GameManager.Instance.state == GAMESTATE.CLOCKEDIN)
+        if (GameManager.state == GAMESTATE.CLOCKEDIN)
         {
 
             RotatePointer();//rotate the direction pointer

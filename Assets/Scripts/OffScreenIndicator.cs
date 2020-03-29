@@ -75,7 +75,7 @@ public class OffScreenIndicator : MonoBehaviour
 
         foreach (GameObject package in _asteroidHome.packagesOrdered)//go through each item in packages ordered list
         {
-            print(package.name);
+            print("In home list: " + package.name);
             string type = package.name;
 
             switch (type)//determine sprite based on package name saved above
@@ -99,23 +99,19 @@ public class OffScreenIndicator : MonoBehaviour
             }
 
             packageSlotImages[i].sprite = packageTypeAssigned;//alter the sprite in the image slot
-            print("slot " +i + " " +packageSlotImages[i].sprite.name);
-            //print(packageSlotImages[i].sprite.name);//testing
+            packageSlotImages[i].color = Color.white;//make sure the sprite is visible incase it used to be clear
+            //print("slot " + i + " " + packageSlotImages[i].sprite.name);
 
+            //increment i if there are more packages to loop through
             if (i + 1 < _asteroidHome.packagesOrdered.Count)
-            {
                 i++; //increment the index holder to work with the next icon slot
-                //print("There are more packages to loop through");//testing
-            }
+
+            //set remaining slots as invisible
             else
             {
-                //print("Set other slot images to nothing");//testing
                 for (int n = i + 1; n < packageSlotImages.Length; n++)//loop through the remaining slots
-                {
-                    //print("N " + n);//testing
                     packageSlotImages[n].color = Color.clear;//make the sprites invisible
-                    //print("slot: " + (n + 1) + " is invisible");//testing
-                }
+
                 break;//break the foreach loop
             }
         }

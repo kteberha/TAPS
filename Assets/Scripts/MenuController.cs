@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MenuController : MonoSingleton<MenuController>
+public class MenuController : Singleton<MenuController>
 {
     [HideInInspector]public bool paused = false;
 
@@ -59,19 +59,15 @@ public class MenuController : MonoSingleton<MenuController>
             invertedMovement = true;
         }
         invertMoveToggle.SetIsOnWithoutNotify(invertedMovement);
+
+        //subscribe to gamemanager's pause and resume events
+        GameManager.onPaused += Pause;
+        GameManager.onResumed += Resume;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //need to make this unviseral key press for controller and keyboard
-        if (Input.GetKeyDown(KeyCode.Escape))//pause or unpause the game on a key press
-        {
-            if (GameManager.Instance.state == GAMESTATE.PAUSED)
-                Resume();
-            else
-                Pause();
-        }
 
         //if (Input.GetKeyDown(KeyCode.M))
         //{
@@ -88,7 +84,7 @@ public class MenuController : MonoSingleton<MenuController>
         optionsCg.blocksRaycasts = false;
         optionsCg.interactable = false;
         paused = true;
-        GameManager.Instance.state = GAMESTATE.PAUSED;
+        GameManager.state = GAMESTATE.PAUSED;
     }
 
     /// <summary>
@@ -103,7 +99,7 @@ public class MenuController : MonoSingleton<MenuController>
         optionsCg.interactable = false;
         optionsCg.alpha = 0f;
         paused = false;
-        GameManager.Instance.state = GAMESTATE.CLOCKEDIN;
+        GameManager.state = GAMESTATE.CLOCKEDIN;
     }
 
     public void Restart()
@@ -183,7 +179,7 @@ public class MenuController : MonoSingleton<MenuController>
 
     IEnumerator EndDay()
     {
-        GameManager.Instance.state = GAMESTATE.CLOCKEDOUTEND;
+        GameManager.state = GAMESTATE.CLOCKEDOUTEND;
         //paused = true;
         endDayAnim.Play();
         yield return new WaitForSeconds(endDayAnim.clip.length);
@@ -225,7 +221,7 @@ public class MenuController : MonoSingleton<MenuController>
     ////////////////FOR DEMO ONLY/////////////////////////
     public void Wishlist()
     {
-        GameManager.Instance.state = GAMESTATE.CLOCKEDOUTEND;
+        GameManager.state = GAMESTATE.CLOCKEDOUTEND;
         wishlist.SetActive(true);
     }
 }

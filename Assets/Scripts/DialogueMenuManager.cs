@@ -5,7 +5,7 @@ using UnityStandardAssets._2D;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class DialogueMenuManager : MonoSingleton<DialogueMenuManager>
+public class DialogueMenuManager : Singleton<DialogueMenuManager>
 {
     public GameObject player;
     public GameObject menu;
@@ -50,7 +50,7 @@ public class DialogueMenuManager : MonoSingleton<DialogueMenuManager>
 
     void MakeMenu(GAMESTATE gs)
     {
-        GameManager.Instance.state = gs;
+        GameManager.state = gs;
         //menuController.paused = true;
         //Time.timeScale = 0f;
         menuActive = true;
@@ -60,7 +60,7 @@ public class DialogueMenuManager : MonoSingleton<DialogueMenuManager>
 
     void TutorialMakeMenu()
     {
-        GameManager.Instance.state = GAMESTATE.PAUSED;
+        GameManager.state = GAMESTATE.PAUSED;
         Time.timeScale = 0f;
         menuActive = true;
         menu.gameObject.SetActive(true);
@@ -74,11 +74,11 @@ public class DialogueMenuManager : MonoSingleton<DialogueMenuManager>
         menuActive = false;
         menu.gameObject.SetActive(false);
 
-        if (GameManager.Instance.state == GAMESTATE.CLOCKEDOUTSTART)
+        if (GameManager.state == GAMESTATE.CLOCKEDOUTSTART)
         {
             goalsScreen.SetActive(true);
         }
-        else if(GameManager.Instance.state == GAMESTATE.CLOCKEDOUTEND)
+        else if(GameManager.state == GAMESTATE.CLOCKEDOUTEND)
         {
             StartCoroutine(GameManager.Instance.ShutDown());
         }
@@ -87,7 +87,7 @@ public class DialogueMenuManager : MonoSingleton<DialogueMenuManager>
     public void ClockIn()
     {
         goalsScreen.SetActive(false);
-        GameManager.Instance.state = GAMESTATE.CLOCKEDIN;
+        GameManager.state = GAMESTATE.CLOCKEDIN;
         GameManager.Instance.textAnimation.Play();
         NarrativeDialogue.Instance.story = NarrativeDialogue.Instance.NewStory();
     }

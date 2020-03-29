@@ -78,7 +78,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 0.05
-  m_LinearDrag: 0.1
+  m_LinearDrag: 0.25
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -309,6 +309,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 856365191234717131, guid: 4583b2b1204842046894b480ede833de,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 07a8de4cc55eb254da62b665eb58a2a7, type: 2}
     - target: {fileID: -4216859302048453862, guid: 4583b2b1204842046894b480ede833de,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -409,11 +414,6 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 856365191234717131, guid: 4583b2b1204842046894b480ede833de,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 07a8de4cc55eb254da62b665eb58a2a7, type: 2}
     - target: {fileID: 8871860419199349103, guid: 4583b2b1204842046894b480ede833de,
         type: 3}
       propertyPath: m_Mesh

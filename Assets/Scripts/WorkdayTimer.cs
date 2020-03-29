@@ -50,7 +50,7 @@ public class WorkdayTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.state == GAMESTATE.CLOCKEDIN)
+        if (GameManager.state == GAMESTATE.CLOCKEDIN)
         {
             ////a lot of this needs to be taken off update////
             if (countStarted && countdownValue >= 0f)//run countdown logic if there is time left AND if the counter is allowed to be active

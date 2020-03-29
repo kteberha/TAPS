@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class OrderManager : MonoSingleton<OrderManager>
+public class OrderManager : Singleton<OrderManager>
 {
     public AsteroidHome[] homes;//array of the homes to pull from
 
@@ -25,7 +25,7 @@ public class OrderManager : MonoSingleton<OrderManager>
     void Update()
     {
         //check that the game is in the right state to do the order timing logic
-        if (GameManager.Instance.state == GAMESTATE.CLOCKEDIN)
+        if (GameManager.state == GAMESTATE.CLOCKEDIN)
         {
             //make sure we're not in the tutorial scene
             if (SceneManager.GetActiveScene().name != "TutorialScene")

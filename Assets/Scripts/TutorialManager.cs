@@ -29,7 +29,7 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.Instance.state = GAMESTATE.PAUSED;
+        GameManager.state = GAMESTATE.PAUSED;
     }
 
     // Update is called once per frame
@@ -171,7 +171,7 @@ public class TutorialManager : MonoBehaviour
         print("toggle off: " + i);
         DialogueMenuManager.Instance.dialogueScreen.SetActive(false);
         DialogueMenuManager.Instance.enabled = true;
-        GameManager.Instance.state = GAMESTATE.CLOCKEDIN;
+        GameManager.state = GAMESTATE.CLOCKEDIN;
     }
 
     public void PauseObjects()

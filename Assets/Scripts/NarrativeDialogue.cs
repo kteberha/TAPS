@@ -5,7 +5,7 @@ using Ink.Runtime;
 using UnityEngine.UI;
 using TMPro;
 
-public class NarrativeDialogue : MonoSingleton<NarrativeDialogue>
+public class NarrativeDialogue : Singleton<NarrativeDialogue>
 {
     public TextAsset inkJSONAsset;
     public TextAsset inkJSONAsset2;
@@ -37,7 +37,7 @@ public class NarrativeDialogue : MonoSingleton<NarrativeDialogue>
     public Story NewStory()
     {
         story = new Story(inkJSONAsset2.text);
-        print("new story");
+        //print("new story");
         RefreshView();
         return story;
     }

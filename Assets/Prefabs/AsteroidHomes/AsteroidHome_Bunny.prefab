@@ -724,19 +724,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dca7fe2d9cf4a92409ba2dbda735123c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gm: {fileID: 0}
   packageBeenOrdered: 0
   numPackagesOrdered: 0
   orderTime: 30
   orderDelayTime: 5
   points: 1
-  packageTypes:
+  _packageTypes:
   - {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00, type: 3}
   - {fileID: 5869416400145213135, guid: adec3afedcd934895a03c05563e18a70, type: 3}
   - {fileID: 5869416400145213135, guid: 44e83320535054feea794b68faceb626, type: 3}
   packagesOrdered: []
-  offScreenIndicator: {fileID: 0}
+  tutorialManager: {fileID: 0}
+  offScreenIndicatorObj: {fileID: 0}
   demandController: {fileID: 0}
+  houseRenderers:
+  - {fileID: 2600144559506052145}
+  - {fileID: 2055411368449527413}
   orderedClip: {fileID: 8300000, guid: d1bd81d5fc1845748a7d338e1728f973, type: 3}
   expiredClip: {fileID: 8300000, guid: 44c8314493a79234fa4190ce46d8e822, type: 3}
   successClip: {fileID: 8300000, guid: 79464b9291903d7499d32e1e5c233f6a, type: 3}
