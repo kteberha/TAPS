@@ -8,17 +8,17 @@ public class OrderManager : Singleton<OrderManager>
     public AsteroidHome[] homes;//array of the homes to pull from
 
     [SerializeField]
-    float orderTimer = 5f;//amount of time before a new house will place an order
+    float _orderTimer = 5f;//amount of time before a new house will place an order
 
-    float resetTimer;//resets the order timer when appropriate
+    float _resetTimer;//resets the order timer when appropriate
 
-    int homeIndex = 0;//int to select which house is placing an order
+    int _homeIndex = 0;//int to select which house is placing an order (for deepening the ordering system)
 
 
     // Start is called before the first frame update
     void Start()
     {
-        resetTimer = orderTimer;
+        _resetTimer = _orderTimer;
     }
 
     // Update is called once per frame
@@ -30,18 +30,16 @@ public class OrderManager : Singleton<OrderManager>
             //make sure we're not in the tutorial scene
             if (SceneManager.GetActiveScene().name != "TutorialScene")
             {
-                //countdown timer
-                orderTimer -= Time.deltaTime;
+                _orderTimer -= Time.deltaTime; //countdown timer
+
 
                 //check when the timer reaches 0;
-                if (orderTimer <= 0)
+                if (_orderTimer <= 0)
                 {
-                    //print("attempt order");
                     //go through the list of homes and see if they can order a package
                     for (int i = 0; i < homes.Length; i++)
                     {
                         ///////////////////////Make this so that it won't keep picking the same house/////////////
-                        //print("checking: " + homes[i].name);
                         //check if the home being compared has ordered a package, if so break the loop
                         if (homes[i].packageBeenOrdered == false)
                         {
@@ -51,7 +49,7 @@ public class OrderManager : Singleton<OrderManager>
                         //////////////////////////////////////////////////////////////////////////////////////////
                     }
 
-                    orderTimer = resetTimer;//reset the order timer.
+                    _orderTimer = _resetTimer;//reset the order timer.
                 }
             }
         }
@@ -62,11 +60,9 @@ public class OrderManager : Singleton<OrderManager>
     /// </summary>
     public void OrderPackage()
     {
-        print("ordering package");
         for (int i = 0; i < homes.Length; i++)
         {
             ///////////////////////Make this so that it won't keep picking the same house/////////////
-            //print("checking: " + homes[i].name);
             //check if the home being compared has ordered a package, if so break the loop
             if (homes[i].packageBeenOrdered == false)
             {
@@ -74,6 +70,5 @@ public class OrderManager : Singleton<OrderManager>
                 break;
             }
         }
-        print("ordered");
     }
 }

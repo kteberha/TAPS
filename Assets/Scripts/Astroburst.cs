@@ -19,31 +19,18 @@ public class Astroburst : MonoBehaviour
     static bool firstBurst = true;
 
     //attempt to make the particles play at the right time
-    public ParticleSystem pColl1;
-    public ParticleSystem pColl2;
-    public ParticleSystem pColl3;
-    public ParticleSystem pColl4;
-    public ParticleSystem pColl5;
-    public ParticleSystem pColl6;
+    public ParticleSystem[] CollisionParticles = new ParticleSystem[6];
     public ParticleSystem pCont;
 
     private void Start()
     {
         pointEffector = GetComponent<PointEffector2D>();
         pointEffector.enabled = false;
-        partSystem = GetComponent<ParticleSystem>();
 
-        //particles attempt
-        pColl1 = GetComponent<ParticleSystem>();
-        pColl2 = GetComponent<ParticleSystem>();
-        pColl3 = GetComponent<ParticleSystem>();
-        pColl4 = GetComponent<ParticleSystem>();
-        pColl5 = GetComponent<ParticleSystem>();
-        pColl6 = GetComponent<ParticleSystem>();
-        pCont = GetComponent<ParticleSystem>();
+        foreach (ParticleSystem _p in CollisionParticles)
+            _p.Stop();
 
-        partSystem.Stop();
-        pCont.Play(); //particles attempt
+        pCont.Play();
         meshRend = GetComponent<MeshRenderer>();
 
     }
@@ -70,14 +57,11 @@ public class Astroburst : MonoBehaviour
         yield return new WaitForSeconds(delayTime);
 
         pointEffector.enabled = true;
-        //partSystem.Play();
         pCont.Stop();
-        pColl1.Play();
-        pColl2.Play();
-        pColl3.Play();
-        pColl4.Play();
-        pColl5.Play();
-        pColl6.Play();
+        print(pCont.isPlaying);
+
+        foreach (ParticleSystem _p in CollisionParticles)
+            _p.Play();
 
         meshRend.enabled = false;
         GetComponent<AudioSource>().Play();
@@ -108,6 +92,6 @@ public class Astroburst : MonoBehaviour
 
     bool ParticleEmitting()
     {
-        return partSystem.isEmitting;
+        return CollisionParticles[5].isEmitting;
     }
 }

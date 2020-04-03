@@ -68,7 +68,6 @@ public class GameManager : Singleton<GameManager>
     public static Action onPaused; //delegate to be called when the game is paused
     public static Action onResumed; //delegate to be called when game is resumed
     [HideInInspector]
-    public bool paused = false;
     public GameObject pausePanel;
 
 

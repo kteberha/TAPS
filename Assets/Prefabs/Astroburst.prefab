@@ -4863,7 +4863,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 1.65
 --- !u!58 &4624711481760005614
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4897,12 +4897,13 @@ MonoBehaviour:
   playOnCollision: {fileID: 3899440538814771224}
   delayTime: 0.25
   bHChance: 0.3
-  pColl1: {fileID: 3082667197836416448}
-  pColl2: {fileID: 3798504842783093436}
-  pColl3: {fileID: 6096353992586816374}
-  pColl4: {fileID: 421154160206861738}
-  pColl5: {fileID: 4537480285830656709}
-  pColl6: {fileID: 6684522273873319100}
+  CollisionParticles:
+  - {fileID: 3082667197836416448}
+  - {fileID: 3798504842783093436}
+  - {fileID: 6096353992586816374}
+  - {fileID: 421154160206861738}
+  - {fileID: 4537480285830656709}
+  - {fileID: 6684522273873319100}
   pCont: {fileID: 7808693441394371220}
 --- !u!250 &4624711481760005603
 PointEffector2D:
@@ -9722,7 +9723,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -1407295084529541908, guid: c28ce6ed7ffb1fe4cbbb15bc75db4d79,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 4ec09215ecef28648a1e1164fa42fa16, type: 3}
+  m_audioClip: {fileID: 8300000, guid: c8557eb4e64ba884592992910c948775, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -14790,16 +14791,6 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5757377907235811871, guid: 67bb6d58240cbca4789de4ffcf4cd6e8,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 31728361b385d254d9e7a61337e8f5a9, type: 2}
-    - target: {fileID: 5757377907235811871, guid: 67bb6d58240cbca4789de4ffcf4cd6e8,
-        type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 31728361b385d254d9e7a61337e8f5a9, type: 2}
     - target: {fileID: 5421683764522374246, guid: 67bb6d58240cbca4789de4ffcf4cd6e8,
         type: 3}
       propertyPath: playOnAwake
@@ -14940,6 +14931,21 @@ PrefabInstance:
       propertyPath: ColorModule.enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2954888539637690911, guid: 67bb6d58240cbca4789de4ffcf4cd6e8,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5757377907235811871, guid: 67bb6d58240cbca4789de4ffcf4cd6e8,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31728361b385d254d9e7a61337e8f5a9, type: 2}
+    - target: {fileID: 5757377907235811871, guid: 67bb6d58240cbca4789de4ffcf4cd6e8,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31728361b385d254d9e7a61337e8f5a9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67bb6d58240cbca4789de4ffcf4cd6e8, type: 3}
 --- !u!1 &3899440538814771224 stripped

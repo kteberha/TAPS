@@ -81,23 +81,24 @@ public class WorkdayTimer : MonoBehaviour
                     }
                 }
 
-                if (Mathf.Ceil(countdownValue) == 31)//fade the clock in and don't let it fade out during the final push
+                //fade the clock in and don't let it fade out during the final push
+                if (Mathf.Ceil(countdownValue) == 31)
                 {
                     fadeAnimation.Play("ClockFadeIn");
                 }
 
-                if (countdownValue <= 0)//play the final fade out animation
+                //play the final fade out animation
+                if (countdownValue <= 0)
                 {
                     if (!oneTimeFadeStarted)
                     {
                         fadeAnimation.Play("ClockFadeOut");
                         oneTimeFadeStarted = true;
-                        //clockTextAnim.Stop();
-                        //clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b, 0f);
                     }
                 }
 
-                if (countdownValue <= finalColorSecValue + 1)//start the red flashing warning that time is almost up
+                //start the red flashing warning that time is almost up
+                if (countdownValue <= finalColorSecValue + 1)
                 {
                     fill.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.2f, 1));
                     if (!oneTimeFadeStarted)
