@@ -82,7 +82,7 @@ AudioSource:
   m_GameObject: {fileID: 4464430415442241081}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -6103354110245224638, guid: c28ce6ed7ffb1fe4cbbb15bc75db4d79,
+  OutputAudioMixerGroup: {fileID: -6788466302798204762, guid: c28ce6ed7ffb1fe4cbbb15bc75db4d79,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 4ec09215ecef28648a1e1164fa42fa16, type: 3}
   m_PlayOnAwake: 0
@@ -191,6 +191,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   meshRenderer: {fileID: 0}
+  m_Camera: {fileID: 0}
 --- !u!58 &4464430415442241080
 CircleCollider2D:
   m_ObjectHideFlags: 0

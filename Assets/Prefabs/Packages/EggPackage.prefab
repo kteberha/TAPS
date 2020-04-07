@@ -191,7 +191,7 @@ AudioSource:
   m_GameObject: {fileID: 5869416400145213135}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -6987383228537063942, guid: c28ce6ed7ffb1fe4cbbb15bc75db4d79,
+  OutputAudioMixerGroup: {fileID: 7692903266452207972, guid: c28ce6ed7ffb1fe4cbbb15bc75db4d79,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 50cf8fd27ad56554c978c0eb62f23419, type: 3}
   m_PlayOnAwake: 0
@@ -405,11 +405,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: pEgg
       objectReference: {fileID: 0}
-    - target: {fileID: 856365191234717131, guid: 4583b2b1204842046894b480ede833de,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e9b0435fa1d58425684685794a8f4cc1, type: 2}
     - target: {fileID: -4216859302048453862, guid: 4583b2b1204842046894b480ede833de,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -480,6 +475,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.30114242
       objectReference: {fileID: 0}
+    - target: {fileID: 856365191234717131, guid: 4583b2b1204842046894b480ede833de,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e9b0435fa1d58425684685794a8f4cc1, type: 2}
     - target: {fileID: 2636797423722545353, guid: 4583b2b1204842046894b480ede833de,
         type: 3}
       propertyPath: m_LocalRotation.x
