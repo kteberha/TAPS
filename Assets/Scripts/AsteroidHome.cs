@@ -33,8 +33,7 @@ public class AsteroidHome : MonoBehaviour
 
 
     //variables for audio
-    AudioSource audioSource;
-    [SerializeField] AudioClip orderedClip, expiredClip, successClip;
+    [SerializeField] AudioSource OrderedAudioSource, ExpiredAudioSource, SuccessAudioSource;
 
     bool doOnce = false;
 
@@ -47,8 +46,6 @@ public class AsteroidHome : MonoBehaviour
         {
             _packTypes.Add(i, _packageTypes[i]);
         }
-
-        audioSource = GetComponent<AudioSource>();
         offScreenIndicatorObj.SetActive(false);
         delayReset = orderDelayTime;//set the delay timer restart to whatever the user designates
         orderDelayTime = 0f;//set the delay timer to 0 for the very first package orders
@@ -90,8 +87,7 @@ public class AsteroidHome : MonoBehaviour
             if (orderDelayTime <= 0)
             {
                 //print(this.name + " has ordered successfully");
-                audioSource.clip = orderedClip;//set the proper audio clip
-                audioSource.Play();//play audio
+                OrderedAudioSource.Play();//play the ordered audio clip
                 packageBeenOrdered = true;//set order status
 
                 #region NumberOfPackagesToOrder
@@ -240,8 +236,7 @@ public class AsteroidHome : MonoBehaviour
 
         packageBeenOrdered = false;
 
-        audioSource.clip = successClip;
-        audioSource.Play();
+        SuccessAudioSource.Play();
 
         GameManager.Instance.packagesDelivered += numPackagesOrdered;//reward based on number of packages delivered
         GameManager.Instance.points += numPackagesOrdered;//reward based on the number of packages delivered
@@ -258,8 +253,7 @@ public class AsteroidHome : MonoBehaviour
         //Check that the time has run out for the order
         if (demandController.CurrentValue <= 0)
         {
-            audioSource.clip = expiredClip;//set the audio clip
-            audioSource.Play();//play the audio
+            ExpiredAudioSource.Play();//play the audio
             offScreenIndicatorObj.SetActive(false);//turn off the offscreen indicator
             packageBeenOrdered = false;//toggle the house's package ordered state to false so it knows it can order another package
             numPackagesOrdered = 0;

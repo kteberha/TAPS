@@ -59,7 +59,10 @@ public class MenuController : Singleton<MenuController>
             invertedMovement = true;
         }
         invertMoveToggle.SetIsOnWithoutNotify(invertedMovement);
+    }
 
+    private void OnEnable()
+    {
         //subscribe to gamemanager's pause and resume events
         GameManager.onPaused += Pause;
         GameManager.onResumed += Resume;
@@ -215,6 +218,13 @@ public class MenuController : Singleton<MenuController>
         PlayerPrefs.DeleteKey("tutorialDone");
         //
         PlayerPrefs.DeleteKey("InvertedMovement");
+    }
+
+    private void OnDisable()
+    {
+        //subscribe to gamemanager's pause and resume events
+        GameManager.onPaused -= Pause;
+        GameManager.onResumed -= Resume;
     }
 
 

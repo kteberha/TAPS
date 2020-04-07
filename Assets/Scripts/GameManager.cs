@@ -12,7 +12,7 @@ public enum GAMESTATE
 
 public enum WORKDAY
 {
-    TUTORIAL, WORKDAY1, WORKDAY2, WORKDAY3, WORKDAY4, WORKDAY5
+    W1, W2, W3, W4, W5, W6, W7, W8, W9, W10
 }
 
 public enum INPUTTYPE
@@ -42,21 +42,11 @@ public class GameManager : Singleton<GameManager>
     //Clock in or out UI text variables
     public Text workdayStatusText;
     [HideInInspector]public Animation textAnimation;
-    bool clockedOut = false;
 
     //Zip Transition Animations
     public GameObject zipFaceObject;
     public Animator zipAnimator;
     AnimatorClipInfo[] clipInfo;
-
-    //////might not need these/////
-    int wakeUpHash = Animator.StringToHash("Base Layer.WakeUpTransition");
-    int excitedHash = Animator.StringToHash("Base Layer.ExcitedResults");
-    int pleasedHash = Animator.StringToHash("Base Layer.PleasedResults");
-    int disappointedHash = Animator.StringToHash("Base Layer.DisappointedResults");
-    int ughHash = Animator.StringToHash("Base Layer.UghResults");
-    int clockOutHash = Animator.StringToHash("Base Layer.ClockoutTransition");
-    ////////////////////////////
 
     //final points to judge
     public Slider starSlider;
@@ -138,7 +128,7 @@ public class GameManager : Singleton<GameManager>
                 if (state == GAMESTATE.CLOCKEDIN)
                 {
                     state = GAMESTATE.CLOCKEDOUTEND;
-                    clockedOut = true;
+
                     //have the workday over text appear and fade before loading the scene
                     StartCoroutine(Clockout());
                 }

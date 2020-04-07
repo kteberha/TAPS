@@ -51,8 +51,11 @@ public class PlayerController : Singleton<PlayerController>
     public float lineDrawSpeed = 6f;
 
     //Audio Variables
-    private AudioSource P_audioSource;
-    [SerializeField] AudioClip extinguisherStart, extinguisherLoop, extinguisherEnd, throwSound, teleportSound;
+    [SerializeField] private AudioSource ExtinguisherAudioSource;
+    [SerializeField] private AudioSource ThrowAudioSource;
+    [SerializeField] private AudioSource TeleportAudioSource;
+    [SerializeField] private AudioSource PackageCollectAudioSource;
+    [SerializeField] AudioClip extinguisherStart, extinguisherLoop, extinguisherEnd;
     [SerializeField] AudioClip[] inventoryAddClips;
     //[SerializeField] AudioClip[] inventorySortClips;
 
@@ -78,7 +81,7 @@ public class PlayerController : Singleton<PlayerController>
 
         lineRenderer = GetComponent<LineRenderer>();
 
-        P_audioSource = GetComponent<AudioSource>();
+        ExtinguisherAudioSource = GetComponent<AudioSource>();
 
         teleportTransform = teleporter.transform;
 
@@ -88,10 +91,6 @@ public class PlayerController : Singleton<PlayerController>
         var splatterStreamEmission = splatterSys.emission;
         mainStreamEmission.enabled = false;
         splatterStreamEmission.enabled = false;
-
-        //subscribe to GameManager events
-
-        //
     }
 
     // Update is called once per frame
@@ -164,9 +163,9 @@ public class PlayerController : Singleton<PlayerController>
                 //stop fire extinguisher loop
                 StopCoroutine("StartExtinguisherSound");
 
-                P_audioSource.loop = false;
-                P_audioSource.clip = extinguisherEnd;
-                P_audioSource.Play();
+                ExtinguisherAudioSource.loop = false;
+                ExtinguisherAudioSource.clip = extinguisherEnd;
+                ExtinguisherAudioSource.Play();
 
                 //play idle animation
                 animator.SetBool("IsFlying", false);
@@ -303,8 +302,7 @@ public class PlayerController : Singleton<PlayerController>
             heldPackages.Remove(packageMoved);
 
             //cue throwing sound
-            P_audioSource.clip = throwSound;
-            P_audioSource.Play();
+            ThrowAudioSource.Play();
 
             //attach the first package's spring joint to the one that was behind it
             if (heldPackages.Count > 0)
@@ -374,8 +372,8 @@ public class PlayerController : Singleton<PlayerController>
             int i = (int)Mathf.Floor(Random.Range(0, inventoryAddClips.Length));
 
             //assign the clip and play
-            P_audioSource.clip = inventoryAddClips[i];
-            P_audioSource.Play();
+            PackageCollectAudioSource.clip = inventoryAddClips[i];
+            PackageCollectAudioSource.Play();
         }
 
         //tell the line renderer to draw to the newest added point
@@ -442,15 +440,15 @@ public class PlayerController : Singleton<PlayerController>
     IEnumerator StartExtinguisherSound()
     {
         //set & play fire extinguisher start sound
-        P_audioSource.clip = extinguisherStart;
-        P_audioSource.Play();
+        ExtinguisherAudioSource.clip = extinguisherStart;
+        ExtinguisherAudioSource.Play();
 
-        yield return new WaitForSeconds(P_audioSource.clip.length);
+        yield return new WaitForSeconds(ExtinguisherAudioSource.clip.length);
 
         //set & play loop sound after setting it to loop
-        P_audioSource.clip = extinguisherLoop;
-        P_audioSource.loop = true;
-        P_audioSource.Play();
+        ExtinguisherAudioSource.clip = extinguisherLoop;
+        ExtinguisherAudioSource.loop = true;
+        ExtinguisherAudioSource.Play();
     }
 
     /// <summary>
@@ -466,7 +464,7 @@ public class PlayerController : Singleton<PlayerController>
         heldPackages.Clear();//remove all packages from the player's inventory
         lineRenderer.positionCount = heldPackages.Count;//clear all of the line renderer's points
 
-        P_audioSource.PlayOneShot(teleportSound);//play the teleport sound
+        TeleportAudioSource.Play();//play the teleport sound
 
         rb.velocity = new Vector2(0f,0f); // set velocity to 0 to discontiue movement
         this.transform.position = teleportTransform.position; // set player position to the teleporter's position
