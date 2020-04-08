@@ -60,6 +60,7 @@ public class Astroburst : MonoBehaviour
 
         //enable the point effector to force objects away
         pointEffector.enabled = true;
+        
         //stop the continuous particle effect
         pCont.Stop();
 
@@ -78,8 +79,11 @@ public class Astroburst : MonoBehaviour
         //disable colliders so force doesn't get added by accident when the mesh is gone
         GetComponent<CircleCollider2D>().enabled = false;
 
+        foreach (ParticleSystem part in CollisionParticles)
+            part.Stop();
+
         //wait until the particle effect is done emitting to call any more code
-        yield return new WaitWhile(ParticleEmitting);
+        //yield return new WaitWhile(ParticleEmitting);
 
         //determine if a black hole should appear or not. The first star exploding will never be a black hole
         if (!firstBurst)
@@ -95,6 +99,7 @@ public class Astroburst : MonoBehaviour
             firstBurst = false;
         }
 
+        yield return new WaitForSeconds(3);
         //destroy the astroburst asset
         Destroy(gameObject);
     }
