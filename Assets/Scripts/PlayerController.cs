@@ -68,6 +68,7 @@ public class PlayerController : Singleton<PlayerController>
     public GameObject playerModel;
     Animator animator;
     public float hitSpeed;
+    [SerializeField] FaceAnimation faceAnim;
 
     [Header("DEMO TUTORIAL")]
     [SerializeField] TutorialManager tutorialManager;
@@ -410,7 +411,11 @@ public class PlayerController : Singleton<PlayerController>
             if(rb.velocity.magnitude > hitSpeed)//only play the hit animation when zip hits not a package at a certain speed
 
             {
+                //toggle the animator
                 animator.SetTrigger("Hit");
+
+                //toggle the face animation
+                faceAnim.SetFreakOutFace();
             }
 
         }

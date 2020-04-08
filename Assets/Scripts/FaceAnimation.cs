@@ -19,7 +19,29 @@ public class FaceAnimation : MonoBehaviour
     {
         selectedAnimation = flyingFaces;//set the default animation;
         currentFace = selectedAnimation[0];
-        InvokeRepeating("AnimateFace", 0f, .25f);
+        StartCoroutine(CycleFrames());
+        //InvokeRepeating("AnimateFace", 0f, .25f);
+    }
+
+    IEnumerator CycleFrames()
+    {
+        if(faceFrameIndex < selectedAnimation.Length)
+        {
+            faceMaterial.SetTexture("_Texture2D_FaceTexture", currentFace);//set the face texture to the adjusted current face
+            if (faceFrameIndex + 1 < selectedAnimation.Length)//check array bounds
+                currentFace = selectedAnimation[faceFrameIndex + 1];//set the current face to the frame ahead
+            else
+                faceFrameIndex = 0;//reset the face index to 0 when it has reached the end of the array
+            faceFrameIndex++;//increase the int to get the next frame
+        }
+        else
+        {
+            selectedAnimation = flyingFaces;
+            currentFace = flyingFaces[0];
+        }
+        yield return new WaitForSeconds(animationPlaybackSpeed);
+
+        StartCoroutine(CycleFrames());//restart the coroutine
     }
 
     public void AnimateFace()
