@@ -1,46 +1,47 @@
-Hello and welcome to The Astro Parcel Service!
+Alright so we've assigned you to our Omega quadrant route.
+It's pretty deserted. So if you screw up, you won't hurt our reputation too much.
+We've equipped you with a company standard space propulsion device and no! It is not the fire extinguisher from the front office so don't ask.
+Go ahead and give it a whirl. You can hold down the controls for gliding movement or tap 'em to give you more control.
 
-As our newest Delivery Associate, we’re so glad you joined our family and as such, you are allowed to refer to the company as TAPS. In this training session, you will be learning the basics of productivity in the workplace. Let’s get started!
+Good job. You've mastered pushing a button. Now here's the real job.
 
-First, give your TAPS standard issue fire exting--we mean space propulsion device a try!
-//Show on screen either a controller button or a left mouse click image. Player can now move//
+Throughout the workday, you'll receive customer orders. When you get an order, a customer's portrait icon will pop up on your screen. Perks of being a robot on this job.
+Customers can order one of three packages containing valuable plants. You don't need to know what's in 'em. You just worry about delivering them.
 
-This tool is crucial to ensuring each delivery is a guaranteed success.
-
-Throughout the workday, you will receive orders on your heads up display beneath the customer’s image. As you can see, customers can order one of three packages containing valuable plants. //[Example order pops up mid-screen]//
-
-//[Layout of order hud pops up, like the example below]//
-
-You will find these packages in the TAPS Shipping Lane as they are teleported from our delivery hub. Find the package specific to the customer's order and fly into it to activate your inventory tractor beam tool.
+You'll find the packages in the Shipping Lane, the giant blue donut in the middle of the sector. Packages get teleported there from our delivery hub.
+Find the packages you need to complete the customer's order and run into them. The collision will automatically activate your inventory tractor beam tool.
+Try grabbing one.
 //Player collects a package//
 
-Well done. Now pick up multiple packages!
+Well done. Now grab a few more.
 
-Oh it looks like you've got your first order! Start heading toward your customer's home and deliver it! You better move fast. You want to deliver the package before the customer's patience--we mean their their estimated time for delivery is up.
+Ok that's enough lollygagging. It looks like you've got your first order.
+Start heading toward your customer's home and move fast! We've got a reputation to uphold!
+You have to deliver the package before the customer's expected time for delivery is up, or the order gets cancelled entirely. So get a move on!
 //[The example order moves to the edge of the screen, as normal]//
 
 Use the customer's directional indicator to navigate your way to their home. 
 
-Often times, there will be obstacles between you and your destination. Due to liability issues, TAPS management suggests you find a safer, and hopefully faster path to your destination.
+Despite the area being mostly deserted, you will encounter a few obstacles. They are not an excuse to be late for delivery! So get around them by any means necessary and get those packages delivered.
 
-Great work avoiding those obstacles!
+Good job avoiding those obstacles. We might just make a courier of you yet.
 
 //[Player approached asteroid home]//
-Now that you have arrived at the destination, all that’s left is to deliver the right package to the customer. Your inventory tractor beam allows you to cycle through your inventory to select the correct package.
+Now that you've arrived at the customer's home, all that’s left is to deliver the right package. You can cycle through your inventory tractor beam to select the correct package.
 //Show the controls for cycling through the inventory//
 
-When you're ready, chuck the package at the customer's home or asteroid to complete the delivery!
+When you're ready, chuck the package at the customer's home or asteroid to complete the delivery.
 //Show the commands for how to chuck the package//
 
-Well done! Oh it looks like a few more orders have come in!
+Well done. Oh! It looks like a few more orders came in.
 //[Delivery is successful, like 12 more pop up]//
 
-There’s never a dull moment in the life of a TAPS Delivery Associate! You need to get on these orders pronto!
-
-You need to get back to the Shipping Lane fast! Quick! Activate your Rechargeable Employee Safety Teleporter!
+Get on those orders pronto! Activate your teleporter to return to the Shipping Lane.
 //show the control or key necessary to activate the teleporter//
 
-You can use the R.E.S.T. to get yourself out of a tight spot or to quickly get on to your next order. Your packages do not teleport with you so use your R.E.S.T. wisely.
+You can use the teleporter to get out of a tight spot, but be warned: Your packages do not travel with you. And those packages left behind will be coming out of your paycheck.
 
-Well done! Now you’re all set for your first work day. Good luck and remember management’s motto: Our employees are expendable. Our high-quality customer service is not.
+That about sums up your training. I'll see you after your workday ends.
+
+If you ever don't know what to do, remember management’s motto: Our employees are expendable. Our high-quality customer service is not.
 ->DONE

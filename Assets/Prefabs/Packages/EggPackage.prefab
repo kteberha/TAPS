@@ -297,7 +297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2036384555696578816
 Transform:
   m_ObjectHideFlags: 0
@@ -405,6 +405,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: pEgg
       objectReference: {fileID: 0}
+    - target: {fileID: 856365191234717131, guid: 4583b2b1204842046894b480ede833de,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e9b0435fa1d58425684685794a8f4cc1, type: 2}
     - target: {fileID: -4216859302048453862, guid: 4583b2b1204842046894b480ede833de,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -475,11 +480,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.30114242
       objectReference: {fileID: 0}
-    - target: {fileID: 856365191234717131, guid: 4583b2b1204842046894b480ede833de,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e9b0435fa1d58425684685794a8f4cc1, type: 2}
     - target: {fileID: 2636797423722545353, guid: 4583b2b1204842046894b480ede833de,
         type: 3}
       propertyPath: m_LocalRotation.x

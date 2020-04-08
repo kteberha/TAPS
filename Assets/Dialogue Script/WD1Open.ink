@@ -1,13 +1,5 @@
-Manager: We need to get this inventory out fast! I hope by now you’ve forgotten this concept of ‘free time’ you dream about.
-Manager: What's wrong with you? Why aren't you moving?! Installing a software update?
-Manager: Wait. Did you forget how to do YOUR JOB? I thought they fixed the CPU bugs for this generation!
-Zip:
-*Isn’t it unsafe[?] to use the fire extinguisher for purposes it wasn’t intended for?
-Manager: YOU THINK I DON’T KNOW HOW TO RUN A COMPANY? WHY DON’T YOU PROVE YOU CAN DO YOUR JOB?! GET GOING!
-->DONE
-*Shouldn’t we be interacting with the customers[?] to achieve the service we strive for? Throwing packages is illogical as it will damage the contents.
-Manager: YOU THINK I DON’T KNOW HOW TO RUN A COMPANY? WHY DON’T YOU PROVE YOU CAN DO YOUR JOB?! GET GOING!
-->DONE
-*You can't talk to me like that.[] You're rather rude. You appear to be displaying a large amount of hostility.
-Manager: AND YOU'RE A BLOCK HEAD THAT CAN'T REMEMBER WHAT THEY WERE PROGRAMMED FOR! NOW GET GOING!
+Welcome to your first day at The Astro Parcel Service. To save time, team members call it TAPS.
+I'm your manager. You can refer to me as Manager.
+At TAPS, we deliver packages containing plants and high quality customer service.
+But we can't do that with you just standing around! Get to work!
 ->DONE
