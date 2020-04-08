@@ -20,7 +20,7 @@ Start heading toward your customer's home and move fast! We've got a reputation 
 You have to deliver the package before the customer's expected time for delivery is up, or the order gets cancelled entirely. So get a move on!
 //[The example order moves to the edge of the screen, as normal]//
 
-Use the customer's directional indicator to navigate your way to their home. 
+Use the customer's directional indicator to navigate your way to their home.
 
 Despite the area being mostly deserted, you will encounter a few obstacles. They are not an excuse to be late for delivery! So get around them by any means necessary and get those packages delivered.
 
@@ -39,7 +39,7 @@ Well done. Oh! It looks like a few more orders came in.
 Get on those orders pronto! Activate your teleporter to return to the Shipping Lane.
 //show the control or key necessary to activate the teleporter//
 
-You can use the teleporter to get out of a tight spot, but be warned: Your packages do not travel with you. And those packages left behind will be coming out of your paycheck.
+You can use the teleporter to get out of a tight spot, but be warned: Your packages do not teleport with you so use it wisely.
 
 That about sums up your training. I'll see you after your workday ends.
 

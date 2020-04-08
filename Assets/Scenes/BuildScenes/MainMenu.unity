@@ -640,7 +640,7 @@ MonoBehaviour:
   topEyeCaseBound: {fileID: 1250291676}
   midEyeCaseBound: {fileID: 1497069871}
   bottomEyeCaseBound: {fileID: 1955623584}
-  moveTime: 0.3
+  moveTime: 3
   scaleTime: 0.3
   scaleMax: 1.2
   scaleMin: 1
@@ -1732,7 +1732,7 @@ MonoBehaviour:
   topEyeCaseBound: {fileID: 1250291676}
   midEyeCaseBound: {fileID: 1497069871}
   bottomEyeCaseBound: {fileID: 1955623584}
-  moveTime: 0.3
+  moveTime: 3
   scaleTime: 0.3
   scaleMax: 1.2
   scaleMin: 1
@@ -6861,7 +6861,7 @@ MonoBehaviour:
   topEyeCaseBound: {fileID: 1250291676}
   midEyeCaseBound: {fileID: 1497069871}
   bottomEyeCaseBound: {fileID: 1955623584}
-  moveTime: 0.3
+  moveTime: 3
   scaleTime: 0.3
   scaleMax: 1.2
   scaleMin: 1
@@ -9893,7 +9893,7 @@ MonoBehaviour:
   topEyeCaseBound: {fileID: 1250291676}
   midEyeCaseBound: {fileID: 1497069871}
   bottomEyeCaseBound: {fileID: 1955623584}
-  moveTime: 0.3
+  moveTime: 3
   scaleTime: 0.3
   scaleMax: 1.2
   scaleMin: 1
