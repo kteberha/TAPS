@@ -20,11 +20,11 @@ public class Boundaries : MonoBehaviour
     {
         if (player.transform.position.y > topbottomBoundaries.y || player.transform.position.y < -(topbottomBoundaries.y))
         {
-            PlayerController.Instance.Teleport();
+            StartCoroutine(PlayerController.Instance.Teleport());
         }
         if (player.transform.position.x > leftrightBoundaries.x || player.transform.position.x < -(leftrightBoundaries.x))
         {
-            PlayerController.Instance.Teleport();
+            StartCoroutine(PlayerController.Instance.Teleport());
         }
     }
 }

@@ -41,7 +41,7 @@ public class PlayerController : Singleton<PlayerController>
     public float inventoryFrequency = 0.5f;
 
     //particle system variables
-    [SerializeField]ParticleSystem mainStreamSys, splatterSys, burstSys;
+    [SerializeField] ParticleSystem mainStreamSys, splatterSys, burstSys;
     bool burstPlayed = false;
 
     //variables for the lineRenderer
@@ -63,6 +63,10 @@ public class PlayerController : Singleton<PlayerController>
     public GameObject teleporter;
     private Transform teleportTransform;
     public float teleportCooldown;
+    public float dissolveTime;
+    [SerializeField] public Material face_mat;
+    [SerializeField] public Material body_mat;
+    [SerializeField] public Material fe_mat;
 
     //Animator variables
     public GameObject playerModel;
@@ -92,6 +96,10 @@ public class PlayerController : Singleton<PlayerController>
         var splatterStreamEmission = splatterSys.emission;
         mainStreamEmission.enabled = false;
         splatterStreamEmission.enabled = false;
+
+        face_mat.SetFloat("_Vector1_AlphaClip", 0);
+        body_mat.SetFloat("_Vector1_AlphaClip", 0);
+        fe_mat.SetFloat("_Vector1_AlphaClip", 0);
     }
 
     // Update is called once per frame
@@ -191,7 +199,8 @@ public class PlayerController : Singleton<PlayerController>
             //Teleport on given key down
             if (Input.GetMouseButtonDown(2) || Input.GetKeyDown(KeyCode.T))
             {
-                Teleport();
+                //Teleport();
+                StartCoroutine(Teleport());
             }
             #endregion
             ///////////////////////////////////////////////////////////////////////////
@@ -459,7 +468,8 @@ public class PlayerController : Singleton<PlayerController>
     /// <summary>
     /// this teleports the player to a fixed location
     /// </summary>
-    public void Teleport()
+    //public void Teleport() //changed to coroutine
+    public IEnumerator Teleport()
     {
         for (int i = 0; i < heldPackages.Count; i++)//remove all packages from the player inventory, remove the bubble, and update line renderer
         {
@@ -471,8 +481,20 @@ public class PlayerController : Singleton<PlayerController>
 
         TeleportAudioSource.Play();//play the teleport sound
 
+        face_mat.DOFloat(1, "_Vector1_AlphaClip", dissolveTime); //dissolve materials
+        body_mat.DOFloat(1, "_Vector1_AlphaClip", dissolveTime);
+        fe_mat.DOFloat(1, "_Vector1_AlphaClip", dissolveTime);
+
         rb.velocity = new Vector2(0f,0f); // set velocity to 0 to discontiue movement
+
+        yield return new WaitForSeconds(dissolveTime);
+
         this.transform.position = teleportTransform.position; // set player position to the teleporter's position
+
+        face_mat.SetFloat("_Vector1_AlphaClip", 0); //reset material alpha clip to default
+        body_mat.SetFloat("_Vector1_AlphaClip", 0);
+        fe_mat.SetFloat("_Vector1_AlphaClip", 0);
+ 
     }
 
     /// <summary>

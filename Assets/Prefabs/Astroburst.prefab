@@ -4894,7 +4894,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blackHole: {fileID: 2048933665244815794, guid: 8bd532e3e79dcd9489eb2b22cb543da2,
     type: 3}
-  playOnCollision: {fileID: 3899440538814771224}
   delayTime: 0.25
   bHChance: 0.3
   CollisionParticles:
@@ -14948,12 +14947,6 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 31728361b385d254d9e7a61337e8f5a9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67bb6d58240cbca4789de4ffcf4cd6e8, type: 3}
---- !u!1 &3899440538814771224 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4888787608623257275, guid: 67bb6d58240cbca4789de4ffcf4cd6e8,
-    type: 3}
-  m_PrefabInstance: {fileID: 8486451783392945827}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3855928896693924425 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4631648794323653866, guid: 67bb6d58240cbca4789de4ffcf4cd6e8,

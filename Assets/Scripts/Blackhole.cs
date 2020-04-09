@@ -9,7 +9,8 @@ public class Blackhole : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            PlayerController.Instance.Teleport();
+            //PlayerController.Instance.Teleport();
+            StartCoroutine(PlayerController.Instance.Teleport());
         }
         else if (collision.CompareTag("Package"))
         {
