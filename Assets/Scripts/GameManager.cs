@@ -22,11 +22,18 @@ public enum INPUTTYPE
 
 public class GameManager : Singleton<GameManager>
 {
-    public static Action<int> init;//Action to call level initialization.
-
     public static GAMESTATE state;//for tracking the game state for functionality
     public static WORKDAY workDay;//for tracking the workday
     public static INPUTTYPE inputType;//for tracking input type
+    #region WorkdayInitVariables
+    //Variables for comparing, saving & loading high scores
+    int[] _orderScore;//used to compare or save new orders completed scores based on workday
+    int[] _deliveryScore;//used to compare or save new packages delivered score based on workday
+    int[] _refundsScore;//used to compare or save new refund scores based on workday
+
+    public static Action<int> Initialize;//delegate to call level initialization.
+    public static Action<int> UpdateMaxStarValue;//delegate to signal slider's max value updating
+    #endregion
 
     //point and package tracking variables
     [HideInInspector] public int packagesDelivered = 0;
@@ -63,7 +70,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject pausePanel;
 
 
-    #region
+    #region TutorialStuff
     ////Tutorial variables
     [Header("Tutorial Variables")]
     public GameObject tutorialManager;
@@ -71,17 +78,35 @@ public class GameManager : Singleton<GameManager>
     bool test = false;
     #endregion
 
-    private void Awake()
-    {
 
+    private void OnEnable()
+    {
+        AsteroidHome.UpdateScore += OrdersFulfilledUpdate;
+        AsteroidHome.UpdatePackagesDelivered += PackagesDeliveredUpdate;
+        AsteroidHome.UpdateRefunds += RefundsUpdate;
     }
 
+    /// <summary>
+    /// Initializes the scene and subscribed scripts based on given workday
+    /// </summary>
+    /// <param name="_workdayNumber"></param>
     void Init(int _workdayNumber)
     {
-        if(init != null)
-        {
-            init(_workdayNumber);
-        }
+        if (Initialize != null)
+            Initialize(_workdayNumber);
+        if (UpdateMaxStarValue != null)
+            UpdateMaxStarValue(_workdayNumber);
+
+        //Check for Saved scores based on the workday and load them in
+        PlayerPrefs.GetInt($"OrdersCompleted_{_workdayNumber}", 0);//check with interpolated string
+        PlayerPrefs.GetInt($"PackagesDelivered_{_workdayNumber}", 0);//see if there is a saved value
+        PlayerPrefs.GetInt($"RefundsOrdered_{_workdayNumber}", 99);//see if there is a saved value
+
+        //set all values that are scored in a workday to 0
+        OrdersFulfilledUpdate(0);
+        PackagesDeliveredUpdate(0);
+        RefundsUpdate(0);
+        //////
     }
 
     // Start is called before the first frame update
@@ -191,11 +216,11 @@ public class GameManager : Singleton<GameManager>
 
         yield return new WaitForSeconds(textAnimation["WorkdayStatusAnim"].length);
 
+        ///////FIX THIS/////////////
         MenuController.Instance.ordersFulfilled = ordersFulfilled;
         MenuController.Instance.refundsOrdered = refundsOrdered;
-        MenuController.Instance.EndOfDay();
-
-        //StopCoroutine(Clockout());
+        StartCoroutine(MenuController.Instance.EndDay());
+        ////////////////////////
     }
 
     public IEnumerator ZipResults()
@@ -234,4 +259,43 @@ public class GameManager : Singleton<GameManager>
         DialogueMenuManager.Instance.StartDialogue(GAMESTATE.CLOCKEDOUTEND);
         //StartCoroutine(ShutDown());
     }
+
+    /// <summary>
+    /// Sets the number of packages delivered in a workday
+    /// </summary>
+    /// <param name="_numPackages"></param>
+    void PackagesDeliveredUpdate(int _numPackages)
+    {
+        packagesDelivered += _numPackages;
+        print(packagesDelivered);
+    }
+
+    /// <summary>
+    /// Sets the number of orders fulfilled in a workday
+    /// </summary>
+    /// <param name="_numOrders"></param>
+    void OrdersFulfilledUpdate(int _numOrders)
+    {
+        ordersFulfilled += _numOrders;
+        print(ordersFulfilled);
+    }
+
+    /// <summary>
+    /// Sets the number of refunds ordered in a workday
+    /// </summary>
+    /// <param name="_numRefunds"></param>
+    void RefundsUpdate(int _numRefunds)
+    {
+        refundsOrdered += _numRefunds;
+        print(refundsOrdered);
+    }
+
+    private void OnDisable()
+    {
+        //unsubscribe from events
+        AsteroidHome.UpdateScore -= OrdersFulfilledUpdate;
+        AsteroidHome.UpdatePackagesDelivered -= PackagesDeliveredUpdate;
+        AsteroidHome.UpdateRefunds -= RefundsUpdate;
+    }
+
 }

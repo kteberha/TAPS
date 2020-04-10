@@ -13,23 +13,31 @@ public class RatingSlider : MonoBehaviour
 
     public GameObject Fill;
 
-    private void Start()
+    [SerializeField] int[] _maxStarValues = new int[10];//stores the max values of the star slider depending on workday
+
+    private void OnEnable()
     {
-        slider.maxValue = maxValue;
+        AsteroidHome.UpdatePackagesDelivered += UpdateSliderValue;
+        GameManager.UpdateMaxStarValue += UpdateMaxValue;
     }
 
-    private void Update()
+    void UpdateMaxValue(int _maxValue)
     {
-        //make this an event, get this off update//////
-        slideValue = GameManager.Instance.points;
+        slider.maxValue = _maxStarValues[_maxValue];
+    }
 
-        slider.value = slideValue;
+    /// <summary>
+    /// Updates the slider's value based on given value
+    /// </summary>
+    /// <param name="_addedPoints"></param>
+    void UpdateSliderValue(int _addedPoints)
+    {
+        slider.value += _addedPoints;
+    }
 
-
-        if (slideValue == maxValue)
-        {
-            Fill.GetComponent<Image>().sprite = filledImage;
-        }
-        ////////////////////////
+    private void OnDisable()
+    {
+        AsteroidHome.UpdatePackagesDelivered -= UpdateSliderValue;
+        GameManager.UpdateMaxStarValue -= UpdateMaxValue;
     }
 }

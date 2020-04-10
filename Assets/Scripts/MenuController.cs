@@ -156,10 +156,10 @@ public class MenuController : Singleton<MenuController>
         optionsCg.blocksRaycasts = false;
     }
 
-    public void EndOfDay()
+    public IEnumerator EndDay()
     {
         //Check for orders completed high scores and adjust accordingly
-        if(PlayerPrefs.GetInt("OrderBest") < ordersFulfilled)
+        if (PlayerPrefs.GetInt("OrderBest") < ordersFulfilled)
         {
             PlayerPrefs.SetInt("OrderBest", ordersFulfilled);
             //print("new best orders fulfilled");
@@ -177,11 +177,6 @@ public class MenuController : Singleton<MenuController>
         refundsOrderedText.text = " Refunds Ordered: " + refundsOrdered.ToString();
         bestRefundsText.text = "Best: " + PlayerPrefs.GetInt("RefundsBest").ToString();
 
-        StartCoroutine(EndDay());
-    }
-
-    IEnumerator EndDay()
-    {
         GameManager.state = GAMESTATE.CLOCKEDOUTEND;
         //paused = true;
         endDayAnim.Play();

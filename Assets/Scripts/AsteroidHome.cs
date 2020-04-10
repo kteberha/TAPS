@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,8 +15,8 @@ public class AsteroidHome : MonoBehaviour
     public float orderDelayTime = 5f;//time to delay another order after expired or fulfilled orders
     public int points;//number of points the house will award for completing an order
 
-    public float timerBonus = 5f;//number of seconds that will be granted as bonus for delivering a package to a house with multiple packages.
-    public float refillSpeed = 2f;//number of seconds for the demand meter to refill when bonus time added.
+    public float timerBonus = 15f;//number of seconds that will be granted as bonus for delivering a package to a house with multiple packages.
+    public float refillSpeed = 1f;//number of seconds for the demand meter to refill when bonus time added.
     Coroutine addTime;//Coroutine to store for looping within the coroutine
 
 
@@ -36,7 +37,9 @@ public class AsteroidHome : MonoBehaviour
 
     bool doOnce = false;
 
-
+    public static Action<int> UpdateScore;
+    public static Action<int> UpdatePackagesDelivered;
+    public static Action<int> UpdateRefunds;
 
     [Header("DEMO TUTORIAL")]
     public TutorialManager tutorialManager;
@@ -98,7 +101,7 @@ public class AsteroidHome : MonoBehaviour
                 packageBeenOrdered = true;//set order status
 
                 #region NumberOfPackagesToOrder
-                float packageNumSeed = Random.value;
+                float packageNumSeed = UnityEngine.Random.value;
                 if (packageNumSeed <= 0.45f)
                     numPackagesOrdered = 1;
                 else
@@ -106,7 +109,7 @@ public class AsteroidHome : MonoBehaviour
                 #endregion
 
                 #region PackageTypesToSelect
-                float packTypeSeed = Random.value;
+                float packTypeSeed = UnityEngine.Random.value;
 
                 switch (numPackagesOrdered)
                 {
@@ -250,9 +253,15 @@ public class AsteroidHome : MonoBehaviour
 
         packageBeenOrdered = false;//mark the house as able to order packages again
 
-        GameManager.Instance.packagesDelivered += numPackagesOrdered;//reward based on number of packages delivered
-        GameManager.Instance.points += numPackagesOrdered;//reward based on the number of packages delivered
-        GameManager.Instance.ordersFulfilled += 1;
+        //call the event that updates the deliveries completed score
+        if (UpdateScore != null)
+            UpdateScore(1);
+        if (UpdatePackagesDelivered != null)
+            UpdatePackagesDelivered(numPackagesOrdered);
+
+        //GameManager.Instance.packagesDelivered += numPackagesOrdered;//reward based on number of packages delivered
+        //GameManager.Instance.points += numPackagesOrdered;//reward based on the number of packages delivered
+        //GameManager.Instance.ordersFulfilled += 1;
 
         orderDelayTime = delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
     }
@@ -270,8 +279,11 @@ public class AsteroidHome : MonoBehaviour
             ExpiredAudioSource.Play();//play the audio
             offScreenIndicatorObj.SetActive(false);//turn off the offscreen indicator
             packageBeenOrdered = false;//toggle the house's package ordered state to false so it knows it can order another package
-            numPackagesOrdered = 0;
-            GameManager.Instance.refundsOrdered += 1;//increment the refunds ordered variable in the game manager
+            numPackagesOrdered = 0;//set the number of packages ordered by the house back to 0
+            //call the refund update action
+            if (UpdateRefunds != null)
+                UpdateRefunds(1);
+            //GameManager.Instance.refundsOrdered += 1;//increment the refunds ordered variable in the game manager
             orderDelayTime = delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
 
             packagesOrdered.Clear();//remove all packages ordered
@@ -309,11 +321,9 @@ public class AsteroidHome : MonoBehaviour
     /// <returns></returns>
     IEnumerator AddTime(float _lerpPercent, bool _firstCall = true)
     {
-        print("add time percent at: " + _lerpPercent);
         //set the start and end lerp values the first time this is called
         if (_firstCall)
         {
-            print("first time being called on this house");
             _beginValue = demandController.CurrentValue;
             if (_beginValue + timerBonus >= demandController.maxValue)
                 _endValue = demandController.maxValue;
@@ -328,9 +338,5 @@ public class AsteroidHome : MonoBehaviour
             print(_lerpPercent);
             yield return new WaitForEndOfFrame();
         }
-
-        print("AddTime is done");
-
-
     }
 }

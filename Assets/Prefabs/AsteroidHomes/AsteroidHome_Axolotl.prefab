@@ -295,7 +295,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -8376682962319273393, guid: c28ce6ed7ffb1fe4cbbb15bc75db4d79,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: dc1d876011823da4bae5041cf2c1d4db, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 79464b9291903d7499d32e1e5c233f6a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -398,12 +398,13 @@ MonoBehaviour:
   orderTime: 30
   orderDelayTime: 5
   points: 1
+  timerBonus: 15
+  refillSpeed: 1
   _packageTypes:
   - {fileID: 5869416400145213135, guid: 7007122bec9f3f84f9f4619dc200db00, type: 3}
   - {fileID: 5869416400145213135, guid: adec3afedcd934895a03c05563e18a70, type: 3}
   - {fileID: 5869416400145213135, guid: 44e83320535054feea794b68faceb626, type: 3}
   packagesOrdered: []
-  tutorialManager: {fileID: 0}
   offScreenIndicatorObj: {fileID: 0}
   demandController: {fileID: 0}
   houseRenderers:
@@ -411,6 +412,7 @@ MonoBehaviour:
   OrderedAudioSource: {fileID: 1148591349}
   ExpiredAudioSource: {fileID: 2734221961006384506}
   SuccessAudioSource: {fileID: 5083958529530966031}
+  tutorialManager: {fileID: 0}
 --- !u!1001 &6923558786484260013
 PrefabInstance:
   m_ObjectHideFlags: 0
