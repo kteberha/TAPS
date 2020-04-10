@@ -14,28 +14,34 @@ public class AsteroidHome : MonoBehaviour
     public float orderDelayTime = 5f;//time to delay another order after expired or fulfilled orders
     public int points;//number of points the house will award for completing an order
 
-    private Dictionary<int, GameObject> _packTypes = new Dictionary<int, GameObject>();
-    [SerializeField]
-    private GameObject[] _packageTypes = new GameObject[3];
-    public List<GameObject> packagesOrdered;
+    public float timerBonus = 5f;//number of seconds that will be granted as bonus for delivering a package to a house with multiple packages.
+    public float refillSpeed = 2f;//number of seconds for the demand meter to refill when bonus time added.
+    Coroutine addTime;//Coroutine to store for looping within the coroutine
 
+
+    private Dictionary<int, GameObject> _packTypes = new Dictionary<int, GameObject>();
+    [SerializeField] private GameObject[] _packageTypes = new GameObject[3];//stores the 3 types of packages
+    public List<GameObject> packagesOrdered;//the list of packages the house currently has remaining in their order
 
     private float delayReset;//value to reset the delay to
 
-    [Header("DEMO TUTORIAL")]
-    public TutorialManager tutorialManager;
-
     //variables for offscreen indicator
     public GameObject offScreenIndicatorObj;
-    OffScreenIndicator offScreenIndicator;
+    OffScreenIndicator _offScreenIndicator;
     public DemandController demandController;
     [SerializeField] Renderer[] houseRenderers;
-
 
     //variables for audio
     [SerializeField] AudioSource OrderedAudioSource, ExpiredAudioSource, SuccessAudioSource;
 
     bool doOnce = false;
+
+
+
+    [Header("DEMO TUTORIAL")]
+    public TutorialManager tutorialManager;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -46,10 +52,11 @@ public class AsteroidHome : MonoBehaviour
         {
             _packTypes.Add(i, _packageTypes[i]);
         }
-        offScreenIndicatorObj.SetActive(false);
+
+        offScreenIndicatorObj.SetActive(false);//make sure no offscreen indicator starts turned on
         delayReset = orderDelayTime;//set the delay timer restart to whatever the user designates
         orderDelayTime = 0f;//set the delay timer to 0 for the very first package orders
-        offScreenIndicator = offScreenIndicatorObj.GetComponent<OffScreenIndicator>();
+        _offScreenIndicator = offScreenIndicatorObj.GetComponent<OffScreenIndicator>();
     }
 
     // Update is called once per frame
@@ -69,9 +76,9 @@ public class AsteroidHome : MonoBehaviour
         }
 
         //Check if house is rendered so that the direction arrow can be rendered or not
-        if (offScreenIndicator.isActiveAndEnabled)
+        if (_offScreenIndicator.isActiveAndEnabled)
             foreach(Renderer rend in houseRenderers)
-                offScreenIndicator.CheckHouseRendered(rend);
+                _offScreenIndicator.CheckHouseRendered(rend);
 
     }
 
@@ -81,7 +88,7 @@ public class AsteroidHome : MonoBehaviour
     public void Order()
     {
         //check that this house hasn't ordered a package already
-        if (packageBeenOrdered == false)
+        if (!packageBeenOrdered)
         {
             //make sure the delay time is 0 so that an order isn't placed right after one is fulfilled or expires
             if (orderDelayTime <= 0)
@@ -190,16 +197,16 @@ public class AsteroidHome : MonoBehaviour
                 StartCoroutine(OrderDelay());
             }
 
-            offScreenIndicatorObj.GetComponent<OffScreenIndicator>().OrderTicketUpdate(this);//update the offscreen indicator to display packages
+            _offScreenIndicator.OrderTicketUpdate(this);//update the offscreen indicator to display packages
         }
     }
 
     /// <summary>
-    /// Add points to player's score based on the time of package's arrival
+    /// Check if the house has more packages to be delivered. If not, award points. If yes, award bonus time.
     /// </summary>
     public void OrderStatusCheck()
     {
-        offScreenIndicatorObj.GetComponent<OffScreenIndicator>().OrderTicketUpdate(this);
+        _offScreenIndicator.OrderTicketUpdate(this);
 
         //check number of packages left to deliver
         if (packagesOrdered.Count == 0)
@@ -214,6 +221,8 @@ public class AsteroidHome : MonoBehaviour
             }
             /////////////////////////////////////////////////////////
         }
+        else
+            addTime = StartCoroutine(AddTime(0f));
 
         ///Tutorial stuff///////
         if(SceneManager.GetActiveScene().name == "TutorialScene")
@@ -232,11 +241,14 @@ public class AsteroidHome : MonoBehaviour
     /// </summary>
     void OrderFulfilled()
     {
-        offScreenIndicatorObj.SetActive(false);
-
-        packageBeenOrdered = false;
+        //place the check mark on top of the portraits.
 
         SuccessAudioSource.Play();
+
+
+        offScreenIndicatorObj.SetActive(false);//toggle the offscreen indicator off
+
+        packageBeenOrdered = false;//mark the house as able to order packages again
 
         GameManager.Instance.packagesDelivered += numPackagesOrdered;//reward based on number of packages delivered
         GameManager.Instance.points += numPackagesOrdered;//reward based on the number of packages delivered
@@ -253,6 +265,8 @@ public class AsteroidHome : MonoBehaviour
         //Check that the time has run out for the order
         if (demandController.CurrentValue <= 0)
         {
+            //toggle the X over the order ticket
+
             ExpiredAudioSource.Play();//play the audio
             offScreenIndicatorObj.SetActive(false);//turn off the offscreen indicator
             packageBeenOrdered = false;//toggle the house's package ordered state to false so it knows it can order another package
@@ -262,6 +276,8 @@ public class AsteroidHome : MonoBehaviour
 
             packagesOrdered.Clear();//remove all packages ordered
         }
+
+
 
         ///Special condition only for the tutorial scene
         if (SceneManager.GetActiveScene().name == "TutorialScene")
@@ -282,5 +298,39 @@ public class AsteroidHome : MonoBehaviour
         orderDelayTime = 0;
         Order();
         orderDelayTime = delayReset;
+    }
+
+    //variables for add time Coroutine
+    float _beginValue;
+    float _endValue;
+    /// <summary>
+    /// Refills the demand bar by a bonus amount when a package is delivered
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator AddTime(float _lerpPercent, bool _firstCall = true)
+    {
+        print("add time percent at: " + _lerpPercent);
+        //set the start and end lerp values the first time this is called
+        if (_firstCall)
+        {
+            print("first time being called on this house");
+            _beginValue = demandController.CurrentValue;
+            if (_beginValue + timerBonus >= demandController.maxValue)
+                _endValue = demandController.maxValue;
+            else
+                _endValue = _beginValue + timerBonus;
+        }
+
+        while (_lerpPercent < 1f)
+        {
+            demandController.CurrentValue = Mathf.SmoothStep(_beginValue, _endValue, _lerpPercent);//update the demand value with lerp
+            _lerpPercent += Time.deltaTime / refillSpeed;//increase the lerp alpha
+            print(_lerpPercent);
+            yield return new WaitForEndOfFrame();
+        }
+
+        print("AddTime is done");
+
+
     }
 }

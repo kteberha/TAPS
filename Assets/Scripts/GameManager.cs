@@ -22,6 +22,8 @@ public enum INPUTTYPE
 
 public class GameManager : Singleton<GameManager>
 {
+    public static Action<int> init;//Action to call level initialization.
+
     public static GAMESTATE state;//for tracking the game state for functionality
     public static WORKDAY workDay;//for tracking the workday
     public static INPUTTYPE inputType;//for tracking input type
@@ -29,7 +31,7 @@ public class GameManager : Singleton<GameManager>
     //point and package tracking variables
     [HideInInspector] public int packagesDelivered = 0;
     [HideInInspector] public int ordersFulfilled = 0;
-    [HideInInspector] public int refundsOrdered = 0;
+    [HideInInspector] public int refundsOrdered = 99;
     [HideInInspector] public int points = 0;
 
     [HideInInspector] public int bestDeliveryAmount = 0;
@@ -61,12 +63,26 @@ public class GameManager : Singleton<GameManager>
     public GameObject pausePanel;
 
 
-
+    #region
     ////Tutorial variables
     [Header("Tutorial Variables")]
     public GameObject tutorialManager;
 
     bool test = false;
+    #endregion
+
+    private void Awake()
+    {
+
+    }
+
+    void Init(int _workdayNumber)
+    {
+        if(init != null)
+        {
+            init(_workdayNumber);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -83,7 +99,7 @@ public class GameManager : Singleton<GameManager>
             //}
         }
 
-        workdayStatusText.text = "Clocked IN!";
+        workdayStatusText.text = "Clocked IN!";//set the animated text object
         textAnimation = workdayStatusText.GetComponent<Animation>();
 
         //state = GAMESTATE.CLOCKEDOUTSTART;
