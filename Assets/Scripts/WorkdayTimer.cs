@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class WorkdayTimer : MonoBehaviour
 {
-    public Slider clockSlider;
+    //public Slider clockSlider;
     public Text clockText;
-    public Image fill;
+    //public Image fill;
     public Color startFillColor;
     public Color warningColor;
     public Color finalColor;
@@ -36,10 +36,10 @@ public class WorkdayTimer : MonoBehaviour
     private void Start()
     {
         countdownValue = GameManager.Instance.workdayLength;
-        clockSlider.maxValue = countdownValue;
-        clockSlider.value = countdownValue;
+        //clockSlider.maxValue = countdownValue;
+        //clockSlider.value = countdownValue;
 
-        fill.color = startFillColor;
+        //fill.color = startFillColor;
 
         fadeAnimation = GetComponent<Animation>();
         clockTextAnim = GetComponent<Animation>();
@@ -100,7 +100,7 @@ public class WorkdayTimer : MonoBehaviour
                 //start the red flashing warning that time is almost up
                 if (countdownValue <= finalColorSecValue + 1)
                 {
-                    fill.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.2f, 1));
+                    //fill.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.2f, 1));
                     if (!oneTimeFadeStarted)
                     {
                         clockText.color = new Color(finalColor.r, finalColor.g, finalColor.b, Mathf.PingPong(Time.time * 1.2f, 1));
@@ -112,7 +112,7 @@ public class WorkdayTimer : MonoBehaviour
                     //set the starting time for the fade to use
                     startTime = GameManager.Instance.workdayLength * warningColorPercent;
                     //fade from one color to the other smoothly
-                    fill.color = Color.Lerp(startFillColor, warningColor, Mathf.SmoothStep(0, 1, ((Time.time - startTime) / fadeTime)));
+                    //fill.color = Color.Lerp(startFillColor, warningColor, Mathf.SmoothStep(0, 1, ((Time.time - startTime) / fadeTime)));
                 }
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -129,7 +129,7 @@ public class WorkdayTimer : MonoBehaviour
                 }
             }
 
-            clockSlider.value = countdownValue;//adjust the slider fill value
+            //clockSlider.value = countdownValue;//adjust the slider fill value
             clockText.text = minText + ":" + secText;//format the timer text
 
         }
