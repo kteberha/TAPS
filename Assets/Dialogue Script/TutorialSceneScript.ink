@@ -22,9 +22,10 @@ You have to deliver the package before the customer's expected time for delivery
 
 Use the customer's directional indicator to navigate your way to their home.
 
-Despite the area being mostly deserted, you will encounter a few obstacles. They are not an excuse to be late for delivery! So get around them by any means necessary and get those packages delivered.
+Despite the area being mostly deserted, it looks like you've got a couple asteroids in your way. They are not an excuse to be late for delivery!
+Get around them by any means necessary and get those packages delivered! You can break through the ice asteroids by plowing through them at high speeds.
 
-Good job avoiding those obstacles. We might just make a courier of you yet.
+Good job getting around those asteroids. We might just make a courier of you yet.
 
 //[Player approached asteroid home]//
 Now that you've arrived at the customer's home, all that’s left is to deliver the right package. You can cycle through your inventory tractor beam to select the correct package.
