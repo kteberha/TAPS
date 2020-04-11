@@ -70,7 +70,7 @@ public class AsteroidHome : MonoBehaviour
             if (!doOnce)//if the order hasn't called the expired method once
             {
                 doOnce = true;//trigger the one time bool
-                OrderExpired();//set the order to expired
+                StartCoroutine(OrderExpired());//set the order to expired
             }
         }
         else//if the current value of offscreen indicator is > 0
@@ -214,7 +214,7 @@ public class AsteroidHome : MonoBehaviour
         //check number of packages left to deliver
         if (packagesOrdered.Count == 0)
         {
-            OrderFulfilled();
+            StartCoroutine(OrderFulfilled());
 
             //////////////FOR DEMO TUTORIAL SCENE////////////////
             if (SceneManager.GetActiveScene().name == "TutorialScene")
@@ -242,34 +242,26 @@ public class AsteroidHome : MonoBehaviour
     /// <summary>
     /// When all the packages are delivered as requested, award the points to the player
     /// </summary>
-    void OrderFulfilled()
+    IEnumerator OrderFulfilled()
     {
-        //place the check mark on top of the portraits.
-
-        SuccessAudioSource.Play();
-
-
-        offScreenIndicatorObj.SetActive(false);//toggle the offscreen indicator off
-
+        offScreenIndicatorObj.transform.Find("Success").gameObject.SetActive(true);//place the check mark on top of the portraits.
+        SuccessAudioSource.Play();//play the audio
         packageBeenOrdered = false;//mark the house as able to order packages again
-
         //call the event that updates the deliveries completed score
         if (UpdateScore != null)
             UpdateScore(1);
         if (UpdatePackagesDelivered != null)
             UpdatePackagesDelivered(numPackagesOrdered);
-
-        //GameManager.Instance.packagesDelivered += numPackagesOrdered;//reward based on number of packages delivered
-        //GameManager.Instance.points += numPackagesOrdered;//reward based on the number of packages delivered
-        //GameManager.Instance.ordersFulfilled += 1;
-
         orderDelayTime = delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
+        yield return new WaitForSeconds(2);//wait before disabling the off screen indicator
+        offScreenIndicatorObj.transform.Find("Success").gameObject.SetActive(false);//toggle the check mark off
+        offScreenIndicatorObj.SetActive(false);//disable the off screen indicator
     }
 
     /// <summary>
     /// Cancels the current order and notifies the game manager
     /// </summary>
-    public void OrderExpired()
+    IEnumerator OrderExpired()
     {
         //Check that the time has run out for the order
         if (demandController.CurrentValue <= 0)
@@ -277,7 +269,6 @@ public class AsteroidHome : MonoBehaviour
             //toggle the X over the order ticket
 
             ExpiredAudioSource.Play();//play the audio
-            offScreenIndicatorObj.SetActive(false);//turn off the offscreen indicator
             packageBeenOrdered = false;//toggle the house's package ordered state to false so it knows it can order another package
             numPackagesOrdered = 0;//set the number of packages ordered by the house back to 0
             //call the refund update action
@@ -285,8 +276,12 @@ public class AsteroidHome : MonoBehaviour
                 UpdateRefunds(1);
             //GameManager.Instance.refundsOrdered += 1;//increment the refunds ordered variable in the game manager
             orderDelayTime = delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
-
             packagesOrdered.Clear();//remove all packages ordered
+            offScreenIndicatorObj.transform.Find("Failed").gameObject.SetActive(true);//toggle the x to active
+
+            yield return new WaitForSeconds(2);
+            offScreenIndicatorObj.SetActive(false);//turn off the offscreen indicator
+            offScreenIndicatorObj.transform.Find("Failed").gameObject.SetActive(false);//reset the x to off
         }
 
 
