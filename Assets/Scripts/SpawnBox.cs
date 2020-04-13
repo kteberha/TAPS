@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpawnBox : MonoBehaviour
 {
+    private PackagePooler packagePool;
+
     private float timeSinceSpawn = 0f;
     public float spawnRate = 15f;
 
@@ -14,6 +16,11 @@ public class SpawnBox : MonoBehaviour
     public GameObject[] spawnPoints = new GameObject[4];
     private GameObject package;
     private GameObject spawnPoint;
+
+    private void Start()
+    {
+        packagePool = GameObject.FindGameObjectWithTag("PackagePool").GetComponent<PackagePooler>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -47,7 +54,7 @@ public class SpawnBox : MonoBehaviour
                         break;
 
                     default:
-                        print("spawn point error");
+                        Debug.LogError("spawn point error");
                         break;
                 }
 
@@ -69,15 +76,14 @@ public class SpawnBox : MonoBehaviour
                         break;
 
                     default:
-                        print("package type error");
+                        Debug.LogError("package type error");
                         break;
                 }
 
                 if (spawnPoint != null && package != null) // spawn selected package at point
                 {
-                    Instantiate(package, new Vector3(spawnPoint.transform.position.x, spawnPoint.transform.position.y, spawnPoint.transform.position.z), new Quaternion());
-                    //print(package.ToString());
-                    //print(spawnPoint.ToString());
+                    packagePool.SpawnFromPool(packageTypeIndex, spawnPoint.transform.position, Quaternion.identity);
+
                     timeSinceSpawn = 0;
                 }
             }

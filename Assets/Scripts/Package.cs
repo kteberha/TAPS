@@ -146,7 +146,7 @@ public class Package : MonoBehaviour
             a_Source.clip = normalPackageClip;
         a_Source.Play();
         yield return new WaitForSeconds(a_Source.clip.length);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     //private void OnMouseDown()

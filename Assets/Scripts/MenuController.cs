@@ -171,14 +171,14 @@ public class MenuController : MonoBehaviour
         if (invertedMovement)
         {
             invertedMovement = false;
-            PlayerPrefs.SetInt("InvertedMovement", 0);
-            PlayerPrefs.Save();
+            //PlayerPrefs.SetInt("InvertedMovement", 0);
+            //PlayerPrefs.Save();
         }
         else
         {
             invertedMovement = true;
-            PlayerPrefs.SetInt("InvertedMovement", 1);
-            PlayerPrefs.Save();
+            //PlayerPrefs.SetInt("InvertedMovement", 1);
+            //PlayerPrefs.Save();
         }
     }
 
