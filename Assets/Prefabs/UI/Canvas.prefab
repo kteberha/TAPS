@@ -5599,6 +5599,8 @@ GameObject:
   - component: {fileID: 4022581357136622590}
   - component: {fileID: 4022581357136622589}
   - component: {fileID: 4022581357136622584}
+  - component: {fileID: 2741190553112583584}
+  - component: {fileID: 201942454282704468}
   m_Layer: 5
   m_Name: WorkdayTimer
   m_TagString: Untagged
@@ -5700,6 +5702,53 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!61 &2741190553112583584
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4022581357136622579}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.18672943, y: -15.726107}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 150.85713, y: 32.45223}
+  m_EdgeRadius: 0
+--- !u!50 &201942454282704468
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4022581357136622579}
+  m_BodyType: 0
+  m_Simulated: 0
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &4022581357155069645
 GameObject:
   m_ObjectHideFlags: 0
@@ -11329,11 +11378,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4022581357376182096}
     m_Modifications:
-    - target: {fileID: 8255321376327966902, guid: f2e1bb9672c2c0148b83db586f703d0c,
-        type: 3}
-      propertyPath: m_Name
-      value: BROffScreenIndicator
-      objectReference: {fileID: 0}
     - target: {fileID: 622764503910426826, guid: f2e1bb9672c2c0148b83db586f703d0c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11439,6 +11483,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8255321376327966902, guid: f2e1bb9672c2c0148b83db586f703d0c,
+        type: 3}
+      propertyPath: m_Name
+      value: BROffScreenIndicator
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2e1bb9672c2c0148b83db586f703d0c, type: 3}
 --- !u!224 &239592751828017847 stripped
@@ -11454,11 +11503,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4022581357376182096}
     m_Modifications:
-    - target: {fileID: 8255321376327966902, guid: f2e1bb9672c2c0148b83db586f703d0c,
-        type: 3}
-      propertyPath: m_Name
-      value: TROffScreenIndicator
-      objectReference: {fileID: 0}
     - target: {fileID: 622764503910426826, guid: f2e1bb9672c2c0148b83db586f703d0c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11564,6 +11608,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8255321376327966902, guid: f2e1bb9672c2c0148b83db586f703d0c,
+        type: 3}
+      propertyPath: m_Name
+      value: TROffScreenIndicator
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2e1bb9672c2c0148b83db586f703d0c, type: 3}
 --- !u!224 &2105681922701118465 stripped
@@ -11579,11 +11628,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4022581357376182096}
     m_Modifications:
-    - target: {fileID: 8255321376327966902, guid: f2e1bb9672c2c0148b83db586f703d0c,
-        type: 3}
-      propertyPath: m_Name
-      value: TLOffScreenIndicator
-      objectReference: {fileID: 0}
     - target: {fileID: 622764503910426826, guid: f2e1bb9672c2c0148b83db586f703d0c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11689,6 +11733,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8255321376327966902, guid: f2e1bb9672c2c0148b83db586f703d0c,
+        type: 3}
+      propertyPath: m_Name
+      value: TLOffScreenIndicator
+      objectReference: {fileID: 0}
     - target: {fileID: 3970428984125510379, guid: f2e1bb9672c2c0148b83db586f703d0c,
         type: 3}
       propertyPath: packageSprites.Array.data[0]
@@ -11722,16 +11771,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4022581357376182096}
     m_Modifications:
-    - target: {fileID: 86619232901928369, guid: e0089a3bbd8e3fe42b366b587ce5ed6e,
-        type: 3}
-      propertyPath: m_Name
-      value: DialogueScreen
-      objectReference: {fileID: 0}
-    - target: {fileID: 86619232901928369, guid: e0089a3bbd8e3fe42b366b587ce5ed6e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 86619232901928374, guid: e0089a3bbd8e3fe42b366b587ce5ed6e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11836,6 +11875,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 86619232901928369, guid: e0089a3bbd8e3fe42b366b587ce5ed6e,
+        type: 3}
+      propertyPath: m_Name
+      value: DialogueScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 86619232901928369, guid: e0089a3bbd8e3fe42b366b587ce5ed6e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1758406177089904345, guid: e0089a3bbd8e3fe42b366b587ce5ed6e,
         type: 3}
@@ -12012,11 +12061,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4022581357376182096}
     m_Modifications:
-    - target: {fileID: 8255321376327966902, guid: f2e1bb9672c2c0148b83db586f703d0c,
-        type: 3}
-      propertyPath: m_Name
-      value: BLOffScreenIndicator
-      objectReference: {fileID: 0}
     - target: {fileID: 622764503910426826, guid: f2e1bb9672c2c0148b83db586f703d0c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12121,6 +12165,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255321376327966902, guid: f2e1bb9672c2c0148b83db586f703d0c,
+        type: 3}
+      propertyPath: m_Name
+      value: BLOffScreenIndicator
       objectReference: {fileID: 0}
     - target: {fileID: 3970428984125510379, guid: f2e1bb9672c2c0148b83db586f703d0c,
         type: 3}

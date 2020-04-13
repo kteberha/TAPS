@@ -76,29 +76,29 @@ public class WorkdayTimer : MonoBehaviour
                     secText = second.ToString();
 
                 /////////////////////////////////////////////This is all rough code that needs to be made nicer and more efficient
-                if (second % 60 == 1 || second % 60 == 31 && countdownValue > 32)
-                {
-                    if (!fadeAnimationStarted)
-                    {
-                        StartCoroutine(ClockFade());
-                    }
-                }
+                //if (second % 60 == 1 || second % 60 == 31 && countdownValue > 32)
+                //{
+                    //if (!fadeAnimationStarted)
+                    //{
+                        //StartCoroutine(ClockFade());
+                    //}
+                //}
 
                 //fade the clock in and don't let it fade out during the final push
-                if (Mathf.Ceil(countdownValue) == 31)
-                {
-                    fadeAnimation.Play("ClockFadeIn");
-                }
+               // if (Mathf.Ceil(countdownValue) == 31)
+                //{
+                    //fadeAnimation.Play("ClockFadeIn");
+                //}
 
                 //play the final fade out animation
-                if (countdownValue <= 0)
-                {
-                    if (!oneTimeFadeStarted)
-                    {
-                        fadeAnimation.Play("ClockFadeOut");
-                        oneTimeFadeStarted = true;
-                    }
-                }
+                //if (countdownValue <= 0)
+                //{
+                    //if (!oneTimeFadeStarted)
+                    //{
+                        //fadeAnimation.Play("ClockFadeOut");
+                        //oneTimeFadeStarted = true;
+                    //}
+                //}
 
                 //start the red flashing warning that time is almost up
                 if (countdownValue <= finalColorSecValue + 1)
@@ -148,10 +148,15 @@ public class WorkdayTimer : MonoBehaviour
 
         yield return new WaitForSeconds(2);
 
-        fadeAnimation.clip = fadeAnimation.GetClip("ClockFadeOut");//change the clip to fade out
-        fadeAnimation.Play();//play the fade out
+        //fadeAnimation.clip = fadeAnimation.GetClip("ClockFadeOut");//change the clip to fade out
+        //fadeAnimation.Play();//play the fade out
 
-        fadeAnimation.clip = fadeAnimation.GetClip("ClockFadeIn");//reset the animation clip to play correctly the next time coroutine is run
-        fadeAnimationStarted = false;//toggle bool back to false
+       // fadeAnimation.clip = fadeAnimation.GetClip("ClockFadeIn");//reset the animation clip to play correctly the next time coroutine is run
+        //fadeAnimationStarted = false;//toggle bool back to false
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("hit");
     }
 }

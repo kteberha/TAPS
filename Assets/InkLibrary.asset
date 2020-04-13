@@ -14,14 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inkLibrary:
   - compileAutomatically: 0
-    inkAsset: {fileID: 102900000, guid: 1460e815e969b43b8a83a7caa8b48c27, type: 3}
-    jsonAssetPath: {fileID: 0}
-    jsonAsset: {fileID: 4900000, guid: 6cf48bb6d89824cc69e35b43f9a1aca6, type: 3}
-  - compileAutomatically: 0
-    inkAsset: {fileID: 102900000, guid: 2b37d8bb7b0bc0049bdeb2145ced6083, type: 3}
-    jsonAssetPath: {fileID: 0}
-    jsonAsset: {fileID: 4900000, guid: d6d8236466809e5489a3937214c2b395, type: 3}
-  - compileAutomatically: 0
     inkAsset: {fileID: 102900000, guid: 9bfdd3dbab5b71348b6f5eb24812b2af, type: 3}
     jsonAssetPath: {fileID: 0}
     jsonAsset: {fileID: 4900000, guid: c8d8c85b5c33b2a4d9268290dfa9a6fd, type: 3}
@@ -30,17 +22,17 @@ MonoBehaviour:
     jsonAssetPath: {fileID: 0}
     jsonAsset: {fileID: 4900000, guid: f0843071c90c13f40acfed9a363ec4ab, type: 3}
   - compileAutomatically: 0
+    inkAsset: {fileID: 102900000, guid: 2b37d8bb7b0bc0049bdeb2145ced6083, type: 3}
+    jsonAssetPath: {fileID: 0}
+    jsonAsset: {fileID: 4900000, guid: d6d8236466809e5489a3937214c2b395, type: 3}
+  - compileAutomatically: 0
     inkAsset: {fileID: 102900000, guid: 7a26f5b320e0e0544ae5cbe3eb209f46, type: 3}
     jsonAssetPath: {fileID: 0}
     jsonAsset: {fileID: 4900000, guid: 75e35348e6f30c94eb8abb6294dd8090, type: 3}
   - compileAutomatically: 0
-    inkAsset: {fileID: 102900000, guid: 07b36e373aa177e428173b7010bc5270, type: 3}
+    inkAsset: {fileID: 102900000, guid: 1460e815e969b43b8a83a7caa8b48c27, type: 3}
     jsonAssetPath: {fileID: 0}
-    jsonAsset: {fileID: 4900000, guid: 415c268b9da6db34b992d1d145abc5c4, type: 3}
-  - compileAutomatically: 0
-    inkAsset: {fileID: 102900000, guid: 9f8b77bcd6dfbce4a8c78eb0bef2146e, type: 3}
-    jsonAssetPath: {fileID: 0}
-    jsonAsset: {fileID: 4900000, guid: 8df3c428f08815c4c8ab4e184a94c4cd, type: 3}
+    jsonAsset: {fileID: 4900000, guid: 6cf48bb6d89824cc69e35b43f9a1aca6, type: 3}
   - compileAutomatically: 0
     inkAsset: {fileID: 102900000, guid: d6a5f500023a68747a7c21a4e5e2a4dc, type: 3}
     jsonAssetPath: {fileID: 0}
@@ -50,20 +42,28 @@ MonoBehaviour:
     jsonAssetPath: {fileID: 0}
     jsonAsset: {fileID: 4900000, guid: 13dcf85814e8d5a4297dc44aeddb2c23, type: 3}
   - compileAutomatically: 0
-    inkAsset: {fileID: 102900000, guid: 944db5561b9c5a64dbdad3f3d6a0e48b, type: 3}
-    jsonAssetPath: {fileID: 0}
-    jsonAsset: {fileID: 4900000, guid: a0949c0f100797c449ae01473ab4a999, type: 3}
-  - compileAutomatically: 0
-    inkAsset: {fileID: 102900000, guid: 4f8bffed01977694d98de70d6d85ae8c, type: 3}
-    jsonAssetPath: {fileID: 0}
-    jsonAsset: {fileID: 4900000, guid: 5f586dfbf5855da4bb0de389a42cc54b, type: 3}
-  - compileAutomatically: 0
     inkAsset: {fileID: 102900000, guid: 0b197ac4622b4eb4fa4049d1523fbfe2, type: 3}
     jsonAssetPath: {fileID: 0}
     jsonAsset: {fileID: 4900000, guid: d7d4ddead22f76a4297d376fe22bf4f5, type: 3}
   - compileAutomatically: 0
+    inkAsset: {fileID: 102900000, guid: 944db5561b9c5a64dbdad3f3d6a0e48b, type: 3}
+    jsonAssetPath: {fileID: 0}
+    jsonAsset: {fileID: 4900000, guid: a0949c0f100797c449ae01473ab4a999, type: 3}
+  - compileAutomatically: 0
     inkAsset: {fileID: 102900000, guid: b023ecf634689a94ba93c7c9c3b13d43, type: 3}
     jsonAssetPath: {fileID: 0}
     jsonAsset: {fileID: 4900000, guid: ca1b2c0d54dd07042bab0fe0107a04be, type: 3}
+  - compileAutomatically: 0
+    inkAsset: {fileID: 102900000, guid: 07b36e373aa177e428173b7010bc5270, type: 3}
+    jsonAssetPath: {fileID: 0}
+    jsonAsset: {fileID: 4900000, guid: 415c268b9da6db34b992d1d145abc5c4, type: 3}
+  - compileAutomatically: 0
+    inkAsset: {fileID: 102900000, guid: 9f8b77bcd6dfbce4a8c78eb0bef2146e, type: 3}
+    jsonAssetPath: {fileID: 0}
+    jsonAsset: {fileID: 4900000, guid: 8df3c428f08815c4c8ab4e184a94c4cd, type: 3}
+  - compileAutomatically: 0
+    inkAsset: {fileID: 102900000, guid: 4f8bffed01977694d98de70d6d85ae8c, type: 3}
+    jsonAssetPath: {fileID: 0}
+    jsonAsset: {fileID: 4900000, guid: 5f586dfbf5855da4bb0de389a42cc54b, type: 3}
   pendingCompilationStack: []
   compilationStack: []
