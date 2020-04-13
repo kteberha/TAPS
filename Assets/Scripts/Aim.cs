@@ -5,6 +5,7 @@ using UnityEngine;
 public class Aim : MonoBehaviour
 {
     private LineRenderer lineRenderer;
+    [SerializeField]private PlayerController playerController;
 
     public Camera mainCamera;
     public Transform player;
@@ -21,7 +22,7 @@ public class Aim : MonoBehaviour
     {
         if (Input.GetButton("Fire2"))
         {
-            if (PlayerController.Instance.heldPackages.Count > 0) //check that the player has packages to throw
+            if (playerController.heldPackages.Count > 0) //check that the player has packages to throw
             {
                 RaycastHit hit;
 

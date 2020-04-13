@@ -36,15 +36,15 @@ public class TutorialManager : MonoBehaviour
     void Update()
     {
 
-        if(Input.GetKeyDown(KeyCode.Space) && DialogueMenuManager.Instance.dialogueScreen.activeInHierarchy)
+        if(Input.GetKeyDown(KeyCode.Space))// && DialogueMenuManager.Instance.dialogueScreen.activeInHierarchy)
         {
-            if (!NarrativeDialogue.Instance.story.canContinue)
-            {
-                print("she's ready");
-                readyForMainScene = true;
-            }
+            //if (!NarrativeDialogue.Instance.story.canContinue)
+            //{
+            //    print("she's ready");
+            //    readyForMainScene = true;
+            //}
 
-            NarrativeDialogue.Instance.RefreshView();
+            //NarrativeDialogue.Instance.RefreshView();
             i++;
         }
 
@@ -108,7 +108,7 @@ public class TutorialManager : MonoBehaviour
             print(i);
             i++;
             ToggleDialogueOn();
-            OrderManager.Instance.OrderPackage();
+            //OrderManager.Instance.OrderPackage();
             Time.timeScale = 0f;
         }
         else if (i == 18 && Input.GetKeyDown(KeyCode.Space))
@@ -141,7 +141,7 @@ public class TutorialManager : MonoBehaviour
             print(i + " should reappear");
             i++;
             ToggleDialogueOn();
-            NarrativeDialogue.Instance.RefreshView();
+            //NarrativeDialogue.Instance.RefreshView();
         }
 
         #endregion
@@ -161,23 +161,22 @@ public class TutorialManager : MonoBehaviour
     public void ToggleDialogueOn()
     {
         print("toggle on " + i);
-        DialogueMenuManager.Instance.dialogueScreen.SetActive(true);
-        DialogueMenuManager.Instance.enabled = false;
-
+        //DialogueMenuManager.Instance.dialogueScreen.SetActive(true);
+        //DialogueMenuManager.Instance.enabled = false;
     }
 
     public void ToggleDialogueOff()
     {
         print("toggle off: " + i);
-        DialogueMenuManager.Instance.dialogueScreen.SetActive(false);
-        DialogueMenuManager.Instance.enabled = true;
+        //DialogueMenuManager.Instance.dialogueScreen.SetActive(false);
+        //DialogueMenuManager.Instance.enabled = true;
         GameManager.state = GAMESTATE.CLOCKEDIN;
     }
 
     public void PauseObjects()
     {
         player.GetComponent<Rigidbody2D>().Sleep();
-        foreach(GameObject p in PlayerController.Instance.heldPackages)
+        foreach(GameObject p in player.GetComponent<PlayerController>().heldPackages)
         {
             p.GetComponent<Rigidbody2D>().Sleep();
         }
@@ -186,7 +185,7 @@ public class TutorialManager : MonoBehaviour
     public void ResumeObjects()
     {
         player.GetComponent<Rigidbody2D>().WakeUp();
-        foreach(GameObject p in PlayerController.Instance.heldPackages)
+        foreach(GameObject p in player.GetComponent<PlayerController>().heldPackages)
         {
             p.GetComponent<Rigidbody2D>().WakeUp();
         }

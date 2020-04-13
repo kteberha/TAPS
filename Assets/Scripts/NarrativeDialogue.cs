@@ -5,7 +5,7 @@ using Ink.Runtime;
 using UnityEngine.UI;
 using TMPro;
 
-public class NarrativeDialogue : Singleton<NarrativeDialogue>
+public class NarrativeDialogue : MonoBehaviour
 {
     public TextAsset inkJSONAsset;
     public TextAsset inkJSONAsset2;
@@ -16,11 +16,14 @@ public class NarrativeDialogue : Singleton<NarrativeDialogue>
     public Button button;
     public Button choiceButton;
 
+    private DialogueMenuManager dialogueManager;
     public HorizontalLayoutGroup hlg;
 
     // Start is called before the first frame update
     void Start()
     {
+        dialogueManager = GetComponent<DialogueMenuManager>();
+
         if (textBox == null)
         {
             textBox = GameObject.Find("TextTest").GetComponent<TextMeshProUGUI>();
@@ -60,7 +63,7 @@ public class NarrativeDialogue : Singleton<NarrativeDialogue>
         }
         else
         {
-            DialogueMenuManager.Instance.EndDialogue();
+            dialogueManager.EndDialogue();
         }
 
         // Display all the choices, if there are any!

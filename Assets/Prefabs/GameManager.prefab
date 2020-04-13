@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2389631504862340817
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2389631504862340823}
+  - component: {fileID: 2389631504862340816}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: GameManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2389631504862340823
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2389631504862340817}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1252.1954, y: 875.96783, z: 8.90486}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2389631504862340816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2389631504862340817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b33293f191613449dd04ca5027364e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentOrderHighScore: 0
+  currentPackageHighScore: 0
+  currentRefundLowScore: 0
+  packagesDelivered: 0
+  ordersFulfilled: 0
+  refundsOrdered: 0
+  points: 0
+  bestDeliveryAmount: 0
+  fewestRefundsAmount: 0
+  timeInWorkday: 0
+  workdayLength: 121
+  workdayStatusText: {fileID: 0}
+  textAnimation: {fileID: 0}
+  zipFaceObject: {fileID: 0}
+  zipAnimator: {fileID: 0}
+  inkEndScript: {fileID: 4900000, guid: f0843071c90c13f40acfed9a363ec4ab, type: 3}
+  pausePanel: {fileID: 0}
+  tutorialManager: {fileID: 0}

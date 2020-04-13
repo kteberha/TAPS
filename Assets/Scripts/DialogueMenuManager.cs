@@ -5,7 +5,7 @@ using UnityStandardAssets._2D;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class DialogueMenuManager : Singleton<DialogueMenuManager>
+public class DialogueMenuManager : MonoBehaviour
 {
     public GameObject player;
     public GameObject menu;
@@ -19,6 +19,8 @@ public class DialogueMenuManager : Singleton<DialogueMenuManager>
     Camera main;
     Transform dialogueCameraTransform;
 
+    NarrativeDialogue narrativeDialogue;
+
 
     [Header("DEMO TUTORIAL")]
     public GameObject dialogueScreen;
@@ -28,7 +30,8 @@ public class DialogueMenuManager : Singleton<DialogueMenuManager>
     {
         main = Camera.main;
         rb = player.GetComponent<Rigidbody2D>();
-        dialogueCameraTransform = PlayerController.Instance.dialogueCameraPoint;
+        dialogueCameraTransform = player.GetComponent<PlayerController>().dialogueCameraPoint;
+        narrativeDialogue = GetComponent<NarrativeDialogue>();
     }
 
     public void StartDialogue(GAMESTATE gs)
@@ -80,7 +83,7 @@ public class DialogueMenuManager : Singleton<DialogueMenuManager>
         }
         else if(GameManager.state == GAMESTATE.CLOCKEDOUTEND)
         {
-            StartCoroutine(GameManager.Instance.ShutDown());
+            //StartCoroutine(GameManager.Instance.ShutDown());
         }
     }
 
@@ -88,8 +91,8 @@ public class DialogueMenuManager : Singleton<DialogueMenuManager>
     {
         goalsScreen.SetActive(false);
         GameManager.state = GAMESTATE.CLOCKEDIN;
-        GameManager.Instance.textAnimation.Play();
-        NarrativeDialogue.Instance.story = NarrativeDialogue.Instance.NewStory();
+        //GameManager.Instance.textAnimation.Play();
+        narrativeDialogue.story = narrativeDialogue.NewStory();
     }
 
     public void SkipDialogue()

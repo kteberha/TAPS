@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,28 +12,31 @@ public enum GAMESTATE
     PAUSED, CLOCKEDIN, CLOCKEDOUTSTART, CLOCKEDOUTEND
 }
 
-public enum WORKDAY
-{
-    W1, W2, W3, W4, W5, W6, W7, W8, W9, W10
-}
-
 public enum INPUTTYPE
 {
     KEYBOARD, CONTROLLER
 }
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : MonoBehaviour
 {
     public static GAMESTATE state;//for tracking the game state for functionality
-    public static WORKDAY workDay;//for tracking the workday
     public static INPUTTYPE inputType;//for tracking input type
-    #region WorkdayInitVariables
-    //Variables for comparing, saving & loading high scores
-    int[] _orderScore;//used to compare or save new orders completed scores based on workday
-    int[] _deliveryScore;//used to compare or save new packages delivered score based on workday
-    int[] _refundsScore;//used to compare or save new refund scores based on workday
+    public static int workDayIndex = 0;//int for accessing workday values and loading scene indexs(day+1): 0 = workday 1
+    public static int workDayActual = 1;//int for loading correct scenes
 
-    public static Action<int> Initialize;//delegate to call level initialization.
+    #region WorkdayInitVariables
+    protected static GameData gameData;
+
+    public static int[] orderScores = new int[10];//all orders fulfilled scores to be saved
+    public static int[] packageScores = new int[10];//all package delivered scores to be saved
+    public static int[] refundsScores = new int[10];//all refund scores to be saved
+
+    public int currentOrderHighScore;//instance of order score to be compared and rewritten per workday
+    public int currentPackageHighScore;//instance of package delivered score to be compared and rewritten per workday
+    public int currentRefundLowScore;//instance of refund score to be compared and rewritten per workday
+
+    public static Action<int> InitializeDay;//delegate to call level initialization.
+    public static Action InitializeSettings;//delegate to call setting initialization.
     public static Action<int> UpdateMaxStarValue;//delegate to signal slider's max value updating
     #endregion
 
@@ -48,6 +53,7 @@ public class GameManager : Singleton<GameManager>
     public float timeInWorkday = 0f;
     public float workdayLength = 301f;
 
+    #region ThingsThatNeedMoved
     //Clock in or out UI text variables
     public Text workdayStatusText;
     [HideInInspector]public Animation textAnimation;
@@ -55,17 +61,19 @@ public class GameManager : Singleton<GameManager>
     //Zip Transition Animations
     public GameObject zipFaceObject;
     public Animator zipAnimator;
-    AnimatorClipInfo[] clipInfo;
 
     //final points to judge
-    public Slider starSlider;
     CanvasGroup zipAnimCG;
     public TextAsset inkEndScript;
+    #endregion
 
 
     //Pause menu & game state variables
     public static Action onPaused; //delegate to be called when the game is paused
     public static Action onResumed; //delegate to be called when game is resumed
+
+    public static Action workdayStarted;//delegate event to be called when day has started
+    public static Action workdayEnded;//delegate event to be called when day is over
     [HideInInspector]
     public GameObject pausePanel;
 
@@ -79,68 +87,116 @@ public class GameManager : Singleton<GameManager>
     #endregion
 
 
+    private void Awake()
+    {
+        GameInit();
+    }
+
     private void OnEnable()
     {
         AsteroidHome.UpdateScore += OrdersFulfilledUpdate;
         AsteroidHome.UpdatePackagesDelivered += PackagesDeliveredUpdate;
         AsteroidHome.UpdateRefunds += RefundsUpdate;
+        SceneManager.sceneLoaded += LevelInit;
+    }
+    private void OnDisable()
+    {
+        //unsubscribe from events
+        AsteroidHome.UpdateScore -= OrdersFulfilledUpdate;
+        AsteroidHome.UpdatePackagesDelivered -= PackagesDeliveredUpdate;
+        AsteroidHome.UpdateRefunds -= RefundsUpdate;
+        SceneManager.sceneLoaded -= LevelInit;
     }
 
     /// <summary>
     /// Initializes the scene and subscribed scripts based on given workday
     /// </summary>
-    /// <param name="_workdayNumber"></param>
-    void Init(int _workdayNumber)
+    void GameInit()
     {
-        if (Initialize != null)
-            Initialize(_workdayNumber);
-        if (UpdateMaxStarValue != null)
-            UpdateMaxStarValue(_workdayNumber);
+        print("start game init");
 
-        //Check for Saved scores based on the workday and load them in
-        PlayerPrefs.GetInt($"OrdersCompleted_{_workdayNumber}", 0);//check with interpolated string
-        PlayerPrefs.GetInt($"PackagesDelivered_{_workdayNumber}", 0);//see if there is a saved value
-        PlayerPrefs.GetInt($"RefundsOrdered_{_workdayNumber}", 99);//see if there is a saved value
+        //check if data exists, if not, create new files.
+        if (LoadAllGameData() == null)
+        {
+            Debug.LogWarning("creating new save files");
+            CreateFiles();
+        }
+        else
+            LoadAllGameData();
 
-        //set all values that are scored in a workday to 0
-        OrdersFulfilledUpdate(0);
-        PackagesDeliveredUpdate(0);
-        RefundsUpdate(0);
-        //////
+
+    }
+
+    void LevelInit(Scene _newDay, LoadSceneMode _loadSceneMode = LoadSceneMode.Single)
+    {
+        print("workday initializing");
+
+
+        //check that we're not in the main menu
+        if (_newDay.buildIndex != 0)
+        {
+            print($"initialized in workday {_newDay.buildIndex}");
+            workDayActual = _newDay.buildIndex;//this gets saved so that the player returns to the correct scene if they quit
+            workDayIndex = _newDay.buildIndex - 1;//set the workday int for proper array access index
+
+            currentOrderHighScore = orderScores[workDayIndex];//set the high score comparison variable for future writing
+            currentPackageHighScore = packageScores[workDayIndex];//set the high score comarison variable for future writing
+            currentRefundLowScore = refundsScores[workDayIndex];//set the low score for comparison variable for future writing
+
+            //set all values that are scored in a workday to 0
+            OrdersFulfilledUpdate(0);
+            PackagesDeliveredUpdate(0);
+            RefundsUpdate(0);
+            //////
+        }
+        else
+            print("currently in main menu");
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        //zipAnimCG = zipFaceObject.GetComponent<CanvasGroup>();
-        if (SceneManager.GetActiveScene().name != "TutorialScene")
+        if (workdayStatusText != null)
         {
-            //print(PlayerPrefs.GetInt("tutorialDone"));
-            //start the tutorial dialogue if it hasn't been done before
-            //if (PlayerPrefs.GetInt("tutorialDone", 0) <= 0)
-            //{
-            //    dialogueMenuManager.StartDialogue();
-            //    PlayerPrefs.SetInt("tutorialDone", 1);
-            //}
+            workdayStatusText.text = "Clocked IN!";//set the animated text object
+            textAnimation = workdayStatusText.GetComponent<Animation>();
         }
 
-        workdayStatusText.text = "Clocked IN!";//set the animated text object
-        textAnimation = workdayStatusText.GetComponent<Animation>();
-
-        //state = GAMESTATE.CLOCKEDOUTSTART;
-        state = GAMESTATE.CLOCKEDIN;
-        //StartCoroutine(WakeUp());
-
-        if (SceneManager.GetActiveScene().name == "TutorialScene")
+        if (SceneManager.GetActiveScene().buildIndex != 0)
         {
-            textAnimation.Stop();
+            //state = GAMESTATE.CLOCKEDOUTSTART;
+            state = GAMESTATE.CLOCKEDIN;
+            //StartCoroutine(WakeUp());
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        #region SAVE/LOADTESTING
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            print("attempt to load");
+            LoadAllGameData();
+        }
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            print("saved");
+            SaveSystem.SaveGameData(gameData);
+        }
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            print("deleted saves");
+            SaveSystem.DeleteAllFiles();
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SceneManager.LoadScene(2);
+        }
+        #endregion
+
+        //pause & resume game
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (state == GAMESTATE.PAUSED)
             {
@@ -158,7 +214,8 @@ public class GameManager : Singleton<GameManager>
             }
         }
 
-        if (state == GAMESTATE.CLOCKEDIN)//only count the time if the player is clocked in
+        //only count the time if the player is clocked in
+        if (state == GAMESTATE.CLOCKEDIN)
         {
             //Workday timer
             timeInWorkday += Time.deltaTime;
@@ -169,9 +226,8 @@ public class GameManager : Singleton<GameManager>
                 if (state == GAMESTATE.CLOCKEDIN)
                 {
                     state = GAMESTATE.CLOCKEDOUTEND;
-
-                    //have the workday over text appear and fade before loading the scene
-                    StartCoroutine(Clockout());
+                        //have the workday over text appear and fade before loading the scene
+                        StartCoroutine(Clockout());
                 }
             }
         }
@@ -179,7 +235,7 @@ public class GameManager : Singleton<GameManager>
 
     }
 
-
+    #region NEEDS TO BE MOVED OR HEAVILY ALTERED
     IEnumerator WakeUp()
     {
         zipFaceObject.SetActive(true);
@@ -188,7 +244,7 @@ public class GameManager : Singleton<GameManager>
         zipAnimator.SetTrigger("DonePlaying");
         zipAnimCG.alpha = 0f;
 
-        DialogueMenuManager.Instance.StartDialogue(GAMESTATE.CLOCKEDOUTSTART);
+        //DialogueMenuManager.Instance.StartDialogue(GAMESTATE.CLOCKEDOUTSTART);
         StopCoroutine(WakeUp());
     }
 
@@ -202,7 +258,7 @@ public class GameManager : Singleton<GameManager>
 
         yield return new WaitForSeconds(2f);
         //FOR DEMO
-        MenuController.Instance.Wishlist();
+        //MenuController.Instance.Wishlist();
         //zipAnimCG.alpha = 0f;
         zipFaceObject.SetActive(false);
     }
@@ -217,18 +273,18 @@ public class GameManager : Singleton<GameManager>
         yield return new WaitForSeconds(textAnimation["WorkdayStatusAnim"].length);
 
         ///////FIX THIS/////////////
-        MenuController.Instance.ordersFulfilled = ordersFulfilled;
-        MenuController.Instance.refundsOrdered = refundsOrdered;
-        StartCoroutine(MenuController.Instance.EndDay());
+        //MenuController.Instance.ordersFulfilled = ordersFulfilled;
+        //MenuController.Instance.refundsOrdered = refundsOrdered;
+        //StartCoroutine(MenuController.Instance.EndDay());
         ////////////////////////
     }
 
     public IEnumerator ZipResults()
     {
-        NarrativeDialogue.Instance.inkJSONAsset = inkEndScript;
+        //NarrativeDialogue.Instance.inkJSONAsset = inkEndScript;
         zipAnimCG.alpha = 1f;
         //zipFaceObject.SetActive(true);
-
+        #region NEEDS TO BE MODULAR
         if (packagesDelivered >= 15)
         {
             zipAnimator.SetTrigger("ExcitedResults");
@@ -256,10 +312,13 @@ public class GameManager : Singleton<GameManager>
         yield return new WaitForSeconds(2.5f);
         zipAnimator.SetTrigger("DonePlaying");
         zipAnimCG.alpha = 0f;
-        DialogueMenuManager.Instance.StartDialogue(GAMESTATE.CLOCKEDOUTEND);
+        //DialogueMenuManager.Instance.StartDialogue(GAMESTATE.CLOCKEDOUTEND);
         //StartCoroutine(ShutDown());
+        #endregion
     }
+    #endregion
 
+    #region SCORE UPDATE METHODS
     /// <summary>
     /// Sets the number of packages delivered in a workday
     /// </summary>
@@ -267,7 +326,7 @@ public class GameManager : Singleton<GameManager>
     void PackagesDeliveredUpdate(int _numPackages)
     {
         packagesDelivered += _numPackages;
-        print(packagesDelivered);
+        //print("Total packages delivered (GM): " + packagesDelivered);
     }
 
     /// <summary>
@@ -277,7 +336,7 @@ public class GameManager : Singleton<GameManager>
     void OrdersFulfilledUpdate(int _numOrders)
     {
         ordersFulfilled += _numOrders;
-        print(ordersFulfilled);
+        //print("Orders fulfilled (GM): "+ ordersFulfilled);
     }
 
     /// <summary>
@@ -287,15 +346,102 @@ public class GameManager : Singleton<GameManager>
     void RefundsUpdate(int _numRefunds)
     {
         refundsOrdered += _numRefunds;
-        print(refundsOrdered);
+        //print(refundsOrdered);
     }
 
-    private void OnDisable()
+    /// <summary>
+    /// Comparison check for order scores where workday 1 = 0
+    /// </summary>
+    /// <param name="_workday"></param>
+    /// <param name="_score"></param>
+    public static int CheckOrderScore(int _workday, int _score)
     {
-        //unsubscribe from events
-        AsteroidHome.UpdateScore -= OrdersFulfilledUpdate;
-        AsteroidHome.UpdatePackagesDelivered -= PackagesDeliveredUpdate;
-        AsteroidHome.UpdateRefunds -= RefundsUpdate;
+        if (orderScores[_workday] < _score)
+        {
+            print($"new order high score {_score} on day {_workday}");
+            return orderScores[_workday] = _score;
+        }
+        else
+            return orderScores[_workday];
     }
 
+    /// <summary>
+    /// Comparison check for package scores where workday 1 = 0
+    /// </summary>
+    /// <param name="_workday"></param>
+    /// <param name="_score"></param>
+    public static int CheckPackageScore(int _workday, int _score)
+    {
+        if (packageScores[_workday] < _score)
+        {
+            print($"new package high score {_score} on day {_workday}");
+            return packageScores[_workday] = _score;
+        }
+        else
+            return packageScores[_workday];
+    }
+
+    /// <summary>
+    /// Comparison check for refund scores where workday 1 = 0
+    /// </summary>
+    /// <param name="_workday"></param>
+    /// <param name="_score"></param>
+    public static int CheckRefundScore(int _workday, int _score)
+    {
+        if (refundsScores[_workday] > _score)
+        {
+            print($"new refund low score {_score} on day {_workday}");
+            return refundsScores[_workday] = _score;
+        }
+        else
+            return refundsScores[_workday];
+    }
+    #endregion
+
+
+
+
+    #region SAVE & LOADING
+    /// <summary>
+    /// Creates new files to save and load to with default values.
+    /// </summary>
+    public void CreateFiles()
+    {
+        SaveSystem.CreateNewGameData();
+    }
+
+    /// <summary>
+    /// Saves all the game data, used when the game closes
+    /// </summary>
+    public void SaveAllGameData()
+    {
+        gameData.startingWorkday = workDayActual;
+        gameData.SetAllOrderScores(orderScores);
+        gameData.SetAllPackageScores(packageScores);
+        gameData.SetAllRefundScores(refundsScores);
+        SaveSystem.SaveGameData(gameData);
+        print("GM saved files");
+    }
+
+    /// <summary>
+    /// Loads all of the game data, used for when the game launches
+    /// </summary>
+    public GameData LoadAllGameData()
+    {
+        gameData = SaveSystem.LoadGameData();
+        if (gameData != null)
+        {
+            workDayIndex = gameData.startingWorkday;
+            orderScores = gameData.orderHighScores;
+            packageScores = gameData.packageHighScores;
+            refundsScores = gameData.refundsHighScores;
+            return gameData;
+        }
+        else
+        {
+            Debug.LogError("No game data file could be loaded");
+            return null;
+        }
+    }
+    #endregion
 }

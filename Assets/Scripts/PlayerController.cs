@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 
-public class PlayerController : Singleton<PlayerController>
+public class PlayerController : MonoBehaviour
 {
     //Camera variables
     private Camera mainCamera;
@@ -266,7 +266,7 @@ public class PlayerController : Singleton<PlayerController>
             dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
 
-        if(MenuController.Instance.invertedMovement)//determine inverted movement controls and establish direction of travel
+        if(MenuController.invertedMovement)//determine inverted movement controls and establish direction of travel
 
             dir = dir.normalized * -1;
         else
@@ -494,7 +494,7 @@ public class PlayerController : Singleton<PlayerController>
         face_mat.SetFloat("_Vector1_AlphaClip", 0); //reset material alpha clip to default
         body_mat.SetFloat("_Vector1_AlphaClip", 0);
         fe_mat.SetFloat("_Vector1_AlphaClip", 0);
- 
+
     }
 
     /// <summary>
@@ -518,7 +518,7 @@ public class PlayerController : Singleton<PlayerController>
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
 
         Vector3 rotateVector = new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y, 0f);
-        if(MenuController.Instance.invertedMovement)
+        if(MenuController.invertedMovement)
             movementPointer.transform.rotation = Quaternion.LookRotation(-rotateVector, -Vector3.forward);
         else
             movementPointer.transform.rotation = Quaternion.LookRotation(rotateVector, -Vector3.forward);

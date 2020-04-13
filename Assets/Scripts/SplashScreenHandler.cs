@@ -20,14 +20,14 @@ public class SplashScreenHandler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !skipped)
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(0) && !skipped)
         {
             skipped = true;
             animator.Play("SplashScreenAnim", 0, 0.96f);
 
-            audioSource2.Stop();
-            audioSource1.Stop();
-            audioSource2.Play();
+            audioSource2.Stop();//cancel scheduled audio
+            audioSource1.Stop();//stop the current audio
+            audioSource2.Play();//play the looping audio
         }
     }
 }

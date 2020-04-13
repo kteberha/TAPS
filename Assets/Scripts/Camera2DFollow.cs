@@ -6,6 +6,7 @@ namespace UnityStandardAssets._2D
     public class Camera2DFollow : MonoBehaviour
     {
         private Transform target;
+        private PlayerController playerController;
         public float damping = 1;
         public float yAddValue = 0f;
 
@@ -32,6 +33,7 @@ namespace UnityStandardAssets._2D
         private void Start()
         {
             target = GameObject.FindGameObjectWithTag("Player").transform;
+            playerController = target.gameObject.GetComponent<PlayerController>();
             m_LastTargetPosition = target.position;
             m_CurrentPosition = transform.position;
             m_OffsetZ = (m_CurrentPosition - target.position).z;
@@ -52,10 +54,10 @@ namespace UnityStandardAssets._2D
             float yMoveDelta = (target.position - m_LastTargetPosition).y;
             float zMoveDelta = (target.position - m_LastTargetPosition).z;
 
-            m_OffsetZ = PlayerController.Instance.DetermineCameraZ();
+            m_OffsetZ = playerController.DetermineCameraZ();
 
             //handle the direction arrow fading in and out
-            if(PlayerController.Instance.lerpPerc < dissolveThreshold)
+            if(playerController.lerpPerc < dissolveThreshold)
             {
                 if(dissolved)
                 {

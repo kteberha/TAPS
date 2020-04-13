@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
-public class MenuController : Singleton<MenuController>
+public class MenuController : MonoBehaviour
 {
     [HideInInspector]public bool paused = false;
+
+    #region COMING IN FROM MAINMENU
+    public AudioMixer masterMixer;
+    public static float sfxVolume, musicVolume;//these are for saving to settings
+    public Dropdown resolutionDropdown;
+    Resolution[] resolutions;
+    #endregion
 
     public GameObject pausePanel;
     public GameObject optionsPanel;
@@ -28,11 +36,21 @@ public class MenuController : Singleton<MenuController>
 
     Animation endDayAnim;
     [HideInInspector] public int ordersFulfilled = 0;
+    [HideInInspector] public int packagesDelivered = 0;
     [HideInInspector] public int refundsOrdered = 0;
 
-    public bool invertedMovement = false;
+    public static bool invertedMovement = false;
     //public bool mapToggled = true;
     public Toggle invertMoveToggle;
+
+
+    private void OnEnable()
+    {
+        //subscribe to gamemanager's pause and resume events
+        GameManager.onPaused += Pause;
+        GameManager.onResumed += Resume;
+        GameManager.InitializeSettings += AssignSettings;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +60,39 @@ public class MenuController : Singleton<MenuController>
         optionsCg = optionsPanel.GetComponent<CanvasGroup>();
         endDayCg = endDayPanel.GetComponent<CanvasGroup>();
         endDayAnim = endDayPanel.GetComponent<Animation>();
+
+        #region COMING IN FROM MAIN MENU
+        //get all of the resolutions available to display
+        resolutions = Screen.resolutions;
+
+        //Make sure the dropdown doesn't duplicate values
+        resolutionDropdown.ClearOptions();
+
+        //create a list to store all of the resolutions as strings (needs to have adjustable size)
+        List<string> options = new List<string>();
+
+        //current index variable for storing which value is the default
+        int currentResolutionIndex = 0;
+
+        //add all the resolutions into the list in a formatted string
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+            string option = resolutions[i].width + " x " + resolutions[i].height;
+            options.Add(option);
+
+            //check to see if the resolution being added equals the one currently in use
+            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+            {
+                currentResolutionIndex = i;
+            }
+        }
+        //add the list of strings to the dropdown
+        resolutionDropdown.AddOptions(options);
+        //set the current dropdown value to the current resolution value
+        resolutionDropdown.value = currentResolutionIndex;
+        //Refresh the dropdown so it displays the correct value on start
+        resolutionDropdown.RefreshShownValue();
+        #endregion
 
         //get and apply saved input options if any exist
         if (!PlayerPrefs.HasKey("InvertedMovement"))
@@ -61,21 +112,9 @@ public class MenuController : Singleton<MenuController>
         invertMoveToggle.SetIsOnWithoutNotify(invertedMovement);
     }
 
-    private void OnEnable()
-    {
-        //subscribe to gamemanager's pause and resume events
-        GameManager.onPaused += Pause;
-        GameManager.onResumed += Resume;
-    }
-
-    // Update is called once per frame
-    void Update()
+    void AssignSettings()
     {
 
-        //if (Input.GetKeyDown(KeyCode.M))
-        //{
-        //    ToggleMap();
-        //}
     }
 
     public void Pause()
@@ -158,19 +197,9 @@ public class MenuController : Singleton<MenuController>
 
     public IEnumerator EndDay()
     {
-        //Check for orders completed high scores and adjust accordingly
-        if (PlayerPrefs.GetInt("OrderBest") < ordersFulfilled)
-        {
-            PlayerPrefs.SetInt("OrderBest", ordersFulfilled);
-            //print("new best orders fulfilled");
-        }
-
-        //check for refunds placed (lowest) high scores and adjust accordingly
-        if (PlayerPrefs.GetInt("RefundsBest") > refundsOrdered)
-        {
-            PlayerPrefs.SetInt("RefundsBest", refundsOrdered);
-            //print("new best refunds avoided");
-        }
+        int bestOrdersFulfilled = GameManager.CheckOrderScore(GameManager.workDayIndex, ordersFulfilled);
+        int bestPackagesDelivered = GameManager.CheckPackageScore(GameManager.workDayIndex, packagesDelivered);
+        int bestRefundsOrdered = GameManager.CheckRefundScore(GameManager.workDayIndex, refundsOrdered);
 
         ordersFulfilledText.text = "Orders Fulfilled: " + ordersFulfilled.ToString();
         bestOrdersFulfilledText.text = "Best: " + PlayerPrefs.GetInt("OrderBest").ToString();
@@ -188,13 +217,14 @@ public class MenuController : Singleton<MenuController>
 
     public void ShowResultFace()
     {
-        GameManager.Instance.StartCoroutine(GameManager.Instance.ZipResults());
+        //GameManager.Instance.StartCoroutine(GameManager.Instance.ZipResults());
         endDayPanel.SetActive(false);
     }
 
     public void ReturnToMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        //GameManager.Instance.SaveAllPlayerData();
+        SceneManager.LoadScene(0);
     }
 
     /// <summary>
@@ -202,24 +232,65 @@ public class MenuController : Singleton<MenuController>
     /// </summary>
     public void QuitGame()
     {
-        //needs removed/commented out when making builds
-        //UnityEditor.EditorApplication.ExecuteMenuItem("Edit/Play");
-        //
-
         Application.Quit();
-
-        //remove for official development
-        //for testing purposes, reset the tutorial check
-        PlayerPrefs.DeleteKey("tutorialDone");
-        //
-        PlayerPrefs.DeleteKey("InvertedMovement");
     }
+
+    #region CAME IN FROM MAIN MENU
+
+    /// <summary>
+    /// Adjusts the music master mixer
+    /// </summary>
+    /// <param name="volume"></param>
+    public void SetMusicVolume(float volume)
+    {
+        masterMixer.SetFloat("MasterMusicVolume", volume);
+    }
+
+    /// <summary>
+    /// Adjusts the sound effect master mixer
+    /// </summary>
+    /// <param name="volume"></param>
+    public void SetSFXVolume(float volume)
+    {
+        masterMixer.SetFloat("MasterSFXVolume", volume);
+    }
+
+    /// <summary>
+    /// Sets the game's resolution
+    /// </summary>
+    /// <param name="resolutionIndex"></param>
+    public void SetResolution(int resolutionIndex)
+    {
+        Resolution resolution = resolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
+    /// <summary>
+    /// Sets the graphics quality
+    /// </summary>
+    /// <param name="qualityIndex"></param>
+    public void SetQuality(int qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(qualityIndex);
+    }
+
+    /// <summary>
+    /// Toggles full screen mode
+    /// </summary>
+    /// <param name="isFullscreen"></param>
+    public void SetFullScreen(bool isFullscreen)
+    {
+        Screen.fullScreen = isFullscreen;
+    }
+    #endregion
+
 
     private void OnDisable()
     {
         //subscribe to gamemanager's pause and resume events
         GameManager.onPaused -= Pause;
         GameManager.onResumed -= Resume;
+        GameManager.InitializeSettings -= AssignSettings;
     }
 
 

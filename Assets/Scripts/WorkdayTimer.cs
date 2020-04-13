@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class WorkdayTimer : MonoBehaviour
 {
+    private GameManager gm;
+
     //public Slider clockSlider;
     public Text clockText;
     //public Image fill;
@@ -35,7 +37,8 @@ public class WorkdayTimer : MonoBehaviour
 
     private void Start()
     {
-        countdownValue = GameManager.Instance.workdayLength;
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        countdownValue = gm.workdayLength;
         //clockSlider.maxValue = countdownValue;
         //clockSlider.value = countdownValue;
 
@@ -55,7 +58,7 @@ public class WorkdayTimer : MonoBehaviour
             ////a lot of this needs to be taken off update////
             if (countStarted && countdownValue >= 0f)//run countdown logic if there is time left AND if the counter is allowed to be active
             {
-                countdownValue = Mathf.Clamp(countdownValue - Time.deltaTime, 0f, GameManager.Instance.workdayLength);//start the countdown
+                countdownValue = Mathf.Clamp(countdownValue - Time.deltaTime, 0f, gm.workdayLength);//start the countdown
 
 
                 //set the minute and second values
@@ -107,10 +110,10 @@ public class WorkdayTimer : MonoBehaviour
                     }
 
                 }
-                else if (countdownValue / GameManager.Instance.workdayLength <= warningColorPercent + 0.1f)
+                else if (countdownValue / gm.workdayLength <= warningColorPercent + 0.1f)
                 {
                     //set the starting time for the fade to use
-                    startTime = GameManager.Instance.workdayLength * warningColorPercent;
+                    startTime = gm.workdayLength * warningColorPercent;
                     //fade from one color to the other smoothly
                     //fill.color = Color.Lerp(startFillColor, warningColor, Mathf.SmoothStep(0, 1, ((Time.time - startTime) / fadeTime)));
                 }

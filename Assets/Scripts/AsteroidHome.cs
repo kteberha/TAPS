@@ -6,17 +6,25 @@ using UnityEngine.SceneManagement;
 
 public class AsteroidHome : MonoBehaviour
 {
+    [SerializeField]
+    [Range(1, 3)]
+    int packageOrderCapacity;//determines the max number of packages a house can request per order
+    [SerializeField]
+    [Range(0f, 1f)]
+    float twoPackagePerc, threePackagePerc;//these are the numbers used to determine the chance of ordering multiple packages
+
     //Variables regarding the packages
     [HideInInspector]
     public bool packageBeenOrdered = false;//whether house has ordered a package or not
     [HideInInspector]
     public int numPackagesOrdered;//number of packages ordered by a house
-    public float orderTime = 120f;//time before an order expires
+    public float countdownTime = 120f;//time before an order expires
     public float orderDelayTime = 5f;//time to delay another order after expired or fulfilled orders
     public int points;//number of points the house will award for completing an order
 
     public float timerBonus = 15f;//number of seconds that will be granted as bonus for delivering a package to a house with multiple packages.
     public float refillSpeed = 1f;//number of seconds for the demand meter to refill when bonus time added.
+
     Coroutine addTime;//Coroutine to store for looping within the coroutine
 
 
@@ -24,7 +32,7 @@ public class AsteroidHome : MonoBehaviour
     [SerializeField] private GameObject[] _packageTypes = new GameObject[3];//stores the 3 types of packages
     public List<GameObject> packagesOrdered;//the list of packages the house currently has remaining in their order
 
-    private float delayReset;//value to reset the delay to
+    private float _delayReset;//value to reset the delay to
 
     //variables for offscreen indicator
     public GameObject offScreenIndicatorObj;
@@ -57,7 +65,7 @@ public class AsteroidHome : MonoBehaviour
         }
 
         offScreenIndicatorObj.SetActive(false);//make sure no offscreen indicator starts turned on
-        delayReset = orderDelayTime;//set the delay timer restart to whatever the user designates
+        _delayReset = orderDelayTime;//set the delay timer restart to whatever the user designates
         orderDelayTime = 0f;//set the delay timer to 0 for the very first package orders
         _offScreenIndicator = offScreenIndicatorObj.GetComponent<OffScreenIndicator>();
     }
@@ -102,19 +110,38 @@ public class AsteroidHome : MonoBehaviour
 
                 #region NumberOfPackagesToOrder
                 float packageNumSeed = UnityEngine.Random.value;
-                if (packageNumSeed <= 0.45f)
-                    numPackagesOrdered = 1;
-                else
-                    numPackagesOrdered = 2;
+
+                //decide how many packages should be ordered
+                switch(packageOrderCapacity)
+                {
+                    case 1:
+                        numPackagesOrdered = 1;
+                        break;
+                    case 2:
+                        if (packageNumSeed < twoPackagePerc)
+                            numPackagesOrdered = 1;
+                        else
+                            numPackagesOrdered = 2;
+                        break;
+                    case 3:
+                        if (packageNumSeed < twoPackagePerc)
+                            numPackagesOrdered = 1;
+                        else if (packageNumSeed < threePackagePerc)
+                            numPackagesOrdered = 2;
+                        else
+                            numPackagesOrdered = 3;
+                        break;
+                }
                 #endregion
 
                 #region PackageTypesToSelect
                 float packTypeSeed = UnityEngine.Random.value;
 
+                //Create 3 package ordering possibilities
                 switch (numPackagesOrdered)
                 {
                     #region SinglePackageOrders
-                    case (1):
+                    case 1:
                         if (packTypeSeed <= 0.3f)
                         {
                             print("ordered 1 Square");
@@ -134,7 +161,7 @@ public class AsteroidHome : MonoBehaviour
                     #endregion
 
                     #region DoublePackageOrders
-                    case (2):
+                    case 2:
                         #region RepeatedPackageTypes
                         if (packTypeSeed <= 0.17f)
                         {
@@ -151,7 +178,6 @@ public class AsteroidHome : MonoBehaviour
                         else if(packTypeSeed <= 0.51f)
                         {
                             print("ordered 2 Eggs");
-
                             for (int i = 0; i < 2; i++)
                                 packagesOrdered.Add(_packTypes[2]);
                         }
@@ -181,6 +207,85 @@ public class AsteroidHome : MonoBehaviour
                         #endregion
                     #endregion
 
+                    #region TriplePackageOrders
+                    case 3:
+                        #region SameOfAKind
+                        if (packTypeSeed <= 0.1f)
+                        {
+                            print("ordered 3 boxes");
+                            for (int i = 0; i < 3; i++)
+                                packagesOrdered.Add(_packageTypes[0]);
+                        }
+                        else if (packTypeSeed <= 0.2f)
+                        {
+                            print("ordered 3 cones");
+                            for (int i = 0; i < 3; i++)
+                                packagesOrdered.Add(_packageTypes[1]);
+                        }
+                        else if (packTypeSeed <= 0.3f)
+                        {
+                            print("ordered 3 eggs");
+                            for (int i = 0; i < 3; i++)
+                                packagesOrdered.Add(_packageTypes[2]);
+                        }
+                        #endregion
+
+                        #region TwoOneCombo
+                        else if (packTypeSeed <= 0.4f)
+                        {
+                            print("ordered 2 box 1 cone");
+                            for (int i = 0; i < 2; i++)
+                                packagesOrdered.Add(_packageTypes[0]);
+                            packagesOrdered.Add(_packageTypes[1]);
+                        }
+                        else if (packTypeSeed <= 0.5f)
+                        {
+                            print("ordered 2 box 1 egg");
+                            for (int i = 0; i < 2; i++)
+                                packagesOrdered.Add(_packageTypes[0]);
+                            packagesOrdered.Add(_packageTypes[2]);
+                        }
+                        else if (packTypeSeed <= 0.6f)
+                        {
+                            print("ordered 2 cone 1 box");
+                            for (int i = 0; i < 2; i++)
+                                packagesOrdered.Add(_packageTypes[1]);
+                            packagesOrdered.Add(_packageTypes[0]);
+                        }
+                        else if(packTypeSeed <= 0.7f)
+                        {
+                            print("ordered 2 cone 1 egg");
+                            for (int i = 0; i < 2; i++)
+                                packagesOrdered.Add(_packageTypes[1]);
+                            packagesOrdered.Add(_packageTypes[2]);
+                        }
+                        else if(packTypeSeed <= 0.8f)
+                        {
+                            print("ordered 2 egg 1 box");
+                            for (int i = 0; i < 2; i++)
+                                packagesOrdered.Add(_packageTypes[2]);
+                            packagesOrdered.Add(_packageTypes[0]);
+                        }
+                        else if(packTypeSeed <= 0.9f)
+                        {
+                            print("ordered 2 egg 1 cone");
+                            for (int i = 0; i < 2; i++)
+                                packagesOrdered.Add(_packageTypes[2]);
+                            packagesOrdered.Add(_packageTypes[1]);
+                        }
+                        #endregion
+
+                        #region VariedThreeOrder
+                        else
+                        {
+                            print("ordered 3 of a kind");
+                            for (int i = 0; i < 3; i++)
+                                packagesOrdered.Add(_packageTypes[i]);
+                        }
+                        #endregion
+                        break;
+                    #endregion
+
                     default:
                         print("error with ordering packages");
                         break;
@@ -188,8 +293,8 @@ public class AsteroidHome : MonoBehaviour
                 #endregion
 
 
-                demandController.maxValue = orderTime;//set the slider's max time value
-                demandController.CurrentValue = orderTime;//set the slider's current value
+                demandController.maxValue = countdownTime;//set the slider's max time value
+                demandController.CurrentValue = countdownTime;//set the slider's current value
 
                 offScreenIndicatorObj.SetActive(true);//set assigned demand indicator to be active with assigned time
             }
@@ -252,7 +357,7 @@ public class AsteroidHome : MonoBehaviour
             UpdateScore(1);
         if (UpdatePackagesDelivered != null)
             UpdatePackagesDelivered(numPackagesOrdered);
-        orderDelayTime = delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
+        orderDelayTime = _delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
         yield return new WaitForSeconds(2);//wait before disabling the off screen indicator
         offScreenIndicatorObj.transform.Find("Success").gameObject.SetActive(false);//toggle the check mark off
         offScreenIndicatorObj.SetActive(false);//disable the off screen indicator
@@ -275,7 +380,7 @@ public class AsteroidHome : MonoBehaviour
             if (UpdateRefunds != null)
                 UpdateRefunds(1);
             //GameManager.Instance.refundsOrdered += 1;//increment the refunds ordered variable in the game manager
-            orderDelayTime = delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
+            orderDelayTime = _delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
             packagesOrdered.Clear();//remove all packages ordered
             offScreenIndicatorObj.transform.Find("Failed").gameObject.SetActive(true);//toggle the x to active
 
@@ -304,7 +409,7 @@ public class AsteroidHome : MonoBehaviour
         yield return new WaitForSeconds(orderDelayTime);
         orderDelayTime = 0;
         Order();
-        orderDelayTime = delayReset;
+        orderDelayTime = _delayReset;
     }
 
     //variables for add time Coroutine
@@ -330,7 +435,6 @@ public class AsteroidHome : MonoBehaviour
         {
             demandController.CurrentValue = Mathf.SmoothStep(_beginValue, _endValue, _lerpPercent);//update the demand value with lerp
             _lerpPercent += Time.deltaTime / refillSpeed;//increase the lerp alpha
-            print(_lerpPercent);
             yield return new WaitForEndOfFrame();
         }
     }

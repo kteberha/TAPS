@@ -59,7 +59,7 @@ public class EyeController : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         /*
         if (gameObject.name == "Start/Resume")
         {
-            
+
             rightEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
             leftEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
 
@@ -69,7 +69,7 @@ public class EyeController : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
         if (gameObject.name == "Options")
         {
-            
+
             rightEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
             leftEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
 
@@ -79,7 +79,7 @@ public class EyeController : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
         if (gameObject.name == "Credits")
         {
-            
+
             rightEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
             leftEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
 
@@ -89,7 +89,7 @@ public class EyeController : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
         if (gameObject.name == "Quit")
         {
-            
+
             rightEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
             leftEyeFocus.transform.DOMoveY(thisButton.transform.position.y, moveTime);
 
@@ -137,13 +137,13 @@ public class EyeController : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
         if(lerpPerc <= 1)
         {
-            print("need to keep lerping: " + lerpPerc);
+            //print("need to keep lerping: " + lerpPerc);
             lerpPerc += timeSinceOverlap / moveTime;
             yield return StartCoroutine(EyeTransition(eyeCase));
         }
         else
         {
-            print("lerp done, percent restarted");
+            //print("lerp done, percent restarted");
             lerpPerc = 0f;
         }
     }

@@ -10,6 +10,7 @@ TagManager:
   - Wall
   - Choices
   - Breakable
+  - GameManager
   layers:
   - Default
   - TransparentFX
