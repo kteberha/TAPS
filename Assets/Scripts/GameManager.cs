@@ -26,14 +26,15 @@ public class GameManager : MonoBehaviour
 
     #region WorkdayInitVariables
     protected static GameData gameData;
+    static bool gameInitialized = false;
 
     public static int[] orderScores = new int[10];//all orders fulfilled scores to be saved
     public static int[] packageScores = new int[10];//all package delivered scores to be saved
     public static int[] refundsScores = new int[10];//all refund scores to be saved
 
-    public int currentOrderHighScore;//instance of order score to be compared and rewritten per workday
-    public int currentPackageHighScore;//instance of package delivered score to be compared and rewritten per workday
-    public int currentRefundLowScore;//instance of refund score to be compared and rewritten per workday
+    public int currentOrderHighScore = 0;//instance of order score to be compared and rewritten per workday
+    public int currentPackageHighScore = 0;//instance of package delivered score to be compared and rewritten per workday
+    public int currentRefundLowScore = 99;//instance of refund score to be compared and rewritten per workday
 
     public static Action<int> InitializeDay;//delegate to call level initialization.
     public static Action InitializeSettings;//delegate to call setting initialization.
@@ -41,29 +42,18 @@ public class GameManager : MonoBehaviour
     #endregion
 
     //point and package tracking variables
-    [HideInInspector] public int packagesDelivered = 0;
-    [HideInInspector] public int ordersFulfilled = 0;
-    [HideInInspector] public int refundsOrdered = 99;
-    [HideInInspector] public int points = 0;
-
-    [HideInInspector] public int bestDeliveryAmount = 0;
-    [HideInInspector] public int fewestRefundsAmount = 0;
+    [HideInInspector] public int packagesDelivered = 0;//tallies number of packages delivered throughout workday
+    [HideInInspector] public int ordersFulfilled = 0;//tallies number of orders fulfilled throughout workday
+    [HideInInspector] public int refundsOrdered = 0;//tallies number of refunds ordered throughout workday
 
     //workday timer variables
-    public float timeInWorkday = 0f;
-    public float workdayLength = 301f;
+    public float timeInWorkday = 0f;//counts the amount of time that's passed in a workday
+    public float workdayLength = 301f;//seconds in a workday
 
     #region ThingsThatNeedMoved
     //Clock in or out UI text variables
     public Text workdayStatusText;
     [HideInInspector]public Animation textAnimation;
-
-    //Zip Transition Animations
-    public GameObject zipFaceObject;
-    public Animator zipAnimator;
-
-    //final points to judge
-    CanvasGroup zipAnimCG;
     public TextAsset inkEndScript;
     #endregion
 
@@ -71,9 +61,8 @@ public class GameManager : MonoBehaviour
     //Pause menu & game state variables
     public static Action onPaused; //delegate to be called when the game is paused
     public static Action onResumed; //delegate to be called when game is resumed
-
-    public static Action workdayStarted;//delegate event to be called when day has started
-    public static Action workdayEnded;//delegate event to be called when day is over
+    public static Action WorkdayStarted;//delegate event to be called when day has started
+    public static Action WorkdayEnded;//delegate event to be called when day is over
     [HideInInspector]
     public GameObject pausePanel;
 
@@ -89,7 +78,11 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        GameInit();
+        if (!gameInitialized)
+        {
+            GameInit();
+            gameInitialized = true;
+        }
     }
 
     private void OnEnable()
@@ -156,12 +149,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (workdayStatusText != null)
+        if(WorkdayStarted != null)
         {
-            workdayStatusText.text = "Clocked IN!";//set the animated text object
-            textAnimation = workdayStatusText.GetComponent<Animation>();
+            WorkdayStarted();
         }
-
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
             //state = GAMESTATE.CLOCKEDOUTSTART;
@@ -226,97 +217,18 @@ public class GameManager : MonoBehaviour
                 if (state == GAMESTATE.CLOCKEDIN)
                 {
                     state = GAMESTATE.CLOCKEDOUTEND;
+
+                    if (WorkdayEnded != null)
+                    {
+                        WorkdayEnded();
+                        print("workday has ended");
+                    }
                         //have the workday over text appear and fade before loading the scene
-                        StartCoroutine(Clockout());
+                    //StartCoroutine(Clockout());
                 }
             }
         }
-        //clipInfo = zipAnimator.GetCurrentAnimatorClipInfo(0);
-
     }
-
-    #region NEEDS TO BE MOVED OR HEAVILY ALTERED
-    IEnumerator WakeUp()
-    {
-        zipFaceObject.SetActive(true);
-        zipAnimator.SetTrigger("ClockingIn");
-        yield return new WaitForSeconds(28.7f);
-        zipAnimator.SetTrigger("DonePlaying");
-        zipAnimCG.alpha = 0f;
-
-        //DialogueMenuManager.Instance.StartDialogue(GAMESTATE.CLOCKEDOUTSTART);
-        StopCoroutine(WakeUp());
-    }
-
-    public IEnumerator ShutDown()
-    {
-        StopCoroutine(ZipResults());
-        zipAnimCG.alpha = 1;
-        zipAnimator.SetTrigger("ClockingOut");
-        //clipInfo = zipAnimator.GetCurrentAnimatorClipInfo(0);
-        //print("shut down clip name: " + clipInfo[0].clip.name);
-
-        yield return new WaitForSeconds(2f);
-        //FOR DEMO
-        //MenuController.Instance.Wishlist();
-        //zipAnimCG.alpha = 0f;
-        zipFaceObject.SetActive(false);
-    }
-
-    public IEnumerator Clockout()
-    {
-        state = GAMESTATE.CLOCKEDOUTEND;
-
-        workdayStatusText.text = "Clocked OUT!";
-        textAnimation.Play();
-
-        yield return new WaitForSeconds(textAnimation["WorkdayStatusAnim"].length);
-
-        ///////FIX THIS/////////////
-        //MenuController.Instance.ordersFulfilled = ordersFulfilled;
-        //MenuController.Instance.refundsOrdered = refundsOrdered;
-        //StartCoroutine(MenuController.Instance.EndDay());
-        ////////////////////////
-    }
-
-    public IEnumerator ZipResults()
-    {
-        //NarrativeDialogue.Instance.inkJSONAsset = inkEndScript;
-        zipAnimCG.alpha = 1f;
-        //zipFaceObject.SetActive(true);
-        #region NEEDS TO BE MODULAR
-        if (packagesDelivered >= 15)
-        {
-            zipAnimator.SetTrigger("ExcitedResults");
-            print(packagesDelivered);
-            print("show excited results");
-        }
-        else if (packagesDelivered >= 10 && packagesDelivered < 15)
-        {
-            zipAnimator.SetTrigger("PleasedResults");
-            print(packagesDelivered);
-            print("show pleased results");
-        }
-        else if (packagesDelivered >= 5 && packagesDelivered < 10)
-        {
-            zipAnimator.SetTrigger("DisappointedResults");
-            print(packagesDelivered);
-            print("show disappointed results");
-        }
-        else
-        {
-            zipAnimator.SetTrigger("UghResults");
-            print(packagesDelivered);
-            print("show ugh results");
-        }
-        yield return new WaitForSeconds(2.5f);
-        zipAnimator.SetTrigger("DonePlaying");
-        zipAnimCG.alpha = 0f;
-        //DialogueMenuManager.Instance.StartDialogue(GAMESTATE.CLOCKEDOUTEND);
-        //StartCoroutine(ShutDown());
-        #endregion
-    }
-    #endregion
 
     #region SCORE UPDATE METHODS
     /// <summary>

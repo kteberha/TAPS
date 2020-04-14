@@ -58,10 +58,11 @@ public static class SaveSystem
             FileStream stream = new FileStream(path, FileMode.Open);
 
             GameData gData = (GameData)bf.Deserialize(stream);
-            for(int i = 0; i < gData.orderHighScores.Length; i++)
+            /*for(int i = 0; i < gData.orderHighScores.Length; i++)
             {
                 Debug.Log("Order highscores: " + gData.orderHighScores[i]);
             }
+            */
             stream.Close();
             return gData;
         }
@@ -72,13 +73,14 @@ public static class SaveSystem
         }
     }
 
-    public static void SaveOptionsData()
+    public static void SaveOptionsData(OptionsData _oData)
     {
         BinaryFormatter bf = new BinaryFormatter();
         string path = Application.persistentDataPath + "/optionsData.taps";
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        OptionsData oData = new OptionsData();
+        bf.Serialize(stream, _oData);
+        stream.Close();
 
     }
 

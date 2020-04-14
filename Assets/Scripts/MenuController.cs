@@ -7,14 +7,15 @@ using UnityEngine.Audio;
 
 public class MenuController : MonoBehaviour
 {
+    protected static OptionsData optionsData;
+
     [HideInInspector]public bool paused = false;
 
-    #region COMING IN FROM MAINMENU
     public AudioMixer masterMixer;
+    public static bool invertedMovement = false;
     public static float sfxVolume, musicVolume;//these are for saving to settings
     public Dropdown resolutionDropdown;
     Resolution[] resolutions;
-    #endregion
 
     public GameObject pausePanel;
     public GameObject optionsPanel;
@@ -29,27 +30,43 @@ public class MenuController : MonoBehaviour
     CanvasGroup optionsCg;
     CanvasGroup endDayCg;
 
-    public Text ordersFulfilledText;
-    public Text refundsOrderedText;
-    public Text bestOrdersFulfilledText;
-    public Text bestRefundsText;
+    [SerializeField] Text workdayStatusText;
+    [HideInInspector] public Animation textAnimation;
+
+    public Text ordersFulfilledText, packagesDeliveredText, refundsOrderedText;
+    public Text bestOrdersFulfilledText, bestPackagesText, bestRefundsText;
 
     Animation endDayAnim;
     [HideInInspector] public int ordersFulfilled = 0;
     [HideInInspector] public int packagesDelivered = 0;
     [HideInInspector] public int refundsOrdered = 0;
 
-    public static bool invertedMovement = false;
     //public bool mapToggled = true;
     public Toggle invertMoveToggle;
+
+    //Zip Transition Animations
+    public GameObject zipFaceObject;
+    public Animator zipAnimator;
+
+    //final points to judge
+    public CanvasGroup zipAnimCG;
 
 
     private void OnEnable()
     {
-        //subscribe to gamemanager's pause and resume events
         GameManager.onPaused += Pause;
         GameManager.onResumed += Resume;
+        GameManager.WorkdayStarted += WorkdayStart;
+        GameManager.WorkdayEnded += EndDaySequence;
         GameManager.InitializeSettings += AssignSettings;
+    }
+    private void OnDisable()
+    {
+        GameManager.onPaused -= Pause;
+        GameManager.onResumed -= Resume;
+        GameManager.WorkdayStarted -= WorkdayStart;
+        GameManager.WorkdayEnded -= EndDaySequence;
+        GameManager.InitializeSettings -= AssignSettings;
     }
 
     // Start is called before the first frame update
@@ -61,7 +78,6 @@ public class MenuController : MonoBehaviour
         endDayCg = endDayPanel.GetComponent<CanvasGroup>();
         endDayAnim = endDayPanel.GetComponent<Animation>();
 
-        #region COMING IN FROM MAIN MENU
         //get all of the resolutions available to display
         resolutions = Screen.resolutions;
 
@@ -92,8 +108,8 @@ public class MenuController : MonoBehaviour
         resolutionDropdown.value = currentResolutionIndex;
         //Refresh the dropdown so it displays the correct value on start
         resolutionDropdown.RefreshShownValue();
-        #endregion
 
+        #region NEEDSFIXED
         //get and apply saved input options if any exist
         if (!PlayerPrefs.HasKey("InvertedMovement"))
         {
@@ -109,6 +125,7 @@ public class MenuController : MonoBehaviour
         {
             invertedMovement = true;
         }
+        #endregion
         invertMoveToggle.SetIsOnWithoutNotify(invertedMovement);
     }
 
@@ -117,6 +134,14 @@ public class MenuController : MonoBehaviour
 
     }
 
+    public void WorkdayStart()
+    {
+        if (workdayStatusText != null)
+        {
+            workdayStatusText.text = "Clocked IN!";//set the animated text object
+            textAnimation = workdayStatusText.GetComponent<Animation>();
+        }
+    }
     public void Pause()
     {
         Time.timeScale = 0f;
@@ -146,8 +171,24 @@ public class MenuController : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = 1f;
+        SceneManager.LoadScene(GameManager.workDayActual);
+    }
+
+    public void Continue()
+    {
+        Time.timeScale = 1f;
+        //check if currently on last day
+        if (++GameManager.workDayActual > SceneManager.sceneCount)
+        {
+            print("on last level, go back to main menu");
+            SceneManager.LoadScene(0);
+        }
+        else
+        {
+            GameManager.workDayActual++;
+            SceneManager.LoadScene(GameManager.workDayActual);
+        }
     }
 
     /// <summary>
@@ -193,18 +234,49 @@ public class MenuController : MonoBehaviour
         optionsCg.alpha = 0f;
         optionsCg.interactable = false;
         optionsCg.blocksRaycasts = false;
+
+        //need to save options settings here
+        SaveAllSettings();
+
+        ///
+    }
+
+    /// <summary>
+    /// Sequence of events to start the workday
+    /// </summary>
+    public void StartDaySequence()
+    {
+        StartCoroutine(WakeUp());
+    }
+
+
+    /// <summary>
+    /// Sequence of events after the workday timer reaches 0;
+    /// </summary>
+    public void EndDaySequence()
+    {
+        StartCoroutine(EndDay());
     }
 
     public IEnumerator EndDay()
     {
         int bestOrdersFulfilled = GameManager.CheckOrderScore(GameManager.workDayIndex, ordersFulfilled);
-        int bestPackagesDelivered = GameManager.CheckPackageScore(GameManager.workDayIndex, packagesDelivered);
-        int bestRefundsOrdered = GameManager.CheckRefundScore(GameManager.workDayIndex, refundsOrdered);
+        print($"best orders this day are {bestOrdersFulfilled}");
 
-        ordersFulfilledText.text = "Orders Fulfilled: " + ordersFulfilled.ToString();
-        bestOrdersFulfilledText.text = "Best: " + PlayerPrefs.GetInt("OrderBest").ToString();
-        refundsOrderedText.text = " Refunds Ordered: " + refundsOrdered.ToString();
-        bestRefundsText.text = "Best: " + PlayerPrefs.GetInt("RefundsBest").ToString();
+        int bestPackagesDelivered = GameManager.CheckPackageScore(GameManager.workDayIndex, packagesDelivered);
+        print($"best packages delivered this day are: {bestPackagesDelivered}");
+
+        int bestRefundsOrdered = GameManager.CheckRefundScore(GameManager.workDayIndex, refundsOrdered);
+        print($"best refunds this day are: {bestRefundsOrdered}");
+
+        ordersFulfilledText.text = $"Orders Fulfilled: {ordersFulfilled}";
+        bestOrdersFulfilledText.text = $"Best: {bestOrdersFulfilled}";
+
+        packagesDeliveredText.text = $"Packages Delivered: {packagesDelivered}";
+        bestPackagesText.text = $"Best: {bestPackagesDelivered}";
+
+        refundsOrderedText.text = $"Refunds Ordered: {refundsOrdered}";
+        bestRefundsText.text = $"Best: {bestRefundsOrdered}";
 
         GameManager.state = GAMESTATE.CLOCKEDOUTEND;
         //paused = true;
@@ -217,9 +289,92 @@ public class MenuController : MonoBehaviour
 
     public void ShowResultFace()
     {
-        //GameManager.Instance.StartCoroutine(GameManager.Instance.ZipResults());
+        StartCoroutine(ZipResults());
         endDayPanel.SetActive(false);
     }
+
+    #region NEEDS TO BE MOVED OR HEAVILY ALTERED
+    IEnumerator WakeUp()
+    {
+        zipFaceObject.SetActive(true);
+        zipAnimator.SetTrigger("ClockingIn");
+        yield return new WaitForSeconds(28.7f);
+        zipAnimator.SetTrigger("DonePlaying");
+        zipAnimCG.alpha = 0f;
+
+        //DialogueMenuManager.Instance.StartDialogue(GAMESTATE.CLOCKEDOUTSTART);
+        StopCoroutine(WakeUp());
+    }
+
+    public IEnumerator ShutDown()
+    {
+        StopCoroutine(ZipResults());
+        zipAnimCG.alpha = 1;
+        zipAnimator.SetTrigger("ClockingOut");
+        //clipInfo = zipAnimator.GetCurrentAnimatorClipInfo(0);
+        //print("shut down clip name: " + clipInfo[0].clip.name);
+
+        yield return new WaitForSeconds(2f);
+        //FOR DEMO
+        //MenuController.Instance.Wishlist();
+        //zipAnimCG.alpha = 0f;
+        zipFaceObject.SetActive(false);
+    }
+
+    public IEnumerator Clockout()
+    {
+        GameManager.state = GAMESTATE.CLOCKEDOUTEND;
+
+        workdayStatusText.text = "Clocked OUT!";
+        textAnimation.Play();
+
+        yield return new WaitForSeconds(textAnimation["WorkdayStatusAnim"].length);
+
+        ///////FIX THIS/////////////
+        //MenuController.Instance.ordersFulfilled = ordersFulfilled;
+        //MenuController.Instance.refundsOrdered = refundsOrdered;
+        //StartCoroutine(MenuController.Instance.EndDay());
+        ////////////////////////
+    }
+
+    public IEnumerator ZipResults()
+    {
+        //NarrativeDialogue.Instance.inkJSONAsset = inkEndScript;
+        zipAnimCG.alpha = 1f;
+        //zipFaceObject.SetActive(true);
+        #region NEEDS TO BE MODULAR
+        if (packagesDelivered >= 15)
+        {
+            zipAnimator.SetTrigger("ExcitedResults");
+            print(packagesDelivered);
+            print("show excited results");
+        }
+        else if (packagesDelivered >= 10 && packagesDelivered < 15)
+        {
+            zipAnimator.SetTrigger("PleasedResults");
+            print(packagesDelivered);
+            print("show pleased results");
+        }
+        else if (packagesDelivered >= 5 && packagesDelivered < 10)
+        {
+            zipAnimator.SetTrigger("DisappointedResults");
+            print(packagesDelivered);
+            print("show disappointed results");
+        }
+        else
+        {
+            zipAnimator.SetTrigger("UghResults");
+            print(packagesDelivered);
+            print("show ugh results");
+        }
+        yield return new WaitForSeconds(2.5f);
+        zipAnimator.SetTrigger("DonePlaying");
+        zipAnimCG.alpha = 0f;
+        //DialogueMenuManager.Instance.StartDialogue(GAMESTATE.CLOCKEDOUTEND);
+        //StartCoroutine(ShutDown());
+        #endregion
+    }
+    #endregion
 
     public void ReturnToMenu()
     {
@@ -285,13 +440,39 @@ public class MenuController : MonoBehaviour
     #endregion
 
 
-    private void OnDisable()
+
+    public void CreateFiles()
     {
-        //subscribe to gamemanager's pause and resume events
-        GameManager.onPaused -= Pause;
-        GameManager.onResumed -= Resume;
-        GameManager.InitializeSettings -= AssignSettings;
+        SaveSystem.CreateNewSettingsData();
     }
+
+    public void SaveAllSettings()
+    {
+        optionsData.ChangeMovementSettings(invertedMovement);
+        optionsData.ChangeMusicVolume(musicVolume);
+        optionsData.ChangeSfxVolume(sfxVolume);
+        SaveSystem.SaveOptionsData(optionsData);
+    }
+
+    public OptionsData LoadAllSettings()
+    {
+        optionsData = SaveSystem.LoadOptionsData();
+        if(optionsData != null)
+        {
+            print("found file to load");
+            invertedMovement = optionsData.invertedMovement;
+            musicVolume = optionsData.musicVolume;
+            sfxVolume = optionsData.sfxVolume;
+            return optionsData;
+        }
+        else
+        {
+            Debug.LogWarning("no options file to load");
+            return null;
+        }
+    }
+
+
 
 
     ////////////////FOR DEMO ONLY/////////////////////////

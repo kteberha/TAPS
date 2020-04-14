@@ -10,13 +10,23 @@ public class OptionsData
 
     public OptionsData()
     {
-
+        invertedMovement = MenuController.invertedMovement;
+        musicVolume = MenuController.musicVolume;
+        sfxVolume = MenuController.sfxVolume;
     }
 
     public void ChangeMovementSettings(bool _movementSetting)
     {
-        if (_movementSetting)
-            invertedMovement = _movementSetting;
+        invertedMovement = _movementSetting;
+    }
 
+    public void ChangeMusicVolume(float _volume)
+    {
+        musicVolume = _volume;
+    }
+
+    public void ChangeSfxVolume(float _volume)
+    {
+        sfxVolume = _volume;
     }
 }
