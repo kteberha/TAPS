@@ -175,7 +175,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: You're FIRED!
+  m_text: YOU'RE FIRED!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 297e6ec96494cd2469865e06734706b8, type: 2}
   m_sharedMaterial: {fileID: 83784905043092836, guid: 297e6ec96494cd2469865e06734706b8,
@@ -204,8 +204,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1225,8 +1225,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Well done, Zip! I'm expecting the same excellence tomorrow so you better
-    not let me down!
+  m_text: Well done, Zip! I'll be expecting the same quality of work tomorrow so don't
+    let me down!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 297e6ec96494cd2469865e06734706b8, type: 2}
   m_sharedMaterial: {fileID: 83784905043092836, guid: 297e6ec96494cd2469865e06734706b8,
@@ -1298,8 +1298,8 @@ MonoBehaviour:
     textComponent: {fileID: 6156843967840708040}
     characterCount: 89
     spriteCount: 0
-    spaceCount: 15
-    wordCount: 16
+    spaceCount: 16
+    wordCount: 17
     linkCount: 0
     lineCount: 3
     pageCount: 1
