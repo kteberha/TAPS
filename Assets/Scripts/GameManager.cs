@@ -42,9 +42,9 @@ public class GameManager : MonoBehaviour
     #endregion
 
     //point and package tracking variables
-    [HideInInspector] public int packagesDelivered = 0;//tallies number of packages delivered throughout workday
-    [HideInInspector] public int ordersFulfilled = 0;//tallies number of orders fulfilled throughout workday
-    [HideInInspector] public int refundsOrdered = 0;//tallies number of refunds ordered throughout workday
+    public static int packagesDelivered = 0;//tallies number of packages delivered throughout workday
+    public static int ordersFulfilled = 0;//tallies number of orders fulfilled throughout workday
+    public static int refundsOrdered = 0;//tallies number of refunds ordered throughout workday
 
     //workday timer variables
     public float timeInWorkday = 0f;//counts the amount of time that's passed in a workday
@@ -146,18 +146,18 @@ public class GameManager : MonoBehaviour
             print("currently in main menu");
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        if(WorkdayStarted != null)
-        {
-            WorkdayStarted();
-        }
+        //check that main menu isn't current scene
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
             //state = GAMESTATE.CLOCKEDOUTSTART;
             state = GAMESTATE.CLOCKEDIN;
             //StartCoroutine(WakeUp());
+        }
+        if (WorkdayStarted != null)
+        {
+            WorkdayStarted();
         }
     }
 
@@ -274,7 +274,10 @@ public class GameManager : MonoBehaviour
             return orderScores[_workday] = _score;
         }
         else
+        {
+            print("no new order score");
             return orderScores[_workday];
+        }
     }
 
     /// <summary>
@@ -317,7 +320,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Creates new files to save and load to with default values.
     /// </summary>
-    public void CreateFiles()
+    public static void CreateFiles()
     {
         SaveSystem.CreateNewGameData();
     }
@@ -325,7 +328,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Saves all the game data, used when the game closes
     /// </summary>
-    public void SaveAllGameData()
+    public static void SaveAllGameData()
     {
         gameData.startingWorkday = workDayActual;
         gameData.SetAllOrderScores(orderScores);
@@ -338,7 +341,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Loads all of the game data, used for when the game launches
     /// </summary>
-    public GameData LoadAllGameData()
+    public static GameData LoadAllGameData()
     {
         gameData = SaveSystem.LoadGameData();
         if (gameData != null)

@@ -74,6 +74,9 @@ public class PlayerController : MonoBehaviour
     public float hitSpeed;
     [SerializeField] FaceAnimation faceAnim;
 
+    //collider variables
+    [SerializeField] Collider2D[] allColliders;
+
     [Header("DEMO TUTORIAL")]
     [SerializeField] TutorialManager tutorialManager;
 
@@ -476,6 +479,11 @@ public class PlayerController : MonoBehaviour
             heldPackages[i].GetComponent<Package>().Throw();
             Destroy(heldPackages[i].GetComponent<SpringJoint2D>());
         }
+
+        foreach (Collider2D c in allColliders)
+            c.enabled = false;
+
+
         heldPackages.Clear();//remove all packages from the player's inventory
         lineRenderer.positionCount = heldPackages.Count;//clear all of the line renderer's points
 
@@ -495,6 +503,8 @@ public class PlayerController : MonoBehaviour
         body_mat.SetFloat("_Vector1_AlphaClip", 0);
         fe_mat.SetFloat("_Vector1_AlphaClip", 0);
 
+        foreach (Collider2D c in allColliders)
+            c.enabled = true;
     }
 
     /// <summary>

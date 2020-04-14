@@ -9,12 +9,11 @@ public class DialogueMenuManager : MonoBehaviour
 {
     public GameObject player;
     public GameObject menu;
-
     public GameObject goalsScreen;
 
     Rigidbody2D rb;
     Vector3 pTempVelocity;
-    bool menuActive = false;
+    //bool menuActive = false;
 
     Camera main;
     Transform dialogueCameraTransform;
@@ -54,9 +53,7 @@ public class DialogueMenuManager : MonoBehaviour
     void MakeMenu(GAMESTATE gs)
     {
         GameManager.state = gs;
-        //menuController.paused = true;
-        //Time.timeScale = 0f;
-        menuActive = true;
+        //menuActive = true;
         menu.gameObject.SetActive(true);
         player.GetComponent<AudioSource>().Stop();
     }
@@ -65,7 +62,7 @@ public class DialogueMenuManager : MonoBehaviour
     {
         GameManager.state = GAMESTATE.PAUSED;
         Time.timeScale = 0f;
-        menuActive = true;
+        //menuActive = true;
         menu.gameObject.SetActive(true);
 
     }
@@ -74,7 +71,7 @@ public class DialogueMenuManager : MonoBehaviour
     {
         //menuController.paused = false;
         Time.timeScale = 1f;
-        menuActive = false;
+        //menuActive = false;
         menu.gameObject.SetActive(false);
 
         if (GameManager.state == GAMESTATE.CLOCKEDOUTSTART)

@@ -17,6 +17,11 @@ public class RatingSlider : MonoBehaviour
         AsteroidHome.UpdatePackagesDelivered += UpdateSliderValue;
     }
 
+    private void Start()
+    {
+        slider.maxValue = maxStarValue;
+    }
+
     /// <summary>
     /// Updates the slider's value based on given value
     /// </summary>

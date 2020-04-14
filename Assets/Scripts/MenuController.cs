@@ -50,6 +50,8 @@ public class MenuController : MonoBehaviour
 
     //final points to judge
     public CanvasGroup zipAnimCG;
+    [SerializeField] RatingSlider starRatingSlider;
+    int _threeStarVal, _twoStarVal, _oneStarVal;
 
 
     private void OnEnable()
@@ -59,6 +61,9 @@ public class MenuController : MonoBehaviour
         GameManager.WorkdayStarted += WorkdayStart;
         GameManager.WorkdayEnded += EndDaySequence;
         GameManager.InitializeSettings += AssignSettings;
+        AsteroidHome.UpdateScore += UpdateOrderScore;
+        AsteroidHome.UpdatePackagesDelivered += UpdatePackageScore;
+        AsteroidHome.UpdateRefunds += UpdateRefundScore;
     }
     private void OnDisable()
     {
@@ -67,6 +72,9 @@ public class MenuController : MonoBehaviour
         GameManager.WorkdayStarted -= WorkdayStart;
         GameManager.WorkdayEnded -= EndDaySequence;
         GameManager.InitializeSettings -= AssignSettings;
+        AsteroidHome.UpdateScore -= UpdateOrderScore;
+        AsteroidHome.UpdatePackagesDelivered -= UpdatePackageScore;
+        AsteroidHome.UpdateRefunds -= UpdateRefundScore;
     }
 
     // Start is called before the first frame update
@@ -77,6 +85,9 @@ public class MenuController : MonoBehaviour
         optionsCg = optionsPanel.GetComponent<CanvasGroup>();
         endDayCg = endDayPanel.GetComponent<CanvasGroup>();
         endDayAnim = endDayPanel.GetComponent<Animation>();
+        _threeStarVal = starRatingSlider.maxStarValue;
+        _twoStarVal = Mathf.CeilToInt(starRatingSlider.maxStarValue * (2 / 3));
+        _oneStarVal = Mathf.CeilToInt(starRatingSlider.maxStarValue * (1 / 3));
 
         //get all of the resolutions available to display
         resolutions = Screen.resolutions;
@@ -110,6 +121,7 @@ public class MenuController : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
 
         #region NEEDSFIXED
+
         //get and apply saved input options if any exist
         if (!PlayerPrefs.HasKey("InvertedMovement"))
         {
@@ -136,12 +148,15 @@ public class MenuController : MonoBehaviour
 
     public void WorkdayStart()
     {
+
         if (workdayStatusText != null)
         {
             workdayStatusText.text = "Clocked IN!";//set the animated text object
             textAnimation = workdayStatusText.GetComponent<Animation>();
         }
     }
+
+    #region MenuMethods
     public void Pause()
     {
         Time.timeScale = 0f;
@@ -237,9 +252,22 @@ public class MenuController : MonoBehaviour
 
         //need to save options settings here
         SaveAllSettings();
-
         ///
     }
+    public void ReturnToMenu()
+    {
+        //GameManager.Instance.SaveAllPlayerData();
+        SceneManager.LoadScene(0);
+    }
+
+    /// <summary>
+    /// Quit the game in editor and build
+    /// </summary>
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+    #endregion
 
     /// <summary>
     /// Sequence of events to start the workday
@@ -248,7 +276,6 @@ public class MenuController : MonoBehaviour
     {
         StartCoroutine(WakeUp());
     }
-
 
     /// <summary>
     /// Sequence of events after the workday timer reaches 0;
@@ -277,6 +304,8 @@ public class MenuController : MonoBehaviour
 
         refundsOrderedText.text = $"Refunds Ordered: {refundsOrdered}";
         bestRefundsText.text = $"Best: {bestRefundsOrdered}";
+
+        GameManager.SaveAllGameData();
 
         GameManager.state = GAMESTATE.CLOCKEDOUTEND;
         //paused = true;
@@ -321,41 +350,26 @@ public class MenuController : MonoBehaviour
         zipFaceObject.SetActive(false);
     }
 
-    public IEnumerator Clockout()
-    {
-        GameManager.state = GAMESTATE.CLOCKEDOUTEND;
-
-        workdayStatusText.text = "Clocked OUT!";
-        textAnimation.Play();
-
-        yield return new WaitForSeconds(textAnimation["WorkdayStatusAnim"].length);
-
-        ///////FIX THIS/////////////
-        //MenuController.Instance.ordersFulfilled = ordersFulfilled;
-        //MenuController.Instance.refundsOrdered = refundsOrdered;
-        //StartCoroutine(MenuController.Instance.EndDay());
-        ////////////////////////
-    }
-
+    /// <summary>
+    /// Plays the facial animations for zip based on the score earned.
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator ZipResults()
     {
-        //NarrativeDialogue.Instance.inkJSONAsset = inkEndScript;
         zipAnimCG.alpha = 1f;
-        //zipFaceObject.SetActive(true);
-        #region NEEDS TO BE MODULAR
-        if (packagesDelivered >= 15)
+        if (packagesDelivered >= _threeStarVal)
         {
             zipAnimator.SetTrigger("ExcitedResults");
             print(packagesDelivered);
             print("show excited results");
         }
-        else if (packagesDelivered >= 10 && packagesDelivered < 15)
+        else if (packagesDelivered >= _twoStarVal)// && packagesDelivered < starRatingSlider.maxStarValue)
         {
             zipAnimator.SetTrigger("PleasedResults");
             print(packagesDelivered);
             print("show pleased results");
         }
-        else if (packagesDelivered >= 5 && packagesDelivered < 10)
+        else if (packagesDelivered >= _oneStarVal)// && packagesDelivered < Mathf.Ceil(starRatingSlider.maxStarValue * (2/3))
         {
             zipAnimator.SetTrigger("DisappointedResults");
             print(packagesDelivered);
@@ -372,23 +386,9 @@ public class MenuController : MonoBehaviour
         zipAnimCG.alpha = 0f;
         //DialogueMenuManager.Instance.StartDialogue(GAMESTATE.CLOCKEDOUTEND);
         //StartCoroutine(ShutDown());
-        #endregion
     }
     #endregion
 
-    public void ReturnToMenu()
-    {
-        //GameManager.Instance.SaveAllPlayerData();
-        SceneManager.LoadScene(0);
-    }
-
-    /// <summary>
-    /// Quit the game in editor and build
-    /// </summary>
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
 
     #region CAME IN FROM MAIN MENU
 
@@ -439,8 +439,22 @@ public class MenuController : MonoBehaviour
     }
     #endregion
 
+    #region Score Methods
+    public void UpdateOrderScore(int _score)
+    {
+        ordersFulfilled += _score;
+    }
+    public void UpdatePackageScore(int _score)
+    {
+        packagesDelivered += _score;
+    }
+    public void UpdateRefundScore(int _score)
+    {
+        refundsOrdered += _score;
+    }
+    #endregion
 
-
+    #region Save/Load Methods
     public void CreateFiles()
     {
         SaveSystem.CreateNewSettingsData();
@@ -452,6 +466,7 @@ public class MenuController : MonoBehaviour
         optionsData.ChangeMusicVolume(musicVolume);
         optionsData.ChangeSfxVolume(sfxVolume);
         SaveSystem.SaveOptionsData(optionsData);
+        print("saved settings");
     }
 
     public OptionsData LoadAllSettings()
@@ -471,6 +486,7 @@ public class MenuController : MonoBehaviour
             return null;
         }
     }
+    #endregion
 
 
 
