@@ -7358,7 +7358,8 @@ MonoBehaviour:
   goalsScreenTwoStar: {fileID: 996395212478050088}
   goalsScreenThreeStar: {fileID: 2572837494711207586}
   ordersFulfilled: 0
-  packagesDelivered: 0
+  packagesDeliveredActual: 0
+  packagesDeliveredStarRating: 0
   refundsOrdered: 0
   invertMoveToggle: {fileID: 4022581357006506502}
   zipFaceObject: {fileID: 2922912288812514757}
@@ -13980,7 +13981,7 @@ PrefabInstance:
     - target: {fileID: 86619232901928369, guid: e0089a3bbd8e3fe42b366b587ce5ed6e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 86619232901928374, guid: e0089a3bbd8e3fe42b366b587ce5ed6e,
         type: 3}
@@ -14145,7 +14146,7 @@ PrefabInstance:
     - target: {fileID: 86619232418576068, guid: e0089a3bbd8e3fe42b366b587ce5ed6e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -12
+      value: -12.000015
       objectReference: {fileID: 0}
     - target: {fileID: 86619232418576068, guid: e0089a3bbd8e3fe42b366b587ce5ed6e,
         type: 3}

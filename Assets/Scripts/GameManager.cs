@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
 
     //point and package tracking variables
     public static int packagesDelivered = 0;//tallies number of packages delivered throughout workday
+    public static int totalPackagesDelivered = 0;//can't be decreased by refunds
     public static int ordersFulfilled = 0;//tallies number of orders fulfilled throughout workday
     public static int refundsOrdered = 0;//tallies number of refunds ordered throughout workday
 
@@ -87,6 +88,7 @@ public class GameManager : MonoBehaviour
     {
         AsteroidHome.UpdateScore += OrdersFulfilledUpdate;
         AsteroidHome.UpdatePackagesDelivered += PackagesDeliveredUpdate;
+        AsteroidHome.UpdateRefundPackages += PackagesRefundUpdate;
         AsteroidHome.UpdateRefunds += RefundsUpdate;
         SceneManager.sceneLoaded += LevelInit;
     }
@@ -95,6 +97,7 @@ public class GameManager : MonoBehaviour
         //unsubscribe from events
         AsteroidHome.UpdateScore -= OrdersFulfilledUpdate;
         AsteroidHome.UpdatePackagesDelivered -= PackagesDeliveredUpdate;
+        AsteroidHome.UpdateRefundPackages -= PackagesRefundUpdate;
         AsteroidHome.UpdateRefunds -= RefundsUpdate;
         SceneManager.sceneLoaded -= LevelInit;
     }
@@ -180,7 +183,7 @@ public class GameManager : MonoBehaviour
         #endregion
 
         //pause & resume game
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && state==GAMESTATE.CLOCKEDIN)
         {
             if (state == GAMESTATE.PAUSED)
             {
@@ -231,6 +234,7 @@ public class GameManager : MonoBehaviour
     void PackagesDeliveredUpdate(int _numPackages)
     {
         packagesDelivered += _numPackages;
+        totalPackagesDelivered += _numPackages;
         //print("Total packages delivered (GM): " + packagesDelivered);
     }
 
@@ -242,6 +246,16 @@ public class GameManager : MonoBehaviour
     {
         ordersFulfilled += _numOrders;
         //print("Orders fulfilled (GM): "+ ordersFulfilled);
+    }
+
+    /// <summary>
+    /// reduces the current packages delivered for scoring (not total). Param must be negative int
+    /// </summary>
+    /// <param name="_numPackages"></param>
+    void PackagesRefundUpdate(int _numPackages)
+    {
+        print($"GM added {_numPackages}");
+        packagesDelivered += _numPackages;
     }
 
     /// <summary>

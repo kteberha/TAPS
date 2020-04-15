@@ -16,6 +16,7 @@ public class RatingSlider : MonoBehaviour
     private void OnEnable()
     {
         AsteroidHome.UpdatePackagesDelivered += UpdateSliderValue;
+        AsteroidHome.UpdateRefundPackages += UpdateSliderValue;
     }
 
     private void Start()
@@ -36,7 +37,7 @@ public class RatingSlider : MonoBehaviour
     /// <param name="_addedPoints"></param>
     void UpdateSliderValue(int _addedPoints)
     {
-
+        print($"added {_addedPoints} to slider");
         //print("added points: " + _addedPoints);
         slider.value += _addedPoints;
         //print("New slider value: " + slider.value);
@@ -45,5 +46,6 @@ public class RatingSlider : MonoBehaviour
     private void OnDisable()
     {
         AsteroidHome.UpdatePackagesDelivered -= UpdateSliderValue;
+        AsteroidHome.UpdateRefundPackages -= UpdateSliderValue;
     }
 }

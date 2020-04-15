@@ -40,7 +40,8 @@ public class MenuController : MonoBehaviour
 
     Animation endDayAnim;
     [HideInInspector] public int ordersFulfilled = 0;
-    [HideInInspector] public int packagesDelivered = 0;
+    [HideInInspector] public int packagesDeliveredActual = 0;
+    [HideInInspector] public int packagesDeliveredStarRating = 0;
     [HideInInspector] public int refundsOrdered = 0;
 
     //public bool mapToggled = true;
@@ -68,7 +69,9 @@ public class MenuController : MonoBehaviour
         GameManager.WorkdayEnded += EndDaySequence;
         GameManager.InitializeSettings += AssignSettings;
         AsteroidHome.UpdateScore += UpdateOrderScore;
-        AsteroidHome.UpdatePackagesDelivered += UpdatePackageScore;
+        AsteroidHome.UpdatePackagesDelivered += UpdatePackageRatingScore;
+        AsteroidHome.UpdatePackagesDelivered += UpdatePackageTotalScore;
+        AsteroidHome.UpdateRefundPackages += UpdatePackageRatingScore;
         AsteroidHome.UpdateRefunds += UpdateRefundScore;
     }
     private void OnDisable()
@@ -79,7 +82,9 @@ public class MenuController : MonoBehaviour
         GameManager.WorkdayEnded -= EndDaySequence;
         GameManager.InitializeSettings -= AssignSettings;
         AsteroidHome.UpdateScore -= UpdateOrderScore;
-        AsteroidHome.UpdatePackagesDelivered -= UpdatePackageScore;
+        AsteroidHome.UpdatePackagesDelivered -= UpdatePackageRatingScore;
+        AsteroidHome.UpdatePackagesDelivered += UpdatePackageTotalScore;
+        AsteroidHome.UpdateRefundPackages -= UpdatePackageRatingScore;
         AsteroidHome.UpdateRefunds -= UpdateRefundScore;
     }
 
@@ -303,7 +308,7 @@ public class MenuController : MonoBehaviour
         int bestOrdersFulfilled = GameManager.CheckOrderScore(GameManager.workDayIndex, ordersFulfilled);
         print($"best orders this day are {bestOrdersFulfilled}");
 
-        int bestPackagesDelivered = GameManager.CheckPackageScore(GameManager.workDayIndex, packagesDelivered);
+        int bestPackagesDelivered = GameManager.CheckPackageScore(GameManager.workDayIndex, packagesDeliveredStarRating);
         print($"best packages delivered this day are: {bestPackagesDelivered}");
 
         int bestRefundsOrdered = GameManager.CheckRefundScore(GameManager.workDayIndex, refundsOrdered);
@@ -312,17 +317,17 @@ public class MenuController : MonoBehaviour
         ordersFulfilledText.text = $"Orders Fulfilled: {ordersFulfilled}";
         bestOrdersFulfilledText.text = $"Best: {bestOrdersFulfilled}";
 
-        packagesDeliveredText.text = $"Packages Delivered: {packagesDelivered}";
+        packagesDeliveredText.text = $"Packages Delivered: {packagesDeliveredStarRating}";
         bestPackagesText.text = $"Best: {bestPackagesDelivered}";
 
-        refundsOrderedText.text = $"Refunds Ordered: {refundsOrdered}";
+        refundsOrderedText.text = $"Deliveries Missed: {refundsOrdered}";
         bestRefundsText.text = $"Best: {bestRefundsOrdered}";
         #endregion
 
         GameManager.SaveAllGameData();
 
         //check if player can continue
-        if (packagesDelivered < _oneStarVal)
+        if (packagesDeliveredStarRating < _oneStarVal)
         {
             continueButton.enabled = false;
             continueButton.GetComponentInChildren<Text>().text = "";
@@ -387,25 +392,25 @@ public class MenuController : MonoBehaviour
         string clipName = "";
         endDayPanel.SetActive(false);
         zipAnimCG.alpha = 1f;
-        if (packagesDelivered >= _threeStarVal)
+        if (packagesDeliveredStarRating >= _threeStarVal)
         {
             zipAnimator.SetTrigger("ExcitedResults");
             clipName = "ExcitedResultsFace";
-            print($"{packagesDelivered} >= {_threeStarVal}");
+            print($"{packagesDeliveredStarRating} >= {_threeStarVal}");
             print("show excited results");
         }
-        else if (packagesDelivered >= _twoStarVal)// && packagesDelivered < starRatingSlider.maxStarValue)
+        else if (packagesDeliveredStarRating >= _twoStarVal)// && packagesDelivered < starRatingSlider.maxStarValue)
         {
             zipAnimator.SetTrigger("PleasedResults");
             clipName = "PleasedResultsFace";
-            print($"{packagesDelivered} >= {_twoStarVal}");
+            print($"{packagesDeliveredStarRating} >= {_twoStarVal}");
             print("show pleased results");
         }
-        else if (packagesDelivered >= _oneStarVal)// && packagesDelivered < Mathf.Ceil(starRatingSlider.maxStarValue * (2/3))
+        else if (packagesDeliveredStarRating >= _oneStarVal)// && packagesDelivered < Mathf.Ceil(starRatingSlider.maxStarValue * (2/3))
         {
             zipAnimator.SetTrigger("UghResults");
             clipName = "UghResultsFace";
-            print($"{packagesDelivered} >= {_oneStarVal}");
+            print($"{packagesDeliveredStarRating} >= {_oneStarVal}");
             print("show ugh results");
         }
         else
@@ -492,9 +497,14 @@ public class MenuController : MonoBehaviour
     {
         ordersFulfilled += _score;
     }
-    public void UpdatePackageScore(int _score)
+    public void UpdatePackageRatingScore(int _score)
     {
-        packagesDelivered += _score;
+        packagesDeliveredStarRating += _score;
+    }
+
+    public void UpdatePackageTotalScore(int _score)
+    {
+        packagesDeliveredActual += _score;
     }
     public void UpdateRefundScore(int _score)
     {

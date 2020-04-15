@@ -46,6 +46,7 @@ public class AsteroidHome : MonoBehaviour
 
     public static Action<int> UpdateScore;
     public static Action<int> UpdatePackagesDelivered;
+    public static Action<int> UpdateRefundPackages;
     public static Action<int> UpdateRefunds;
 
     [Header("DEMO TUTORIAL")]
@@ -355,11 +356,12 @@ public class AsteroidHome : MonoBehaviour
 
             ExpiredAudioSource.Play();//play the audio
             packageBeenOrdered = false;//toggle the house's package ordered state to false so it knows it can order another package
-            numPackagesOrdered = 0;//set the number of packages ordered by the house back to 0
             //call the refund update action
             if (UpdateRefunds != null)
                 UpdateRefunds(1);
-            //GameManager.Instance.refundsOrdered += 1;//increment the refunds ordered variable in the game manager
+            if (UpdateRefundPackages != null)
+                UpdateRefundPackages(-numPackagesOrdered);
+            numPackagesOrdered = 0;//set the number of packages ordered by the house back to 0
             orderDelayTime = _delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
             packagesOrdered.Clear();//remove all packages ordered
             offScreenIndicatorObj.transform.Find("Failed").gameObject.SetActive(true);//toggle the x to active
