@@ -31,27 +31,47 @@ namespace UM_AI
 	[System.Serializable]
 	public struct SteeringBehaviourWeights
 	{
+		[Range(0f,2f)]
 		public float separation;
+		[Range(0f,2f)]
 		public float cohesion;
+		[Range(0f,2f)]
 		public float alignment;
+		[Range(0f,2f)]
 		public float wander;
+		[Range(0f,2f)]
 		public float avoidance;
+		[Range(0f,2f)]
 		public float seek;
+		[Range(0f,2f)]
 		public float flee;
+		[Range(0f,2f)]
 		public float arrive;
+		[Range(0f,2f)]
 		public float pursuit;
+		[Range(0f,2f)]
 		public float interpose;
+		[Range(0f,2f)]
 		public float evade;
+		[Range(0f,2f)]
 		public float hide;
 	}
 
 	public partial class SteeringRig : MonoBehaviour
 	{
+		[Header("Steering")]
 		[UModules.EnumFlag,SerializeField]
 		SteeringType stFlags = SteeringType.None;
 		[SerializeField]
 		SteeringBehaviourWeights weights = new SteeringBehaviourWeights();
+
+		[Header("Stopping")]
+		[SerializeField]
+		bool stopping = false;
+		[Range(0f,100f), Tooltip("Mininum distance steered to target."),SerializeField]
+		float stoppingDistance = 1f;
 		
+		[Header("Wander")]
 		[Range(1f,100f),SerializeField]
 		float wanderJitter = 1f;
 		[Range(EPSILON,100f),SerializeField]
@@ -73,6 +93,10 @@ namespace UM_AI
 		/// <param name="targetPos">Target Position</param>
 		Vector2 Seek(Vector2 targetPos)
 		{
+			if (stopping && Vector2.Distance(RB.position,targetPos)<=stoppingDistance)
+			{
+				return Vector2.zero;
+			}
 			Vector2 desiredVelocity = (targetPos - RB.position).normalized * maxSpeed;
 			return (desiredVelocity - RB.velocity);
 		}
@@ -113,7 +137,7 @@ namespace UM_AI
 				//because Deceleration is enumerated as an int, this value is required
 				//to provide fine tweaking of the deceleration...
 				const float DECELTWEAK = 0.3f;
-
+ 
 				//calculate the speed required to reach the target given the desired
 				//deceleration
 				float speed =  dist / ((float)decel * DECELTWEAK);     
@@ -139,26 +163,30 @@ namespace UM_AI
 		//------------------------------------------------------------------------
 		Vector2 Pursuit(Rigidbody2D target)
 		{
-			const float DEGLIMIT = -0.95f; //acos(0.95)=18 degs
+			// const float DEGLIMIT = -0.95f; //acos(0.95)=18 degs
+			const float MAXPREIDCTION = 1f;
 			//if the evader is ahead and facing the agent then we can just seek for the evader's current position.
 			Vector2 toTarget = target.position - RB.position;
-			Vector2 heading = RB.velocity.normalized;
+			// Vector2 heading = RB.velocity.normalized;
+			float distance = toTarget.magnitude;
+			float speed = RB.velocity.magnitude;
+			float prediction = speed <= distance / MAXPREIDCTION ? MAXPREIDCTION : distance / speed;
+			return Seek(target.position + target.velocity * prediction);
 
-			float relativeHeading = Vector2.Dot(heading,target.velocity.normalized);
-
-			if ((Vector2.Dot(toTarget,heading) > 0f) && (relativeHeading < DEGLIMIT))  
-			{
-				return Seek(target.position);
-			}
+			// float relativeHeading = Vector2.Dot(heading,target.velocity.normalized);
+			// if ((Vector2.Dot(toTarget,heading) > 0f) && (relativeHeading < DEGLIMIT))  
+			// {
+			// 	return Seek(target.position);
+			// }
 
 			//Not considered ahead so we predict where the evader will be.
 			
 			//the lookahead time is propotional to the distance between the evader
 			//and the pursuer; and is inversely proportional to the sum of the agent's velocities
-			float lookAheadTime = toTarget.magnitude / (maxSpeed + RB.velocity.magnitude);
+			//float lookAheadTime = toTarget.magnitude / (maxSpeed + RB.velocity.magnitude);
 			
 			//now seek to the predicted future position of the evader
-			return Seek(target.position + target.velocity * lookAheadTime);
+			//return Seek(target.position + target.velocity * lookAheadTime);
 		}
 
 		//----------------------------- Evade ------------------------------------
@@ -206,7 +234,7 @@ namespace UM_AI
 			wanderTarget *= wanderRadius;
 
 			//move the target into a position WanderDist in front of the agent
-			Vector2 target = RB.position + Side * wanderDistance + wanderTarget;
+			Vector2 target = RB.position + Forward * wanderDistance + wanderTarget;
 
 			//and steer towards it
 			return target - RB.position;
@@ -319,22 +347,22 @@ namespace UM_AI
 		// TODO: Use original sensors
 		Vector2 Avoidance()
 		{
-			Vector2 rf = Vector2.zero;
+			// const float MINANGLE = 165f;
+			Vector2 avoidance = Vector2.zero;
+			RaycastHit2D hit;
 			for (int i = 0; i < sensors.Length; i++)
 			{
-				var s = sensors[i];
-				s.Pulse();
-				if (!s.IsObstructed) continue;
-				// 0 when unobstructed, 1 when touching
-				float obsRatio = Mathf.Pow(1f-(s.ObstructionRayHit.distance/s.Length), 1f/avoidanceSensitivity);
-				rf += obsRatio * s.ObstructionRayHit.normal;
+				sensors[i].Pulse();
+				if (sensors[i].IsObstructed)
+				{
+					hit = sensors[i].ObstructionRayHit;
+					#if UNITY_EDITOR
+					Debug.DrawRay(hit.point, hit.normal * avoidanceSensitivity, Color.red, 1f);
+					#endif
+					avoidance += hit.normal * avoidanceSensitivity;
+				}
 			}
-			float rfMag = rf.magnitude;
-			if (rfMag > maxAvoidanceLength)
-			{
-				return rf * maxAvoidanceLength;
-			}
-			return rf * rfMag;
+			return avoidance;
 		}
 
 	}
