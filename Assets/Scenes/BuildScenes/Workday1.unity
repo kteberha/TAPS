@@ -72196,7 +72196,7 @@ PrefabInstance:
     - target: {fileID: 2389631504862340816, guid: 63d135427928f734d9695a015a089a8d,
         type: 3}
       propertyPath: workdayLength
-      value: 61
+      value: 91
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63d135427928f734d9695a015a089a8d, type: 3}
