@@ -505,6 +505,8 @@ public class PlayerController : MonoBehaviour
 
         foreach (Collider2D c in allColliders)
             c.enabled = true;
+        print("teleporting possible now");
+        Boundaries.teleporting = false;
     }
 
     /// <summary>

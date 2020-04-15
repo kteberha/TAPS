@@ -8,6 +8,7 @@ public class Boundaries : MonoBehaviour
     private Vector2 topbottomBoundaries;
     private PlayerController playerController;
     GameObject player;
+    [HideInInspector] public static bool teleporting;
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +23,19 @@ public class Boundaries : MonoBehaviour
     {
         if (player.transform.position.y > topbottomBoundaries.y || player.transform.position.y < -(topbottomBoundaries.y))
         {
-            StartCoroutine(playerController.Teleport());
+            if (!teleporting)
+            {
+                teleporting = true;
+                StartCoroutine(playerController.Teleport());
+            }
         }
         if (player.transform.position.x > leftrightBoundaries.x || player.transform.position.x < -(leftrightBoundaries.x))
         {
-            StartCoroutine(playerController.Teleport());
+            if (!teleporting)
+            {
+                teleporting = true;
+                StartCoroutine(playerController.Teleport());
+            }
         }
     }
 }
