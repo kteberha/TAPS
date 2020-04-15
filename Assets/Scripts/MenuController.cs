@@ -20,6 +20,7 @@ public class MenuController : MonoBehaviour
     public GameObject pausePanel;
     public GameObject optionsPanel;
     public GameObject endDayPanel;
+    [SerializeField] GameObject goalsScreen;
 
     //////DEMO ONLY/////
     public GameObject wishlist;
@@ -35,6 +36,7 @@ public class MenuController : MonoBehaviour
 
     public Text ordersFulfilledText, packagesDeliveredText, refundsOrderedText;
     public Text bestOrdersFulfilledText, bestPackagesText, bestRefundsText;
+    [SerializeField] TMPro.TextMeshProUGUI goalsScreenOneStar, goalsScreenTwoStar, goalsScreenThreeStar;
 
     Animation endDayAnim;
     [HideInInspector] public int ordersFulfilled = 0;
@@ -47,18 +49,22 @@ public class MenuController : MonoBehaviour
     //Zip Transition Animations
     public GameObject zipFaceObject;
     public Animator zipAnimator;
+    [SerializeField] Animator screenAnimator;
 
     //final points to judge
     public CanvasGroup zipAnimCG;
     [SerializeField] RatingSlider starRatingSlider;
     int _threeStarVal, _twoStarVal, _oneStarVal;
 
+    [SerializeField] DialogueMenuManager dialogueManger;
+
+    [SerializeField] Button continueButton;
 
     private void OnEnable()
     {
         GameManager.onPaused += Pause;
         GameManager.onResumed += Resume;
-        GameManager.WorkdayStarted += WorkdayStart;
+        GameManager.WorkdayStarted += LevelStart;
         GameManager.WorkdayEnded += EndDaySequence;
         GameManager.InitializeSettings += AssignSettings;
         AsteroidHome.UpdateScore += UpdateOrderScore;
@@ -69,7 +75,7 @@ public class MenuController : MonoBehaviour
     {
         GameManager.onPaused -= Pause;
         GameManager.onResumed -= Resume;
-        GameManager.WorkdayStarted -= WorkdayStart;
+        GameManager.WorkdayStarted -= LevelStart;
         GameManager.WorkdayEnded -= EndDaySequence;
         GameManager.InitializeSettings -= AssignSettings;
         AsteroidHome.UpdateScore -= UpdateOrderScore;
@@ -85,10 +91,19 @@ public class MenuController : MonoBehaviour
         optionsCg = optionsPanel.GetComponent<CanvasGroup>();
         endDayCg = endDayPanel.GetComponent<CanvasGroup>();
         endDayAnim = endDayPanel.GetComponent<Animation>();
-        _threeStarVal = starRatingSlider.maxStarValue;
-        _twoStarVal = Mathf.CeilToInt(starRatingSlider.maxStarValue * (2 / 3));
-        _oneStarVal = Mathf.CeilToInt(starRatingSlider.maxStarValue * (1 / 3));
+        dialogueManger = GameObject.Find("Dialogue Menu Manager").GetComponent<DialogueMenuManager>();
 
+        //establish the star rating values
+        _threeStarVal = starRatingSlider.maxStarValue;
+        _twoStarVal = Mathf.CeilToInt(_threeStarVal * 0.66f);
+        _oneStarVal = Mathf.CeilToInt(_threeStarVal * 0.33f);
+
+        //update the goals text values
+        goalsScreenThreeStar.text = $"{_threeStarVal} Packages";
+        goalsScreenTwoStar.text = $"{_twoStarVal} Packages";
+        goalsScreenOneStar.text = $"{_oneStarVal} Packages";
+
+        #region Resolution Setup
         //get all of the resolutions available to display
         resolutions = Screen.resolutions;
 
@@ -119,8 +134,9 @@ public class MenuController : MonoBehaviour
         resolutionDropdown.value = currentResolutionIndex;
         //Refresh the dropdown so it displays the correct value on start
         resolutionDropdown.RefreshShownValue();
+        #endregion
 
-        #region NEEDSFIXED
+        #region NEEDSFIXED Check and set movement setting
 
         //get and apply saved input options if any exist
         if (!PlayerPrefs.HasKey("InvertedMovement"))
@@ -146,15 +162,6 @@ public class MenuController : MonoBehaviour
 
     }
 
-    public void WorkdayStart()
-    {
-
-        if (workdayStatusText != null)
-        {
-            workdayStatusText.text = "Clocked IN!";//set the animated text object
-            textAnimation = workdayStatusText.GetComponent<Animation>();
-        }
-    }
 
     #region MenuMethods
     public void Pause()
@@ -184,26 +191,13 @@ public class MenuController : MonoBehaviour
         GameManager.state = GAMESTATE.CLOCKEDIN;
     }
 
-    public void Restart()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(GameManager.workDayActual);
-    }
-
     public void Continue()
     {
-        Time.timeScale = 1f;
-        //check if currently on last day
-        if (++GameManager.workDayActual > SceneManager.sceneCount)
-        {
-            print("on last level, go back to main menu");
-            SceneManager.LoadScene(0);
-        }
-        else
-        {
-            GameManager.workDayActual++;
-            SceneManager.LoadScene(GameManager.workDayActual);
-        }
+        StartCoroutine(ZipResults(true));
+    }
+    public void Restart()
+    {
+        StartCoroutine(ZipResults(false));
     }
 
     /// <summary>
@@ -269,16 +263,29 @@ public class MenuController : MonoBehaviour
     }
     #endregion
 
-    /// <summary>
-    /// Sequence of events to start the workday
-    /// </summary>
-    public void StartDaySequence()
+    #region Workday Methods
+    public void LevelStart()
     {
         StartCoroutine(WakeUp());
     }
 
+    public void WorkdayStart()
+    {
+        if (workdayStatusText != null)
+        {
+            workdayStatusText.text = "Clocked IN!";//set the animated text object
+            textAnimation = workdayStatusText.GetComponent<Animation>();
+            textAnimation.Play();
+        }
+
+        GameManager.state = GAMESTATE.CLOCKEDIN;
+
+        goalsScreen.SetActive(false);
+    }
+
     /// <summary>
     /// Sequence of events after the workday timer reaches 0;
+    /// Coroutine nested in method for event call
     /// </summary>
     public void EndDaySequence()
     {
@@ -287,6 +294,12 @@ public class MenuController : MonoBehaviour
 
     public IEnumerator EndDay()
     {
+        //play the clocked out text animation
+        workdayStatusText.text = "Clocked OUT!";//set the animated text object
+        textAnimation.Play();
+        yield return new WaitForSeconds(textAnimation.clip.length);
+
+        #region Checking For Highscores
         int bestOrdersFulfilled = GameManager.CheckOrderScore(GameManager.workDayIndex, ordersFulfilled);
         print($"best orders this day are {bestOrdersFulfilled}");
 
@@ -304,93 +317,128 @@ public class MenuController : MonoBehaviour
 
         refundsOrderedText.text = $"Refunds Ordered: {refundsOrdered}";
         bestRefundsText.text = $"Best: {bestRefundsOrdered}";
+        #endregion
 
         GameManager.SaveAllGameData();
 
+        //check if player can continue
+        if (packagesDelivered < _oneStarVal)
+        {
+            continueButton.enabled = false;
+            continueButton.GetComponentInChildren<Text>().text = "";
+        }
+
         GameManager.state = GAMESTATE.CLOCKEDOUTEND;
-        //paused = true;
         endDayAnim.Play();
+
         yield return new WaitForSeconds(endDayAnim.clip.length);
-        //Time.timeScale = 0f;
+
         endDayCg.blocksRaycasts = true;
         endDayCg.interactable = true;
-    }
-
-    public void ShowResultFace()
-    {
-        StartCoroutine(ZipResults());
-        endDayPanel.SetActive(false);
     }
 
     #region NEEDS TO BE MOVED OR HEAVILY ALTERED
     IEnumerator WakeUp()
     {
+        //Fade screen in
+        screenAnimator.SetTrigger("FadeOut");
         zipFaceObject.SetActive(true);
+        zipAnimCG.alpha = 1f;
+        yield return new WaitForSeconds(Mathf.Ceil(GetAnimationClip(screenAnimator, "ScreenFadeOut").length));
+
         zipAnimator.SetTrigger("ClockingIn");
-        yield return new WaitForSeconds(28.7f);
+        yield return new WaitForSeconds(Mathf.Ceil(GetAnimationClip(zipAnimator, "WakeUpTransition").length));
+
         zipAnimator.SetTrigger("DonePlaying");
         zipAnimCG.alpha = 0f;
 
-        //DialogueMenuManager.Instance.StartDialogue(GAMESTATE.CLOCKEDOUTSTART);
-        StopCoroutine(WakeUp());
+        //toggle the dialogue menu for starting dialogue
+        dialogueManger.StartDialogue(GAMESTATE.CLOCKEDOUTSTART);
     }
-
-    public IEnumerator ShutDown()
+    /// <summary>
+    /// Helper method to get animation clips
+    /// </summary>
+    /// <param name="_animator"></param>
+    /// <param name="_name"></param>
+    /// <returns></returns>
+    AnimationClip GetAnimationClip(Animator _animator, string _name)
     {
-        StopCoroutine(ZipResults());
-        zipAnimCG.alpha = 1;
-        zipAnimator.SetTrigger("ClockingOut");
-        //clipInfo = zipAnimator.GetCurrentAnimatorClipInfo(0);
-        //print("shut down clip name: " + clipInfo[0].clip.name);
+        AnimationClip[] clips = _animator.runtimeAnimatorController.animationClips;
+        AnimationClip startClip = null;
+        foreach (AnimationClip c in clips)
+            if (c.name == _name)
+            {
+                //print($"Clip: {_name} found");
+                startClip = c;
+                break;
+            }
+        if (startClip.name == null)
+            Debug.LogWarning($"no clip with name: {_name} exists");
 
-        yield return new WaitForSeconds(2f);
-        //FOR DEMO
-        //MenuController.Instance.Wishlist();
-        //zipAnimCG.alpha = 0f;
-        zipFaceObject.SetActive(false);
+        return startClip;
     }
 
     /// <summary>
     /// Plays the facial animations for zip based on the score earned.
     /// </summary>
     /// <returns></returns>
-    public IEnumerator ZipResults()
+    public IEnumerator ZipResults(bool _continue)
     {
+        string clipName = "";
+        endDayPanel.SetActive(false);
         zipAnimCG.alpha = 1f;
         if (packagesDelivered >= _threeStarVal)
         {
             zipAnimator.SetTrigger("ExcitedResults");
-            print(packagesDelivered);
+            clipName = "ExcitedResultsFace";
+            print($"{packagesDelivered} >= {_threeStarVal}");
             print("show excited results");
         }
         else if (packagesDelivered >= _twoStarVal)// && packagesDelivered < starRatingSlider.maxStarValue)
         {
             zipAnimator.SetTrigger("PleasedResults");
-            print(packagesDelivered);
+            clipName = "PleasedResultsFace";
+            print($"{packagesDelivered} >= {_twoStarVal}");
             print("show pleased results");
         }
         else if (packagesDelivered >= _oneStarVal)// && packagesDelivered < Mathf.Ceil(starRatingSlider.maxStarValue * (2/3))
         {
-            zipAnimator.SetTrigger("DisappointedResults");
-            print(packagesDelivered);
-            print("show disappointed results");
+            zipAnimator.SetTrigger("UghResults");
+            clipName = "UghResultsFace";
+            print($"{packagesDelivered} >= {_oneStarVal}");
+            print("show ugh results");
         }
         else
         {
-            zipAnimator.SetTrigger("UghResults");
-            print(packagesDelivered);
-            print("show ugh results");
+            zipAnimator.SetTrigger("DisappointedResults");
+            clipName = "DisappointedResultsFace";
+            print("show disappointed results");
         }
-        yield return new WaitForSeconds(2.5f);
-        zipAnimator.SetTrigger("DonePlaying");
-        zipAnimCG.alpha = 0f;
-        //DialogueMenuManager.Instance.StartDialogue(GAMESTATE.CLOCKEDOUTEND);
-        //StartCoroutine(ShutDown());
+        yield return new WaitForSeconds(Mathf.Ceil(GetAnimationClip(zipAnimator, clipName).length));
+
+        //Fade out and load next level
+        screenAnimator.SetTrigger("FadeIn");
+        yield return new WaitForSeconds(Mathf.Ceil(GetAnimationClip(screenAnimator, "ScreenFadeIn").length));
+
+        //check if restarting the scene or moving onto the next one.
+        if (!_continue)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        else
+        {
+            //check if currently on last day
+            if (SceneManager.GetActiveScene().buildIndex + 1 >= SceneManager.sceneCountInBuildSettings)
+            {
+                SceneManager.LoadScene(0);
+            }
+            else
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
+    #endregion
     #endregion
 
 
-    #region CAME IN FROM MAIN MENU
+    #region Settings Adjustment Methods
 
     /// <summary>
     /// Adjusts the music master mixer

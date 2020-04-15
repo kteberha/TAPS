@@ -12,7 +12,7 @@ public class NarrativeDialogue : MonoBehaviour
     public Story story;
 
     public Canvas canvas;
-    public TextMeshProUGUI textBox;
+    public TextMeshProUGUI text;
     public Button button;
     public Button choiceButton;
 
@@ -24,10 +24,10 @@ public class NarrativeDialogue : MonoBehaviour
     {
         dialogueManager = GetComponent<DialogueMenuManager>();
 
-        if (textBox == null)
+        if (text == null)
         {
-            textBox = GameObject.Find("TextTest").GetComponent<TextMeshProUGUI>();
-            print(textBox);
+            text = GameObject.Find("TextTest").GetComponent<TextMeshProUGUI>();
+            print(text);
         }
 
         //script for calling the .ink files located in the Dialogue Script folder
@@ -106,7 +106,7 @@ public class NarrativeDialogue : MonoBehaviour
     // Creates a button showing the choice text
     void CreateContentView(string text)
     {
-        textBox.text = text;
+        this.text.text = text;
     }
 
     // Creates a button showing the choice text

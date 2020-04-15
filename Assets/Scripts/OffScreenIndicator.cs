@@ -9,7 +9,7 @@ public class OffScreenIndicator : MonoBehaviour
 
     float distanceFromTarget;
     float sizeMultiplier = 4;
-    public Transform playerTransform;
+    Transform playerTransform;
 
     public float minDistance;
     public float maxDistance;
@@ -22,6 +22,11 @@ public class OffScreenIndicator : MonoBehaviour
 
     [SerializeField] GameObject arrowHolder;// to indicate where the associated home is
 
+
+    private void Start()
+    {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     // Update is called once per frame
     void Update()

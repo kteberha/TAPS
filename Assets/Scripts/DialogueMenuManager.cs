@@ -13,7 +13,6 @@ public class DialogueMenuManager : MonoBehaviour
 
     Rigidbody2D rb;
     Vector3 pTempVelocity;
-    //bool menuActive = false;
 
     Camera main;
     Transform dialogueCameraTransform;
@@ -38,7 +37,6 @@ public class DialogueMenuManager : MonoBehaviour
         pTempVelocity = rb.velocity;
         rb.velocity = new Vector3(0f, 0f, 0f);
         main.GetComponent<Camera2DFollow>().enabled = false;
-        //main.transform.DOMove(new Vector3(dialogueCameraTransform.position.x, dialogueCameraTransform.transform.position.y, dialogueCameraTransform.position.z), 0.3f).OnComplete(MakeMenu).SetEase(DG.Tweening.Ease.InBack);
         MakeMenu(gs);
     }
 
@@ -53,7 +51,6 @@ public class DialogueMenuManager : MonoBehaviour
     void MakeMenu(GAMESTATE gs)
     {
         GameManager.state = gs;
-        //menuActive = true;
         menu.gameObject.SetActive(true);
         player.GetComponent<AudioSource>().Stop();
     }
@@ -62,16 +59,12 @@ public class DialogueMenuManager : MonoBehaviour
     {
         GameManager.state = GAMESTATE.PAUSED;
         Time.timeScale = 0f;
-        //menuActive = true;
         menu.gameObject.SetActive(true);
-
     }
 
     void RemoveMenu()
     {
-        //menuController.paused = false;
         Time.timeScale = 1f;
-        //menuActive = false;
         menu.gameObject.SetActive(false);
 
         if (GameManager.state == GAMESTATE.CLOCKEDOUTSTART)
@@ -90,10 +83,5 @@ public class DialogueMenuManager : MonoBehaviour
         GameManager.state = GAMESTATE.CLOCKEDIN;
         //GameManager.Instance.textAnimation.Play();
         narrativeDialogue.story = narrativeDialogue.NewStory();
-    }
-
-    public void SkipDialogue()
-    {
-        EndDialogue();
     }
 }

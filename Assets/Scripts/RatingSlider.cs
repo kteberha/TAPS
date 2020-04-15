@@ -11,6 +11,7 @@ public class RatingSlider : MonoBehaviour
     public GameObject Fill;
 
     public int maxStarValue;
+    [SerializeField] RatingSlider endDaySlider;
 
     private void OnEnable()
     {
@@ -19,6 +20,13 @@ public class RatingSlider : MonoBehaviour
 
     private void Start()
     {
+        //sets the end of day slider to match the gameday slider.
+        if (endDaySlider != null)
+        {
+            endDaySlider.maxStarValue = maxStarValue;
+            endDaySlider.slider.maxValue = maxStarValue;
+        }
+
         slider.maxValue = maxStarValue;
     }
 

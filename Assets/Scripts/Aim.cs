@@ -5,15 +5,18 @@ using UnityEngine;
 public class Aim : MonoBehaviour
 {
     private LineRenderer lineRenderer;
-    [SerializeField]private PlayerController playerController;
+    private PlayerController playerController;
 
-    public Camera mainCamera;
-    public Transform player;
+    private Camera mainCamera;
+    private Transform player;
     public float maxLength;
 
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerController = player.gameObject.GetComponent<PlayerController>();
+        mainCamera = Camera.main;
         lineRenderer = GetComponent<LineRenderer>();
     }
 

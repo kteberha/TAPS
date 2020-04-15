@@ -52,8 +52,6 @@ public class GameManager : MonoBehaviour
 
     #region ThingsThatNeedMoved
     //Clock in or out UI text variables
-    public Text workdayStatusText;
-    [HideInInspector]public Animation textAnimation;
     public TextAsset inkEndScript;
     #endregion
 
@@ -148,13 +146,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //check that main menu isn't current scene
-        if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            //state = GAMESTATE.CLOCKEDOUTSTART;
-            state = GAMESTATE.CLOCKEDIN;
-            //StartCoroutine(WakeUp());
-        }
+        state = GAMESTATE.CLOCKEDOUTSTART;
+
         if (WorkdayStarted != null)
         {
             WorkdayStarted();
