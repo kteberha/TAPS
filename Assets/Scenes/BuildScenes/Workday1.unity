@@ -14058,7 +14058,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 966846798, guid: e6c5238db262e0f488f3bbc3ff83bee5, type: 3}
       propertyPath: orderDelayTime
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1523720864548264424, guid: e6c5238db262e0f488f3bbc3ff83bee5,
         type: 3}
