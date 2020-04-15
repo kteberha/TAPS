@@ -8874,9 +8874,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb3b26e632567849909ba6bdd45bbe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
-  mainCamera: {fileID: 0}
-  player: {fileID: 0}
   maxLength: 65
 --- !u!1 &4022581359060365486
 GameObject:
@@ -13983,7 +13980,7 @@ PrefabInstance:
     - target: {fileID: 86619232901928369, guid: e0089a3bbd8e3fe42b366b587ce5ed6e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 86619232901928374, guid: e0089a3bbd8e3fe42b366b587ce5ed6e,
         type: 3}
@@ -14213,12 +14210,12 @@ PrefabInstance:
     - target: {fileID: 86619232418576069, guid: e0089a3bbd8e3fe42b366b587ce5ed6e,
         type: 3}
       propertyPath: m_fontSize
-      value: 28
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 86619232418576069, guid: e0089a3bbd8e3fe42b366b587ce5ed6e,
         type: 3}
       propertyPath: m_fontSizeBase
-      value: 28
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 86619233584908882, guid: e0089a3bbd8e3fe42b366b587ce5ed6e,
         type: 3}
@@ -14558,6 +14555,21 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6773778967978547426, guid: 7764e1bbc2aabf64e885077de91235b6,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773778967978547426, guid: 7764e1bbc2aabf64e885077de91235b6,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3165969566728842745, guid: 7764e1bbc2aabf64e885077de91235b6,
+        type: 3}
+      propertyPath: m_UpdateMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8401301009726941684, guid: 7764e1bbc2aabf64e885077de91235b6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -14587,6 +14599,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 366.70505
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773778967978547425, guid: 7764e1bbc2aabf64e885077de91235b6,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2474693522314697672, guid: 7764e1bbc2aabf64e885077de91235b6,
         type: 3}
@@ -14673,11 +14690,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6773778967978547425, guid: 7764e1bbc2aabf64e885077de91235b6,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6773778968995685189, guid: 7764e1bbc2aabf64e885077de91235b6,
         type: 3}
       propertyPath: m_IsActive
@@ -14692,11 +14704,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3165969566728842745, guid: 7764e1bbc2aabf64e885077de91235b6,
-        type: 3}
-      propertyPath: m_UpdateMode
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3132179537964604113, guid: 7764e1bbc2aabf64e885077de91235b6,
         type: 3}

@@ -20,7 +20,6 @@ public class AsteroidHome : MonoBehaviour
     public int numPackagesOrdered;//number of packages ordered by a house
     public float countdownTime = 120f;//time before an order expires
     public float orderDelayTime = 5f;//time to delay another order after expired or fulfilled orders
-    public int points;//number of points the house will award for completing an order
 
     public float timerBonus = 15f;//number of seconds that will be granted as bonus for delivering a package to a house with multiple packages.
     public float refillSpeed = 1f;//number of seconds for the demand meter to refill when bonus time added.
@@ -295,13 +294,12 @@ public class AsteroidHome : MonoBehaviour
 
                 demandController.maxValue = countdownTime;//set the slider's max time value
                 demandController.CurrentValue = countdownTime;//set the slider's current value
-
                 offScreenIndicatorObj.SetActive(true);//set assigned demand indicator to be active with assigned time
             }
             //run the delay then place the order
             else
             {
-                print(this.name + " needs to wait");
+                print($"{this.name} needs to wait {orderDelayTime} seconds");
                 StartCoroutine(OrderDelay());
             }
 
@@ -314,34 +312,15 @@ public class AsteroidHome : MonoBehaviour
     /// </summary>
     public void OrderStatusCheck()
     {
-        _offScreenIndicator.OrderTicketUpdate(this);
+        _offScreenIndicator.OrderTicketUpdate(this);//update the package ticket image
 
         //check number of packages left to deliver
         if (packagesOrdered.Count == 0)
         {
-            StartCoroutine(OrderFulfilled());
-
-            //////////////FOR DEMO TUTORIAL SCENE////////////////
-            if (SceneManager.GetActiveScene().name == "TutorialScene")
-            {
-                orderDelayTime = 0f;
-                Order();
-            }
-            /////////////////////////////////////////////////////////
+            StartCoroutine(OrderFulfilled());//start order fulfilled coroutine
         }
         else
-            addTime = StartCoroutine(AddTime(0f));
-
-        ///Tutorial stuff///////
-        if(SceneManager.GetActiveScene().name == "TutorialScene")
-        {
-            if(tutorialManager.i == 24)
-            {
-                tutorialManager.i++;
-                tutorialManager.ToggleDialogueOn();
-            }
-        }
-        ///////////////////////////////////////////////////////
+            addTime = StartCoroutine(AddTime(0f));//start the add time coroutine with starting lerp value of 0
     }
 
     /// <summary>
@@ -358,6 +337,7 @@ public class AsteroidHome : MonoBehaviour
         if (UpdatePackagesDelivered != null)
             UpdatePackagesDelivered(numPackagesOrdered);
         orderDelayTime = _delayReset;//set the order delay timer so that it will trigger the delay branch in the order method.
+
         yield return new WaitForSeconds(2);//wait before disabling the off screen indicator
         offScreenIndicatorObj.transform.Find("Success").gameObject.SetActive(false);//toggle the check mark off
         offScreenIndicatorObj.SetActive(false);//disable the off screen indicator
@@ -387,15 +367,6 @@ public class AsteroidHome : MonoBehaviour
             yield return new WaitForSeconds(2);
             offScreenIndicatorObj.SetActive(false);//turn off the offscreen indicator
             offScreenIndicatorObj.transform.Find("Failed").gameObject.SetActive(false);//reset the x to off
-        }
-
-
-
-        ///Special condition only for the tutorial scene
-        if (SceneManager.GetActiveScene().name == "TutorialScene")
-        {
-            orderDelayTime = 0;
-            Order();
         }
     }
 
