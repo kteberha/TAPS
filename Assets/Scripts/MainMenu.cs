@@ -19,16 +19,12 @@ public class MainMenu : MonoBehaviour
     {
         //get all of the resolutions available to display
         resolutions = Screen.resolutions;
-
         //Make sure the dropdown doesn't duplicate values
         resolutionDropdown.ClearOptions();
-
         //create a list to store all of the resolutions as strings (needs to have adjustable size)
         List<string> options = new List<string>();
-
         //current index variable for storing which value is the default
         int currentResolutionIndex = 0;
-
         //add all the resolutions into the list in a formatted string
         for (int i = 0; i < resolutions.Length; i++)
         {

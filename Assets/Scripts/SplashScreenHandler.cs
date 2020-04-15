@@ -6,6 +6,8 @@ public class SplashScreenHandler : MonoBehaviour
 {
     [SerializeField] Animator animator;
     [SerializeField] AudioSource audioSource1, audioSource2;
+    bool splashScreenOver = false;//determines if the splash screens are done/have been skipped
+
 
     bool skipped = false;
     private void Awake()
@@ -20,14 +22,25 @@ public class SplashScreenHandler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(0) && !skipped)
+        if (!audioSource1.isPlaying)
         {
             skipped = true;
-            animator.Play("SplashScreenAnim", 0, 0.96f);
-
-            audioSource2.Stop();//cancel scheduled audio
-            audioSource1.Stop();//stop the current audio
-            audioSource2.Play();//play the looping audio
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(0))
+        {
+            if (!skipped)
+                SkipIntro();
+        }
+    }
+
+    void SkipIntro()
+    {
+        skipped = true;
+        animator.Play("SplashScreenAnim", 0, 0.96f);
+        audioSource2.Stop();//cancel scheduled audio
+        audioSource1.Stop();//stop the current audio
+        audioSource2.Play();//play the looping audio
+
     }
 }

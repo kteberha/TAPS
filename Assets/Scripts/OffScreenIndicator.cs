@@ -74,8 +74,6 @@ public class OffScreenIndicator : MonoBehaviour
     /// <param name="_asteroidHome"></param>
     public void OrderTicketUpdate(AsteroidHome _asteroidHome)
     {
-        //print("ui should update");//testing
-
         int i = 0;
 
         foreach (GameObject package in _asteroidHome.packagesOrdered)//go through each item in packages ordered list
@@ -99,18 +97,17 @@ public class OffScreenIndicator : MonoBehaviour
                     break;
                 default:
                     packageTypeAssigned = null;
-                    print("Error assigning package image: Offscreen Indicator");
+                    Debug.LogWarning($"Error assigning package image: {this.name}");
                     break;
             }
 
             packageSlotImages[i].sprite = packageTypeAssigned;//alter the sprite in the image slot
-            packageSlotImages[i].color = Color.white;//make sure the sprite is visible incase it used to be clear
+            packageSlotImages[i].color = Color.white;//make sure the sprite is visible in case it used to be clear
             //print("slot " + i + " " + packageSlotImages[i].sprite.name);
 
             //increment i if there are more packages to loop through
             if (i + 1 < _asteroidHome.packagesOrdered.Count)
                 i++; //increment the index holder to work with the next icon slot
-
             //set remaining slots as invisible
             else
             {
