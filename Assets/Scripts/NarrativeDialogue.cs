@@ -5,26 +5,29 @@ using Ink.Runtime;
 using UnityEngine.UI;
 using TMPro;
 
-public class NarrativeDialogue : Singleton<NarrativeDialogue>
+public class NarrativeDialogue : MonoBehaviour
 {
     public TextAsset inkJSONAsset;
     public TextAsset inkJSONAsset2;
     public Story story;
 
     public Canvas canvas;
-    public TextMeshProUGUI textBox;
+    public TextMeshProUGUI text;
     public Button button;
     public Button choiceButton;
 
+    private DialogueMenuManager dialogueManager;
     public HorizontalLayoutGroup hlg;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (textBox == null)
+        dialogueManager = GetComponent<DialogueMenuManager>();
+
+        if (text == null)
         {
-            textBox = GameObject.Find("TextTest").GetComponent<TextMeshProUGUI>();
-            print(textBox);
+            text = GameObject.Find("TextTest").GetComponent<TextMeshProUGUI>();
+            print(text);
         }
 
         //script for calling the .ink files located in the Dialogue Script folder
@@ -60,7 +63,7 @@ public class NarrativeDialogue : Singleton<NarrativeDialogue>
         }
         else
         {
-            DialogueMenuManager.Instance.EndDialogue();
+            dialogueManager.EndDialogue();
         }
 
         // Display all the choices, if there are any!
@@ -103,7 +106,7 @@ public class NarrativeDialogue : Singleton<NarrativeDialogue>
     // Creates a button showing the choice text
     void CreateContentView(string text)
     {
-        textBox.text = text;
+        this.text.text = text;
     }
 
     // Creates a button showing the choice text

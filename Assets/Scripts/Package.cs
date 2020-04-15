@@ -29,7 +29,7 @@ public class Package : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _heldPackages = PlayerController.Instance.heldPackages;
+        _heldPackages = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().heldPackages;
         a_Source = GetComponent<AudioSource>();
 
         //Random Size
@@ -146,7 +146,7 @@ public class Package : MonoBehaviour
             a_Source.clip = normalPackageClip;
         a_Source.Play();
         yield return new WaitForSeconds(a_Source.clip.length);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     //private void OnMouseDown()

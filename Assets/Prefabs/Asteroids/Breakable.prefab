@@ -88,6 +88,9 @@ MonoBehaviour:
   player: {fileID: 0}
   asteroidSpawn: {fileID: 923535397587018118, guid: 34f705687ff2f4c40a3143bc0fc23150,
     type: 3}
+  asteroidMeshes:
+  - {fileID: -2340022017102216221, guid: 8c49781dd7240b348bf7ed5618fc07d8, type: 3}
+  - {fileID: -2301121019992963588, guid: 0e565eda2a5292b4ab259f6fbb2bae4e, type: 3}
   breakThreshold: 25
   playCoolDown: 0.5
   breakableResist: {fileID: 8300000, guid: 4ec09215ecef28648a1e1164fa42fa16, type: 3}
@@ -232,7 +235,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1857079751986641668}
-  m_Mesh: {fileID: -5787454983416860088, guid: 89b9931aab1d90848947ae0a622d6055, type: 3}
+  m_Mesh: {fileID: -2301121019992963588, guid: 0e565eda2a5292b4ab259f6fbb2bae4e, type: 3}
 --- !u!23 &2709022988808731736
 MeshRenderer:
   m_ObjectHideFlags: 0

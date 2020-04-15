@@ -9,7 +9,7 @@ public class TutorialDialogue : MonoBehaviour
     {
         if (isActiveAndEnabled == true && Input.GetKeyDown(KeyCode.Space))
         {
-            NarrativeDialogue.Instance.RefreshView();
+            //NarrativeDialogue.Instance.RefreshView();
         }
     }
 }

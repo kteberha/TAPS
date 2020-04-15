@@ -5,8 +5,9 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
-// TEMPORARY USING
+// Temporary using
 using SensorToolkit;
 
 namespace UM_AI
@@ -24,40 +25,19 @@ namespace UM_AI
 
 		#region Properties
 
+		[Header("Movement")]
 		[Tooltip("The maximum movement speed that will be applied in a forwards direction.")]
 		public float maxSpeed;
 		[Tooltip("The maximum turning speed that will be applied.")]
 		public float turnSpeed;
 		[Tooltip("The maximum movement speed that will be applied in a sideways or backwards direction.")]
 		public float strafeSpeed;
-		[Tooltip("The rig won't try to steer around objects in this list.")]
-		public List<GameObject> ignoreList;
-		[Range(0.1f, 4f), Tooltip("Lower numbers mean the rig will move closer to obstacles.")]
-		public float avoidanceSensitivity = 1f;
-		[Range(1f, 2f), Tooltip("The max distance that can be steered from the target direction.")]
-		public float maxAvoidanceLength = 1f;
-		[Tooltip("Whether to rotate to face the direction of movement.")]
-		public bool faceMovingDirection;
 		[Tooltip("Type of deceleration to use.")]
 		public DecelerationType deceleration = DecelerationType.Slow;
-		[SerializeField, Tooltip("Type of steering vector summing calculation to use.")]
+
+		[Header("Summing type")]
+		[SerializeField,Tooltip("Type of steering vector summing calculation to use.")]
 		SummingType _summingType = SummingType.WeightedAverage;
-
-		[UModules.Readonly]
-		public Transform destinationTransform;
-
-		[SerializeField,UModules.Readonly]
-		Vector2 steeringForce;
-
-		RaySensor2D[] sensors;
-		Rigidbody2D RB;
-		Vector2 targetPos;
-		Rigidbody2D target1;
-		Rigidbody2D target2;
-		Rigidbody2D[] neighbors;
-
-		delegate Vector2 SummingMethod();
-		SummingMethod summingCalculate;
 		public SummingType SummingType
 		{
 			get => _summingType;
@@ -82,16 +62,58 @@ namespace UM_AI
 			}
 		}
 
-		bool trackingToDestinationPosition = false;
-		public Vector2 Destination
+		[Header("Avoidance")]
+		[Range(0.1f,10f), Tooltip("Sensitivity of distance steered to obstacles.")]
+		public float avoidanceSensitivity = 1f;
+		[Tooltip("The rig won't try to steer around objects in this list.")]
+		public List<GameObject> _ignoreList;
+		public List<GameObject> IgnoreList
 		{
-			get
-			{
-				return destinationTransform != null ? (Vector2)destinationTransform.position : targetPos;
-			}
+			get => _ignoreList;
 			set
 			{
-				if (destinationTransform != null)
+				_ignoreList = value;
+				foreach(RaySensor2D rs in sensors) rs.IgnoreList = _ignoreList;
+			}
+		}
+
+		[Header("Look moving smoothing")]
+		[Tooltip("Whether to rotate to face the direction of movement.")]
+		public bool lookMovingDirection = true;
+        public bool smoothing = true;
+        public int bufferSize = 5;
+
+		Queue<Vector2> velocityBuffer = new Queue<Vector2>();
+		Vector2 steeringForce;
+		RaySensor2D[] sensors;
+		Rigidbody2D RB;
+		Vector2 targetPos;
+		Rigidbody2D target1;
+		Rigidbody2D target2;
+		Rigidbody2D[] neighbors;
+		delegate Vector2 SummingMethod();
+		SummingMethod summingCalculate;
+		bool trackingToDestinationPosition = false;
+
+		private Transform _destinationTransform;
+		public Transform DestinationTransform
+		{
+			get => _destinationTransform;
+			set
+			{
+				if (value!=null) IgnoreList.Add(value.gameObject);
+				else if (_destinationTransform != null) IgnoreList.Remove(_destinationTransform.gameObject);
+				_destinationTransform = value;
+				target1 = _destinationTransform?.GetComponent<Rigidbody2D>();
+			}
+		}
+
+		public Vector2 Destination
+		{
+			get => DestinationTransform != null ? (Vector2)DestinationTransform.position : targetPos;
+			set
+			{
+				if (DestinationTransform != null)
 				{
 					Debug.LogWarning("Cannot set Destination while DestinationTransform is not Null.");
 				}
@@ -106,20 +128,18 @@ namespace UM_AI
 		#endregion
 
 		Vector2 Heading => steeringForce.normalized;
-		Vector2 Side => (Vector2)transform.right;
+		// NOTE: Forward for 2D
+		Vector2 Forward => (Vector2)transform.right;
 
 		void Awake()
 		{
 			RB = GetComponent<Rigidbody2D>();
-			if (ignoreList == null) 
-			{
-				ignoreList = new List<GameObject>();
-			}
 			// TODO: use original sensors
 			sensors = GetComponentsInChildren<RaySensor2D>();
+			IgnoreList.AddRange(GetComponentsInChildren<Collider2D>(includeInactive:true).Select(x=>x.gameObject));
 			for (int i=0; i<sensors.Length; ++i)
 			{
-				sensors[i].IgnoreList = ignoreList;
+				sensors[i].IgnoreList = IgnoreList;
 				sensors[i].SensorUpdateMode = RaySensor2D.UpdateMode.Manual;
 			}
 			SummingType = _summingType;
@@ -132,9 +152,7 @@ namespace UM_AI
 			// reset the steering force
 			steeringForce = Vector2.zero;
 			steeringForce = summingCalculate();
-
-			if (faceMovingDirection) FaceDirectionKinematic(Heading);
-
+			if (lookMovingDirection) FaceDirectionKinematic(steeringForce);
 			// Lerp the dot product of the direction facing to the direction moving,
 			// this will interpolate between the strafing force and the moving force.
 			float forwardDotVel = Vector3.Dot(RB.transform.up, Heading);
@@ -150,11 +168,31 @@ namespace UM_AI
 
 		void FaceDirectionKinematic(Vector2 direction)
 		{
+            if (smoothing)
+            {
+                if (velocityBuffer.Count >= bufferSize)
+                {
+                    velocityBuffer.Dequeue();
+                }
+
+                velocityBuffer.Enqueue(RB.velocity);
+
+                direction = Vector2.zero;
+
+                foreach (Vector2 v in velocityBuffer)
+                {
+                    direction += v;
+                }
+
+                direction /= velocityBuffer.Count;
+            }
 			if (direction.sqrMagnitude > EPSILON)
 			{
 				float toRotation = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-				RB.transform.rotation = Quaternion.RotateTowards(RB.transform.rotation,
-											Quaternion.Euler(Vector3.forward*toRotation),turnSpeed*Time.deltaTime);
+				float newRot = Mathf.LerpAngle(RB.rotation, toRotation, Time.deltaTime * turnSpeed);
+				RB.MoveRotation(newRot);
+				// RB.transform.rotation = Quaternion.RotateTowards(RB.transform.rotation,
+				// 							Quaternion.Euler(Vector3.forward*toRotation),turnSpeed*Time.deltaTime);
 			}
 		}
 
@@ -198,9 +236,9 @@ namespace UM_AI
 			{
 				steeringForce += Avoidance() * weights.avoidance;
 			}
-			if (HasFlag(SteeringType.Evade))
+			if (HasFlag(SteeringType.Evade) && target1 != null)
 			{
-				Debug.Assert(target1!=null, "Evade target not assigned!");
+				// Debug.Assert(target1!=null, "Evade target not assigned!");
 				steeringForce += Evade(target1) * weights.evade;
 			}
 
@@ -237,15 +275,15 @@ namespace UM_AI
 				steeringForce += Arrive(targetPos, deceleration) * weights.arrive;
 			}
 
-			if (HasFlag(SteeringType.Pursuit))
+			if (HasFlag(SteeringType.Pursuit) && target1 != null)
 			{
-				Debug.Assert(target1!=null,"Pursuit target not assigned!");
+				// Debug.Assert(target1!=null,"Pursuit target not assigned!");
 				steeringForce += Pursuit(target1) * weights.pursuit;
 			}
 
-			if (HasFlag(SteeringType.Interpose))
+			if (HasFlag(SteeringType.Interpose) && target1 != null && target2 != null)
 			{
-				Debug.Assert(target1!=null && target2!=null,"Interpose agents not assigned!");
+				// Debug.Assert(target1!=null && target2!=null,"Interpose agents not assigned!");
 				steeringForce += Interpose(target1,target2,deceleration) * weights.interpose;
 			}
 
@@ -268,9 +306,9 @@ namespace UM_AI
 				force = Avoidance() * weights.avoidance;
 				if (!AccumulateForce(force)) return steeringForce;
 			}
-			if (HasFlag(SteeringType.Evade))
+			if (HasFlag(SteeringType.Evade) && target1!=null)
 			{
-				Debug.Assert(target1!=null, "Evade target not assigned!");
+				// Debug.Assert(target1!=null, "Evade target not assigned!");
 				force = Evade(target1) * weights.evade;
 				if (!AccumulateForce(force)) return steeringForce;
 			}
@@ -311,15 +349,15 @@ namespace UM_AI
 				force = Wander() * weights.wander;
 				if (!AccumulateForce(force)) return steeringForce;
 			}
-			if (HasFlag(SteeringType.Pursuit))
+			if (HasFlag(SteeringType.Pursuit) && target1!=null)
 			{
-				Debug.Assert(target1!=null,"Pursuit target not assigned!");
+				// Debug.Assert(target1!=null,"Pursuit target not assigned!");
 				force = Pursuit(target1) * weights.pursuit;
 				if (!AccumulateForce(force)) return steeringForce;
 			}
-			if (HasFlag(SteeringType.Interpose))
+			if (HasFlag(SteeringType.Interpose) & target1!=null && target2!=null)
 			{
-				Debug.Assert(target1!=null && target2!=null,"Interpose agents not assigned!");
+				// Debug.Assert(target1!=null && target2!=null,"Interpose agents not assigned!");
 				force = Interpose(target1, target2, deceleration) * weights.interpose;
 				if (!AccumulateForce(force)) return steeringForce;
 			}
@@ -329,5 +367,16 @@ namespace UM_AI
 
 		// TODO
 		Vector2 CalculateDithered() { return Vector2.zero; }
+
+		#if UNITY_EDITOR
+		void OnDrawGizmos()
+		{
+			if (Application.isPlaying)
+			{
+				Gizmos.color = Color.blue;
+				Gizmos.DrawRay(transform.position,Heading*20f);
+			}
+		}
+		#endif
 	}
 }

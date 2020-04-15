@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class WorkdayTimer : MonoBehaviour
 {
+    private GameManager gm;
+
     //public Slider clockSlider;
     public Text clockText;
     //public Image fill;
@@ -35,7 +37,8 @@ public class WorkdayTimer : MonoBehaviour
 
     private void Start()
     {
-        countdownValue = GameManager.Instance.workdayLength;
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        countdownValue = gm.workdayLength;
         //clockSlider.maxValue = countdownValue;
         //clockSlider.value = countdownValue;
 
@@ -55,7 +58,7 @@ public class WorkdayTimer : MonoBehaviour
             ////a lot of this needs to be taken off update////
             if (countStarted && countdownValue >= 0f)//run countdown logic if there is time left AND if the counter is allowed to be active
             {
-                countdownValue = Mathf.Clamp(countdownValue - Time.deltaTime, 0f, GameManager.Instance.workdayLength);//start the countdown
+                countdownValue = Mathf.Clamp(countdownValue - Time.deltaTime, 0f, gm.workdayLength);//start the countdown
 
 
                 //set the minute and second values
@@ -73,29 +76,29 @@ public class WorkdayTimer : MonoBehaviour
                     secText = second.ToString();
 
                 /////////////////////////////////////////////This is all rough code that needs to be made nicer and more efficient
-                if (second % 60 == 1 || second % 60 == 31 && countdownValue > 32)
-                {
-                    if (!fadeAnimationStarted)
-                    {
-                        StartCoroutine(ClockFade());
-                    }
-                }
+                //if (second % 60 == 1 || second % 60 == 31 && countdownValue > 32)
+                //{
+                    //if (!fadeAnimationStarted)
+                    //{
+                        //StartCoroutine(ClockFade());
+                    //}
+                //}
 
                 //fade the clock in and don't let it fade out during the final push
-                if (Mathf.Ceil(countdownValue) == 31)
-                {
-                    fadeAnimation.Play("ClockFadeIn");
-                }
+               // if (Mathf.Ceil(countdownValue) == 31)
+                //{
+                    //fadeAnimation.Play("ClockFadeIn");
+                //}
 
                 //play the final fade out animation
-                if (countdownValue <= 0)
-                {
-                    if (!oneTimeFadeStarted)
-                    {
-                        fadeAnimation.Play("ClockFadeOut");
-                        oneTimeFadeStarted = true;
-                    }
-                }
+                //if (countdownValue <= 0)
+                //{
+                    //if (!oneTimeFadeStarted)
+                    //{
+                        //fadeAnimation.Play("ClockFadeOut");
+                        //oneTimeFadeStarted = true;
+                    //}
+                //}
 
                 //start the red flashing warning that time is almost up
                 if (countdownValue <= finalColorSecValue + 1)
@@ -107,10 +110,10 @@ public class WorkdayTimer : MonoBehaviour
                     }
 
                 }
-                else if (countdownValue / GameManager.Instance.workdayLength <= warningColorPercent + 0.1f)
+                else if (countdownValue / gm.workdayLength <= warningColorPercent + 0.1f)
                 {
                     //set the starting time for the fade to use
-                    startTime = GameManager.Instance.workdayLength * warningColorPercent;
+                    startTime = gm.workdayLength * warningColorPercent;
                     //fade from one color to the other smoothly
                     //fill.color = Color.Lerp(startFillColor, warningColor, Mathf.SmoothStep(0, 1, ((Time.time - startTime) / fadeTime)));
                 }
@@ -145,10 +148,15 @@ public class WorkdayTimer : MonoBehaviour
 
         yield return new WaitForSeconds(2);
 
-        fadeAnimation.clip = fadeAnimation.GetClip("ClockFadeOut");//change the clip to fade out
-        fadeAnimation.Play();//play the fade out
+        //fadeAnimation.clip = fadeAnimation.GetClip("ClockFadeOut");//change the clip to fade out
+        //fadeAnimation.Play();//play the fade out
 
-        fadeAnimation.clip = fadeAnimation.GetClip("ClockFadeIn");//reset the animation clip to play correctly the next time coroutine is run
-        fadeAnimationStarted = false;//toggle bool back to false
+       // fadeAnimation.clip = fadeAnimation.GetClip("ClockFadeIn");//reset the animation clip to play correctly the next time coroutine is run
+        //fadeAnimationStarted = false;//toggle bool back to false
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("hit");
     }
 }

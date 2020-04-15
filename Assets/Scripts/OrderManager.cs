@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class OrderManager : Singleton<OrderManager>
+public class OrderManager : MonoBehaviour
 {
     public AsteroidHome[] homes;//array of the homes to pull from
 
@@ -54,6 +54,12 @@ public class OrderManager : Singleton<OrderManager>
             }
         }
     }
+
+
+
+
+
+
 
     /// <summary>
     /// FOR DEMO TUTORIAL

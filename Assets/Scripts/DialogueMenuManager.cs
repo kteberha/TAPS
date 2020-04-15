@@ -5,19 +5,19 @@ using UnityStandardAssets._2D;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class DialogueMenuManager : Singleton<DialogueMenuManager>
+public class DialogueMenuManager : MonoBehaviour
 {
     public GameObject player;
     public GameObject menu;
-
     public GameObject goalsScreen;
 
     Rigidbody2D rb;
     Vector3 pTempVelocity;
-    bool menuActive = false;
 
     Camera main;
     Transform dialogueCameraTransform;
+
+    NarrativeDialogue narrativeDialogue;
 
 
     [Header("DEMO TUTORIAL")]
@@ -28,7 +28,8 @@ public class DialogueMenuManager : Singleton<DialogueMenuManager>
     {
         main = Camera.main;
         rb = player.GetComponent<Rigidbody2D>();
-        dialogueCameraTransform = PlayerController.Instance.dialogueCameraPoint;
+        dialogueCameraTransform = player.GetComponent<PlayerController>().dialogueCameraPoint;
+        narrativeDialogue = GetComponent<NarrativeDialogue>();
     }
 
     public void StartDialogue(GAMESTATE gs)
@@ -36,7 +37,6 @@ public class DialogueMenuManager : Singleton<DialogueMenuManager>
         pTempVelocity = rb.velocity;
         rb.velocity = new Vector3(0f, 0f, 0f);
         main.GetComponent<Camera2DFollow>().enabled = false;
-        //main.transform.DOMove(new Vector3(dialogueCameraTransform.position.x, dialogueCameraTransform.transform.position.y, dialogueCameraTransform.position.z), 0.3f).OnComplete(MakeMenu).SetEase(DG.Tweening.Ease.InBack);
         MakeMenu(gs);
     }
 
@@ -51,9 +51,6 @@ public class DialogueMenuManager : Singleton<DialogueMenuManager>
     void MakeMenu(GAMESTATE gs)
     {
         GameManager.state = gs;
-        //menuController.paused = true;
-        //Time.timeScale = 0f;
-        menuActive = true;
         menu.gameObject.SetActive(true);
         player.GetComponent<AudioSource>().Stop();
     }
@@ -62,16 +59,12 @@ public class DialogueMenuManager : Singleton<DialogueMenuManager>
     {
         GameManager.state = GAMESTATE.PAUSED;
         Time.timeScale = 0f;
-        menuActive = true;
         menu.gameObject.SetActive(true);
-
     }
 
     void RemoveMenu()
     {
-        //menuController.paused = false;
         Time.timeScale = 1f;
-        menuActive = false;
         menu.gameObject.SetActive(false);
 
         if (GameManager.state == GAMESTATE.CLOCKEDOUTSTART)
@@ -80,7 +73,7 @@ public class DialogueMenuManager : Singleton<DialogueMenuManager>
         }
         else if(GameManager.state == GAMESTATE.CLOCKEDOUTEND)
         {
-            StartCoroutine(GameManager.Instance.ShutDown());
+            //StartCoroutine(GameManager.Instance.ShutDown());
         }
     }
 
@@ -88,12 +81,7 @@ public class DialogueMenuManager : Singleton<DialogueMenuManager>
     {
         goalsScreen.SetActive(false);
         GameManager.state = GAMESTATE.CLOCKEDIN;
-        GameManager.Instance.textAnimation.Play();
-        NarrativeDialogue.Instance.story = NarrativeDialogue.Instance.NewStory();
-    }
-
-    public void SkipDialogue()
-    {
-        EndDialogue();
+        //GameManager.Instance.textAnimation.Play();
+        narrativeDialogue.story = narrativeDialogue.NewStory();
     }
 }

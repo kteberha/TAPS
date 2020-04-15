@@ -5,14 +5,18 @@ using UnityEngine;
 public class Aim : MonoBehaviour
 {
     private LineRenderer lineRenderer;
+    private PlayerController playerController;
 
-    public Camera mainCamera;
-    public Transform player;
+    private Camera mainCamera;
+    private Transform player;
     public float maxLength;
 
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerController = player.gameObject.GetComponent<PlayerController>();
+        mainCamera = Camera.main;
         lineRenderer = GetComponent<LineRenderer>();
     }
 
@@ -21,7 +25,7 @@ public class Aim : MonoBehaviour
     {
         if (Input.GetButton("Fire2"))
         {
-            if (PlayerController.Instance.heldPackages.Count > 0) //check that the player has packages to throw
+            if (playerController.heldPackages.Count > 0) //check that the player has packages to throw
             {
                 RaycastHit hit;
 

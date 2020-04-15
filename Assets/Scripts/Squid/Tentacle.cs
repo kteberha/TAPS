@@ -3,42 +3,83 @@ using UModules;
 
 public class Tentacle : MonoBehaviour
 {
+	const float EPSILON = 0.001f;
 	const string ROOTJOINTNAME = "Armature/Root";
 
-	[Readonly]
-	public Transform RootJoint;
-	[Readonly]
-	public ArmJoint[] Joints;
-	[Readonly]
-	public float[] Solution;
+	#region Properties
 
-	public Transform Target;
-	
-	[Tooltip("Mininum distance from target")]
-	public float MininumDistance;
+	[Header("Target")]
+
+	[SerializeField]
+	Transform _target;
+	public Transform Target
+	{
+		get => _target;
+		set
+		{
+			_target = value;
+			dynamicBone.enabled = _target==null;
+		}
+	}
+
+	[Readonly,SerializeField]
 	private Vector3 destination;
 
-	[Range(0, 1f)]
-	public float DeltaGradient = 0.1F;
-	[Range(0, 100f)]
-	public float LearningRate = 0.1F;
+	[Header("Solution Parameters")]
 
-	[Range(0, 0.25f)]
-	public float StopThreshold = 0.1F;
-	[Range(0, 10f)]
-	public float SlowdownThreshold = 0.25F;
+	[Tooltip("Mininum distance from target")]
+	public float mininumDistance;
+	[Range(EPSILON,1f)]
+	public float deltaGradient = 0.1f;
+	[Range(EPSILON,100f)]
+	public float learningRate = 0.1f;
+	[Range(0f,0.25f)]
+	public float stopThreshold = 0.1f;
+	[Range(0f,10f)]
+	public float slowdownThreshold = 0.25f;
+	[Range(0f,10f)]
+	public float orientationWeight = 0.5f;
+	[Range(0f,10f)]
+	public float torsionWeight = 0.5f;
+	public Vector3 torsionPenality = Vector3.right;
+	[Readonly]
+	public float[] solution;
 
-	[Range(0, 10)]
-	public float OrientationWeight = 0.5F;
-	[Range(0, 10)]
-	public float TorsionWeight = 0.5F;
-	public Vector3 TorsionPenality = new Vector3(1, 0, 0);
+	[Header("Armature")]
+
+	public Transform rootJoint;
+	[Readonly]
+	public ArmJoint[] joints;
+	[Readonly]
+	public Transform endBone;
+
+	[Header("Components")]
+
+	[Readonly]
+	public DynamicBone dynamicBone;
+	[Readonly]
+	public TentacleHand hand;
+
+	public Transform HeldObject => hand?.heldObject;
+	public bool Holding => hand?.Holding??false;
+
+	#endregion
+
+	public void ToggleDB() => dynamicBone.enabled = !dynamicBone.enabled;
+	public void ToggleCollider() => hand.ToggleCollider();
+
+	public void HandAttach(Transform t) => hand?.HandAttach(t);
+	public void HandDetach() => hand?.HandDetach(); 
 
 	void Awake()
 	{
-		RootJoint = transform.Find(ROOTJOINTNAME);
-		Joints = RootJoint.GetComponentsInChildren<ArmJoint>();
-		Solution = new float[Joints.Length];
+		//RootJoint = transform.Find(ROOTJOINTNAME);
+		joints = rootJoint.GetComponentsInChildren<ArmJoint>();
+		dynamicBone = GetComponent<DynamicBone>();
+		endBone = joints[joints.Length-1].transform;
+		hand = endBone.GetComponent<TentacleHand>();
+		hand.triggerEnter.AddListener(HandCollisionHandler);
+		solution = new float[joints.Length];
 	}
 
 	void Update()
@@ -46,25 +87,33 @@ public class Tentacle : MonoBehaviour
 		if (Target != null)
 		{
 			Vector3 direction = (Target.position - transform.position).normalized;
-			destination = Target.position - direction * MininumDistance;
-			if (Comfort(destination, Solution) > StopThreshold) ApproachTarget(destination);
+			destination = Target.position - direction * mininumDistance;
+			if (Comfort(destination, solution) > stopThreshold) ApproachTarget(destination);
+		}
+	}
+
+	void HandCollisionHandler(Collider2D other)
+	{
+		if (other.transform == Target)
+		{
+			HandAttach(other.transform);
 		}
 	}
 
 	private void ApproachTarget(Vector3 target)
 	{
-		for (int i = Joints.Length - 1; i >= 0; i--)
+		for (int i = joints.Length - 1; i >= 0; i--)
 		{
-			float error = Comfort(target, Solution);
-			float slowdown = Mathf.Clamp01((error - StopThreshold) / (SlowdownThreshold - StopThreshold));
-			float gradient = CalculateGradient(target, Solution, i, DeltaGradient);
-			Solution[i] -= LearningRate * gradient * slowdown;
-			Solution[i] = Joints[i].ClampAngle(Solution[i]);
-			if (Comfort(target, Solution) <= StopThreshold) break;
+			float error = Comfort(target, solution);
+			float slowdown = Mathf.Clamp01((error - stopThreshold) / (slowdownThreshold - stopThreshold));
+			float gradient = CalculateGradient(target, solution, i, deltaGradient);
+			solution[i] -= learningRate * gradient * slowdown;
+			solution[i] = joints[i].ClampAngle(solution[i]);
+			if (Comfort(target, solution) <= stopThreshold) break;
 		}
-		for (int i = 0; i < Joints.Length-1; i++)
+		for (int i = 0; i < joints.Length-1; i++)
 		{
-			Joints[i].MoveArm(Solution[i]);
+			joints[i].MoveArm(solution[i]);
 		}
 	}
 
@@ -84,17 +133,17 @@ public class Tentacle : MonoBehaviour
 
 	public float Comfort(Vector3 target, float[] solution)
 	{
-		PosRot result = ForwardKinematics(Solution);
+		PosRot result = ForwardKinematics(this.solution);
 		float torsion = 0;
 		for (int i = 0; i < solution.Length; i++)
 		{
-			torsion += Mathf.Abs(solution[i]) * TorsionPenality.x;
-			torsion += Mathf.Abs(solution[i]) * TorsionPenality.y;
-			torsion += Mathf.Abs(solution[i]) * TorsionPenality.z;
+			torsion += Mathf.Abs(solution[i]) * torsionPenality.x;
+			torsion += Mathf.Abs(solution[i]) * torsionPenality.y;
+			torsion += Mathf.Abs(solution[i]) * torsionPenality.z;
 		}
 		return Vector3.Distance(target, result)
-			+ Mathf.Abs(Quaternion.Angle(result, Target.rotation)/180F) * OrientationWeight
-			+ (torsion / solution.Length) * TorsionWeight;
+			+ Mathf.Abs(Quaternion.Angle(result, this.Target.rotation)/180F) * orientationWeight
+			+ (torsion / solution.Length) * torsionWeight;
 	}
 
 	public float DistanceFromTarget(Vector3 target, float[] solution)
@@ -105,15 +154,26 @@ public class Tentacle : MonoBehaviour
 
 	public PosRot ForwardKinematics(float[] solution)
 	{
-		Vector3 prevPoint = Joints[0].transform.position;
+		Vector3 prevPoint = joints[0].transform.position;
 		Quaternion rotation = transform.rotation;
-		for (int i = 1; i < Joints.Length; i++)
+		for (int i = 1; i < joints.Length; i++)
 		{
-			rotation *= Quaternion.AngleAxis(solution[i - 1], Joints[i - 1].Axis);
-			Vector3 nextPoint = prevPoint + rotation * Joints[i].StartOffset;
+			rotation *= Quaternion.AngleAxis(solution[i - 1], ToVector(joints[i - 1].axis));
+			Vector3 nextPoint = prevPoint + rotation * joints[i].startOffset;
 			prevPoint = nextPoint;
 		}
 		return new PosRot(prevPoint, rotation);
+	}
+
+	public static Vector3 ToVector(Axis axis)
+	{
+		switch (axis)
+		{
+			case Axis.X: return Vector3.right;
+			case Axis.Y: return Vector3.up;
+			case Axis.Z: return Vector3.forward;
+			default: return Vector3.zero;
+		}
 	}
 }
 

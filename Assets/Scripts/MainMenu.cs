@@ -8,13 +8,12 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public AudioMixer masterMixer;
+    public static float sfxVolume, musicVolume;//these are for saving to settings
     public Dropdown resolutionDropdown;
     public GameObject splash, mainMenu, optionsMenu, creditsPanel;
     public GameObject rightEye, leftEye;
 
     Resolution[] resolutions;
-
-
 
     private void Start()
     {
@@ -49,6 +48,7 @@ public class MainMenu : MonoBehaviour
         //Refresh the dropdown so it displays the correct value on start
         resolutionDropdown.RefreshShownValue();
     }
+
 
     /// <summary>
     /// Returns to the main menu from options menu
@@ -92,8 +92,11 @@ public class MainMenu : MonoBehaviour
 
     public void SplashToMenu()
     {
-        splash.SetActive(false);
-        mainMenu.SetActive(true);
+        if (splash.activeSelf)
+        {
+            splash.SetActive(false);
+            mainMenu.SetActive(true);
+        }
     }
 
     /// <summary>
@@ -101,11 +104,8 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        //will need a section for loading saved
-        //
-        //
-
-        SceneManager.LoadScene("TutorialScene");
+        print($"Going to workday {GameManager.workDayActual}");
+        SceneManager.LoadScene(GameManager.workDayActual);
     }
 
     /// <summary>
@@ -141,7 +141,6 @@ public class MainMenu : MonoBehaviour
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];
-        print(resolution);
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 

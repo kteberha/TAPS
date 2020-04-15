@@ -1,3 +1,8 @@
+/*
+	Peter Francis
+	available to use according to UM_AI/LICENSE
+*/
+
 using System;
 
 namespace UM_AI
@@ -12,7 +17,7 @@ namespace UM_AI
 		bool Triggered { get; }
 	}
 
-	public struct Conditional : IConditional
+	public readonly struct Conditional : IConditional
 	{
 		public Func<bool> Predicate { get; }
 		public Action[] Actions { get; }
@@ -24,7 +29,7 @@ namespace UM_AI
 		}
 	}
 
-	public struct Transitional : IConditional
+	public readonly struct Transitional : IConditional
 	{ 
 		public Func<bool> Predicate { get; }
 		public Action[] Actions { get; }

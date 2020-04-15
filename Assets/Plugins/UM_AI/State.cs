@@ -1,3 +1,8 @@
+/*
+	Peter Francis
+	available to use according to UM_AI/LICENSE
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -85,6 +90,9 @@ namespace UM_AI
 		/// Triggered when we enter the state.
 		/// </summary>
 		public virtual void Enter(StateArgs args) {}
+		public virtual void Enter<T>(StateArgs<T> args) {}
+		public virtual void Enter<T0,T1>(StateArgs<T0,T1> args) {}
+		public virtual void Enter<T0,T1,T2>(StateArgs<T0,T1,T2> args) {}
 		
 		/// <summary>
 		/// Update this state and its children with a specified delta time.
@@ -95,6 +103,9 @@ namespace UM_AI
 		/// Triggered when we exit the state.
 		/// </summary>
 		public virtual void Exit(StateArgs args) {}
+		public virtual void Exit<T>(StateArgs<T> args) {}
+		public virtual void Exit<T0,T1>(StateArgs<T0,T1> args) {}
+		public virtual void Exit<T0,T1,T2>(StateArgs<T0,T1,T2> args) {}
 
 
 		/// <summary>

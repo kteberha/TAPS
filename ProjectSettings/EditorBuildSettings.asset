@@ -9,12 +9,27 @@ EditorBuildSettings:
     path: Assets/Scenes/BuildScenes/MainMenu.unity
     guid: f90fc6093a8d3564c9b28e27f5a70bda
   - enabled: 1
-    path: Assets/Scenes/BuildScenes/TutorialScene.unity
-    guid: bf02db76a41393245aeed4b6529ec72f
-  - enabled: 1
-    path: Assets/Scenes/BuildScenes/MainScene.unity
+    path: Assets/Scenes/BuildScenes/Workday1.unity
     guid: 922c8793bad611547b8e4a6016f0be54
-  - enabled: 0
-    path: Assets/Scenes/BuildScenes/AstroburstTest.unity
-    guid: e34b1b4e950e5f9409230726ef195d3e
+  - enabled: 1
+    path: Assets/Scenes/BuildScenes/Workday2.unity
+    guid: 264fc7e559312b74ebf12a47d8fd0df9
+  - enabled: 1
+    path: Assets/Scenes/BuildScenes/Workday3.unity
+    guid: c3be90a01e7eab94a84f54ec31564f80
+  - enabled: 1
+    path: Assets/Scenes/BuildScenes/Workday4.unity
+    guid: ce7478a8986e57749a333e711a5e3f56
+  - enabled: 1
+    path: Assets/Scenes/BuildScenes/Workday5.unity
+    guid: 8a548718322198644949eed153ebdb8c
+  - enabled: 1
+    path: Assets/Scenes/BuildScenes/Workday6.unity
+    guid: ab1b50527ae7d834397480846680c09f
+  - enabled: 1
+    path: Assets/Scenes/BuildScenes/Workday7.unity
+    guid: 21304c52caa5b904bb346df44676250d
+  - enabled: 1
+    path: Assets/Scenes/BuildScenes/Workday8.unity
+    guid: d63d4a5eec416cf46918a5e0a36579a4
   m_configObjects: {}

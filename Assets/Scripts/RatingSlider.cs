@@ -8,22 +8,26 @@ public class RatingSlider : MonoBehaviour
     public Sprite fillingImage;
     public Sprite filledImage;
 
-    public float slideValue = 0f;
-    public float maxValue = 1000f;
-
     public GameObject Fill;
 
-    [SerializeField] int[] _maxStarValues = new int[10];//stores the max values of the star slider depending on workday
+    public int maxStarValue;
+    [SerializeField] RatingSlider endDaySlider;
 
     private void OnEnable()
     {
         AsteroidHome.UpdatePackagesDelivered += UpdateSliderValue;
-        GameManager.UpdateMaxStarValue += UpdateMaxValue;
     }
 
-    void UpdateMaxValue(int _maxValue)
+    private void Start()
     {
-        slider.maxValue = _maxStarValues[_maxValue];
+        //sets the end of day slider to match the gameday slider.
+        if (endDaySlider != null)
+        {
+            endDaySlider.maxStarValue = maxStarValue;
+            endDaySlider.slider.maxValue = maxStarValue;
+        }
+
+        slider.maxValue = maxStarValue;
     }
 
     /// <summary>
@@ -32,12 +36,14 @@ public class RatingSlider : MonoBehaviour
     /// <param name="_addedPoints"></param>
     void UpdateSliderValue(int _addedPoints)
     {
+
+        //print("added points: " + _addedPoints);
         slider.value += _addedPoints;
+        //print("New slider value: " + slider.value);
     }
 
     private void OnDisable()
     {
         AsteroidHome.UpdatePackagesDelivered -= UpdateSliderValue;
-        GameManager.UpdateMaxStarValue -= UpdateMaxValue;
     }
 }
