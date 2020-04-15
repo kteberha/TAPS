@@ -4,6 +4,8 @@ using UModules;
 
 public class Edible : MonoBehaviour
 {
+	public bool destroyOnEat = true;
+
 	[Header("Components")]
 	[ReorderableList]
 	public Behaviour[] components;
@@ -37,7 +39,6 @@ public class Edible : MonoBehaviour
 	public void Eaten()
 	{
 		eaten.Invoke();
-		// TODO: NOT 
-		Destroy(this.gameObject);
+		if (destroyOnEat) Destroy(this.gameObject);
 	}
 }
