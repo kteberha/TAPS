@@ -1,33 +1,61 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UM_AI;
 using UModules;
 using SensorToolkit;
+
+[System.Serializable]
+public class TargetingEvent : UnityEvent<string> {};
 
 public partial class Squid : Agent
 {
 	const string PLAYERTAG = "Player";
 	const string PACKAGETAG = "Package";
-	private readonly string[] AllowedTags = {PLAYERTAG,PACKAGETAG};
+	const string MOUTH = "Squid/Squid/Root/Mouth/TopMouth1";
+	readonly string[] AllowedTags = {PLAYERTAG,PACKAGETAG};
 
 	public float roamRange = 50f;
 	public float seekTime = 30f;
+	public float fleeTime = 15f;
 	[Range(0f,1f),Tooltip("Interest in pursuing packages over Player.")]
 	public float packageInterest = 0.5f;
+	[Range(0.1f,100f),Tooltip("Mininum magnitude^2 of the velocity from package to detect hit.")]
+	public float mininumPackageSpeed = 5f;
+	[Range(0.1f,10f)]
+	public float mininumEatDistance = 1f;
 
-	[SerializeField,Readonly]
-	private Tentacle[] tentacles;
+	[Header("Events")]
+	public UnityEvent PackageHit = new UnityEvent();
+	public TargetingEvent TargetFound = new TargetingEvent();
+	public TargetingEvent TargetLost = new TargetingEvent();
 
-	[SerializeField] protected bool debug = false;
+	#if UNITY_EDITOR
+	[SerializeField]
+	protected bool debug = false;
+	#endif
 
-	private UM_AI.SteeringRig _steeringRig;
-	private UM_AI.SteeringRig Steering {get {return this.Get<UM_AI.SteeringRig>(ref _steeringRig);} }
+	Tentacle[] tentacles;
+	#if UNITY_EDITOR
+	[DebugGUIPrint]
+	#endif
+	Tentacle activeTentacle;
+	Transform mouth;
 
-	private RangeSensor2D _rangeSensor;
-	private RangeSensor2D RangeSensor {get {return this.Get<RangeSensor2D>(ref _rangeSensor);} }
+	UM_AI.SteeringRig _steeringRig;
+	UM_AI.SteeringRig Steering => this.Get<UM_AI.SteeringRig>(ref _steeringRig);
+
+	RangeSensor2D _rangeSensor;
+	RangeSensor2D RangeSensor => this.Get<RangeSensor2D>(ref _rangeSensor);
+
+	Collider2D _collider;
+	Collider2D Collider => this.Get<Collider2D>(ref _collider);
 
 	private GameObject _target;
+	#if UNITY_EDITOR
+	[DebugGUIPrint]
+	#endif
 	public GameObject Target
 	{
 		get
@@ -37,12 +65,16 @@ public partial class Squid : Agent
 		protected set
 		{
 			_target = value;
-			TargetPos = _target.transform.position;
-			Steering.destinationTransform = gameObject.transform;
-			foreach (var t in tentacles) t.Target = _target.transform;
+			TargetPos = _target?.transform.position.XY()??Vector2.zero;
+			Steering.DestinationTransform = _target?.transform;
+			UpdateTentacleTarget();
 		}
 	}
+
 	private Vector2 _targetPos;
+	#if UNITY_EDITOR
+	[DebugGUIPrint]
+	#endif
 	public Vector2 TargetPos
 	{
 		get
@@ -52,36 +84,28 @@ public partial class Squid : Agent
 		protected set
 		{
 			_targetPos = value;
-			//Steering.Destination = _targetPos;
-			#if UNITY_EDITOR
-			if (debug) Debug.LogFormat("TargetPos: {0}",_targetPos);
-			#endif
+			if (Target==null) Steering.Destination = _targetPos;
 		}
 	}
 
-	public float DistanceToTarget
-	{
-		get
-		{
-			return Vector3.Distance(transform.position,TargetPos);
-		}
-	}
-
-	//public bool PlayerDetected => RangeSensor.DetectedObjects.Any(x => x.CompareTag(PLAYERTAG));
-	protected bool playerDetected = false;
+	public float DistanceToTarget => Vector3.Distance(transform.position,TargetPos);
+	private bool TargetingPlayer => Target?.tag == PLAYERTAG;
 
 	public override void Initialize()
 	{
 		base.Initialize();
 		tentacles = GetComponentsInChildren<Tentacle>();
+		mouth = transform.Find(MOUTH);
 		RangeSensor.EnableTagFilter = true;
 		RangeSensor.AllowedTags = AllowedTags;
-		RangeSensor.OnDetected.AddListener(Detection);
-		RangeSensor.OnLostDetection.AddListener(LostDetection);
+		RangeSensor.OnDetected.AddListener(DetectedHandler);
+		RangeSensor.OnLostDetection.AddListener(LostDetectionHandler);
 		Steering.SetFlag(SteeringType.Avoidance);
 		SetupStateMachine();
+		#if UNITY_EDITOR
+		this.gameObject.AddComponent<DebugGUI>();
+		#endif
 	}
-
 
 	protected override void UpdateAgent()
 	{
@@ -89,52 +113,92 @@ public partial class Squid : Agent
 		RangeSensor.Pulse();
 	}
 
-	public void Detection(GameObject go, Sensor sensor)
+	void OnCollisionEnter2D(Collision2D coll)
+	{
+		if (coll.collider.tag == PACKAGETAG && coll.rigidbody.velocity.sqrMagnitude >= mininumPackageSpeed)
+		{
+			TargetPos = coll.collider.gameObject.transform.position;
+			PackageHit.Invoke();
+		}
+	}
+
+	public void DetectedHandler(GameObject go, Sensor sensor)
 	{
 		switch (go.tag)
 		{
 			case PLAYERTAG:
-				playerDetected = true;
 				Target = go;
+				TargetFound.Invoke(PLAYERTAG);
 			break;
 			case PACKAGETAG:
-				if (Random.value <= packageInterest) Target = go;
+				if (Random.value <= packageInterest)
+				{
+					Target = go;
+					TargetFound.Invoke(PACKAGETAG);
+				}
 			break;
 		}
 	}
 
-	public void LostDetection(GameObject go, Sensor sensor)
+	public void LostDetectionHandler(GameObject go, Sensor sensor)
 	{
 		switch (go.tag)
 		{
 			case PLAYERTAG:
-				playerDetected = false;
-				Target = null;
+				if (Target==go)
+				{
+					Target = null;
+					TargetLost.Invoke(PACKAGETAG);
+				}
 			break;
 			case PACKAGETAG:
-
+				if (Target==go)
+				{
+					Target = null;
+					TargetLost.Invoke(PACKAGETAG);
+				}
 			break;
 		}
 	}
 
-	public void Sprayed() => SM.ChangeState(typeof(Flee));
+	void UpdateTentacleTarget()
+	{
+		if (Target != null)
+		{
+			if (activeTentacle != ClosestTentacle || Target != activeTentacle.Target)
+			{
+				activeTentacle = ClosestTentacle;
+				activeTentacle.Target = Target.transform;
+				activeTentacle.dynamicBone.enabled = false;
+				foreach (Tentacle ten in tentacles)
+				{
+					if (ten != activeTentacle)
+					{
+						ten.Target = null;
+						ten.dynamicBone.enabled = true;
+					}
+				}
+			}
+		}
+		else if (!activeTentacle?.Holding??true)
+		{
+			activeTentacle = null;
+			foreach (Tentacle ten in tentacles)
+			{
+				ten.Target = null;
+				ten.dynamicBone.enabled = true;
+			}
+		}
+	}
+
+	bool LeftSide(Vector3 pos) => Vector3.Dot(transform.position-pos,transform.up) <= 0f;
+	Tentacle ClosestTentacle => tentacles.Aggregate((x,y)=>
+								Vector3.Distance(x.transform.position,Target.transform.position)<
+								Vector3.Distance(y.transform.position,Target.transform.position)?
+								x:y);
 
 	protected IEnumerable<GameObject> PackageCast(Vector2 pos)
 	{
 		return Physics2D.CircleCastAll(pos,30f,Vector2.zero).Select(x=>x.transform.gameObject).Where(y=>y.tag==PACKAGETAG);
 	}
-
-	public bool ToWander() => !playerDetected && SM.TimeElapsed.Seconds >= seekTime;
-	public bool ToSeek() => playerDetected;
-
-	#if UNITY_EDITOR
-	void OnDrawGizmos()
-	{
-		if (debug && Application.isPlaying)
-		{
-			Gizmos.color = Color.red;
-			Gizmos.DrawCube(TargetPos,Vector3.one*3f);
-		}
-	}
-	#endif
 }

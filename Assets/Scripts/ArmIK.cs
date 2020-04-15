@@ -1,21 +1,20 @@
 // www.ryanjuckett.com, Sunil Sandeep Nayak, Peter Francis
 using UnityEngine;
-//using UModules;
 
 [RequireComponent(typeof(Animator))]
 public class ArmIK : MonoBehaviour
 {
 
-	//[DontShowIf(nameof(mouseTarget))]
 	public Transform target;
 	public bool mouseTarget;
-	//[OnlyShowIf(nameof(mouseTarget))]
 	public float screenToWorldPointFactor = 100f;
-	//[OnlyShowIf(nameof(mouseTarget))]
 	public float zOffset = -10f;
-	[SerializeField] private AvatarIKGoal Type;
-	[SerializeField, Range(0, 1)] private float PositionWeight = 1;
-	[SerializeField, Range(0, 1)] private float RotationWeight = 0;
+	[SerializeField]
+	private AvatarIKGoal Type;
+	[SerializeField, Range(0, 1)]
+	private float PositionWeight = 1;
+	[SerializeField, Range(0, 1)]
+	private float RotationWeight = 0;
 
 	private Animator animator;
 	private Vector3 targetPos;
