@@ -48,6 +48,7 @@ public class AsteroidHome : MonoBehaviour
     public static Action<int> UpdatePackagesDelivered;
     public static Action<int> UpdateRefundPackages;
     public static Action<int> UpdateRefunds;
+    public static Action ToggleTeleportTutorial;
 
     [Header("DEMO TUTORIAL")]
     public TutorialManager tutorialManager;
@@ -329,6 +330,10 @@ public class AsteroidHome : MonoBehaviour
     /// </summary>
     IEnumerator OrderFulfilled()
     {
+        //check to toggle tutorial action
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+            ToggleTeleportTutorial?.Invoke();
+
         offScreenIndicatorObj.transform.Find("Success").gameObject.SetActive(true);//place the check mark on top of the portraits.
         SuccessAudioSource.Play();//play the audio
         packageBeenOrdered = false;//mark the house as able to order packages again

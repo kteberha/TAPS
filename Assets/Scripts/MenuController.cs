@@ -61,6 +61,8 @@ public class MenuController : MonoBehaviour
 
     [SerializeField] Button continueButton;
 
+    public static System.Action StartDay;
+
     private void OnEnable()
     {
         GameManager.onPaused += Pause;
@@ -286,6 +288,9 @@ public class MenuController : MonoBehaviour
         GameManager.state = GAMESTATE.CLOCKEDIN;
 
         goalsScreen.SetActive(false);
+
+        if (StartDay != null)
+            StartDay();
     }
 
     /// <summary>

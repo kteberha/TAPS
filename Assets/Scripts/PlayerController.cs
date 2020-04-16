@@ -77,6 +77,9 @@ public class PlayerController : MonoBehaviour
     //collider variables
     [SerializeField] Collider2D[] allColliders;
 
+    //Tutorial Triggers
+    public static System.Action ToggleShuffleTutorial;
+
     [Header("DEMO TUTORIAL")]
     [SerializeField] TutorialManager tutorialManager;
 
@@ -330,18 +333,9 @@ public class PlayerController : MonoBehaviour
 
     void PackageAdd(GameObject other, bool addToFront = false)
     {
-        ///tutorial stuff///////////////
-        if (SceneManager.GetActiveScene().name == "TutorialScene")
-        {
-            if (tutorialManager.i == 9 || tutorialManager.i == 12)
-            {
-                //print("playercontroller");
-                tutorialManager.ToggleDialogueOn();
-                tutorialManager.i++;
-                Time.timeScale = 0f;
-            }
-        }
-        //////////////////////////////////
+        //check to show tutorial for sorting
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+            ToggleShuffleTutorial?.Invoke();
 
         if (!heldPackages.Contains(other.gameObject) && heldPackages.Count < maxPackages)
         {

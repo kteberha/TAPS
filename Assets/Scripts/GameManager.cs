@@ -182,7 +182,7 @@ public class GameManager : MonoBehaviour
         }
         #endregion
 
-        //pause & resume game
+        //pause & resume game (only if game is playing)
         if (Input.GetKeyDown(KeyCode.Escape) && state==GAMESTATE.CLOCKEDIN)
         {
             if (state == GAMESTATE.PAUSED)
@@ -219,8 +219,6 @@ public class GameManager : MonoBehaviour
                         WorkdayEnded();
                         print("workday has ended");
                     }
-                        //have the workday over text appear and fade before loading the scene
-                    //StartCoroutine(Clockout());
                 }
             }
         }
