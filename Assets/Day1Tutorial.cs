@@ -104,7 +104,7 @@ public class Day1Tutorial : MonoBehaviour
 
     IEnumerator EndingLines()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(5);
         iconAnimator.gameObject.SetActive(false);
         SetReader(lastLines);
     }
