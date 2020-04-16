@@ -132,7 +132,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4485089a6b179cf4083c5be67102aaf2, type: 3}
   - {fileID: 8300000, guid: dfef6ca2214846e4f961b8a87ecb99b9, type: 3}
   teleporter: {fileID: 0}
-  teleportCooldown: 0
+  teleportCooldown: 30
   dissolveTime: 0
   face_mat: {fileID: 0}
   body_mat: {fileID: 0}
