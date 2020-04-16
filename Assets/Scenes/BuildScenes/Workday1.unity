@@ -4703,10 +4703,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: ff112871e2bb1774282dd5aece4f78f0, type: 3}
-    m_FontSize: 24
+    m_FontSize: 18
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -32362,8 +32362,8 @@ MonoBehaviour:
   - 'You''ll find the packages in the Shipping Lane, the giant blue donut in the middle
     of the sector. Packages get teleported there from our delivery hub. '
   - Find the packages you need to complete the customer's order and run into them.
-    The collision will automatically activate your inventory tractor beam tool. You
-    can hold more than one.
+    The collision will automatically activate your inventory tractor beam tool.
+  - You can hold more than one but no more than 5.
   shuffleLines:
   - 'You can cycle through your inventory tractor beam to select the correct package. '
   - The first one behind you will be thrown. Now get to that house.

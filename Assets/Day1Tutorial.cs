@@ -70,6 +70,7 @@ public class Day1Tutorial : MonoBehaviour
         {
             iconAnimator.SetTrigger("Scroll");
             SetReader(shuffleLines);
+            print("shuffle lines" + shuffleLines.Length);
             _packageCollected = true;
         }
     }
@@ -112,6 +113,7 @@ public class Day1Tutorial : MonoBehaviour
     {
         dialogueReader = _newDialogue;
         _text.text = dialogueReader[0];
+        _textIndex = 0;
         SetManagerActive(true);
         Time.timeScale = 0f;
     }
@@ -129,6 +131,7 @@ public class Day1Tutorial : MonoBehaviour
         }
         else
         {
+            print(_textIndex + "= text index");
             ResumeGame();
         }
     }
