@@ -10326,7 +10326,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1289093541277023231
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14566,11 +14566,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1.01
       objectReference: {fileID: 0}
-    - target: {fileID: 3165969566728842745, guid: 7764e1bbc2aabf64e885077de91235b6,
-        type: 3}
-      propertyPath: m_UpdateMode
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 8401301009726941684, guid: 7764e1bbc2aabf64e885077de91235b6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -14600,11 +14595,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 366.70505
-      objectReference: {fileID: 0}
-    - target: {fileID: 6773778967978547425, guid: 7764e1bbc2aabf64e885077de91235b6,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2474693522314697672, guid: 7764e1bbc2aabf64e885077de91235b6,
         type: 3}
@@ -14691,6 +14681,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6773778967978547425, guid: 7764e1bbc2aabf64e885077de91235b6,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6773778968995685189, guid: 7764e1bbc2aabf64e885077de91235b6,
         type: 3}
       propertyPath: m_IsActive
@@ -14705,6 +14700,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3165969566728842745, guid: 7764e1bbc2aabf64e885077de91235b6,
+        type: 3}
+      propertyPath: m_UpdateMode
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3132179537964604113, guid: 7764e1bbc2aabf64e885077de91235b6,
         type: 3}
