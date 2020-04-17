@@ -10320,13 +10320,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1289093541277023231}
   - component: {fileID: 3387911413566133284}
+  - component: {fileID: 791608397119047167}
   m_Layer: 5
   m_Name: Control Icons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1289093541277023231
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10375,6 +10376,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!225 &791608397119047167
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6175832276445554054}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &6206358592144464179
 GameObject:
   m_ObjectHideFlags: 0

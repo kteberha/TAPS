@@ -200,7 +200,7 @@ public class MenuController : MonoBehaviour
 
     public void Continue()
     {
-        StartCoroutine(LoadSceneFromMenu());
+        StartCoroutine(LoadSceneFromMenu(true, false));
     }
     public void Restart()
     {
@@ -212,7 +212,6 @@ public class MenuController : MonoBehaviour
         int current = SceneManager.GetActiveScene().buildIndex;
         //Fade out and load next level
         screenAnimator.SetTrigger("FadeIn");
-        print($"{GetAnimationClip(screenAnimator, "ScreenFadeIn").length} time");
         yield return new WaitForSecondsRealtime(Mathf.Ceil(GetAnimationClip(screenAnimator, "ScreenFadeIn").length));
 
         if (continuing)
@@ -220,13 +219,13 @@ public class MenuController : MonoBehaviour
             //check if currently on last day
             if (current + 1 >= SceneManager.sceneCountInBuildSettings)
             {
-                print("load main menu, game over");
+                //print("load main menu, game over");
                 SceneManager.LoadScene(0);//load Main Menu if at end of game
             }
             else
             {
-                print($"{SceneManager.GetSceneByBuildIndex(current).name} is loading");
-                SceneManager.LoadScene(current);//go to next scene
+                //print($"{SceneManager.GetSceneByBuildIndex(current).name} is loading");
+                SceneManager.LoadScene(current + 1);//go to next scene
             }
         }
         else if(quitting)
@@ -429,34 +428,36 @@ public class MenuController : MonoBehaviour
         {
             zipAnimator.SetTrigger("ExcitedResults");
             clipName = "ExcitedResultsFace";
-            print($"{packagesDeliveredStarRating} >= {_threeStarVal}");
-            print("show excited results");
+            //print($"{packagesDeliveredStarRating} >= {_threeStarVal}");
+            //print("show excited results");
         }
         else if (packagesDeliveredStarRating >= _twoStarVal)// && packagesDelivered < starRatingSlider.maxStarValue)
         {
             zipAnimator.SetTrigger("PleasedResults");
             clipName = "PleasedResultsFace";
-            print($"{packagesDeliveredStarRating} >= {_twoStarVal}");
-            print("show pleased results");
+            //print($"{packagesDeliveredStarRating} >= {_twoStarVal}");
+            //print("show pleased results");
         }
         else if (packagesDeliveredStarRating >= _oneStarVal)// && packagesDelivered < Mathf.Ceil(starRatingSlider.maxStarValue * (2/3))
         {
             zipAnimator.SetTrigger("UghResults");
             clipName = "UghResultsFace";
-            print($"{packagesDeliveredStarRating} >= {_oneStarVal}");
-            print("show ugh results");
+            //print($"{packagesDeliveredStarRating} >= {_oneStarVal}");
+            //print("show ugh results");
         }
         else
         {
             zipAnimator.SetTrigger("DisappointedResults");
             clipName = "DisappointedResultsFace";
-            print("show disappointed results");
+            //print("show disappointed results");
         }
-        yield return new WaitForSeconds(Mathf.Ceil(GetAnimationClip(zipAnimator, clipName).length));
+        yield return new WaitForSecondsRealtime(Mathf.Ceil(GetAnimationClip(zipAnimator, clipName).length));
 
+        endDayAnim.gameObject.SetActive(true);
+        zipAnimCG.alpha = 0f;
         //play the results screen
         endDayAnim.Play();
-        yield return new WaitForSeconds(endDayAnim.clip.length);
+        yield return new WaitForSecondsRealtime(endDayAnim.clip.length);
 
         endDayCg.blocksRaycasts = true;
         endDayCg.interactable = true;

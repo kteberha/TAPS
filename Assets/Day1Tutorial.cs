@@ -18,11 +18,12 @@ public class Day1Tutorial : MonoBehaviour
     CanvasGroup _cg;
 
     [SerializeField] Animator iconAnimator;
+    CanvasGroup iconCg;
 
     private void Start()
     {
         _cg = GetComponent<CanvasGroup>();
-        iconAnimator = GameObject.Find("Control Icons").GetComponent<Animator>();
+        iconCg = iconAnimator.gameObject.GetComponent<CanvasGroup>();
     }
 
     private void OnEnable()
@@ -48,6 +49,11 @@ public class Day1Tutorial : MonoBehaviour
             print("progress tutorial");
             ProgressText();
         }
+
+        if (GameManager.state != GAMESTATE.CLOCKEDIN)
+            iconCg.alpha = 0;
+        else
+            iconCg.alpha = 1;
     }
 
     /// <summary>
