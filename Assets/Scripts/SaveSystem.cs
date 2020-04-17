@@ -34,6 +34,9 @@ public static class SaveSystem
         OptionsData oData = new OptionsData();
 
         //set default values
+        oData.invertedMovement = false;
+        oData.musicVolume = 0f;
+        oData.sfxVolume = 0f;
 
         bf.Serialize(stream, oData);
         stream.Close();
@@ -93,6 +96,7 @@ public static class SaveSystem
             FileStream stream = new FileStream(path, FileMode.Open);
 
             OptionsData oData = (OptionsData)bf.Deserialize(stream);
+            stream.Close();
             return oData;
         }
         else

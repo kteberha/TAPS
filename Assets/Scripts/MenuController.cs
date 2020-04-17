@@ -31,6 +31,9 @@ public class MenuController : MonoBehaviour
     CanvasGroup optionsCg;
     CanvasGroup endDayCg;
 
+    Slider musicSlider;
+    Slider sfxSlider;
+
     [SerializeField] Text workdayStatusText;
     [HideInInspector] public Animation textAnimation;
 
@@ -69,7 +72,6 @@ public class MenuController : MonoBehaviour
         GameManager.onResumed += Resume;
         GameManager.WorkdayStarted += LevelStart;
         GameManager.WorkdayEnded += EndDaySequence;
-        GameManager.InitializeSettings += AssignSettings;
         AsteroidHome.UpdateScore += UpdateOrderScore;
         AsteroidHome.UpdatePackagesDelivered += UpdatePackageRatingScore;
         AsteroidHome.UpdatePackagesDelivered += UpdatePackageTotalScore;
@@ -82,7 +84,6 @@ public class MenuController : MonoBehaviour
         GameManager.onResumed -= Resume;
         GameManager.WorkdayStarted -= LevelStart;
         GameManager.WorkdayEnded -= EndDaySequence;
-        GameManager.InitializeSettings -= AssignSettings;
         AsteroidHome.UpdateScore -= UpdateOrderScore;
         AsteroidHome.UpdatePackagesDelivered -= UpdatePackageRatingScore;
         AsteroidHome.UpdatePackagesDelivered += UpdatePackageTotalScore;
@@ -99,6 +100,8 @@ public class MenuController : MonoBehaviour
         endDayCg = endDayPanel.GetComponent<CanvasGroup>();
         endDayAnim = endDayPanel.GetComponent<Animation>();
         dialogueManger = GameObject.Find("Dialogue Menu Manager").GetComponent<DialogueMenuManager>();
+        musicSlider = GameObject.Find("MusicVolume").GetComponent<Slider>();
+        sfxSlider = GameObject.Find("SFXSlider").GetComponent<Slider>();
 
         //establish the star rating values
         _threeStarVal = starRatingSlider.maxStarValue;
@@ -143,31 +146,20 @@ public class MenuController : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
         #endregion
 
-        #region NEEDSFIXED Check and set movement setting
-
-        //get and apply saved input options if any exist
-        if (!PlayerPrefs.HasKey("InvertedMovement"))
+        print("assign settings called");
+        if (LoadAllSettings() == null)
         {
-            PlayerPrefs.SetInt("InvertedMovement", 0);
-            PlayerPrefs.Save();
-            invertedMovement = false;
-        }
-        else if (PlayerPrefs.GetInt("InvertedMovement") == 0)
-        {
-            invertedMovement = false;
+            Debug.LogWarning("No setting files, created new ones");
+            CreateFiles();
+            invertMoveToggle.SetIsOnWithoutNotify(invertedMovement);
         }
         else
         {
-            invertedMovement = true;
+            LoadAllSettings();
+            invertMoveToggle.SetIsOnWithoutNotify(invertedMovement);
         }
-        #endregion
-        invertMoveToggle.SetIsOnWithoutNotify(invertedMovement);
     }
 
-    void AssignSettings()
-    {
-
-    }
 
 
     #region MenuMethods
@@ -250,6 +242,7 @@ public class MenuController : MonoBehaviour
         optionsCg.alpha = 1f;
         optionsCg.interactable = true;
         optionsCg.blocksRaycasts = true;
+        LoadAllSettings();
     }
 
     ///<summary>
@@ -475,6 +468,7 @@ public class MenuController : MonoBehaviour
     public void SetMusicVolume(float volume)
     {
         masterMixer.SetFloat("MasterMusicVolume", volume);
+        musicVolume = volume;
     }
 
     /// <summary>
@@ -484,6 +478,7 @@ public class MenuController : MonoBehaviour
     public void SetSFXVolume(float volume)
     {
         masterMixer.SetFloat("MasterSFXVolume", volume);
+        sfxVolume = volume;
     }
 
     /// <summary>
@@ -557,8 +552,10 @@ public class MenuController : MonoBehaviour
         {
             print("found file to load");
             invertedMovement = optionsData.invertedMovement;
-            musicVolume = optionsData.musicVolume;
-            sfxVolume = optionsData.sfxVolume;
+            SetMusicVolume(optionsData.musicVolume);
+            musicSlider.value = musicVolume;
+            SetSFXVolume(optionsData.sfxVolume);
+            sfxSlider.value = sfxVolume;
             return optionsData;
         }
         else
