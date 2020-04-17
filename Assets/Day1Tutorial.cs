@@ -22,6 +22,7 @@ public class Day1Tutorial : MonoBehaviour
     private void Start()
     {
         _cg = GetComponent<CanvasGroup>();
+        iconAnimator = GameObject.Find("Control Icons").GetComponent<Animator>();
     }
 
     private void OnEnable()

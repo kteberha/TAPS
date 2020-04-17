@@ -200,11 +200,44 @@ public class MenuController : MonoBehaviour
 
     public void Continue()
     {
-        StartCoroutine(ZipResults(true));
+        StartCoroutine(LoadSceneFromMenu());
     }
     public void Restart()
     {
-        StartCoroutine(ZipResults(false));
+        StartCoroutine(LoadSceneFromMenu(false, false));
+    }
+
+    public IEnumerator LoadSceneFromMenu(bool continuing = true, bool quitting = false)
+    {
+        int current = SceneManager.GetActiveScene().buildIndex;
+        //Fade out and load next level
+        screenAnimator.SetTrigger("FadeIn");
+        print($"{GetAnimationClip(screenAnimator, "ScreenFadeIn").length} time");
+        yield return new WaitForSecondsRealtime(Mathf.Ceil(GetAnimationClip(screenAnimator, "ScreenFadeIn").length));
+
+        if (continuing)
+        {
+            //check if currently on last day
+            if (current + 1 >= SceneManager.sceneCountInBuildSettings)
+            {
+                print("load main menu, game over");
+                SceneManager.LoadScene(0);//load Main Menu if at end of game
+            }
+            else
+            {
+                print($"{SceneManager.GetSceneByBuildIndex(current).name} is loading");
+                SceneManager.LoadScene(current);//go to next scene
+            }
+        }
+        else if(quitting)
+        {
+            SceneManager.LoadScene(0);
+        }
+        //reload this scene
+        else
+            SceneManager.LoadScene(current);
+
+        Time.timeScale = 1f;
     }
 
     /// <summary>
@@ -257,8 +290,7 @@ public class MenuController : MonoBehaviour
     }
     public void ReturnToMenu()
     {
-        //GameManager.Instance.SaveAllPlayerData();
-        SceneManager.LoadScene(0);
+        StartCoroutine(LoadSceneFromMenu(false, true));
     }
 
     /// <summary>
@@ -337,14 +369,8 @@ public class MenuController : MonoBehaviour
             continueButton.enabled = false;
             continueButton.GetComponentInChildren<Text>().text = "";
         }
-
         GameManager.state = GAMESTATE.CLOCKEDOUTEND;
-        endDayAnim.Play();
-
-        yield return new WaitForSeconds(endDayAnim.clip.length);
-
-        endDayCg.blocksRaycasts = true;
-        endDayCg.interactable = true;
+        StartCoroutine(ZipResults());
     }
 
     #region NEEDS TO BE MOVED OR HEAVILY ALTERED
@@ -357,6 +383,7 @@ public class MenuController : MonoBehaviour
         yield return new WaitForSeconds(Mathf.Ceil(GetAnimationClip(screenAnimator, "ScreenFadeOut").length));
 
         zipAnimator.SetTrigger("ClockingIn");
+        print("clock in triggered");
         yield return new WaitForSeconds(Mathf.Ceil(GetAnimationClip(zipAnimator, "WakeUpTransition").length));
 
         zipAnimator.SetTrigger("DonePlaying");
@@ -365,6 +392,7 @@ public class MenuController : MonoBehaviour
         //toggle the dialogue menu for starting dialogue
         dialogueManger.StartDialogue(GAMESTATE.CLOCKEDOUTSTART);
     }
+
     /// <summary>
     /// Helper method to get animation clips
     /// </summary>
@@ -392,7 +420,7 @@ public class MenuController : MonoBehaviour
     /// Plays the facial animations for zip based on the score earned.
     /// </summary>
     /// <returns></returns>
-    public IEnumerator ZipResults(bool _continue)
+    public IEnumerator ZipResults()
     {
         string clipName = "";
         endDayPanel.SetActive(false);
@@ -426,23 +454,12 @@ public class MenuController : MonoBehaviour
         }
         yield return new WaitForSeconds(Mathf.Ceil(GetAnimationClip(zipAnimator, clipName).length));
 
-        //Fade out and load next level
-        screenAnimator.SetTrigger("FadeIn");
-        yield return new WaitForSeconds(Mathf.Ceil(GetAnimationClip(screenAnimator, "ScreenFadeIn").length));
+        //play the results screen
+        endDayAnim.Play();
+        yield return new WaitForSeconds(endDayAnim.clip.length);
 
-        //check if restarting the scene or moving onto the next one.
-        if (!_continue)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        else
-        {
-            //check if currently on last day
-            if (SceneManager.GetActiveScene().buildIndex + 1 >= SceneManager.sceneCountInBuildSettings)
-            {
-                SceneManager.LoadScene(0);
-            }
-            else
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
+        endDayCg.blocksRaycasts = true;
+        endDayCg.interactable = true;
     }
     #endregion
     #endregion
