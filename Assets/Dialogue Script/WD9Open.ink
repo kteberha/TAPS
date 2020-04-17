@@ -1,6 +1,6 @@
 I've got some good news, Zip!
 
-Nothing changed in the quadrant over night. Nothing got better either, BUT nothing changed! So you'll at least know some of the layout.
+Nothing changed in the quadrant over night. Nothing got better either, BUT your route hasn't changed! So you'll at least know the layout a bit.
 
 I won't lie to you though. Our radars are picking up something odd in the area just outside your quadrant.
 

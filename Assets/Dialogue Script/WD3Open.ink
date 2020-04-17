@@ -1,6 +1,7 @@
-Good work yesterday, Zip. Don't get comfortable because it's about to get a bit harder.
+You survived yesterday, Zip, but don't get comfortable just yet.
 
-A new resident moved into the quadrant after your shift ended. According to our New Customer Questionnaire, he's apparently TAPS plant products to start a non-profit business or something.
+A new resident moved into your quadrant last night.
+According to our New Customer Questionnaire, he's in demand for our plant products to start a non-profit business or something.
 
-Well whatever it's for, don't disappoint the new client! Get going!
+Well whatever you do, don't disappoint the new client! Get going!
 ->DONE
