@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
     public GameObject splash, mainMenu, optionsMenu, creditsPanel;
     public GameObject rightEye, leftEye;
 
+    [SerializeField] Animator cinematicAnim;
     Resolution[] resolutions;
 
     private void Start()
@@ -90,6 +91,7 @@ public class MainMenu : MonoBehaviour
     {
         if (splash.activeSelf)
         {
+            cinematicAnim.enabled = false;
             splash.SetActive(false);
             mainMenu.SetActive(true);
         }
