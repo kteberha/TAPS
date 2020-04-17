@@ -821,7 +821,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122163140}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6516e7d4d31e4e648b43c57c385b8b4c, type: 3}
   m_Name: 
@@ -924,7 +924,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Yoav Hayat
+  m_text: 'Ian Sundstrom
+
+    Will Emigh
+
+    Alex "Mills" Miller
+
+    Shaun Cunningham
+
+    Megan Eberhard
+
+    Dave Berry
+
+    Yoav Hayat
 
     Oswin
 
@@ -946,9 +958,13 @@ MonoBehaviour:
 
     Pookie
 
-    That friendly stray cat
+    That friendly stray cat now named Peaches
 
-    Brackeys'
+    Brackeys
+
+    Friends and Family
+
+    Anonymous Playtesters'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 297e6ec96494cd2469865e06734706b8, type: 2}
   m_sharedMaterial: {fileID: 83784905043092836, guid: 297e6ec96494cd2469865e06734706b8,
@@ -1108,7 +1124,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: "\n\nDirector\n\nExecutive Producer\n\nProducer\n\n\n\nConcept Artists\n\n\nTechnical
     Artist\n\nUser Interface\n\n3D Artist\n\n3D Art Assistant\n\nAnimators\n\n\n\n\n\nSound
-    Designer\n\nComposers\n\n\nMixing\n\n\n\nSystems Designer \n\nLevel Design\n\nLevel
+    Designer\n\nComposers\n\n\nMixing\n\n\n\nSystems Designer \n\nLevel Design\n\n\nLevel
     Design Assistant\n\nUser Experience\n\nAdditional Design\n\n\n\nNarrative Designer\n\nStory
     and Dialogue\n\n\n\nGameplay Programmer\n\n\nUI\n\n\nAI Programmer\n\nAudio Programmer\n\n\n\nQA
     Analyists\n\n\n\n\n\n\n\n\n\n\n"
@@ -10048,10 +10064,11 @@ MonoBehaviour:
   m_text: "\n\nEmma Rausch\n\nEmma Rausch\n\nKaleb Eberhart\n\n\n\nGaby Benninghoff\nRajin
     Shankar\n\nJonah Clark\n\nAndy Beer\n\nRizlyon Baguisa\n\nEmma Rausch\n\nBeth
     Lula\nKaleb Eberhart\nEmma Rausch\n\n\n \nJake Cozza\n\nJustin Hatfield\nNoah
-    Kankanala\n\nKaleb Eberhart\n\n\n\nKenton Ellson\n\nEliot Westcott\n\nKenton Ellson\n\nAndy
-    Beer\n\nKaleb Eberhart\n\n\n\nEmma Rausch\n\nMadeleine Lovell\n\n\n\nKaleb Eberhart\nJesse
-    Riggins\n\nAndy Beer\nKaleb Eberhart\n\nPeter Francis\n\nKaleb Eberhart\n\n\n\nAndy
-    Beer\nEliot Westcott\nEmma Rausch\nKaleb Eberhart\nKenton Elson\n"
+    Kankanala\n\nJake Cozza\nKaleb Eberhart\n\n\nKenton Ellson\n\nEliot Westcott\nKaleb
+    Eberhart\n\nKenton Ellson\n\nAndy Beer\n\nKaleb Eberhart\n\n\n\nEmma Rausch\n\nMadeleine
+    Lovell\n\n\n\nKaleb Eberhart\nJesse Riggins\n\nAndy Beer\nKaleb Eberhart\n\nPeter
+    Francis\n\nKaleb Eberhart\n\n\n\nAndy Beer\nEliot Westcott\nEmma Rausch\nKaleb
+    Eberhart\nKenton Elson\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 297e6ec96494cd2469865e06734706b8, type: 2}
   m_sharedMaterial: {fileID: 83784905043092836, guid: 297e6ec96494cd2469865e06734706b8,
