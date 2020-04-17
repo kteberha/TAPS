@@ -21,6 +21,10 @@ public class MusicManager : MonoBehaviour
     {
         if (loop1.isPlaying)
         {
+            if (gm.workdayLength - gm.timeInWorkday >= 120)
+                shouldLoop = true;
+            else
+                shouldLoop = false;
             if (shouldLoop)
             {
                 loop1.loop = true;
@@ -30,13 +34,13 @@ public class MusicManager : MonoBehaviour
                 print("play loop 2");
                 loop2.Play();
                 loop1.Stop();
-                if (gm.workdayLength > 180)
+                if (gm.workdayLength - gm.timeInWorkday > 100)
                     shouldLoop = true;
             }
         }
         else if(loop2.isPlaying)
         {
-            if (gm.workdayLength - gm.timeInWorkday < 50)
+            if (gm.workdayLength - gm.timeInWorkday < 20)
                 shouldLoop = false;
             if(shouldLoop)
             {
