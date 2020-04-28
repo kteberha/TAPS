@@ -43,8 +43,6 @@ public class DemandController : MonoBehaviour
 
     }
 
-
-
     void AddtoTimer()
     {
         //CurrentValue += 2.0f;

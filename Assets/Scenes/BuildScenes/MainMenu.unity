@@ -924,7 +924,15 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Ian Sundstrom
+  m_text: 'Nathaniel Ferguson
+
+    Jocelyn Eads
+
+    Dalia Ahmed
+
+    Nick Oyer
+
+    Ian Sundstrom
 
     Will Emigh
 
@@ -962,7 +970,7 @@ MonoBehaviour:
 
     Brackeys
 
-    Friends and Family
+    Friends & Family
 
     Anonymous Playtesters'
   m_isRightToLeft: 0
@@ -2052,7 +2060,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4288928866
+    rgba: 10738786
   m_fontColor: {r: 0.38431373, g: 0.8627451, b: 0.6392157, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -4800,7 +4808,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 9093757909264148474, guid: a051b5e7b6f523544a7909b4d66ea0f7,
     type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: df55670fa5021d24097c7e6f9afb12a3, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -6643,7 +6651,7 @@ PrefabInstance:
     - target: {fileID: 3880720995697368716, guid: 4582ea96336a72540ba7ca77b968e5fd,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9104293
+      value: -0.026351383
       objectReference: {fileID: 0}
     - target: {fileID: 3880720995697368716, guid: 4582ea96336a72540ba7ca77b968e5fd,
         type: 3}
@@ -6653,7 +6661,7 @@ PrefabInstance:
     - target: {fileID: 3880720995697368716, guid: 4582ea96336a72540ba7ca77b968e5fd,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.4136649
+      value: 0.99965274
       objectReference: {fileID: 0}
     - target: {fileID: 3880720995697368716, guid: 4582ea96336a72540ba7ca77b968e5fd,
         type: 3}
@@ -6709,6 +6717,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.9846603
+      objectReference: {fileID: 0}
+    - target: {fileID: 5716529589002786835, guid: 4582ea96336a72540ba7ca77b968e5fd,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0030331316
+      objectReference: {fileID: 0}
+    - target: {fileID: 5716529589002786835, guid: 4582ea96336a72540ba7ca77b968e5fd,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.98451155
+      objectReference: {fileID: 0}
+    - target: {fileID: 5716529589002786835, guid: 4582ea96336a72540ba7ca77b968e5fd,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.17445573
+      objectReference: {fileID: 0}
+    - target: {fileID: 5716529589002786835, guid: 4582ea96336a72540ba7ca77b968e5fd,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.017117353
+      objectReference: {fileID: 0}
+    - target: {fileID: 5716529589002786835, guid: 4582ea96336a72540ba7ca77b968e5fd,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00030204776
+      objectReference: {fileID: 0}
+    - target: {fileID: 5716529589002786835, guid: 4582ea96336a72540ba7ca77b968e5fd,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.16166851
+      objectReference: {fileID: 0}
+    - target: {fileID: 5716529589002786835, guid: 4582ea96336a72540ba7ca77b968e5fd,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.23708673
       objectReference: {fileID: 0}
     - target: {fileID: 7938385517993003862, guid: 4582ea96336a72540ba7ca77b968e5fd,
         type: 3}
@@ -7960,41 +8003,6 @@ PrefabInstance:
       propertyPath: m_LocalRotation.x
       value: -0.038184173
       objectReference: {fileID: 0}
-    - target: {fileID: 5716529589002786835, guid: 4582ea96336a72540ba7ca77b968e5fd,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.0030331316
-      objectReference: {fileID: 0}
-    - target: {fileID: 5716529589002786835, guid: 4582ea96336a72540ba7ca77b968e5fd,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.98451155
-      objectReference: {fileID: 0}
-    - target: {fileID: 5716529589002786835, guid: 4582ea96336a72540ba7ca77b968e5fd,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.17445573
-      objectReference: {fileID: 0}
-    - target: {fileID: 5716529589002786835, guid: 4582ea96336a72540ba7ca77b968e5fd,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.017117353
-      objectReference: {fileID: 0}
-    - target: {fileID: 5716529589002786835, guid: 4582ea96336a72540ba7ca77b968e5fd,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.00030204776
-      objectReference: {fileID: 0}
-    - target: {fileID: 5716529589002786835, guid: 4582ea96336a72540ba7ca77b968e5fd,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.16166851
-      objectReference: {fileID: 0}
-    - target: {fileID: 5716529589002786835, guid: 4582ea96336a72540ba7ca77b968e5fd,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.23708673
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4582ea96336a72540ba7ca77b968e5fd, type: 3}
 --- !u!4 &1300243326 stripped
@@ -8411,7 +8419,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1101856526}
   m_Direction: 0
   m_MinValue: -80
-  m_MaxValue: 0
+  m_MaxValue: -14
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -8535,22 +8543,22 @@ PrefabInstance:
     - target: {fileID: 6114118909803862570, guid: 1c57bb1bf8ec9f144b178c44940ce8d5,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7132756
+      value: -0.5684601
       objectReference: {fileID: 0}
     - target: {fileID: 6114118909803862570, guid: 1c57bb1bf8ec9f144b178c44940ce8d5,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.100622654
+      value: -0.46639314
       objectReference: {fileID: 0}
     - target: {fileID: 6114118909803862570, guid: 1c57bb1bf8ec9f144b178c44940ce8d5,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.086888
+      value: -0.41321188
       objectReference: {fileID: 0}
     - target: {fileID: 6114118909803862570, guid: 1c57bb1bf8ec9f144b178c44940ce8d5,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.68815947
+      value: 0.5372025
       objectReference: {fileID: 0}
     - target: {fileID: 6114118909803862570, guid: 1c57bb1bf8ec9f144b178c44940ce8d5,
         type: 3}
@@ -11082,11 +11090,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 9093757909264148474, guid: a051b5e7b6f523544a7909b4d66ea0f7,
     type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: faca25d92cb591541a650506bec5fe4b, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

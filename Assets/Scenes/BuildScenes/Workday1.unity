@@ -14426,11 +14426,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TLOffScreenIndicator
       objectReference: {fileID: 0}
-    - target: {fileID: 476338364154694803, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8661665233870389237, guid: 75faefc2b2687e144994aed675ddfbe8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -14440,77 +14435,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: RefreshView
-      objectReference: {fileID: 0}
-    - target: {fileID: 3954353803370206903, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8748099748945046219, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8753469379995164302, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 297e6ec96494cd2469865e06734706b8,
-        type: 2}
-    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 83784905043092836, guid: 297e6ec96494cd2469865e06734706b8,
-        type: 2}
-    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_fontSizeBase
-      value: 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_text
-      value: 'This is what the manager will say to the Zip roboboi. We love him so
-        much and angry moustache makes us laugh.
-
-
-'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 111
-      objectReference: {fileID: 0}
-    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 23
-      objectReference: {fileID: 0}
-    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 22
-      objectReference: {fileID: 0}
-    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_firstOverflowCharacterIndex
-      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4022581357376182096, guid: 75faefc2b2687e144994aed675ddfbe8,
         type: 3}
@@ -14885,34 +14809,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 96ae3c12a8c50499d98e9fcc7be2c05f,
         type: 3}
-    - target: {fileID: 2487587431637136928, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 167903176}
-    - target: {fileID: 2487587431637136928, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: playerTransform
-      value: 
-      objectReference: {fileID: 123207203}
-    - target: {fileID: 2487587431637136928, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: packageSprites.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: 042db40233e5b46f9b7e2a35c058504c,
-        type: 3}
-    - target: {fileID: 2487587431637136928, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: packageSprites.Array.data[1]
-      value: 
-      objectReference: {fileID: 21300000, guid: a62880283b16b4234ac794a12dc3ed10,
-        type: 3}
-    - target: {fileID: 2487587431637136928, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: packageSprites.Array.data[2]
-      value: 
-      objectReference: {fileID: 21300000, guid: 96ae3c12a8c50499d98e9fcc7be2c05f,
-        type: 3}
     - target: {fileID: 4390580058915166358, guid: 75faefc2b2687e144994aed675ddfbe8,
         type: 3}
       propertyPath: target
@@ -14992,6 +14888,108 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7425495173476762749, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607708246452875542, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b795afbc6edf24512abe819a9aee9bd1,
+        type: 3}
+    - target: {fileID: 7607708246452875542, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607708246452875542, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607708246452875542, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607708246452875542, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 476338364154694803, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 297e6ec96494cd2469865e06734706b8,
+        type: 2}
+    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 83784905043092836, guid: 297e6ec96494cd2469865e06734706b8,
+        type: 2}
+    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_text
+      value: 'This is what the manager will say to the Zip roboboi. We love him so
+        much and angry moustache makes us laugh.
+
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 111
+      objectReference: {fileID: 0}
+    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3954353803717260739, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8748099748945046219, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3954353803370206903, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753469379995164302, guid: 75faefc2b2687e144994aed675ddfbe8,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -15386,32 +15384,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -15.399902
       objectReference: {fileID: 0}
-    - target: {fileID: 7607708246452875542, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: b795afbc6edf24512abe819a9aee9bd1,
-        type: 3}
-    - target: {fileID: 7607708246452875542, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7607708246452875542, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7607708246452875542, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7607708246452875542, guid: 75faefc2b2687e144994aed675ddfbe8,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9015843566658810042, guid: 75faefc2b2687e144994aed675ddfbe8,
         type: 3}
       propertyPath: m_Alpha
@@ -15501,6 +15473,11 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1613543929}
+    - target: {fileID: 4022581359060365480, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: m_PlayAutomatically
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9030624264996964686, guid: 75faefc2b2687e144994aed675ddfbe8,
         type: 3}
       propertyPath: m_IsActive
@@ -15521,6 +15498,34 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2487587431637136928, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 167903176}
+    - target: {fileID: 2487587431637136928, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 123207203}
+    - target: {fileID: 2487587431637136928, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: packageSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 042db40233e5b46f9b7e2a35c058504c,
+        type: 3}
+    - target: {fileID: 2487587431637136928, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: packageSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: a62880283b16b4234ac794a12dc3ed10,
+        type: 3}
+    - target: {fileID: 2487587431637136928, guid: 75faefc2b2687e144994aed675ddfbe8,
+        type: 3}
+      propertyPath: packageSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 96ae3c12a8c50499d98e9fcc7be2c05f,
+        type: 3}
     - target: {fileID: 5336313155029942918, guid: 75faefc2b2687e144994aed675ddfbe8,
         type: 3}
       propertyPath: m_Enabled
@@ -32381,7 +32386,8 @@ MonoBehaviour:
   - "If you ever don't know what to do, remember management\x19s motto: Our employees
     are expendable. Our high-quality customer service is not. "
   _text: {fileID: 134595123}
-  iconAnimator: {fileID: 2088313265}
+  iconAnimator: {fileID: 0}
+  iconCg: {fileID: 0}
 --- !u!225 &922928478
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -70521,12 +70527,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4218280027348439957, guid: 34f705687ff2f4c40a3143bc0fc23150,
     type: 3}
   m_PrefabInstance: {fileID: 2086602677}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &2088313265 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3387911413566133284, guid: 75faefc2b2687e144994aed675ddfbe8,
-    type: 3}
-  m_PrefabInstance: {fileID: 436919045}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2089165044
 PrefabInstance:

@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     public int currentPackageHighScore = 0;//instance of package delivered score to be compared and rewritten per workday
     public int currentRefundLowScore = 99;//instance of refund score to be compared and rewritten per workday
 
-    public static Action<int> InitializeDay;//delegate to call level initialization.
+    public static Action InitializeDay;//delegate to call level initialization.
     public static Action InitializeSettings;//delegate to call setting initialization.
     public static Action<int> UpdateMaxStarValue;//delegate to signal slider's max value updating
     #endregion
@@ -64,25 +64,6 @@ public class GameManager : MonoBehaviour
     public static Action WorkdayEnded;//delegate event to be called when day is over
     [HideInInspector]
     public GameObject pausePanel;
-
-
-    #region TutorialStuff
-    ////Tutorial variables
-    [Header("Tutorial Variables")]
-    public GameObject tutorialManager;
-
-    bool test = false;
-    #endregion
-
-
-    private void Awake()
-    {
-        if (!gameInitialized)
-        {
-            GameInit();
-            gameInitialized = true;
-        }
-    }
 
     private void OnEnable()
     {
@@ -123,9 +104,6 @@ public class GameManager : MonoBehaviour
 
     void LevelInit(Scene _newDay, LoadSceneMode _loadSceneMode = LoadSceneMode.Single)
     {
-        print("workday initializing");
-
-
         //check that we're not in the main menu
         if (_newDay.buildIndex != 0)
         {
@@ -142,6 +120,8 @@ public class GameManager : MonoBehaviour
             PackagesDeliveredUpdate(0);
             RefundsUpdate(0);
             //////
+            ///
+            InitializeDay?.Invoke();
         }
         else
             print("currently in main menu");
@@ -160,28 +140,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        #region SAVE/LOADTESTING
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            print("attempt to load");
-            LoadAllGameData();
-        }
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            print("saved");
-            SaveSystem.SaveGameData(gameData);
-        }
-        if(Input.GetKeyDown(KeyCode.D))
-        {
-            print("deleted saves");
-            SaveSystem.DeleteAllFiles();
-        }
-        if(Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SceneManager.LoadScene(2);
-        }
-        #endregion
-
         //pause & resume game (only if game is playing)
         if (Input.GetKeyDown(KeyCode.Escape) && state==GAMESTATE.CLOCKEDIN)
         {
@@ -201,7 +159,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //only count the time if the player is clocked in
+        //only count the time if the player is clocked in (game is running)
         if (state == GAMESTATE.CLOCKEDIN)
         {
             //Workday timer
@@ -212,8 +170,9 @@ public class GameManager : MonoBehaviour
             {
                 if (state == GAMESTATE.CLOCKEDIN)
                 {
-                    state = GAMESTATE.CLOCKEDOUTEND;
+                    state = GAMESTATE.CLOCKEDOUTEND;//set the game state to clocked out
 
+                    //call the workday ended event
                     if (WorkdayEnded != null)
                     {
                         WorkdayEnded();
@@ -335,12 +294,19 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static void SaveAllGameData()
     {
-        gameData.startingWorkday = workDayActual;
-        gameData.SetAllOrderScores(orderScores);
-        gameData.SetAllPackageScores(packageScores);
-        gameData.SetAllRefundScores(refundsScores);
-        SaveSystem.SaveGameData(gameData);
-        print("GM saved files");
+        try
+        {
+            gameData.startingWorkday = workDayActual;
+            gameData.SetAllOrderScores(orderScores);
+            gameData.SetAllPackageScores(packageScores);
+            gameData.SetAllRefundScores(refundsScores);
+            SaveSystem.SaveGameData(gameData);
+            print("GM saved files");
+        }
+        catch(Exception e)
+        {
+            print(e.Message);
+        }
     }
 
     /// <summary>

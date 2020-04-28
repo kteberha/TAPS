@@ -7345,7 +7345,6 @@ MonoBehaviour:
   optionsPanel: {fileID: 4022581358893760756}
   endDayPanel: {fileID: 7292973470838680827}
   goalsScreen: {fileID: 8753469379995164302}
-  wishlist: {fileID: 0}
   workdayStatusText: {fileID: 4022581359060365487}
   textAnimation: {fileID: 0}
   ordersFulfilledText: {fileID: 5829555014297296793}
@@ -12150,9 +12149,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 858013023679750689}
   m_Direction: 0
   m_MinValue: -80
-  m_MaxValue: 0
+  m_MaxValue: -14
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: -14
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -14597,6 +14596,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1.01
       objectReference: {fileID: 0}
+    - target: {fileID: 3165969566728842745, guid: 7764e1bbc2aabf64e885077de91235b6,
+        type: 3}
+      propertyPath: m_UpdateMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8401301009726941684, guid: 7764e1bbc2aabf64e885077de91235b6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -14626,6 +14630,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 366.70505
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773778967978547425, guid: 7764e1bbc2aabf64e885077de91235b6,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2474693522314697672, guid: 7764e1bbc2aabf64e885077de91235b6,
         type: 3}
@@ -14712,11 +14721,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6773778967978547425, guid: 7764e1bbc2aabf64e885077de91235b6,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6773778968995685189, guid: 7764e1bbc2aabf64e885077de91235b6,
         type: 3}
       propertyPath: m_IsActive
@@ -14731,11 +14735,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3165969566728842745, guid: 7764e1bbc2aabf64e885077de91235b6,
-        type: 3}
-      propertyPath: m_UpdateMode
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3132179537964604113, guid: 7764e1bbc2aabf64e885077de91235b6,
         type: 3}

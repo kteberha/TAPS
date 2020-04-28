@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Day1Tutorial : MonoBehaviour
 {
@@ -18,11 +19,12 @@ public class Day1Tutorial : MonoBehaviour
     CanvasGroup _cg;
 
     [SerializeField] Animator iconAnimator;
-    CanvasGroup iconCg;
+    [SerializeField] CanvasGroup iconCg;
 
-    private void Start()
+    void AssignObjects()
     {
         _cg = GetComponent<CanvasGroup>();
+        iconAnimator = GameObject.Find("Canvas").transform.Find("Control Icons").gameObject.GetComponent<Animator>();
         iconCg = iconAnimator.gameObject.GetComponent<CanvasGroup>();
     }
 
@@ -32,6 +34,7 @@ public class Day1Tutorial : MonoBehaviour
         PlayerController.ToggleShuffleTutorial += StartShuffleTutorial;
         ThrowTutorialTrigger.ToggleTeleportTutorial += StartThrowTutorial;
         AsteroidHome.ToggleTeleportTutorial += StartTeleportTutorial;
+        GameManager.InitializeDay += AssignObjects;
     }
 
     private void OnDisable()
@@ -40,6 +43,7 @@ public class Day1Tutorial : MonoBehaviour
         PlayerController.ToggleShuffleTutorial -= StartShuffleTutorial;
         ThrowTutorialTrigger.ToggleTeleportTutorial -= StartThrowTutorial;
         AsteroidHome.ToggleTeleportTutorial -= StartTeleportTutorial;
+        GameManager.InitializeDay -= AssignObjects;
     }
 
     private void Update()
@@ -138,7 +142,6 @@ public class Day1Tutorial : MonoBehaviour
         }
         else
         {
-            print(_textIndex + "= text index");
             ResumeGame();
         }
     }

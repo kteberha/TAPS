@@ -22,10 +22,6 @@ public class MenuController : MonoBehaviour
     public GameObject endDayPanel;
     [SerializeField] GameObject goalsScreen;
 
-    //////DEMO ONLY/////
-    public GameObject wishlist;
-    ///////////////////
-
     //public GameObject map;
     CanvasGroup pauseCg;
     CanvasGroup optionsCg;
@@ -35,7 +31,7 @@ public class MenuController : MonoBehaviour
     Slider sfxSlider;
 
     [SerializeField] Text workdayStatusText;
-    [HideInInspector] public Animation textAnimation;
+    [HideInInspector] public Animation textAnimation;//animation for clock in/out text
 
     public Text ordersFulfilledText, packagesDeliveredText, refundsOrderedText;
     public Text bestOrdersFulfilledText, bestPackagesText, bestRefundsText;
@@ -365,18 +361,17 @@ public class MenuController : MonoBehaviour
         StartCoroutine(ZipResults());
     }
 
-    #region NEEDS TO BE MOVED OR HEAVILY ALTERED
     IEnumerator WakeUp()
     {
         //Fade screen in
-        screenAnimator.SetTrigger("FadeOut");
-        zipFaceObject.SetActive(true);
-        zipAnimCG.alpha = 1f;
-        yield return new WaitForSeconds(Mathf.Ceil(GetAnimationClip(screenAnimator, "ScreenFadeOut").length));
+        //screenAnimator.SetTrigger("FadeOut");
+        //zipFaceObject.SetActive(true);
+        //zipAnimCG.alpha = 1f;
+        //yield return new WaitForSeconds(Mathf.Ceil(GetAnimationClip(screenAnimator, "ScreenFadeOut").length));
 
-        zipAnimator.SetTrigger("ClockingIn");
-        print("clock in triggered");
-        yield return new WaitForSeconds(Mathf.Ceil(GetAnimationClip(zipAnimator, "WakeUpTransition").length));
+        zipAnimCG.alpha = 1f;//set the canvas group alpha to 1
+        zipAnimator.SetTrigger("ClockingIn"); //trigger the animtor to play the right animation state
+        yield return new WaitForSeconds(Mathf.Ceil(GetAnimationClip(zipAnimator, "WakeUpTransition").length - 1));
 
         zipAnimator.SetTrigger("DonePlaying");
         zipAnimCG.alpha = 0f;
@@ -455,7 +450,6 @@ public class MenuController : MonoBehaviour
         endDayCg.blocksRaycasts = true;
         endDayCg.interactable = true;
     }
-    #endregion
     #endregion
 
 
@@ -538,11 +532,19 @@ public class MenuController : MonoBehaviour
 
     public void SaveAllSettings()
     {
-        optionsData.ChangeMovementSettings(invertedMovement);
-        optionsData.ChangeMusicVolume(musicVolume);
-        optionsData.ChangeSfxVolume(sfxVolume);
-        SaveSystem.SaveOptionsData(optionsData);
-        print("saved settings");
+        try
+        {
+            optionsData.ChangeMovementSettings(invertedMovement);
+            optionsData.ChangeMusicVolume(musicVolume);
+            optionsData.ChangeSfxVolume(sfxVolume);
+            SaveSystem.SaveOptionsData(optionsData);
+            print("saved settings");
+        }
+        catch(System.Exception e)
+        {
+            print(e.Message);
+        }
+
     }
 
     public OptionsData LoadAllSettings()
@@ -565,14 +567,4 @@ public class MenuController : MonoBehaviour
         }
     }
     #endregion
-
-
-
-
-    ////////////////FOR DEMO ONLY/////////////////////////
-    public void Wishlist()
-    {
-        GameManager.state = GAMESTATE.CLOCKEDOUTEND;
-        wishlist.SetActive(true);
-    }
 }
