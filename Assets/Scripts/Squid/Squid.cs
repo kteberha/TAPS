@@ -52,6 +52,9 @@ public partial class Squid : Agent
 	Collider2D _collider;
 	Collider2D Collider => this.Get<Collider2D>(ref _collider);
 
+	Animator _animator;
+	Animator Animator => this.GetInChildren<Animator>(ref _animator,gameObjectName:"Squid");
+
 	private GameObject _target;
 	#if UNITY_EDITOR
 	[DebugGUIPrint]

@@ -132,7 +132,7 @@ public partial class Squid : Agent
 
 		public void EatTarget()
 		{
-			// TODO: Eating Animation
+			Agent.Animator.SetTrigger("Eating");
 			Agent.activeTentacle?.HeldObject?.SendMessage("Eaten",SendMessageOptions.DontRequireReceiver);
 			Agent.activeTentacle?.HandDetach();
 			Agent.activeTentacle.Target = null;
@@ -145,6 +145,8 @@ public partial class Squid : Agent
 			// #if UNITY_EDITOR 
 			// if(Agent.debug) {Debug.LogFormat("Exit {0}",nameof(Eat));}
 			// #endif
+			// NOTE: may not be needed?
+			Agent.Animator.ResetTrigger("Eating");
 			Agent.Steering.SetFlag(SteeringType.Avoidance);
 			Agent.activeTentacle.Target = null;
 		}
@@ -164,6 +166,7 @@ public partial class Squid : Agent
 			// #if UNITY_EDITOR 
 			// if(Agent.debug) {Debug.LogFormat("Enter {0}",nameof(Flee));}
 			// #endif
+			Agent.Animator.SetBool("Fleeing",true);
 			Agent.Steering.SetFlag(SteeringType.Flee);
 			Agent.activeTentacle?.HandDetach();
 		}
@@ -173,6 +176,7 @@ public partial class Squid : Agent
 			// #if UNITY_EDITOR 
 			// if(Agent.debug) {Debug.LogFormat("Exit {0}",nameof(Flee));}
 			// #endif
+			Agent.Animator.SetBool("Fleeing",false);
 			Agent.Steering.UnsetFlag(SteeringType.Flee);
 		}
 	}
